@@ -1,0 +1,79 @@
+(* program *)
+program       = program_block ;
+program_block = { statement } ;
+
+block         = "{" program_block "}" ;
+
+(* statements *)
+statement        = ( simple_statement | compound_statement ) terminator ;
+simple_stmt      = expression_stmt | assignment_stmt | return_stmt | break_stmt | continue_stmt ;
+compound_stmt    = if_stmt | while_stmt | foreach_stmt | procedure_stmt ;
+
+expression_stmt  = expression ;
+assignment_stmt  = lvalue "=" expression ;
+lvalue           = identifier ;
+return_stmt      = "return" expression ;
+break_stmt       = "break" ;
+continue_stmt    = "continue" ;
+
+if_stmt          = "if(" condition ")" block
+                        [ "elseif" block ]
+                        [ "else" block ] ;
+while_stmt       = "while(" condition ")" block ;
+foreach_stmt     = "foreach(" declaration_stmt "in" expression ")" block ;
+
+(* expression *)
+expression       = conditional ;
+conditional      = or_test ;
+
+or_test          = and_test | or_test "||" and_test ;
+and_test         = not_test | and_test "&&" not_test ;
+not_test         = comparison | "!" not_test ;
+
+comparison       = addition_expr [ { comparison_operator addition_expr } ] ;
+addition_expr    = multiply_expr | addition_expr addition_op addition_expr ;
+multiply_expr    = unary_expr | multiply_expr multiply_op multiply_expr ;
+unary_expr       = primary | unary_op unary_expr ;
+
+comparison_op    = eq | neq | sm | smeq | lr | lreq
+eq               = "==" ;
+neq              = "!=" ;
+sm               = "<" ;
+smeq             = "<=" ;
+lr               = ">" ;
+lreq             = ">=" ;
+addition_op      = "+" | "-" ;
+multiply_op      = "*" | "/" ;
+unary_operator   = "-" | "+" ;
+
+(* functions *)
+call             = function_call | method_call ;
+function_call    = identifier "(" [argument_list ] ")" ;
+method_call      = expression { "." expression } "(" [argument_list ] ")" ;
+
+argument_list    = expression | argument_list "," expression ;
+parameter_list   = identifier | parameter_list "," identifier ;
+
+procedure_def    = function_def | method_def ;
+function_def     = "function" identifier "(" [ parameter_list ] ")" block ;
+method_def       = identifier "." identifier "(" [ parameter_list ] ")" block ;
+
+(* constants )
+letter           = lowercase | uppercase
+lowercase        = "a" | "b" | ... | "z" ;
+uppercase        = "A" | "B" | ... | "Z" ;
+zero             = "0" ;
+nonzero          = "1" | ... | "9" ;
+whitespace       = ? ASCII 32 ? ;
+
+(* primitives *)
+bool             = "true" | "false" ;
+text             = '"' { ? any utf8_char except unescaped '"' ? | escape } '"' ;
+number           = integer | double ;
+integer          = nonzero { digit } | zero ;
+double           = [ integer ] fraction ;
+fraction         = "," { digit } ;
+note             = ( "C" | "C#" | "D" | "D#" | "E" | "F" | "F#" | "G" | "G#" | "A" | "A#" | "B" ) { integer } ;
+
+(* misc *)
+terminator       = ";" ;
