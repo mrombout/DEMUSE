@@ -7,7 +7,7 @@ namespace dem {
 
         }
 
-        std::string NullMatcher::match(std::string::iterator &begin, std::string::iterator &end) const {
+        std::string NullMatcher::match(std::string::iterator begin, std::string::iterator end) const {
             return "";
         }
     }

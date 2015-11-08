@@ -7,7 +7,7 @@ namespace dem {
     namespace lexer {
         class Matcher {
         public:
-            virtual std::string match(std::string::iterator &begin, std::string::iterator &end) const = 0;
+            virtual std::string match(std::string::iterator begin, std::string::iterator end) const = 0;
         };
     }
 }

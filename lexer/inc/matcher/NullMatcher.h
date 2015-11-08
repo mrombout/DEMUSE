@@ -9,10 +9,7 @@ namespace dem {
         public:
             NullMatcher(std::string name);
 
-            virtual std::string match(std::string::iterator &begin, std::string::iterator &end) const;
-
-        private:
-            std::string mName;
+            virtual std::string match(std::string::iterator begin, std::string::iterator end) const;
         };
     }
 }

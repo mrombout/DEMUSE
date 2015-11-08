@@ -8,7 +8,7 @@ namespace dem {
 
         }
 
-        std::string StringMatcher::match(std::string::iterator &begin, std::string::iterator &end) const {
+        std::string StringMatcher::match(std::string::iterator begin, std::string::iterator end) const {
             std::string str{""};
             str.append(begin, begin + mContent.length());
 

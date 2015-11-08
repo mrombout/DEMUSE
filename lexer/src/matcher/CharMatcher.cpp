@@ -7,7 +7,7 @@ namespace dem {
 
         }
 
-        std::string CharMatcher::match(std::string::iterator &begin, std::string::iterator &end) const {
+        std::string CharMatcher::match(std::string::iterator begin, std::string::iterator end) const {
             return (*begin) == mChar ? std::string(1, mChar) : "";
         }
     }
