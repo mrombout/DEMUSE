@@ -23,7 +23,4 @@ int main(int argc, char* argv[]) {
         std::cout << "  | " << std::left << std::setw(20) << token.content() << " | " << std::right << std::setw(12) << token.type() << " | " << std::setw(10) << token.line() << " | " << std::setw(10) << token.column() << " | " << std::setw(5) << token.startIndex() << " |" << std::endl;
     }
     std::cout << "  +----------------------+--------------+------------+------------+-------+\n" << std::endl;
-
-    std::string null;
-    std::cin >> null;
 }
