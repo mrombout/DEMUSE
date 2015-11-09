@@ -30,13 +30,21 @@ set(Lexer_SRCS
 
     inc/matcher/CharMatcher.h
     src/matcher/CharMatcher.cpp
+)
 
-    src/main.cpp
+set(TestLexer_SRCS
+    test/TokenTest.cpp
+    test/TokenDefinitionTest.cpp
+    test/LexerTest.cpp
+    test/matcher/NullMatcherTest.cpp
+    test/matcher/CharMatcherTest.cpp
+    test/matcher/StringMatcherTest.cpp
+    test/matcher/RegexMatcherTest.cpp
 )
 
 add_library(liblexer ${Lexer_SRCS})
 add_library(dem::liblexer ALIAS liblexer)
-add_executable(lexer ${Lexer_SRCS})
+add_executable(lexer ${Lexer_SRCS} src/main.cpp)
 
 target_include_directories(liblexer
     PUBLIC inc
@@ -51,3 +59,17 @@ target_compile_features(liblexer
         cxx_nullptr
         cxx_strong_enums
 )
+
+# testing
+enable_testing()
+
+add_executable(testlexer ${Lexer_SRCS} ${TestLexer_SRCS})
+target_include_directories(testlexer PRIVATE inc)
+
+find_package(GTest REQUIRED)
+if(GTEST_FOUND)
+    target_include_directories(testlexer PRIVATE E:/Libraries/googletest-release-1.7.0/include)
+    target_link_libraries(testlexer ${GTEST_BOTH_LIBRARIES})
+endif()
+
+add_test(AllLexerTests testlexer)
