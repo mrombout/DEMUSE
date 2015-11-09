@@ -19,7 +19,7 @@ namespace dem {
             std::vector<Token> lex(std::string::iterator begin, std::string::iterator end);
 
         private:
-            void match(std::vector<Token> &tokens, std::string::iterator &begin, std::string::iterator &end, int &curLine, int &curColumn, int &curIndex);
+            bool match(std::vector<Token> &tokens, std::string::iterator &begin, std::string::iterator &end, int &curLine, int &curColumn, int &curIndex);
 
         private:
             std::vector<TokenDefinition*> mTokenDefinitions;

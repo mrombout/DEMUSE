@@ -7,7 +7,7 @@ namespace dem {
     namespace lexer {
         class NullMatcher : public Matcher {
         public:
-            NullMatcher(std::string name);
+            NullMatcher();
 
             virtual std::string match(std::string::iterator begin, std::string::iterator end) const;
         };

@@ -3,7 +3,7 @@
 
 namespace dem {
     namespace lexer {
-        Token::Token(const TokenType &type, std::string content, int startIndex, int line, int column) :
+        Token::Token(const TokenType type, std::string content, int startIndex, int line, int column) :
             mType(type),
             mContent(content),
             mStartIndex(startIndex),
@@ -18,6 +18,10 @@ namespace dem {
 
         const std::string &Token::content() const {
             return mContent;
+        }
+
+        void Token::setContent(std::string content) {
+            mContent = content;
         }
 
         const int Token::startIndex() const {

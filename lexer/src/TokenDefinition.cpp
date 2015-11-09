@@ -2,7 +2,7 @@
 
 namespace dem {
     namespace lexer {
-        TokenDefinition::TokenDefinition(TokenType tokenType, Matcher *matcher) :
+        TokenDefinition::TokenDefinition(const TokenType &tokenType, Matcher *matcher) :
             mMatcher(matcher),
             mTokenType(tokenType) {
 
@@ -13,7 +13,9 @@ namespace dem {
         }
 
         TokenDefinition::TokenDefinition(const TokenDefinition &other) {
-            mTokenType = other.mTokenType;
+            std::cout << "copy-constructor" << std::endl;
+            //mTokenType = other.mTokenType;
+            mTokenType = TokenType::ASSIGNMENT;
 
             if(other.mMatcher) {
                 *mMatcher = *other.mMatcher;
@@ -21,12 +23,14 @@ namespace dem {
         }
 
         TokenDefinition &TokenDefinition::operator=(const TokenDefinition &other) {
+            std::cout << "copy-assignment" << std::endl;
             if(this == &other)
                 return *this;
 
             delete mMatcher;
 
-            mTokenType = other.mTokenType;
+            //mTokenType = other.mTokenType;
+            mTokenType = TokenType::ASSIGNMENT;
 
             if(mMatcher) {
                 *mMatcher = *other.mMatcher;
@@ -36,17 +40,21 @@ namespace dem {
         }
 
         TokenDefinition::TokenDefinition(TokenDefinition &&other) {
-            mTokenType = other.mTokenType;
+            std::cout << "move-constructor" << std::endl;
+            //mTokenType = other.mTokenType;
+            mTokenType = TokenType::ASSIGNMENT;
             mMatcher = other.mMatcher;
 
             other.mMatcher = nullptr;
         }
 
         TokenDefinition &TokenDefinition::operator=(TokenDefinition &&other) {
+            std::cout << "move-assignment" << std::endl;
             if(this == &other)
                 return *this;
 
-            mTokenType = other.mTokenType;
+            //mTokenType = other.mTokenType;
+            mTokenType = TokenType::ASSIGNMENT;
             mMatcher = other.mMatcher;
 
             other.mMatcher = nullptr;

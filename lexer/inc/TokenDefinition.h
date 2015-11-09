@@ -8,11 +8,11 @@ namespace dem {
     namespace lexer {
         struct TokenDefinition {
         public:
-            TokenDefinition(TokenType tokenType, Matcher *matcher);
+            TokenDefinition(const TokenType &tokenType, Matcher *matcher);
             ~TokenDefinition();
 
             TokenDefinition(const TokenDefinition &other);
-            TokenDefinition & operator=(const TokenDefinition &other);
+            TokenDefinition &operator=(const TokenDefinition &other);
 
             TokenDefinition(TokenDefinition &&other);
             TokenDefinition &operator=(TokenDefinition &&other);

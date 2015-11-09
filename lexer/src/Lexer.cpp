@@ -1,10 +1,11 @@
 #include <iostream>
 #include "Lexer.h"
+#include "TokenType.h"
 
 namespace dem {
     namespace lexer {
         Lexer::Lexer() :
-            mNewLineMatcher("\\r\\n|\\n"),
+            mNewLineMatcher("\\r\\n?|\\n"),
             mSkipWhitespaceMatcher("\\s*"){
 
         }
@@ -27,8 +28,9 @@ namespace dem {
             int curIndex = 0;
 
             while(begin != end) {
-                match(tokens, begin, end, curLine, curColumn, curIndex);
+                bool matched = match(tokens, begin, end, curLine, curColumn, curIndex);
 
+                // skip newlines
                 std::string newLine;
                 if((newLine = mNewLineMatcher.match(begin, end)).length() > 0) {
                     ++curLine;
@@ -38,17 +40,32 @@ namespace dem {
                     continue;
                 }
 
+                // skip whitespace
                 int skippedWhitespace = mSkipWhitespaceMatcher.match(begin, end).length();
                 curIndex += skippedWhitespace;
                 curColumn += skippedWhitespace;
                 std::advance(begin, skippedWhitespace);
+
+                // collect unmatched character
+                if(!matched && skippedWhitespace == 0) {
+                    if(!tokens.empty() && tokens.back().type() == dem::lexer::TokenType::UNKNOWN) {
+                        Token &backToken = tokens.back();
+                        backToken.setContent(backToken.content() + std::string(1, *begin));
+                    } else {
+                        tokens.push_back(Token(dem::lexer::TokenType::UNKNOWN, std::string(1, *begin), curIndex, curLine, curColumn));
+                    }
+                    ++begin;
+                }
             }
 
             return tokens;
         }
 
-        void Lexer::match(std::vector<Token> &tokens, std::string::iterator &begin, std::string::iterator &end, int &curLine, int &curColumn, int &curIndex) {
+        bool Lexer::match(std::vector<Token> &tokens, std::string::iterator &begin, std::string::iterator &end, int &curLine, int &curColumn, int &curIndex) {
             for(TokenDefinition *tokenDefinition : mTokenDefinitions) {
+                if(!tokenDefinition)
+                    continue;
+
                 std::string matched = tokenDefinition->matcher().match(begin, end);
 
                 if(matched.length() > 0) {
@@ -58,9 +75,11 @@ namespace dem {
                     curColumn += matched.length();
                     curIndex += matched.length();
 
-                    return;
+                    return true;
                 }
             }
+
+            return false;
         }
     }
 }

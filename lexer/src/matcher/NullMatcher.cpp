@@ -2,8 +2,7 @@
 
 namespace dem {
     namespace lexer {
-        NullMatcher::NullMatcher(std::string name) :
-            mName(name) {
+        NullMatcher::NullMatcher() {
 
         }
 
