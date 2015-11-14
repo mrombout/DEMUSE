@@ -42,6 +42,9 @@ set(Parser_SRCS
     inc/symbol/FunctionDefinition.h
     src/symbol/FunctionDefinition.cpp
 
+    inc/symbol/Identifier.h
+    src/symbol/Identifier.cpp
+
     inc/factory/SymbolFactory.h
     src/factory/SymbolFactory.cpp
 
@@ -77,6 +80,9 @@ set(Parser_SRCS
 
     inc/factory/FunctionDefinitionFactory.h
     src/factory/FunctionDefinitionFactory.cpp
+
+    inc/factory/IdentifierFactory.h
+    src/factory/IdentifierFactory.cpp
 )
 
 add_library(libparser ${Parser_SRCS})

@@ -38,6 +38,8 @@ namespace dem {
             END,
             OPEN,
             CLOSE,
+            BRACKET_OPEN,
+            BRACKET_CLOSE,
             FUNCTION,
             VAR,
             TERMINATOR,

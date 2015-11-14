@@ -4,10 +4,11 @@
 #include <deque>
 #include "Token.h"
 #include "symbol/Assignment.h"
+#include "SymbolFactory.h"
 
 namespace dem {
     namespace parser {
-        class AssignmentFactory {
+        class AssignmentFactory : public SymbolFactory {
         public:
             static Assignment *produce(std::deque<lexer::Token> &tokens);
         };

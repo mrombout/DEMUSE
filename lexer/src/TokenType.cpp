@@ -102,6 +102,12 @@ namespace dem {
                 case TokenType::CLOSE:
                     str = "CLOSE";
                     break;
+                case TokenType::BRACKET_OPEN:
+                    str = "BRACKET_OPEN";
+                    break;
+                case TokenType::BRACKET_CLOSE:
+                    str = "BRACKET_CLOSE";
+                    break;
                 case TokenType::FUNCTION:
                     str = "FUNCTION";
                     break;

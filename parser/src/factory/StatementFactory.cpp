@@ -13,46 +13,51 @@ namespace dem {
     namespace parser {
         Statement *StatementFactory::produce(std::deque<lexer::Token> &tokens) {
             // statement = ( simple_statement | compound_statement ) terminator ;
+            Statement *statement = nullptr;
 
             // simple_stmt = return_stmt | break_stmt | continue_stmt | assignment_stmt | expression_stmt ;
             if(tokens.front().is(lexer::TokenType::RETURN)) {
                 // return_stmt
-                return ReturnFactory::produce(tokens);
+                statement = ReturnFactory::produce(tokens);
             } else if(tokens.front().is(lexer::TokenType::BREAK)) {
                 // break_stmt
-                return BreakFactory::produce(tokens);
+                statement = BreakFactory::produce(tokens);
             } else if(tokens.front().is(lexer::TokenType::CONTINUE)) {
                 // continue_stmt
-                return ContinueFactory::produce(tokens);
+                statement = ContinueFactory::produce(tokens);
             } else if(tokens.front().is(lexer::TokenType::IDENTIFIER)) {
                 // assignment_stmt
                 Assignment *assignment = AssignmentFactory::produce(tokens);
-                if(assignment)
-                    return assignment;
-
-                // expression_stmt
-                Expression *expression = ExpressionFactory::produce(tokens);
-                if(expression)
-                    return expression;
+                if(assignment) {
+                    statement = assignment;
+                } else {
+                    // expression_stmt
+                    statement = ExpressionFactory::produce(tokens);
+                }
             }
 
             // compound_stmt = if_stmt | while_stmt | for_stmt | function_def | play_stmt ;
             if(tokens.front().is(lexer::TokenType::IF)) {
                 // if_stmt
-                return IfFactory::produce(tokens);
+                statement = IfFactory::produce(tokens);
             } else if(tokens.front().is(lexer::TokenType::WHILE)) {
                 // while_stmt
-                return WhileFactory::produce(tokens);
+                statement = WhileFactory::produce(tokens);
             } else if(tokens.front().is(lexer::TokenType::FOR)) {
                 // for_stmt
-                return ForFactory::produce(tokens);
+                statement = ForFactory::produce(tokens);
             } else if(tokens.front().is(lexer::TokenType::FUNCTION)) {
                 // function_def
-                return FunctionDefinitionFactory::produce(tokens);
+                statement = FunctionDefinitionFactory::produce(tokens);
             }
+
+            // terminator
+            expect(tokens, lexer::TokenType::TERMINATOR);
 
             // TODO: play_stmt
             // TODO: Throw some error, since this does not seem to be a statement
+
+            return statement;
         }
     }
 }

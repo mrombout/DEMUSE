@@ -9,8 +9,8 @@ namespace dem {
     namespace parser {
         class SymbolFactory {
         protected:
-            static bool expect(std::deque<lexer::Token> &tokens, lexer::TokenType &tokenType);
-            static bool accept(std::deque<lexer::Token> &tokens, lexer::TokenType &tokenType);
+            static bool expect(std::deque<lexer::Token> &tokens, lexer::TokenType tokenType);
+            static bool accept(std::deque<lexer::Token> &tokens, lexer::TokenType tokenType);
         };
     }
 }

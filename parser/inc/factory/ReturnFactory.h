@@ -4,10 +4,11 @@
 #include <deque>
 #include "Token.h"
 #include "symbol/Return.h"
+#include "factory/SymbolFactory.h"
 
 namespace dem {
     namespace parser {
-        class ReturnFactory {
+        class ReturnFactory : public SymbolFactory {
         public:
             static Return *produce(std::deque<lexer::Token> tokens);
         };
