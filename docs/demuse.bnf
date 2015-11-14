@@ -7,7 +7,7 @@ block         = "{" program_block "}" ;
 (* statements *)
 statement        = ( simple_statement | compound_statement ) terminator ;
 simple_stmt      = expression_stmt | assignment_stmt | return_stmt | break_stmt | continue_stmt ;
-compound_stmt    = if_stmt | while_stmt | foreach_stmt | procedure_stmt ;
+compound_stmt    = if_stmt | while_stmt | for_stmt | procedure_stmt | play_stmt ;
 
 expression_stmt  = expression ;
 assignment_stmt  = lvalue "=" expression ;
@@ -15,12 +15,14 @@ lvalue           = identifier ;
 return_stmt      = "return" expression ;
 break_stmt       = "break" ;
 continue_stmt    = "continue" ;
+play_stmt        = "<" { note } ">" ;
+array_init_stmt  = "{" primitive "}" ;
 
 if_stmt          = "if(" condition ")" block
                         [ "elseif" block ]
                         [ "else" block ] ;
 while_stmt       = "while(" condition ")" block ;
-foreach_stmt     = "foreach(" declaration_stmt "in" expression ")" block ;
+for_stmt         = "for(" assignment_stmt conditional assignment_stmt ")" block ;
 
 (* expression *)
 expression       = conditional ;
@@ -34,6 +36,9 @@ comparison       = addition_expr [ { comparison_operator addition_expr } ] ;
 addition_expr    = multiply_expr | addition_expr addition_op addition_expr ;
 multiply_expr    = unary_expr | multiply_expr multiply_op multiply_expr ;
 unary_expr       = primary | unary_op unary_expr ;
+primary          = identifier | primitive | call ;
+new_instance     = "new" identfier "(" argument_list ")" ;
+array_access     = identifier "[" ( identifier | integer ) "]" ;
 
 comparison_op    = eq | neq | sm | smeq | lr | lreq
 eq               = "==" ;
@@ -67,13 +72,14 @@ nonzero          = "1" | ... | "9" ;
 whitespace       = ? ASCII 32 ? ;
 
 (* primitives *)
+primitive        = bool | text | number | note
 bool             = "true" | "false" ;
 text             = '"' { ? any utf8_char except unescaped '"' ? | escape } '"' ;
 number           = integer | double ;
 integer          = nonzero { digit } | zero ;
 double           = [ integer ] fraction ;
 fraction         = "," { digit } ;
-note             = ( "C" | "C#" | "D" | "D#" | "E" | "F" | "F#" | "G" | "G#" | "A" | "A#" | "B" ) { integer } ;
+note             = ( ( "C" | "C#" | "D" | "D#" | "E" | "F" | "F#" | "G" | "G#" | "A" | "A#" | "B" ) [ integer ] | "R" ) [ "w" | "h" | "q" ] ;
 
 (* misc *)
 terminator       = ";" ;
