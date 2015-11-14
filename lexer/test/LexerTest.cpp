@@ -94,10 +94,8 @@ TEST_F(LexerTest, ReturnsTokenListWhenNullTokenDefinition) {
     std::vector<dem::lexer::Token> result = lexer.lex(str.begin(), str.end());
 
     ASSERT_EQ(2, result.size());
-    // TODO: result[0].mTokenType suddenly changes after first ASSERT, WTH?!
     EXPECT_EQ(dem::lexer::TokenType::UNKNOWN, result[0].type());
     EXPECT_EQ(dem::lexer::TokenType::AND, result[1].type());
-    std::cout << "Boija!" << std::endl;
 }
 
 TEST_F(LexerTest, ReturnsEmptyListWithEndIterator) {
