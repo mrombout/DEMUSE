@@ -44,14 +44,12 @@ set(TestLexer_SRCS
 
 add_library(liblexer ${Lexer_SRCS})
 add_library(dem::liblexer ALIAS liblexer)
+set_target_properties(liblexer PROPERTIES OUTPUT_NAME "lexer")
+
 add_executable(lexer ${Lexer_SRCS} src/main.cpp)
 
-target_include_directories(liblexer
-    PUBLIC inc
-    )
-target_include_directories(lexer
-    PRIVATE inc
-    )
+target_include_directories(liblexer PUBLIC inc)
+target_include_directories(lexer PRIVATE inc)
 
 target_compile_features(liblexer
     PRIVATE
@@ -59,6 +57,7 @@ target_compile_features(liblexer
         cxx_nullptr
         cxx_strong_enums
 )
+set(${PROJECT_NAME}_INCLUDE_DIRS ${PROJECT_SOURCE_DIR}/inc CACHE INTERNAL "${PROJECT_NAME}: Include directories" FORCE)
 
 # testing
 enable_testing()

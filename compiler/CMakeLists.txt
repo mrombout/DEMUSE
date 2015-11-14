@@ -11,7 +11,7 @@ target_include_directories(libcompiler
 )
 
 target_link_libraries(libcompiler
-    PRIVATE dem::parser
+    PRIVATE dem::libparser
 )
 
 add_executable(compiler
