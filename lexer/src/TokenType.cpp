@@ -66,8 +66,8 @@ namespace dem {
                 case TokenType::OR:
                     str = "OR";
                     break;
-                case TokenType::FOREACH:
-                    str = "FOREACH";
+                case TokenType::FOR:
+                    str = "FOR";
                     break;
                 case TokenType::IN:
                     str = "IN";

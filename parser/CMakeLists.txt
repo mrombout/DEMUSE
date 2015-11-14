@@ -4,14 +4,79 @@ project(Parser VERSION 0.1 LANGUAGES CXX)
 set(Parser_SRCS
     inc/Parser.h
 
-    inc/Symbol.h
-    src/Symbol.cpp
-
     inc/MuseParser.h
     src/MuseParser.cpp
 
+    inc/symbol/Symbol.h
+
+    inc/symbol/Program.h
+    src/symbol/Program.cpp
+
+    inc/symbol/Statement.h
+    src/symbol/Statement.cpp
+
+    inc/symbol/Assignment.h
+    src/symbol/Assignment.cpp
+
+    inc/symbol/Expression.h
+    src/symbol/Expression.cpp
+
+    inc/symbol/Return.h
+    src/symbol/Return.cpp
+
+    inc/symbol/Break.h
+    src/symbol/Break.cpp
+
+    inc/symbol/Continue.h
+    src/symbol/Continue.cpp
+
+    inc/symbol/If.h
+    src/symbol/If.cpp
+
+    inc/symbol/While.h
+    src/symbol/While.cpp
+
+    inc/symbol/For.h
+    src/symbol/For.cpp
+
+    inc/symbol/FunctionDefinition.h
+    src/symbol/FunctionDefinition.cpp
+
+    inc/factory/SymbolFactory.h
+    src/factory/SymbolFactory.cpp
+
     inc/factory/ProgramFactory.h
     src/factory/ProgramFactory.cpp
+
+    inc/factory/StatementFactory.h
+    src/factory/StatementFactory.cpp
+
+    inc/factory/AssignmentFactory.h
+    src/factory/AssignmentFactory.cpp
+
+    inc/factory/ExpressionFactory.h
+    src/factory/ExpressionFactory.cpp
+
+    inc/factory/ReturnFactory.h
+    src/factory/ReturnFactory.cpp
+
+    inc/factory/BreakFactory.h
+    src/factory/BreakFactory.cpp
+
+    inc/factory/ContinueFactory.h
+    src/factory/ContinueFactory.cpp
+
+    inc/factory/IfFactory.h
+    src/factory/IfFactory.cpp
+
+    inc/factory/WhileFactory.h
+    src/factory/WhileFactory.cpp
+
+    inc/factory/ForFactory.h
+    src/factory/ForFactory.cpp
+
+    inc/factory/FunctionDefinitionFactory.h
+    src/factory/FunctionDefinitionFactory.cpp
 )
 
 add_library(libparser ${Parser_SRCS})

@@ -11,6 +11,8 @@ namespace dem {
             Token(const TokenType type, std::string content, int startIndex, int line, int column);
 
             const TokenType &type() const;
+            const bool is(TokenType tokenType) const;
+
             const std::string &content() const;
             void setContent(std::string content);
             const int startIndex() const;

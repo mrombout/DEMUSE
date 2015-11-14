@@ -3,14 +3,14 @@
 
 #include <vector>
 #include "Parser.h"
-#include "Symbol.h"
+#include "symbol/Symbol.h"
 #include "Token.h"
 
 namespace dem {
     namespace parser {
         class Parser {
         public:
-            virtual Symbol parse(std::vector<lexer::Token> &symbols) = 0;
+            virtual Symbol *parse(std::vector<lexer::Token> &symbols) = 0;
         };
     }
 }

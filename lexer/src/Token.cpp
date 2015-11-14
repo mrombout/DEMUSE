@@ -35,5 +35,9 @@ namespace dem {
         const int Token::column() const {
             return mColumn;
         }
+
+        const bool Token::is(TokenType tokenType) const {
+            return mType == tokenType;
+        }
     }
 }

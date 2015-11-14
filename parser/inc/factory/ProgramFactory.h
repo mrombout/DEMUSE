@@ -2,14 +2,15 @@
 #define DEMUSE_PROGRAMFACTORY_H
 
 #include <deque>
-#include "Symbol.h"
+#include "SymbolFactory.h"
+#include "symbol/Program.h"
 #include "Token.h"
 
 namespace dem {
     namespace parser {
-        class ProgramFactory {
+        class ProgramFactory : public SymbolFactory {
         public:
-            static Symbol produce(std::deque<lexer::Token> &tokens);
+            static Program *produce(std::deque<lexer::Token> &tokens);
         };
     }
 }

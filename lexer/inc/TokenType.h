@@ -26,7 +26,7 @@ namespace dem {
             NOT,
             OR,
             AND,
-            FOREACH,
+            FOR,
             IN,
             ELSE,
             IF,
