@@ -8,6 +8,7 @@
 #include "factory/WhileFactory.h"
 #include "factory/ForFactory.h"
 #include "factory/FunctionDefinitionFactory.h"
+#include "factory/VariableDefinitionFactory.h"
 
 namespace dem {
     namespace parser {
@@ -15,7 +16,7 @@ namespace dem {
             // statement = ( simple_statement | compound_statement ) terminator ;
             Statement *statement = nullptr;
 
-            // simple_stmt = return_stmt | break_stmt | continue_stmt | assignment_stmt | expression_stmt ;
+            // simple_stmt = return_stmt | break_stmt | continue_stmt | variable_def_stmt | assignment_stmt | expression_stmt ;
             if(tokens.front().is(lexer::TokenType::RETURN)) {
                 // return_stmt
                 statement = ReturnFactory::produce(tokens);
@@ -25,6 +26,9 @@ namespace dem {
             } else if(tokens.front().is(lexer::TokenType::CONTINUE)) {
                 // continue_stmt
                 statement = ContinueFactory::produce(tokens);
+            } else if(tokens.front().is(lexer::TokenType::VAR)) {
+                // variable_def_stmt
+                statement = VariableDefinitionFactory::produce(tokens);
             } else if(tokens.front().is(lexer::TokenType::IDENTIFIER)) {
                 // assignment_stmt
                 Assignment *assignment = AssignmentFactory::produce(tokens);

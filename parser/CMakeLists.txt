@@ -45,6 +45,18 @@ set(Parser_SRCS
     inc/symbol/Identifier.h
     src/symbol/Identifier.cpp
 
+    inc/symbol/Block.h
+    src/symbol/Block.cpp
+
+    inc/symbol/VariableDefinition.h
+    src/symbol/VariableDefinition.cpp
+
+    inc/symbol/ArgumentList.h
+    src/symbol/ArgumentList.cpp
+
+    inc/symbol/ParameterList.h
+    src/symbol/ParameterList.cpp
+
     inc/factory/SymbolFactory.h
     src/factory/SymbolFactory.cpp
 
@@ -83,6 +95,18 @@ set(Parser_SRCS
 
     inc/factory/IdentifierFactory.h
     src/factory/IdentifierFactory.cpp
+
+    inc/factory/BlockFactory.h
+    src/factory/BlockFactory.cpp
+
+    inc/factory/VariableDefinitionFactory.h
+    src/factory/VariableDefinitionFactory.cpp
+
+    inc/factory/ArgumentListFactory.h
+    src/factory/ArgumentListFactory.cpp
+
+    inc/factory/ParameterListFactory.h
+    src/factory/ParameterListFactory.cpp
 )
 
 add_library(libparser ${Parser_SRCS})
