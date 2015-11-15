@@ -17,20 +17,23 @@ namespace dem {
 
             // bool
             lexer::Token token = tokens.front();
+            std::string content = token.content();
+
+            parser::Primitive *primitive = nullptr;
             if(tokens.front().is(lexer::TokenType::BOOL)) {
                 tokens.pop_front();
-                return new Bool(token.content());
+                primitive = new Bool(content);
             } else if(tokens.front().is(lexer::TokenType::TEXT)) {
                 tokens.pop_front();
-                return new Text(token.content());
+                primitive = new Text(content);
             } else if(tokens.front().is(lexer::TokenType::NUMBER)) {
                 tokens.pop_front();
-                return new Number(token.content());
+                primitive = new Number(content);
             }
 
             // TODO: Note
 
-            return nullptr;
+            return primitive;
         }
     }
 }

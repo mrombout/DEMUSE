@@ -6,5 +6,9 @@ namespace dem {
             mAssignment(assignment) {
 
         }
+
+        VariableDefinition::~VariableDefinition() {
+
+        }
     }
 }

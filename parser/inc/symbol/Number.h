@@ -10,6 +10,8 @@ namespace dem {
         public:
             Number(std::string value);
 
+            std::string value() const;
+
         private:
             std::string mValue;
         };

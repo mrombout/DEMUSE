@@ -6,7 +6,8 @@
 namespace dem {
     namespace parser {
         class Statement : public Symbol {
-
+        public:
+            virtual ~Statement() = 0;
         };
     }
 }

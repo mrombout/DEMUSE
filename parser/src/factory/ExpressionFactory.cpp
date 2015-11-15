@@ -93,12 +93,12 @@ namespace dem {
         bool ExpressionFactory::continueProcessingTokens(std::deque<lexer::Token> &tokens, int minPrecedence) {
             lexer::Token token = tokens.front();
 
-            bool isBinaryOperator = !token.is(lexer::TokenType::PLUS)
-                || !token.is(lexer::TokenType::MINUS)
-                || !token.is(lexer::TokenType::TIMES)
-                || !token.is(lexer::TokenType::DIVIDE)
-                || !token.is(lexer::TokenType::AND)
-                || !token.is(lexer::TokenType::OR);
+            bool isBinaryOperator = token.is(lexer::TokenType::PLUS)
+                || token.is(lexer::TokenType::MINUS)
+                || token.is(lexer::TokenType::TIMES)
+                || token.is(lexer::TokenType::DIVIDE)
+                || token.is(lexer::TokenType::AND)
+                || token.is(lexer::TokenType::OR);
             // TODO: Modulo
 
             bool largerOrEqualMinPrecedence = isBinaryOperator ? mOperatorPrecedence.at(token.type()) < minPrecedence : false;

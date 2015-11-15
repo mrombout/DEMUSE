@@ -4,7 +4,8 @@
 namespace dem {
     namespace parser {
         class Symbol {
-
+        public:
+            virtual ~Symbol() = 0;
         };
     }
 }

@@ -11,6 +11,9 @@ namespace dem {
         public:
             Program(std::vector<Statement*> statements);
 
+
+            virtual ~Program();
+
             const std::vector<Statement*> &statements() const;
 
         private:

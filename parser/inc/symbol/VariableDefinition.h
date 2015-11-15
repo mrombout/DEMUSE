@@ -11,6 +11,9 @@ namespace dem {
         public:
             VariableDefinition(Assignment *assignment);
 
+
+            virtual ~VariableDefinition();
+
         private:
             Assignment *mAssignment;
         };

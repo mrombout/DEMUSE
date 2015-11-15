@@ -2,6 +2,8 @@
 
 namespace dem {
     namespace parser {
+        Statement::~Statement() {
 
+        }
     }
 }

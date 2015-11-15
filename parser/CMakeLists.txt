@@ -8,6 +8,7 @@ set(Parser_SRCS
     src/MuseParser.cpp
 
     inc/symbol/Symbol.h
+    src/symbol/Symbol.cpp
 
     inc/symbol/Program.h
     src/symbol/Program.cpp

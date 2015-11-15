@@ -7,6 +7,10 @@ namespace dem {
 
         }
 
+        Program::~Program() {
+
+        }
+
         const std::vector<Statement*> &Program::statements() const {
             return mStatements;
         }
