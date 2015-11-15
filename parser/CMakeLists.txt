@@ -57,6 +57,17 @@ set(Parser_SRCS
     inc/symbol/ParameterList.h
     src/symbol/ParameterList.cpp
 
+    inc/symbol/Primitive.h
+
+    inc/symbol/Bool.h
+    src/symbol/Bool.cpp
+
+    inc/symbol/Text.h
+    src/symbol/Text.cpp
+
+    inc/symbol/Number.h
+    src/symbol/Number.cpp
+
     inc/factory/SymbolFactory.h
     src/factory/SymbolFactory.cpp
 
@@ -107,6 +118,9 @@ set(Parser_SRCS
 
     inc/factory/ParameterListFactory.h
     src/factory/ParameterListFactory.cpp
+
+    inc/factory/PrimitiveFactory.h
+    src/factory/PrimitiveFactory.cpp
 )
 
 add_library(libparser ${Parser_SRCS})

@@ -2,11 +2,11 @@
 #define DEMUSE_IDENTIFIER_H
 
 #include <string>
-#include "Symbol.h"
+#include "Expression.h"
 
 namespace dem {
     namespace parser {
-        class Identifier : public Symbol {
+        class Identifier : public Expression {
         public:
             Identifier(std::string name);
 
