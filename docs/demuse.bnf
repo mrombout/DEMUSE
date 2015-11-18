@@ -5,12 +5,12 @@ block         = "{" { statement } "}" ;
 
 (* statements *)
 statement         = ( simple_statement | compound_statement ) terminator ;
-simple_stmt       = return_stmt | break_stmt | continue_stmt | assignment_stmt | expression_stmt ;
+simple_stmt       = return_stmt | break_stmt | continue_stmt | variable_def_stmt | assignment_stmt | expression_stmt ;
 compound_stmt     = if_stmt | while_stmt | for_stmt | function_def | play_stmt ;
 
 expression_stmt   = expression ;
-variable_def_stmt =
-assignment_stmt   = lvalue "=" ( expression | array_init ) ;
+variable_def_stmt = "var" assignment_stmt ;
+assignment_stmt   = lvalue "=" expression ;
 lvalue            = identifier ;
 return_stmt       = "return" expression ;
 break_stmt        = "break" ;
@@ -18,14 +18,13 @@ continue_stmt     = "continue" ;
 play_stmt         = "<" { note } ">" ;
 array_init        = "[" primitive "]" ;
 
-if_stmt           = "if(" condition ")" block
-                        [ "elseif" block ]
-                        [ "else" block ] ;
-while_stmt        = "while(" condition ")" block ;
-for_stmt          = "for(" assignment_stmt conditional assignment_stmt ")" block ;
+if_stmt           = "if(" conditional ")" block
+                        [ "else" ( block | statement ) ] ;
+while_stmt        = "while(" conditional ")" block ;
+for_stmt          = "for(" ( terminator | variable_def_stmt | assignment_stmt ) ( terminator | conditional ) ( terminator | assignment_stmt ) ")" block ;
 
 (* expression *)
-expression        = conditional ;
+expression        = array_init | conditional ;
 conditional       = or_test ;
 
 or_test           = and_test | or_test "||" and_test ;
@@ -53,7 +52,7 @@ unary_operator    = "-" | "+" ;
 
 (* functions *)
 call_stmt         = function_call | method_call ;
-function_call     = identifier "(" [argument_list ] ")" ;
+function_call     = identifier "(" [ argument_list ] ")" ;
 method_call       = expression { "." expression } "(" [argument_list ] ")" ;
 
 argument_list     = expression | argument_list "," expression ;
@@ -72,6 +71,7 @@ nonzero           = "1" | ... | "9" ;
 whitespace        = ? ASCII 32 ? ;
 
 (* primitives *)
+identifier        = letter { letter | number }
 primitive         = bool | text | number | note
 bool              = "true" | "false" ;
 text              = '"' { ? any utf8_char except unescaped '"' ? | escape } '"' ;
