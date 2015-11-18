@@ -19,9 +19,6 @@ set(Parser_SRCS
     inc/symbol/Assignment.h
     src/symbol/Assignment.cpp
 
-    inc/symbol/Expression.h
-    src/symbol/Expression.cpp
-
     inc/symbol/Return.h
     src/symbol/Return.cpp
 
@@ -68,6 +65,27 @@ set(Parser_SRCS
 
     inc/symbol/Number.h
     src/symbol/Number.cpp
+
+    inc/symbol/expression/Expression.h
+    src/symbol/expression/Expression.cpp
+
+    inc/symbol/expression/BinaryExpression.h
+    src/symbol/expression/BinaryExpression.cpp
+
+    inc/symbol/expression/AddExpression.h
+    src/symbol/expression/AddExpression.cpp
+
+    inc/symbol/expression/SubtractionExpression.h
+    src/symbol/expression/SubtractionExpression.cpp
+
+    inc/symbol/expression/MultiplicationExpression.h
+    src/symbol/expression/MultiplicationExpression.cpp
+
+    inc/symbol/expression/DivisionExpression.h
+    src/symbol/expression/DivisionExpression.cpp
+
+    inc/symbol/expression/ModuloExpression.h
+    src/symbol/expression/ModuloExpression.cpp
 
     inc/factory/SymbolFactory.h
     src/factory/SymbolFactory.cpp

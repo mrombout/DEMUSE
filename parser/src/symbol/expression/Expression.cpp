@@ -1,4 +1,4 @@
-#include "symbol/Expression.h"
+#include "symbol/expression/Expression.h"
 
 namespace dem {
     namespace parser {

@@ -4,7 +4,7 @@
 #include <deque>
 #include <map>
 #include "SymbolFactory.h"
-#include "symbol/Expression.h"
+#include "symbol/expression/Expression.h"
 #include "Token.h"
 
 namespace dem {
@@ -25,7 +25,7 @@ namespace dem {
             static const std::map<lexer::TokenType, int> mOperatorPrecedence;
             static const std::map<lexer::TokenType, Associativity> mOperatorAssociativity;
 
-            static Expression *produceExpression(lexer::Token token, Symbol *pSymbol, Symbol *rhs);
+            static Expression *produceExpression(lexer::Token token, Expression *lhs, Expression *rhs);
         };
     }
 }

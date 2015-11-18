@@ -1,7 +1,7 @@
 #ifndef DEMUSE_PRIMITIVE_H
 #define DEMUSE_PRIMITIVE_H
 
-#include "Expression.h"
+#include "expression/Expression.h"
 
 namespace dem {
     namespace parser {

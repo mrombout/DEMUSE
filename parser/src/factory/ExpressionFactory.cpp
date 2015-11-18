@@ -1,11 +1,17 @@
 #include "factory/IdentifierFactory.h"
 #include "factory/ExpressionFactory.h"
 #include "factory/PrimitiveFactory.h"
+#include "symbol/expression/AddExpression.h"
+#include "symbol/expression/SubtractionExpression.h"
+#include "symbol/expression/MultiplicationExpression.h"
+#include "symbol/expression/DivisionExpression.h"
+#include "symbol/expression/ModuloExpression.h"
 
 namespace dem {
     namespace parser {
         const std::map<lexer::TokenType, int> ExpressionFactory::mOperatorPrecedence = {
-            // TODO: (), [], ->, ., ::  -- 1
+            // TODO: (), []  -- 1
+            { lexer::TokenType::PERIOD, 1 },
             // TODO: ! ~ - + ++ -- -- 2
             { lexer::TokenType::TIMES,  3 },
             { lexer::TokenType::DIVIDE, 3 },
@@ -25,6 +31,7 @@ namespace dem {
         };
 
         const std::map<lexer::TokenType, ExpressionFactory::Associativity> ExpressionFactory::mOperatorAssociativity = {
+            { lexer::TokenType::PERIOD, ExpressionFactory::Associativity::RIGHT },
             { lexer::TokenType::TIMES,  ExpressionFactory::Associativity::LEFT },
             { lexer::TokenType::DIVIDE, ExpressionFactory::Associativity::LEFT },
             { lexer::TokenType::MOD,    ExpressionFactory::Associativity::LEFT },
@@ -67,7 +74,7 @@ namespace dem {
             // multiply_op       = "*" | "/" ;
             // unary_operator    = "-" | "+" ;
 
-            return processExpression(tokens, 0);
+            return processExpression(tokens, 15);
         }
 
         Expression *ExpressionFactory::processExpression(std::deque<lexer::Token> &tokens, int minPrecedence) {
@@ -76,6 +83,7 @@ namespace dem {
 
             while(shouldContinueProcessingTokens(tokens, minPrecedence)) {
                 lexer::Token op = tokens.front();
+                tokens.pop_front();
 
                 int precedence = mOperatorPrecedence.at(op.type());
                 Associativity associativity = mOperatorAssociativity.at(op.type());
@@ -100,13 +108,14 @@ namespace dem {
                 || token.is(lexer::TokenType::MINUS)
                 || token.is(lexer::TokenType::TIMES)
                 || token.is(lexer::TokenType::DIVIDE)
+                || token.is(lexer::TokenType::MOD)
                 || token.is(lexer::TokenType::AND)
                 || token.is(lexer::TokenType::OR);
             // TODO: Modulo
 
-            bool largerOrEqualMinPrecedence = isBinaryOperator ? mOperatorPrecedence.at(token.type()) < minPrecedence : false;
+            bool smallerOrEqual = isBinaryOperator ? mOperatorPrecedence.at(token.type()) <= minPrecedence : false;
 
-            return !isBinaryOperator && largerOrEqualMinPrecedence;
+            return isBinaryOperator && smallerOrEqual;
         }
 
         Expression *ExpressionFactory::producePrimary(std::deque<lexer::Token> &tokens) {
@@ -128,8 +137,19 @@ namespace dem {
             }
         }
 
-        Expression *ExpressionFactory::produceExpression(lexer::Token token, Symbol *pSymbol, Symbol *rhs) {
-            return nullptr;
+        Expression *ExpressionFactory::produceExpression(lexer::Token token, Expression *lhs, Expression *rhs) {
+            switch(token.type()) {
+                case lexer::TokenType::PLUS:
+                    return new AddExpression(lhs, rhs);
+                case lexer::TokenType::MINUS:
+                    return new SubtractionExpression(lhs, rhs);
+                case lexer::TokenType::TIMES:
+                    return new MultiplicationExpression(lhs, rhs);
+                case lexer::TokenType::DIVIDE:
+                    return new DivisionExpression(lhs, rhs);
+                case lexer::TokenType::MOD:
+                    return new ModuloExpression(lhs, rhs);
+            }
         }
     }
 }

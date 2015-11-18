@@ -1,5 +1,5 @@
 #include <vector>
-#include "symbol/Expression.h"
+#include "symbol/expression/Expression.h"
 #include "symbol/Block.h"
 #include "factory/IfFactory.h"
 #include "factory/ExpressionFactory.h"

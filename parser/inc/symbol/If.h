@@ -2,7 +2,7 @@
 #define DEMUSE_IF_H
 
 #include "Statement.h"
-#include "symbol/Expression.h"
+#include "symbol/expression/Expression.h"
 #include "symbol/Block.h"
 
 namespace dem {

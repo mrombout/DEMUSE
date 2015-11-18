@@ -1,5 +1,5 @@
 #include "symbol/Identifier.h"
-#include "symbol/Expression.h"
+#include "symbol/expression/Expression.h"
 #include "factory/IdentifierFactory.h"
 #include "factory/AssignmentFactory.h"
 #include "factory/ExpressionFactory.h"

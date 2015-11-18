@@ -5,7 +5,7 @@
 #include <symbol/Assignment.h>
 #include "SymbolFactory.h"
 #include "symbol/For.h"
-#include "symbol/Expression.h"
+#include "symbol/expression/Expression.h"
 #include "Token.h"
 
 namespace dem {

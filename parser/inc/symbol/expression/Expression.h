@@ -1,7 +1,7 @@
 #ifndef DEMUSE_EXPRESSION_H
 #define DEMUSE_EXPRESSION_H
 
-#include "Statement.h"
+#include "../Statement.h"
 
 namespace dem {
     namespace parser {

@@ -2,7 +2,7 @@
 #define DEMUSE_RETURN_H
 
 #include "symbol/Statement.h"
-#include "symbol/Expression.h"
+#include "symbol/expression/Expression.h"
 
 namespace dem {
     namespace parser {

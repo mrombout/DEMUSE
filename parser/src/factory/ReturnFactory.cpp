@@ -1,4 +1,4 @@
-#include "symbol/Expression.h"
+#include "symbol/expression/Expression.h"
 #include "factory/ExpressionFactory.h"
 #include "factory/ReturnFactory.h"
 

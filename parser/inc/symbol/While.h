@@ -2,7 +2,7 @@
 #define DEMUSE_WHILE_H
 
 #include "Statement.h"
-#include "Expression.h"
+#include "expression/Expression.h"
 #include "Block.h"
 
 namespace dem {
