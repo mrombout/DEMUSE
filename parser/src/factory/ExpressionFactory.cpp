@@ -9,7 +9,7 @@ namespace dem {
             // TODO: ! ~ - + ++ -- -- 2
             { lexer::TokenType::TIMES,  3 },
             { lexer::TokenType::DIVIDE, 3 },
-            // TODO: MOD, 3
+            { lexer::TokenType::MOD,    3 },
             { lexer::TokenType::PLUS,   4 },
             { lexer::TokenType::MINUS,  4 },
             { lexer::TokenType::SM,     6 },
@@ -27,7 +27,7 @@ namespace dem {
         const std::map<lexer::TokenType, ExpressionFactory::Associativity> ExpressionFactory::mOperatorAssociativity = {
             { lexer::TokenType::TIMES,  ExpressionFactory::Associativity::LEFT },
             { lexer::TokenType::DIVIDE, ExpressionFactory::Associativity::LEFT },
-            // TODO: MOD, LEFT
+            { lexer::TokenType::MOD,    ExpressionFactory::Associativity::LEFT },
             { lexer::TokenType::PLUS,   ExpressionFactory::Associativity::LEFT },
             { lexer::TokenType::MINUS,  ExpressionFactory::Associativity::LEFT },
             { lexer::TokenType::SM,     ExpressionFactory::Associativity::LEFT },

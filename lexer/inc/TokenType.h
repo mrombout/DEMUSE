@@ -17,6 +17,7 @@ namespace dem {
             MINUS,
             TIMES,
             DIVIDE,
+            MOD,
             EQ,
             TEQ,
             NEQ,

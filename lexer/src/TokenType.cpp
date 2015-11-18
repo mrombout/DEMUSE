@@ -39,6 +39,9 @@ namespace dem {
                 case TokenType::DIVIDE:
                     str = "DIVIDE";
                     break;
+                case TokenType::MOD:
+                    str = "MOD";
+                    break;
                 case TokenType::TEQ:
                     str = "TEQ";
                     break;
