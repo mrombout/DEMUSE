@@ -39,11 +39,17 @@ namespace dem {
                 case TokenType::DIVIDE:
                     str = "DIVIDE";
                     break;
+                case TokenType::TEQ:
+                    str = "TEQ";
+                    break;
                 case TokenType::EQ:
                     str = "EQ";
                     break;
                 case TokenType::NEQ:
                     str = "NEQ";
+                    break;
+                case TokenType::TNEQ:
+                    str = "TNEQ";
                     break;
                 case TokenType::SM:
                     str = "SM";

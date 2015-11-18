@@ -39,9 +39,11 @@ primary           = identifier | primitive | call_stmt ;
 new_instance      = "new" identfier "(" argument_list ")" ;
 array_access      = identifier "[" ( identifier | integer ) "]" ;
 
-comparison_op     = eq | neq | sm | smeq | lr | lreq
+comparison_op     = eq | teq | neq | tneq | sm | smeq | lr | lreq
 eq                = "==" ;
+teq               = "===" ;
 neq               = "!=" ;
+tneq              = "!=="
 sm                = "<" ;
 smeq              = "<=" ;
 lr                = ">" ;
