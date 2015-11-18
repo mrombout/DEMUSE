@@ -4,7 +4,12 @@
 #include <deque>
 #include "SymbolFactory.h"
 #include "Token.h"
-#include "symbol/ParameterList.h"
+
+namespace dem {
+    namespace parser {
+        class ParameterList;
+    }
+}
 
 namespace dem {
     namespace parser {

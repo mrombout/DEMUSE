@@ -2,9 +2,14 @@
 #define DEMUSE_IDENTIFIERFACTORY_H
 
 #include <deque>
-#include "symbol/Identifier.h"
 #include "SymbolFactory.h"
 #include "Token.h"
+
+namespace dem {
+    namespace parser {
+        class Identifier;
+    }
+}
 
 namespace dem {
     namespace parser {

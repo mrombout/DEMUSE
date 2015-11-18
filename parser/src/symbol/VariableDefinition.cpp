@@ -1,4 +1,5 @@
 #include "symbol/VariableDefinition.h"
+#include "Visitor.h"
 
 namespace dem {
     namespace parser {
@@ -9,6 +10,14 @@ namespace dem {
 
         VariableDefinition::~VariableDefinition() {
 
+        }
+
+        bool VariableDefinition::accept(Visitor &visitor) {
+            if(visitor.visitEnter(*this)) {
+                mAssignment->accept(visitor);
+            }
+
+            return visitor.visitLeave(*this);
         }
     }
 }

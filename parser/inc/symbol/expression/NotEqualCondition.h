@@ -8,6 +8,8 @@ namespace dem {
         class NotEqualCondition : public Condition {
         public:
             NotEqualCondition(Expression *left, Expression *right);
+
+            virtual bool accept(Visitor &visitor);
         };
     }
 }

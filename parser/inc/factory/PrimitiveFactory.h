@@ -4,7 +4,12 @@
 #include <deque>
 #include "Token.h"
 #include "SymbolFactory.h"
-#include "symbol/Primitive.h"
+
+namespace dem {
+    namespace parser {
+        class Primitive;
+    }
+}
 
 namespace dem {
     namespace parser {

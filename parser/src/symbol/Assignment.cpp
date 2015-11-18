@@ -1,4 +1,5 @@
 #include "symbol/Assignment.h"
+#include "Visitor.h"
 
 namespace dem {
     namespace parser {
@@ -14,6 +15,15 @@ namespace dem {
 
         Expression &Assignment::expression() const {
             return *mExpression;
+        }
+
+        bool Assignment::accept(Visitor &visitor) {
+            if(visitor.visitEnter(*this)) {
+                identifier().accept(visitor);
+                expression().accept(visitor);
+            }
+
+            return visitor.visitLeave(*this);
         }
     }
 }

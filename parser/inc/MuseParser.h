@@ -1,7 +1,9 @@
 #ifndef DEMUSE_MUSEPARSER_H
 #define DEMUSE_MUSEPARSER_H
 
+#include <vector>
 #include "Parser.h"
+#include "Token.h"
 
 namespace dem {
     namespace parser {

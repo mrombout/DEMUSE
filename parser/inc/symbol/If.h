@@ -16,6 +16,8 @@ namespace dem {
             Expression *mExpression;
             Block *mBlock;
             Block *mElseBlock;
+        public:
+            virtual bool accept(Visitor &visitor);
         };
     }
 }

@@ -1,5 +1,7 @@
 #include <gtest/gtest.h>
 #include "factory/AssignmentFactory.h"
+#include "symbol/Identifier.h"
+#include "symbol/Assignment.h"
 
 class AssignmentFactoryTest : public ::testing::Test {
 protected:

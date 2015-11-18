@@ -1,7 +1,8 @@
 #include <vector>
-#include "symbol/Identifier.h"
 #include "factory/ParameterListFactory.h"
 #include "factory/IdentifierFactory.h"
+#include "symbol/Identifier.h"
+#include "symbol/ParameterList.h"
 
 namespace dem {
     namespace parser {

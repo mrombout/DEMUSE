@@ -1,4 +1,5 @@
 #include "symbol/Number.h"
+#include "Visitor.h"
 
 namespace dem {
     namespace parser {
@@ -9,6 +10,10 @@ namespace dem {
 
         std::string Number::value() const {
             return mValue;
+        }
+
+        bool Number::accept(Visitor &visitor) {
+            visitor.visit(*this);
         }
     }
 }

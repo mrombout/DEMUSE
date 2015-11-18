@@ -17,6 +17,8 @@ namespace dem {
         private:
             Identifier *mIdentifier;
             Expression *mExpression;
+        public:
+            virtual bool accept(Visitor &visitor);
         };
     }
 }

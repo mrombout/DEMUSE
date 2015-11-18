@@ -15,6 +15,8 @@ namespace dem {
             Statement *mInitialization;
             Expression *mCondition;
             Assignment *mAfterThought;
+        public:
+            virtual bool accept(Visitor &visitor);
         };
     }
 }

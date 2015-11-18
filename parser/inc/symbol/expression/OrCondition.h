@@ -8,6 +8,8 @@ namespace dem {
         class OrCondition : public Condition {
         public:
             OrCondition(Expression *left, Expression *right);
+
+            virtual bool accept(Visitor &visitor);
         };
     }
 }

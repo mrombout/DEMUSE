@@ -1,4 +1,5 @@
 #include "symbol/ArgumentList.h"
+#include "Visitor.h"
 
 namespace dem {
     namespace parser {
@@ -13,6 +14,16 @@ namespace dem {
 
         int ArgumentList::numArguments() {
             return mArguments.size();
+        }
+
+        bool ArgumentList::accept(Visitor &visitor) {
+            if(visitor.visitEnter(*this)) {
+                for(Expression *argument : mArguments) {
+                    argument->accept(visitor);
+                }
+            }
+
+            return visitor.visitLeave(*this);
         }
     }
 }

@@ -7,10 +7,9 @@ namespace dem {
     namespace parser {
         class MultiplicationExpression : public BinaryExpression {
         public:
-            MultiplicationExpression(Expression *left, Expression *right) :
-                BinaryExpression(left, right) {
+            MultiplicationExpression(Expression *left, Expression *right);
 
-            }
+            virtual bool accept(Visitor &visitor);
         };
     }
 }

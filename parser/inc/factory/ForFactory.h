@@ -2,11 +2,14 @@
 #define DEMUSE_FORFACTORY_H
 
 #include <deque>
-#include <symbol/Assignment.h>
 #include "SymbolFactory.h"
-#include "symbol/For.h"
-#include "symbol/expression/Expression.h"
 #include "Token.h"
+
+namespace dem {
+    namespace parser {
+        class For;
+    }
+}
 
 namespace dem {
     namespace parser {

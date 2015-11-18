@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include "factory/BlockFactory.h"
+#include "symbol/Block.h"
 
 class BlockFactoryTest : public ::testing::Test {
 protected:

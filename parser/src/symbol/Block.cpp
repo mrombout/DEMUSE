@@ -1,4 +1,5 @@
 #include "symbol/Block.h"
+#include "Visitor.h"
 
 namespace dem {
     namespace parser {
@@ -9,6 +10,16 @@ namespace dem {
 
         std::vector<Statement *> &Block::statements() {
             return mStatements;
+        }
+
+        bool Block::accept(Visitor &visitor) {
+            if(visitor.visitEnter(*this)) {
+                for(Statement *statement : mStatements) {
+                    statement->accept(visitor);
+                }
+            }
+
+            return visitor.visitLeave(*this);
         }
     }
 }

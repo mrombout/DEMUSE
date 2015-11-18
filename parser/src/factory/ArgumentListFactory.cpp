@@ -2,6 +2,7 @@
 #include "factory/ArgumentListFactory.h"
 #include "factory/ExpressionFactory.h"
 #include "symbol/expression/Expression.h"
+#include "symbol/ArgumentList.h"
 
 namespace dem {
     namespace parser {

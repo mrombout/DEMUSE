@@ -8,6 +8,12 @@
 
 namespace dem {
     namespace parser {
+        class Statement;
+    }
+}
+
+namespace dem {
+    namespace parser {
         class StatementFactory : public SymbolFactory {
         public:
             static Statement *produce(std::deque<lexer::Token> &tokens);

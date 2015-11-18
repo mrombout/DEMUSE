@@ -1,0 +1,141 @@
+#include "Visitor.h"
+
+namespace dem {
+    namespace parser {
+        bool Visitor::visitEnter(ArgumentList &argumentList) { return true; }
+        bool Visitor::visit(ArgumentList &argumentList) { return true; }
+        bool Visitor::visitLeave(ArgumentList &argumentList) { return true; }
+
+        bool Visitor::visitEnter(Assignment &assignment) { return true; }
+        bool Visitor::visit(Assignment &assignment) { return true; }
+        bool Visitor::visitLeave(Assignment &assignment) { return true; }
+
+        bool Visitor::visitEnter(Block &block) { return true; }
+        bool Visitor::visit(Block &block) { return true; }
+        bool Visitor::visitLeave(Block &block) { return true; }
+
+        bool Visitor::visit(Bool &boolSymbol) { return true; }
+
+        bool Visitor::visit(Break &breakSymbol) { return true; }
+
+        bool Visitor::visit(Continue &continueSymbol) { return true; }
+
+        bool Visitor::visitEnter(For &forSymbol) { return true; }
+        bool Visitor::visit(For &forSymbol) { return true; }
+        bool Visitor::visitLeave(For &forSymbol) { return true; }
+
+        bool Visitor::visitEnter(FunctionDefinition &functionDefinition) { return true; }
+        bool Visitor::visit(FunctionDefinition &functionDefinition) { return true; }
+        bool Visitor::visitLeave(FunctionDefinition &functionDefinition) { return true; }
+
+        bool Visitor::visit(Identifier &identifier) { return true; }
+
+        bool Visitor::visitEnter(If &ifSymbol) { return true; }
+        bool Visitor::visit(If &ifSymbol) { return true; }
+        bool Visitor::visitLeave(If &ifSymbol) { return true; }
+
+        bool Visitor::visit(Number &number) { return true; }
+
+        bool Visitor::visitEnter(ParameterList &parameterList) { return true; }
+        bool Visitor::visit(ParameterList &parameterList) { return true; }
+        bool Visitor::visitLeave(ParameterList &parameterList) { return true; }
+
+        bool Visitor::visitEnter(Program &program) { return true; }
+        bool Visitor::visit(Program &program) { return true; }
+        bool Visitor::visitLeave(Program &program) { return true; }
+
+        bool Visitor::visitEnter(Return &returnSymbol) { return true; }
+        bool Visitor::visit(Return &returnSymbol) { return true; }
+        bool Visitor::visitLeave(Return &returnSymbol) { return true; }
+
+        bool Visitor::visitEnter(Statement &statement) { return true; }
+        bool Visitor::visit(Statement &statement) { return true; }
+        bool Visitor::visitLeave(Statement &statement) { return true; }
+
+        bool Visitor::visitEnter(Symbol &symbol) { return true; }
+        bool Visitor::visit(Symbol &symbol) { return true; }
+        bool Visitor::visitLeave(Symbol &symbol) { return true; }
+
+        bool Visitor::visit(Text &text) { return true; }
+
+        bool Visitor::visitEnter(VariableDefinition &variableDefinition) { return true; }
+        bool Visitor::visit(VariableDefinition &variableDefinition) { return true; }
+        bool Visitor::visitLeave(VariableDefinition &variableDefinition) { return true; }
+
+        bool Visitor::visitEnter(While &whileSymbol) { return true; }
+        bool Visitor::visit(While &whileSymbol) { return true; }
+        bool Visitor::visitLeave(While &whileSymbol) { return true; }
+
+        bool Visitor::visitEnter(AdditionExpression &additionExpression) { return true; }
+        bool Visitor::visit(AdditionExpression &additionExpression) { return true; }
+        bool Visitor::visitLeave(AdditionExpression &additionExpression) { return true; }
+
+        bool Visitor::visitEnter(AndCondition &andCondition) { return true; }
+        bool Visitor::visit(AndCondition &andCondition) { return true; }
+        bool Visitor::visitLeave(AndCondition &andCondition) { return true; }
+
+        bool Visitor::visitEnter(BinaryExpression &binaryExpression) { return true; }
+        bool Visitor::visit(BinaryExpression &binaryExpression) { return true; }
+        bool Visitor::visitLeave(BinaryExpression &binaryExpression) { return true; }
+
+        bool Visitor::visitEnter(Condition &condition) { return true; }
+        bool Visitor::visit(Condition &condition) { return true; }
+        bool Visitor::visitLeave(Condition &condition) { return true; }
+
+        bool Visitor::visitEnter(DivisionExpression &divisionExpression) { return true; }
+        bool Visitor::visit(DivisionExpression &divisionExpression) { return true; }
+        bool Visitor::visitLeave(DivisionExpression &divisionExpression) { return true; }
+
+        bool Visitor::visitEnter(EqualCondition &equalCondition) { return true; }
+        bool Visitor::visit(EqualCondition &equalCondition) { return true; }
+        bool Visitor::visitLeave(EqualCondition &equalCondition) { return true; }
+
+        bool Visitor::visitEnter(Expression &expression) { return true; }
+        bool Visitor::visit(Expression &expression) { return true; }
+        bool Visitor::visitLeave(Expression &expression) { return true; }
+
+        bool Visitor::visitEnter(LargerThanCondition &largerThanCondition) { return true; }
+        bool Visitor::visit(LargerThanCondition &largerThanCondition) { return true; }
+        bool Visitor::visitLeave(LargerThanCondition &largerThanCondition) { return true; }
+
+        bool Visitor::visitEnter(LargerThanOrEqualCondition &largerThanOrEqualCondition) { return true; }
+        bool Visitor::visit(LargerThanOrEqualCondition &largerThanOrEqualCondition) { return true; }
+        bool Visitor::visitLeave(LargerThanOrEqualCondition &largerThanOrEqualCondition) { return true; }
+
+        bool Visitor::visitEnter(ModuloExpression &moduloExpression) { return true; }
+        bool Visitor::visit(ModuloExpression &moduloExpression) { return true; }
+        bool Visitor::visitLeave(ModuloExpression &moduloExpression) { return true; }
+
+        bool Visitor::visitEnter(MultiplicationExpression &multiplicationExpression) { return true; }
+        bool Visitor::visit(MultiplicationExpression &multiplicationExpression) { return true; }
+        bool Visitor::visitLeave(MultiplicationExpression &multiplicationExpression) { return true; }
+
+        bool Visitor::visitEnter(NotEqualCondition &notEqualCondition) { return true; }
+        bool Visitor::visit(NotEqualCondition &notEqualCondition) { return true; }
+        bool Visitor::visitLeave(NotEqualCondition &notEqualCondition) { return true; }
+
+        bool Visitor::visitEnter(OrCondition &orCondition) { return true; }
+        bool Visitor::visit(OrCondition &orCondition) { return true; }
+        bool Visitor::visitLeave(OrCondition &orCondition) { return true; }
+
+        bool Visitor::visitEnter(SmallerThanCondition &smallerThanCondition) { return true; }
+        bool Visitor::visit(SmallerThanCondition &smallerThanCondition) { return true; }
+        bool Visitor::visitLeave(SmallerThanCondition &smallerThanCondition) { return true; }
+
+        bool Visitor::visitEnter(SmallerThanOrEqualCondition &smallerThanOrEqualCondition) { return true; }
+        bool Visitor::visit(SmallerThanOrEqualCondition &smallerThanOrEqualCondition) { return true; }
+        bool Visitor::visitLeave(SmallerThanOrEqualCondition &smallerThanOrEqualCondition) { return true; }
+
+        bool Visitor::visitEnter(StrictEqualCondition &strictEqualCondition) { return true; }
+        bool Visitor::visit(StrictEqualCondition &strictEqualCondition) { return true; }
+        bool Visitor::visitLeave(StrictEqualCondition &strictEqualCondition) { return true; }
+
+        bool Visitor::visitEnter(StrictNotEqualCondition &strictNotEqualCondition) { return true; }
+        bool Visitor::visit(StrictNotEqualCondition &strictNotEqualCondition) { return true; }
+        bool Visitor::visitLeave(StrictNotEqualCondition &strictNotEqualCondition) { return true; }
+
+        bool Visitor::visitEnter(SubtractionExpression &subtractionExpression) { return true; }
+        bool Visitor::visit(SubtractionExpression &subtractionExpression) { return true; }
+        bool Visitor::visitLeave(SubtractionExpression &subtractionExpression) { return true; }
+    }
+}

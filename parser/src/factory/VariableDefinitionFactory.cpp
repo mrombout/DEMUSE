@@ -1,6 +1,7 @@
-#include "symbol/Assignment.h"
 #include "factory/VariableDefinitionFactory.h"
 #include "factory/AssignmentFactory.h"
+#include "symbol/Assignment.h"
+#include "symbol/VariableDefinition.h"
 
 namespace dem {
     namespace parser {

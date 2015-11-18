@@ -3,8 +3,13 @@
 
 #include <deque>
 #include "SymbolFactory.h"
-#include "symbol/While.h"
 #include "Token.h"
+
+namespace dem {
+    namespace parser {
+        class While;
+    }
+}
 
 namespace dem {
     namespace parser {

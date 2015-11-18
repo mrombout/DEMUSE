@@ -1,27 +1,31 @@
 cmake_minimum_required(VERSION 3.3 FATAL_ERROR)
 project(Compiler VERSION 0.1 LANGUAGES CXX)
 
-add_library(libcompiler
+set(Compiler_SRCS
+    inc/Compiler.h
+    src/Compiler.cpp
+
+    inc/MidiCompiler.h
+    src/MidiCompiler.cpp
+)
+
+set(TestCompiler_SRCS
 
 )
+
+add_library(libcompiler ${Compiler_SRCS})
 add_library(dem::libcompiler ALIAS libcompiler)
+set_target_properties(libcompiler PROPERTIES OUTPUT_NAME "compiler")
 
-target_include_directories(libcompiler
-    PUBLIC include
-)
+add_executable(compiler ${Compiler_SRCS} src/main.cpp)
 
-target_link_libraries(libcompiler
-    PRIVATE dem::libparser
-)
+set(${PROJECT_NAME}_INCLUDE_DIRS ${PROJECT_SOURCE_DIR}/inc CACHE INTERNAL "${PROJECT_NAME}: Include directories" FORCE)
 
-add_executable(compiler
-    src/main.cpp
-)
+target_include_directories(libcompiler PUBLIC ${Compiler_INCLUDE_DIRS} ${Parser_INCLUDE_DIRS} ${Lexer_INCLUDE_DIRS})
+target_link_libraries(libcompiler PRIVATE dem::libparser)
 
-target_include_directories(compiler
-    PRIVATE include
-)
-
+target_include_directories(compiler PRIVATE ${Compiler_INCLUDE_DIRS} ${Parser_INCLUDE_DIRS} ${Lexer_INCLUDE_DIRS})
+target_link_libraries(compiler PRIVATE dem::libparser dem::liblexer)
 
 # install
 install(TARGETS compiler DESTINATION bin)

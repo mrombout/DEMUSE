@@ -1,6 +1,7 @@
 #include "factory/WhileFactory.h"
 #include "factory/ExpressionFactory.h"
 #include "factory/BlockFactory.h"
+#include "symbol/While.h"
 
 namespace dem {
     namespace parser {

@@ -1,10 +1,11 @@
-#include "symbol/Identifier.h"
-#include "symbol/Block.h"
-#include "symbol/ParameterList.h"
 #include "factory/FunctionDefinitionFactory.h"
 #include "factory/IdentifierFactory.h"
 #include "factory/BlockFactory.h"
 #include "factory/ParameterListFactory.h"
+#include "symbol/Identifier.h"
+#include "symbol/Block.h"
+#include "symbol/ParameterList.h"
+#include "symbol/FunctionDefinition.h"
 
 namespace dem {
     namespace parser {

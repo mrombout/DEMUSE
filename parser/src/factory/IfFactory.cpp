@@ -1,10 +1,11 @@
 #include <vector>
-#include "symbol/expression/Expression.h"
-#include "symbol/Block.h"
 #include "factory/IfFactory.h"
 #include "factory/ExpressionFactory.h"
 #include "factory/BlockFactory.h"
 #include "factory/StatementFactory.h"
+#include "symbol/expression/Expression.h"
+#include "symbol/Block.h"
+#include "symbol/If.h"
 
 namespace dem {
     namespace parser {

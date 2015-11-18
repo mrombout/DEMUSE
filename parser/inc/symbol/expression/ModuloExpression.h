@@ -8,6 +8,8 @@ namespace dem {
         class ModuloExpression : public BinaryExpression {
         public:
             ModuloExpression(Expression *left, Expression *right);
+
+            virtual bool accept(Visitor &visitor);
         };
     }
 }

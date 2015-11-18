@@ -14,6 +14,8 @@ namespace dem {
         class AdditionExpression : public BinaryExpression {
         public:
             AdditionExpression(Expression *left, Expression *right);
+
+            virtual bool accept(Visitor &visitor);
         };
     }
 }

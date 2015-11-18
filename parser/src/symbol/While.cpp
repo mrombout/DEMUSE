@@ -1,3 +1,6 @@
+#include "Visitor.h"
+#include "symbol/expression/Expression.h"
+#include "symbol/Block.h"
 #include "symbol/While.h"
 
 namespace dem {
@@ -6,6 +9,15 @@ namespace dem {
             mExpression(expression),
             mBlock(block) {
 
+        }
+
+        bool While::accept(Visitor &visitor) {
+            if(visitor.visitEnter(*this)) {
+                mExpression->accept(visitor);
+                mBlock->accept(visitor);
+            }
+
+            return visitor.visitLeave(*this);
         }
     }
 }

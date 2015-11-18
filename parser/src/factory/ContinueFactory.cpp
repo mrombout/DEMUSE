@@ -1,4 +1,5 @@
 #include "factory/ContinueFactory.h"
+#include "symbol/Continue.h"
 
 namespace dem {
     namespace parser {

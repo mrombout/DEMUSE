@@ -4,8 +4,13 @@
 #include <deque>
 #include <map>
 #include "SymbolFactory.h"
-#include "symbol/expression/Expression.h"
 #include "Token.h"
+
+namespace dem {
+    namespace parser {
+        class Expression;
+    }
+}
 
 namespace dem {
     namespace parser {

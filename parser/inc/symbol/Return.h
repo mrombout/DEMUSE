@@ -6,12 +6,20 @@
 
 namespace dem {
     namespace parser {
+        class Expression;
+    }
+}
+
+namespace dem {
+    namespace parser {
         class Return : public Statement {
         public:
             Return(Expression *expression);
 
         private:
             Expression *mExpression;
+        public:
+            virtual bool accept(Visitor &visitor) override;
         };
     };
 }

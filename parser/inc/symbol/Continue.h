@@ -7,6 +7,8 @@ namespace dem {
     namespace parser {
         class Continue : public Statement {
 
+        public:
+            virtual bool accept(Visitor &visitor);
         };
     }
 }

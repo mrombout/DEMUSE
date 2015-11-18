@@ -1,4 +1,5 @@
 #include "factory/BreakFactory.h"
+#include "symbol/Break.h"
 
 namespace dem {
     namespace parser {

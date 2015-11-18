@@ -1,4 +1,5 @@
 #include "symbol/Text.h"
+#include "Visitor.h"
 
 namespace dem {
     namespace parser {
@@ -9,6 +10,10 @@ namespace dem {
 
         std::string Text::value() const {
             return mValue;
+        }
+
+        bool Text::accept(Visitor &visitor) {
+            visitor.visit(*this);
         }
     }
 }

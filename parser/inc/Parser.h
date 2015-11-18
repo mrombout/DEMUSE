@@ -3,8 +3,13 @@
 
 #include <vector>
 #include "Parser.h"
-#include "symbol/Symbol.h"
 #include "Token.h"
+
+namespace dem {
+    namespace parser {
+        class Symbol;
+    }
+}
 
 namespace dem {
     namespace parser {

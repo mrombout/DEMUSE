@@ -2,8 +2,13 @@
 #define DEMUSE_WHILE_H
 
 #include "Statement.h"
-#include "expression/Expression.h"
-#include "Block.h"
+
+namespace dem {
+    namespace parser {
+        class Expression;
+        class Block;
+    }
+}
 
 namespace dem {
     namespace parser {
@@ -14,6 +19,8 @@ namespace dem {
         private:
             Expression *mExpression;
             Block *mBlock;
+        public:
+            virtual bool accept(Visitor &visitor);
         };
     }
 }

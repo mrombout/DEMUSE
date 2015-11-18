@@ -8,6 +8,8 @@ namespace dem {
         class AndCondition : public Condition {
         public:
             AndCondition(Expression *left, Expression *right);
+
+            virtual bool accept(Visitor &visitor);
         };
     }
 }

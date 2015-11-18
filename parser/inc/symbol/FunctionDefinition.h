@@ -6,7 +6,8 @@
 namespace dem {
     namespace parser {
         class FunctionDefinition : public Statement {
-
+        public:
+            virtual bool accept(Visitor &visitor);
         };
     }
 }

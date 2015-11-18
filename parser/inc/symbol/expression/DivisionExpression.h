@@ -8,6 +8,8 @@ namespace dem {
         class DivisionExpression : public BinaryExpression {
         public:
             DivisionExpression(Expression *left, Expression *right);
+
+            virtual bool accept(Visitor &visitor);
         };
     }
 }

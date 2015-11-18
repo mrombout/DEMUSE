@@ -1,6 +1,7 @@
 #include <vector>
 #include "factory/BlockFactory.h"
 #include "factory/StatementFactory.h"
+#include "symbol/Block.h"
 
 namespace dem {
     namespace parser {

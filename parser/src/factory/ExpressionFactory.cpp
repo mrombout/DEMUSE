@@ -16,6 +16,8 @@
 #include "symbol/expression/StrictNotEqualCondition.h"
 #include "symbol/expression/AndCondition.h"
 #include "symbol/expression/OrCondition.h"
+#include "symbol/Identifier.h"
+#include "symbol/Primitive.h"
 
 namespace dem {
     namespace parser {

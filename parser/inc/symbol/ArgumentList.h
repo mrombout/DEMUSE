@@ -16,6 +16,8 @@ namespace dem {
 
         private:
             std::vector<Expression*> mArguments;
+        public:
+            virtual bool accept(Visitor &visitor);
         };
     }
 }

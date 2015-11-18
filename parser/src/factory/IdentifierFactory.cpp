@@ -1,4 +1,5 @@
 #include "factory/IdentifierFactory.h"
+#include "symbol/Identifier.h"
 
 namespace dem {
     namespace parser {

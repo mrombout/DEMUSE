@@ -9,6 +9,14 @@
 #include "factory/ForFactory.h"
 #include "factory/FunctionDefinitionFactory.h"
 #include "factory/VariableDefinitionFactory.h"
+#include "symbol/Return.h"
+#include "symbol/Break.h"
+#include "symbol/Continue.h"
+#include "symbol/VariableDefinition.h"
+#include "symbol/If.h"
+#include "symbol/While.h"
+#include "symbol/For.h"
+#include "symbol/FunctionDefinition.h"
 
 namespace dem {
     namespace parser {

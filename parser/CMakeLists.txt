@@ -2,6 +2,12 @@ cmake_minimum_required(VERSION 3.3 FATAL_ERROR)
 project(Parser VERSION 0.1 LANGUAGES CXX)
 
 set(Parser_SRCS
+    inc/Visitor.h
+    src/Visitor.cpp
+
+    inc/Visitable.h
+    src/Visitable.cpp
+
     inc/Parser.h
 
     inc/MuseParser.h

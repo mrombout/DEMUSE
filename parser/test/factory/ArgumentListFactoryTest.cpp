@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
-#include <factory/ArgumentListFactory.h>
+#include "factory/ArgumentListFactory.h"
+#include "symbol/ArgumentList.h"
 
 class ArgumentListFactoryTest : public ::testing::Test {
 protected:

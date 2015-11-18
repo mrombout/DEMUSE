@@ -1,6 +1,8 @@
 #include "factory/ForFactory.h"
 #include "factory/AssignmentFactory.h"
 #include "factory/ExpressionFactory.h"
+#include "symbol/Statement.h"
+#include "symbol/For.h"
 
 namespace dem {
     namespace parser {

@@ -14,6 +14,8 @@ namespace dem {
 
         private:
             std::string mValue;
+        public:
+            virtual bool accept(Visitor &visitor);
         };
     }
 }

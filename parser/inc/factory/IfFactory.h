@@ -1,8 +1,15 @@
 #ifndef DEMUSE_IFFACTORY_H
 #define DEMUSE_IFFACTORY_H
 
+#include <deque>
+#include "Token.h"
 #include "SymbolFactory.h"
-#include "symbol/If.h"
+
+namespace dem {
+    namespace parser {
+        class If;
+    }
+}
 
 namespace dem {
     namespace parser {

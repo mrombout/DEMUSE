@@ -1,4 +1,5 @@
 #include "symbol/If.h"
+#include "Visitor.h"
 
 namespace dem {
     namespace parser {
@@ -12,6 +13,18 @@ namespace dem {
                 mBlock(block),
                 mElseBlock(elseBlock) {
 
+        }
+
+        bool If::accept(Visitor &visitor) {
+            if(visitor.visitEnter(*this)) {
+                mExpression->accept(visitor);
+                mBlock->accept(visitor);
+                if(mElseBlock) {
+                    mElseBlock->accept(visitor);
+                }
+            }
+
+            return visitor.visitLeave(*this);
         }
     }
 }

@@ -8,6 +8,8 @@ namespace dem {
         class LargerThanCondition : public Condition {
         public:
             LargerThanCondition(Expression *left, Expression *right);
+
+            virtual bool accept(Visitor &visitor);
         };
     }
 }

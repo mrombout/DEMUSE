@@ -3,8 +3,13 @@
 
 #include <deque>
 #include "SymbolFactory.h"
-#include "symbol/Program.h"
 #include "Token.h"
+
+namespace dem {
+    namespace parser {
+        class Program;
+    }
+}
 
 namespace dem {
     namespace parser {

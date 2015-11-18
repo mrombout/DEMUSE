@@ -1,7 +1,7 @@
 #include <vector>
 #include "factory/ProgramFactory.h"
 #include "factory/StatementFactory.h"
-#include "symbol/Statement.h"
+#include "symbol/Program.h"
 
 namespace dem {
     namespace parser {

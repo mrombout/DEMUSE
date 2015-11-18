@@ -1,8 +1,8 @@
-#include "symbol/Identifier.h"
-#include "symbol/expression/Expression.h"
 #include "factory/IdentifierFactory.h"
 #include "factory/AssignmentFactory.h"
 #include "factory/ExpressionFactory.h"
+#include "symbol/Identifier.h"
+#include "symbol/Assignment.h"
 
 namespace dem {
     namespace parser {

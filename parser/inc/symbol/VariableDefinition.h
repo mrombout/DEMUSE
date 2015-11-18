@@ -2,8 +2,13 @@
 #define DEMUSE_VARIABLEDEFINITION_H
 
 #include "Statement.h"
-#include "symbol/VariableDefinition.h"
 #include "symbol/Assignment.h"
+
+namespace dem {
+    namespace parser {
+        class Assignment;
+    }
+}
 
 namespace dem {
     namespace parser {
@@ -11,6 +16,7 @@ namespace dem {
         public:
             VariableDefinition(Assignment *assignment);
 
+            virtual bool accept(Visitor &visitor);
 
             virtual ~VariableDefinition();
 
