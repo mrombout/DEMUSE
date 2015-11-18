@@ -74,7 +74,7 @@ namespace dem {
             Expression *lhs = producePrimary(tokens);
             Expression *rhs = nullptr;
 
-            while(continueProcessingTokens(tokens, minPrecedence)) {
+            while(shouldContinueProcessingTokens(tokens, minPrecedence)) {
                 lexer::Token op = tokens.front();
 
                 int precedence = mOperatorPrecedence.at(op.type());
@@ -90,7 +90,10 @@ namespace dem {
             return lhs;
         }
 
-        bool ExpressionFactory::continueProcessingTokens(std::deque<lexer::Token> &tokens, int minPrecedence) {
+        bool ExpressionFactory::shouldContinueProcessingTokens(std::deque<lexer::Token> &tokens, int minPrecedence) {
+            if(tokens.empty())
+                return false;
+
             lexer::Token token = tokens.front();
 
             bool isBinaryOperator = token.is(lexer::TokenType::PLUS)

@@ -11,6 +11,9 @@ namespace dem {
         public:
             ArgumentList(std::vector<Expression*> arguments);
 
+            std::vector<Expression*> &arguments();
+            int numArguments();
+
         private:
             std::vector<Expression*> mArguments;
         };

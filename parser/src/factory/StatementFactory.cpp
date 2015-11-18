@@ -41,7 +41,7 @@ namespace dem {
             }
 
             // compound_stmt = if_stmt | while_stmt | for_stmt | function_def | play_stmt ;
-            if(tokens.front().is(lexer::TokenType::IF)) {
+            else if(tokens.front().is(lexer::TokenType::IF)) {
                 // if_stmt
                 statement = IfFactory::produce(tokens);
             } else if(tokens.front().is(lexer::TokenType::WHILE)) {

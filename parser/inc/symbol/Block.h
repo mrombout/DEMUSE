@@ -11,6 +11,10 @@ namespace dem {
         public:
             Block(std::vector<Statement*> statements);
 
+            std::vector<Statement*> &statements(
+
+            );
+
         private:
             std::vector<Statement*> mStatements;
         };

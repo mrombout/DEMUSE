@@ -6,5 +6,9 @@ namespace dem {
             mValue(value) {
 
         }
+
+        std::string Bool::value() const {
+            return mValue;
+        }
     }
 }

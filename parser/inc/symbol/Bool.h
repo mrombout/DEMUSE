@@ -10,6 +10,8 @@ namespace dem {
         public:
             Bool(std::string value);
 
+            std::string value() const;
+
         private:
             std::string mValue;
         };

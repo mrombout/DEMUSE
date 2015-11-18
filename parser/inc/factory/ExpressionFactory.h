@@ -20,7 +20,7 @@ namespace dem {
             static Expression *processExpression(std::deque<lexer::Token> &deque, int i);
             static Expression *producePrimary(std::deque<lexer::Token> &deque);
 
-            static bool continueProcessingTokens(std::deque<lexer::Token> &tokens, int i);
+            static bool shouldContinueProcessingTokens(std::deque<lexer::Token> &tokens, int i);
 
             static const std::map<lexer::TokenType, int> mOperatorPrecedence;
             static const std::map<lexer::TokenType, Associativity> mOperatorAssociativity;

@@ -1,5 +1,6 @@
 #include "factory/ForFactory.h"
 #include "factory/AssignmentFactory.h"
+#include "factory/ExpressionFactory.h"
 
 namespace dem {
     namespace parser {
@@ -11,7 +12,7 @@ namespace dem {
             expect(tokens, lexer::TokenType::OPEN);
 
             // ( terminator | variable_def_stmt | assignment_stmt )
-            Statement *statement = nullptr;
+            Statement *initializerStatement = nullptr;
             if(tokens.front().is(lexer::TokenType::TERMINATOR)) {
                 // terminator
                 expect(tokens, lexer::TokenType::TERMINATOR);
@@ -20,10 +21,22 @@ namespace dem {
                 // TODO: Variable def
             } else {
                 // assignment_stmt
-                statement = AssignmentFactory::produce(tokens);
+                initializerStatement = AssignmentFactory::produce(tokens);
             }
 
-            return nullptr;
+            // ( terminator | conditional )
+            Expression *conditionalExpression = nullptr;
+            if(tokens.front().is(lexer::TokenType::TERMINATOR)) {
+                // terminator
+                expect(tokens, lexer::TokenType::TERMINATOR);
+            } else {
+                conditionalExpression = ExpressionFactory::produce(tokens);
+            }
+
+            // ( terminator | assignment_stmt )
+            Assignment *assignmentStatement = AssignmentFactory::produce(tokens);
+
+            return new For(initializerStatement, conditionalExpression, assignmentStatement);
         }
     }
 }

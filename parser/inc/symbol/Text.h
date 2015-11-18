@@ -8,10 +8,12 @@ namespace dem {
     namespace parser {
         class Text : public Primitive {
         public:
-            Text(std::string content);
+            Text(std::string value);
+
+            std::string value() const;
 
         private:
-            std::string mContent;
+            std::string mValue;
         };
     }
 }

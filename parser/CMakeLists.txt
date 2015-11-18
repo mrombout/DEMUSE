@@ -124,6 +124,26 @@ set(Parser_SRCS
     src/factory/PrimitiveFactory.cpp
 )
 
+set(TestParser_SRCS
+    test/factory/ArgumentListFactoryTest.cpp
+    test/factory/AssignmentFactoryTest.cpp
+    test/factory/BlockFactoryTest.cpp
+    test/factory/BreakFactoryTest.cpp
+    test/factory/ContinueFactoryTest.cpp
+    test/factory/ExpressionFactoryTest.cpp
+    test/factory/ForFactoryTest.cpp
+    test/factory/FunctionDefinitionFactoryTest.cpp
+    test/factory/IdentifierFactoryTest.cpp
+    test/factory/IfFactoryTest.cpp
+    test/factory/ParameterListFactoryTest.cpp
+    test/factory/ProgramFactoryTest.cpp
+    test/factory/ReturnFactoryTest.cpp
+    test/factory/StatementFactoryTest.cpp
+    test/factory/VariableDefinitionTest.cpp
+    test/factory/WhileFactoryTest.cpp
+    test/factory/PrimitiveFactoryTest.cpp
+)
+
 add_library(libparser ${Parser_SRCS})
 add_library(dem::libparser ALIAS libparser)
 set_target_properties(liblexer PROPERTIES OUTPUT_NAME "parser")
@@ -135,3 +155,19 @@ target_include_directories(libparser PUBLIC inc ${Lexer_INCLUDE_DIRS})
 
 target_link_libraries(parser dem::liblexer)
 target_include_directories(parser PUBLIC inc ${Lexer_INCLUDE_DIRS})
+
+# testing
+enable_testing()
+
+add_executable(testparser ${Parser_SRCS} ${TestParser_SRCS})
+
+target_link_libraries(testparser dem::liblexer)
+target_include_directories(testparser PRIVATE inc ${Lexer_INCLUDE_DIRS})
+
+find_package(GTest REQUIRED)
+if(GTEST_FOUND)
+    target_include_directories(testparser PRIVATE E:/Libraries/googletest-release-1.7.0/include)
+    target_link_libraries(testparser ${GTEST_BOTH_LIBRARIES})
+endif()
+
+add_test(AllLexerTests testparser)

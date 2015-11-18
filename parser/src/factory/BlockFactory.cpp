@@ -12,10 +12,15 @@ namespace dem {
             // "{"
             expect(tokens, lexer::TokenType::START);
 
-            do {
+            while(!tokens.front().is(lexer::TokenType::END)) {
                 Statement *statement = StatementFactory::produce(tokens);
                 statements.push_back(statement);
-            } while(!tokens.front().is(lexer::TokenType::END));
+            };
+
+            // "}"
+            expect(tokens, lexer::TokenType::END);
+
+            return new Block(statements);
         }
     }
 }

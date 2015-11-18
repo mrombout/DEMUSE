@@ -6,5 +6,13 @@ namespace dem {
                 mArguments(arguments) {
 
         }
+
+        std::vector<Expression *> &ArgumentList::arguments() {
+            return mArguments;
+        }
+
+        int ArgumentList::numArguments() {
+            return mArguments.size();
+        }
     }
 }

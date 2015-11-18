@@ -7,5 +7,13 @@ namespace dem {
             mExpression(expression) {
 
         }
+
+        Identifier &Assignment::identifier() const {
+            return *mIdentifier;
+        }
+
+        Expression &Assignment::expression() const {
+            return *mExpression;
+        }
     }
 }

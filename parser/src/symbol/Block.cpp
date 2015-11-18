@@ -6,5 +6,9 @@ namespace dem {
             mStatements(statements) {
 
         }
+
+        std::vector<Statement *> &Block::statements() {
+            return mStatements;
+        }
     }
 }
