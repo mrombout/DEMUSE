@@ -19,6 +19,7 @@
 #include "symbol/expression/LargerThanOrEqualCondition.h"
 #include "symbol/expression/NotEqualCondition.h"
 #include "symbol/expression/OrCondition.h"
+#include "symbol/expression/BinaryExpression.h"
 
 class ExpressionFactoryTest : public ::testing::Test {
 protected:
@@ -120,6 +121,26 @@ TEST_F(ExpressionFactoryTest, AdditionMultiple) {
     ASSERT_NE(nullptr, addExpression);
     ASSERT_EQ(typeid(dem::parser::Number), typeid(addExpression->left()));
     ASSERT_EQ(typeid(dem::parser::AdditionExpression), typeid(addExpression->right()));
+}
+
+TEST_F(ExpressionFactoryTest, AdditionMultiplicationPrecedence) {
+    // arrange
+    std::deque<dem::lexer::Token> tokens {
+        dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0),
+        dem::lexer::Token(dem::lexer::TokenType::TIMES,  "*", 0, 0, 0),
+        dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0),
+        dem::lexer::Token(dem::lexer::TokenType::PLUS,   "+", 0, 0, 0),
+        dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0)
+    };
+
+    // act
+    dem::parser::BinaryExpression *expression = dynamic_cast<dem::parser::BinaryExpression*>(factory->produce(tokens));
+
+    // assert
+    ASSERT_NE(nullptr, expression);
+    ASSERT_EQ(typeid(dem::parser::MultiplicationExpression), typeid(*expression));
+    ASSERT_EQ(typeid(dem::parser::Number), typeid(expression->left()));
+    ASSERT_EQ(typeid(dem::parser::AdditionExpression), typeid(expression->right()));
 }
 
 TEST_F(ExpressionFactoryTest, SubtractionSingle) {
