@@ -6,6 +6,16 @@
 #include "symbol/expression/MultiplicationExpression.h"
 #include "symbol/expression/DivisionExpression.h"
 #include "symbol/expression/ModuloExpression.h"
+#include "symbol/expression/SmallerThanCondition.h"
+#include "symbol/expression/SmallerThanOrEqualCondition.h"
+#include "symbol/expression/LargerThanCondition.h"
+#include "symbol/expression/LargerThanOrEqualCondition.h"
+#include "symbol/expression/EqualCondition.h"
+#include "symbol/expression/StrictEqualCondition.h"
+#include "symbol/expression/NotEqualCondition.h"
+#include "symbol/expression/StrictNotEqualCondition.h"
+#include "symbol/expression/AndCondition.h"
+#include "symbol/expression/OrCondition.h"
 
 namespace dem {
     namespace parser {
@@ -23,7 +33,9 @@ namespace dem {
             { lexer::TokenType::LR,     6 },
             { lexer::TokenType::LREQ,   6 },
             { lexer::TokenType::EQ,     7 },
+            { lexer::TokenType::TEQ,    7 },
             { lexer::TokenType::NEQ,    7 },
+            { lexer::TokenType::TNEQ,   7 },
             { lexer::TokenType::AND,    11 },
             { lexer::TokenType::OR,     12 },
             // TODO: = += -= *= /= %= &= |= ^= -- 14
@@ -42,7 +54,9 @@ namespace dem {
             { lexer::TokenType::LR,     ExpressionFactory::Associativity::LEFT },
             { lexer::TokenType::LREQ,   ExpressionFactory::Associativity::LEFT },
             { lexer::TokenType::EQ,     ExpressionFactory::Associativity::LEFT },
+            { lexer::TokenType::TEQ,    ExpressionFactory::Associativity::LEFT },
             { lexer::TokenType::NEQ,    ExpressionFactory::Associativity::LEFT },
+            { lexer::TokenType::TNEQ,   ExpressionFactory::Associativity::LEFT },
             { lexer::TokenType::AND,    ExpressionFactory::Associativity::LEFT },
             { lexer::TokenType::OR,     ExpressionFactory::Associativity::LEFT },
         };
@@ -109,8 +123,17 @@ namespace dem {
                 || token.is(lexer::TokenType::TIMES)
                 || token.is(lexer::TokenType::DIVIDE)
                 || token.is(lexer::TokenType::MOD)
+                || token.is(lexer::TokenType::EQ)
+                || token.is(lexer::TokenType::NEQ)
+                || token.is(lexer::TokenType::TEQ)
+                || token.is(lexer::TokenType::TNEQ)
+                || token.is(lexer::TokenType::SM)
+                || token.is(lexer::TokenType::SMEQ)
+                || token.is(lexer::TokenType::LR)
+                || token.is(lexer::TokenType::LREQ)
                 || token.is(lexer::TokenType::AND)
-                || token.is(lexer::TokenType::OR);
+                || token.is(lexer::TokenType::OR)
+                || token.is(lexer::TokenType::SM);
             // TODO: Modulo
 
             bool smallerOrEqual = isBinaryOperator ? mOperatorPrecedence.at(token.type()) <= minPrecedence : false;
@@ -149,6 +172,26 @@ namespace dem {
                     return new DivisionExpression(lhs, rhs);
                 case lexer::TokenType::MOD:
                     return new ModuloExpression(lhs, rhs);
+                case lexer::TokenType::SM:
+                    return new SmallerThanCondition(lhs, rhs);
+                case lexer::TokenType::SMEQ:
+                    return new SmallerThanOrEqualCondition(lhs, rhs);
+                case lexer::TokenType::LR:
+                    return new LargerThanCondition(lhs, rhs);
+                case lexer::TokenType::LREQ:
+                    return new LargerThanOrEqualCondition(lhs, rhs);
+                case lexer::TokenType::EQ:
+                    return new EqualCondition(lhs, rhs);
+                case lexer::TokenType::TEQ:
+                    return new StrictEqualCondition(lhs, rhs);
+                case lexer::TokenType::NEQ:
+                    return new NotEqualCondition(lhs, rhs);
+                case lexer::TokenType::TNEQ:
+                    return new StrictNotEqualCondition(lhs, rhs);
+                case lexer::TokenType::AND:
+                    return new AndCondition(lhs, rhs);
+                case lexer::TokenType::OR:
+                    return new OrCondition(lhs, rhs);
             }
         }
     }

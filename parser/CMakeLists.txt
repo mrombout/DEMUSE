@@ -87,6 +87,39 @@ set(Parser_SRCS
     inc/symbol/expression/ModuloExpression.h
     src/symbol/expression/ModuloExpression.cpp
 
+    inc/symbol/expression/Condition.h
+    src/symbol/expression/Condition.cpp
+
+    inc/symbol/expression/SmallerThanCondition.h
+    src/symbol/expression/SmallerThanCondition.cpp
+
+    inc/symbol/expression/AndCondition.h
+    src/symbol/expression/AndCondition.cpp
+
+    inc/symbol/expression/EqualCondition.h
+    src/symbol/expression/EqualCondition.cpp
+
+    inc/symbol/expression/LargerThanCondition.h
+    src/symbol/expression/LargerThanCondition.cpp
+
+    inc/symbol/expression/LargerThanOrEqualCondition.h
+    src/symbol/expression/LargerThanOrEqualCondition.cpp
+
+    inc/symbol/expression/NotEqualCondition.h
+    src/symbol/expression/NotEqualCondition.cpp
+
+    inc/symbol/expression/OrCondition.h
+    src/symbol/expression/OrCondition.cpp
+
+    inc/symbol/expression/SmallerThanOrEqualCondition.h
+    src/symbol/expression/SmallerThanOrEqualCondition.cpp
+
+    inc/symbol/expression/StrictEqualCondition.h
+    src/symbol/expression/StrictEqualCondition.cpp
+
+    inc/symbol/expression/StrictNotEqualCondition.h
+    src/symbol/expression/StrictNotEqualCondition.cpp
+
     inc/factory/SymbolFactory.h
     src/factory/SymbolFactory.cpp
 
