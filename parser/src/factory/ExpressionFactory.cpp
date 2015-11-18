@@ -1,7 +1,7 @@
 #include "factory/IdentifierFactory.h"
 #include "factory/ExpressionFactory.h"
 #include "factory/PrimitiveFactory.h"
-#include "symbol/expression/AddExpression.h"
+#include "symbol/expression/AdditionExpression.h"
 #include "symbol/expression/SubtractionExpression.h"
 #include "symbol/expression/MultiplicationExpression.h"
 #include "symbol/expression/DivisionExpression.h"
@@ -163,7 +163,7 @@ namespace dem {
         Expression *ExpressionFactory::produceExpression(lexer::Token token, Expression *lhs, Expression *rhs) {
             switch(token.type()) {
                 case lexer::TokenType::PLUS:
-                    return new AddExpression(lhs, rhs);
+                    return new AdditionExpression(lhs, rhs);
                 case lexer::TokenType::MINUS:
                     return new SubtractionExpression(lhs, rhs);
                 case lexer::TokenType::TIMES:

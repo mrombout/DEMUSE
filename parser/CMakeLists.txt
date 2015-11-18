@@ -72,8 +72,8 @@ set(Parser_SRCS
     inc/symbol/expression/BinaryExpression.h
     src/symbol/expression/BinaryExpression.cpp
 
-    inc/symbol/expression/AddExpression.h
-    src/symbol/expression/AddExpression.cpp
+    inc/symbol/expression/AdditionExpression.h
+    src/symbol/expression/AdditionExpression.cpp
 
     inc/symbol/expression/SubtractionExpression.h
     src/symbol/expression/SubtractionExpression.cpp

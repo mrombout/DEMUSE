@@ -6,7 +6,7 @@
 #include "symbol/Number.h"
 #include "symbol/Text.h"
 #include "symbol/Bool.h"
-#include "symbol/expression/AddExpression.h"
+#include "symbol/expression/AdditionExpression.h"
 #include "symbol/expression/SubtractionExpression.h"
 #include "symbol/expression/MultiplicationExpression.h"
 #include "symbol/expression/DivisionExpression.h"
@@ -44,7 +44,7 @@ TEST_F(ExpressionFactoryTest, SingleIdentifierExpression) {
 }
 */
 
-TEST_F(ExpressionFactoryTest, SingleNumberPrimitiveExpression) {
+TEST_F(ExpressionFactoryTest, ExpressionNumberPrimitive) {
     // arrange
     std::deque<dem::lexer::Token> tokens {
         dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0)
@@ -58,7 +58,7 @@ TEST_F(ExpressionFactoryTest, SingleNumberPrimitiveExpression) {
     ASSERT_EQ("5", number->value());
 }
 
-TEST_F(ExpressionFactoryTest, SingleTextPrimitiveExpression) {
+TEST_F(ExpressionFactoryTest, ExpressionTextPrimitive) {
     // arrange
     std::deque<dem::lexer::Token> tokens {
         dem::lexer::Token(dem::lexer::TokenType::TEXT, "Lorum ipsum", 0, 0, 0)
@@ -71,7 +71,7 @@ TEST_F(ExpressionFactoryTest, SingleTextPrimitiveExpression) {
     ASSERT_NE(nullptr, text);
 }
 
-TEST_F(ExpressionFactoryTest, SingleBoolPrimitiveExpression) {
+TEST_F(ExpressionFactoryTest, ExpressionBoolPrimitive) {
     // arrange
     std::deque<dem::lexer::Token> tokens {
         dem::lexer::Token(dem::lexer::TokenType::BOOL, "true", 0, 0, 0)
@@ -84,7 +84,7 @@ TEST_F(ExpressionFactoryTest, SingleBoolPrimitiveExpression) {
     ASSERT_NE(nullptr, boolean);
 }
 
-TEST_F(ExpressionFactoryTest, SingleAddition) {
+TEST_F(ExpressionFactoryTest, AdditionSingle) {
     // arrange
     std::deque<dem::lexer::Token> tokens {
         dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0),
@@ -94,7 +94,7 @@ TEST_F(ExpressionFactoryTest, SingleAddition) {
 
     // act
     dem::parser::Expression *expression = factory->produce(tokens);
-    dem::parser::AddExpression *addExpression = dynamic_cast<dem::parser::AddExpression*>(expression);
+    dem::parser::AdditionExpression *addExpression = dynamic_cast<dem::parser::AdditionExpression *>(expression);
 
     // assert
     ASSERT_NE(nullptr, addExpression);
@@ -102,7 +102,27 @@ TEST_F(ExpressionFactoryTest, SingleAddition) {
     ASSERT_EQ(typeid(dem::parser::Number), typeid(addExpression->right()));
 }
 
-TEST_F(ExpressionFactoryTest, SingleSubtraction) {
+TEST_F(ExpressionFactoryTest, AdditionMultiple) {
+    // arrange
+    std::deque<dem::lexer::Token> tokens {
+            dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0),
+            dem::lexer::Token(dem::lexer::TokenType::PLUS,   "+", 0, 0, 0),
+            dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0),
+            dem::lexer::Token(dem::lexer::TokenType::PLUS,   "+", 0, 0, 0),
+            dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0)
+    };
+
+    // act
+    dem::parser::Expression *expression = factory->produce(tokens);
+    dem::parser::AdditionExpression *addExpression = dynamic_cast<dem::parser::AdditionExpression *>(expression);
+
+    // assert
+    ASSERT_NE(nullptr, addExpression);
+    ASSERT_EQ(typeid(dem::parser::Number), typeid(addExpression->left()));
+    ASSERT_EQ(typeid(dem::parser::AdditionExpression), typeid(addExpression->right()));
+}
+
+TEST_F(ExpressionFactoryTest, SubtractionSingle) {
     // arrange
     std::deque<dem::lexer::Token> tokens {
         dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0),
@@ -120,7 +140,27 @@ TEST_F(ExpressionFactoryTest, SingleSubtraction) {
     ASSERT_EQ(typeid(dem::parser::Number), typeid(subtractionExpression->right()));
 }
 
-TEST_F(ExpressionFactoryTest, SingleMultiplication) {
+TEST_F(ExpressionFactoryTest, SubtractionMultiple) {
+    // arrange
+    std::deque<dem::lexer::Token> tokens {
+            dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0),
+            dem::lexer::Token(dem::lexer::TokenType::MINUS,  "-", 0, 0, 0),
+            dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0),
+            dem::lexer::Token(dem::lexer::TokenType::MINUS,  "-", 0, 0, 0),
+            dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0)
+    };
+
+    // act
+    dem::parser::Expression *expression = factory->produce(tokens);
+    dem::parser::SubtractionExpression *subtractionExpression = dynamic_cast<dem::parser::SubtractionExpression*>(expression);
+
+    // assert
+    ASSERT_NE(nullptr, subtractionExpression);
+    ASSERT_EQ(typeid(dem::parser::Number), typeid(subtractionExpression->left()));
+    ASSERT_EQ(typeid(dem::parser::SubtractionExpression), typeid(subtractionExpression->right()));
+}
+
+TEST_F(ExpressionFactoryTest, MultiplicationSingle) {
     // arrange
     std::deque<dem::lexer::Token> tokens {
         dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0),
@@ -138,7 +178,27 @@ TEST_F(ExpressionFactoryTest, SingleMultiplication) {
     ASSERT_EQ(typeid(dem::parser::Number), typeid(multiplicationExpression->right()));
 }
 
-TEST_F(ExpressionFactoryTest, SingleDivision) {
+TEST_F(ExpressionFactoryTest, MultiplicationMultiple) {
+    // arrange
+    std::deque<dem::lexer::Token> tokens {
+            dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0),
+            dem::lexer::Token(dem::lexer::TokenType::TIMES,  "*", 0, 0, 0),
+            dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0),
+            dem::lexer::Token(dem::lexer::TokenType::TIMES,  "*", 0, 0, 0),
+            dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0)
+    };
+
+    // act
+    dem::parser::Expression *expression = factory->produce(tokens);
+    dem::parser::MultiplicationExpression *multiplicationExpression = dynamic_cast<dem::parser::MultiplicationExpression*>(expression);
+
+    // assert
+    ASSERT_NE(nullptr, multiplicationExpression);
+    ASSERT_EQ(typeid(dem::parser::Number), typeid(multiplicationExpression->left()));
+    ASSERT_EQ(typeid(dem::parser::MultiplicationExpression), typeid(multiplicationExpression->right()));
+}
+
+TEST_F(ExpressionFactoryTest, DivisionSingle) {
     // arrange
     std::deque<dem::lexer::Token> tokens {
         dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0),
@@ -156,8 +216,27 @@ TEST_F(ExpressionFactoryTest, SingleDivision) {
     ASSERT_EQ(typeid(dem::parser::Number), typeid(divisionExpression->right()));
 }
 
+TEST_F(ExpressionFactoryTest, DivisionMultiple) {
+    // arrange
+    std::deque<dem::lexer::Token> tokens {
+            dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0),
+            dem::lexer::Token(dem::lexer::TokenType::DIVIDE, "/", 0, 0, 0),
+            dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0),
+            dem::lexer::Token(dem::lexer::TokenType::DIVIDE, "/", 0, 0, 0),
+            dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0)
+    };
 
-TEST_F(ExpressionFactoryTest, SingleModuloOperation) {
+    // act
+    dem::parser::Expression *expression = factory->produce(tokens);
+    dem::parser::DivisionExpression *divisionExpression = dynamic_cast<dem::parser::DivisionExpression*>(expression);
+
+    // assert
+    ASSERT_NE(nullptr, divisionExpression);
+    ASSERT_EQ(typeid(dem::parser::Number), typeid(divisionExpression->left()));
+    ASSERT_EQ(typeid(dem::parser::DivisionExpression), typeid(divisionExpression->right()));
+}
+
+TEST_F(ExpressionFactoryTest, ModuloSingle) {
     // arrange
     std::deque<dem::lexer::Token> tokens {
         dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0),
@@ -175,7 +254,27 @@ TEST_F(ExpressionFactoryTest, SingleModuloOperation) {
     ASSERT_EQ(typeid(dem::parser::Number), typeid(moduloExpression->right()));
 }
 
-TEST_F(ExpressionFactoryTest, AndCondition) {
+TEST_F(ExpressionFactoryTest, ModuloMultiple) {
+    // arrange
+    std::deque<dem::lexer::Token> tokens {
+            dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0),
+            dem::lexer::Token(dem::lexer::TokenType::MOD,    "%", 0, 0, 0),
+            dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0),
+            dem::lexer::Token(dem::lexer::TokenType::MOD,    "%", 0, 0, 0),
+            dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0)
+    };
+
+    // act
+    dem::parser::Expression *expression = factory->produce(tokens);
+    dem::parser::ModuloExpression *moduloExpression = dynamic_cast<dem::parser::ModuloExpression*>(expression);
+
+    // assert
+    ASSERT_NE(nullptr, moduloExpression);
+    ASSERT_EQ(typeid(dem::parser::Number), typeid(moduloExpression->left()));
+    ASSERT_EQ(typeid(dem::parser::ModuloExpression), typeid(moduloExpression->right()));
+}
+
+TEST_F(ExpressionFactoryTest, ConditionAnd) {
     // arrange
     std::deque<dem::lexer::Token> tokens {
         dem::lexer::Token(dem::lexer::TokenType::BOOL, "true", 0, 0, 0),
@@ -193,7 +292,7 @@ TEST_F(ExpressionFactoryTest, AndCondition) {
     ASSERT_EQ(typeid(dem::parser::Bool), typeid(andCondition->right()));
 }
 
-TEST_F(ExpressionFactoryTest, EqualCondition) {
+TEST_F(ExpressionFactoryTest, ConditionEqual) {
     // arrange
     std::deque<dem::lexer::Token> tokens {
         dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5",  0, 0, 0),
@@ -211,7 +310,7 @@ TEST_F(ExpressionFactoryTest, EqualCondition) {
     ASSERT_EQ(typeid(dem::parser::Number), typeid(equalCondition->right()));
 }
 
-TEST_F(ExpressionFactoryTest, LargerThanCondition) {
+TEST_F(ExpressionFactoryTest, ConditionLargerThan) {
     // arrange
     std::deque<dem::lexer::Token> tokens {
         dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0),
@@ -229,7 +328,7 @@ TEST_F(ExpressionFactoryTest, LargerThanCondition) {
     ASSERT_EQ(typeid(dem::parser::Number), typeid(largerThanCondition->right()));
 }
 
-TEST_F(ExpressionFactoryTest, LargerThanOrEqualCondition) {
+TEST_F(ExpressionFactoryTest, ConditionLargerThanOrEqual) {
     // arrange
     std::deque<dem::lexer::Token> tokens {
             dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5",  0, 0, 0),
@@ -247,7 +346,7 @@ TEST_F(ExpressionFactoryTest, LargerThanOrEqualCondition) {
     ASSERT_EQ(typeid(dem::parser::Number), typeid(lreqCondition->right()));
 }
 
-TEST_F(ExpressionFactoryTest, NotEqualCondition) {
+TEST_F(ExpressionFactoryTest, ConditionNotEqual) {
     // arrange
     std::deque<dem::lexer::Token> tokens {
             dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5",  0, 0, 0),
@@ -265,7 +364,7 @@ TEST_F(ExpressionFactoryTest, NotEqualCondition) {
     ASSERT_EQ(typeid(dem::parser::Number), typeid(notEqualCondition->right()));
 }
 
-TEST_F(ExpressionFactoryTest, OrCondition) {
+TEST_F(ExpressionFactoryTest, ConditionOr) {
     // arrange
     std::deque<dem::lexer::Token> tokens {
             dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5",  0, 0, 0),
@@ -283,7 +382,7 @@ TEST_F(ExpressionFactoryTest, OrCondition) {
     ASSERT_EQ(typeid(dem::parser::Number), typeid(orCondition->right()));
 }
 
-TEST_F(ExpressionFactoryTest, SmallerThanCondition) {
+TEST_F(ExpressionFactoryTest, ConditionSmallerThan) {
     // arrange
     std::deque<dem::lexer::Token> tokens {
         dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0),
@@ -301,7 +400,7 @@ TEST_F(ExpressionFactoryTest, SmallerThanCondition) {
     ASSERT_EQ(typeid(dem::parser::Number), typeid(smallerThanCondition->right()));
 }
 
-TEST_F(ExpressionFactoryTest, SmallerThanOrEqualCondition) {
+TEST_F(ExpressionFactoryTest, ConditionSmallerThanOrEqual) {
     // arrange
     std::deque<dem::lexer::Token> tokens {
         dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5",  0, 0, 0),
@@ -319,7 +418,7 @@ TEST_F(ExpressionFactoryTest, SmallerThanOrEqualCondition) {
     ASSERT_EQ(typeid(dem::parser::Number), typeid(smallerThanOrEqualCondition->right()));
 }
 
-TEST_F(ExpressionFactoryTest, StrictEqual) {
+TEST_F(ExpressionFactoryTest, ConditionStrictEqual) {
     // arrange
     std::deque<dem::lexer::Token> tokens {
         dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5",   0, 0, 0),
@@ -338,7 +437,7 @@ TEST_F(ExpressionFactoryTest, StrictEqual) {
 }
 
 
-TEST_F(ExpressionFactoryTest, StrictNotEqual) {
+TEST_F(ExpressionFactoryTest, ConditionStrictNotEqual) {
     // arrange
     std::deque<dem::lexer::Token> tokens {
             dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5",   0, 0, 0),
