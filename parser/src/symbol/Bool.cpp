@@ -13,7 +13,7 @@ namespace dem {
         }
 
         bool Bool::accept(Visitor &visitor) {
-            visitor.visitLeave(*this);
+            visitor.visit(*this);
         }
     }
 }
