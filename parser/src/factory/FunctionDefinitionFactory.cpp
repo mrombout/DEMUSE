@@ -22,9 +22,10 @@ namespace dem {
             expect(tokens, lexer::TokenType::OPEN);
 
             // [ parameter_list ]
-            ParameterList *parameterList = nullptr;
+            ParameterList *parameterList = new ParameterList();
             if(!tokens.front().is(lexer::TokenType::CLOSE)) {
-                ParameterListFactory::produce(tokens);
+                delete parameterList;
+                parameterList = ParameterListFactory::produce(tokens);
             }
 
             // ")"
@@ -33,7 +34,7 @@ namespace dem {
             // block
             Block *block = BlockFactory::produce(tokens);
 
-            return nullptr;
+            return new FunctionDefinition(identifier, parameterList, block);
         }
     }
 }

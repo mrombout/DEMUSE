@@ -11,13 +11,9 @@ namespace dem {
 
             std::vector<Identifier*> identifiers;
 
-            // identifier
-            Identifier *identifier = IdentifierFactory::produce(tokens);
-
-            // "," identifier
-            while(accept(tokens, lexer::TokenType::COMMA)) {
+            do {
                 identifiers.push_back(IdentifierFactory::produce(tokens));
-            }
+            } while(accept(tokens, lexer::TokenType::COMMA));
 
             return new ParameterList(identifiers);
         }

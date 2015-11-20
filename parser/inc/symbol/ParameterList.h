@@ -15,12 +15,17 @@ namespace dem {
     namespace parser {
         class ParameterList : public Symbol {
         public:
+            ParameterList();
             ParameterList(std::vector<Identifier*> identifiers);
+
+            virtual bool accept(Visitor &visitor);
+
+            std::vector<Identifier*> identifiers() const;
+            int numParameters() const;
+            bool isEmpty() const;
 
         private:
             std::vector<Identifier*> mIdentifiers;
-        public:
-            virtual bool accept(Visitor &visitor);
         };
     }
 }

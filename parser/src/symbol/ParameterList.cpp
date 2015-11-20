@@ -3,6 +3,10 @@
 
 namespace dem {
     namespace parser {
+        ParameterList::ParameterList() {
+
+        }
+
         ParameterList::ParameterList(std::vector<Identifier*> identifiers) :
             mIdentifiers(identifiers) {
 
@@ -16,6 +20,18 @@ namespace dem {
             }
 
             return visitor.visitLeave(*this);
+        }
+
+        std::vector<Identifier *> ParameterList::identifiers() const {
+            return mIdentifiers;
+        }
+
+        int ParameterList::numParameters() const {
+            return mIdentifiers.size();
+        }
+
+        bool ParameterList::isEmpty() const {
+            return mIdentifiers.empty();
         }
     }
 }
