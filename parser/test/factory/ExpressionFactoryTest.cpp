@@ -6,6 +6,7 @@
 #include "symbol/Number.h"
 #include "symbol/Text.h"
 #include "symbol/Bool.h"
+#include "symbol/expression/Expression.h"
 #include "symbol/expression/AdditionExpression.h"
 #include "symbol/expression/SubtractionExpression.h"
 #include "symbol/expression/MultiplicationExpression.h"
@@ -134,7 +135,7 @@ TEST_F(ExpressionFactoryTest, AdditionMultiplicationPrecedence) {
     };
 
     // act
-    dem::parser::BinaryExpression *expression = dynamic_cast<dem::parser::BinaryExpression*>(factory->produce(tokens));
+    dem::parser::BinaryExpression<dem::parser::Expression, dem::parser::Expression> *expression = dynamic_cast<dem::parser::BinaryExpression<dem::parser::Expression, dem::parser::Expression>*>(factory->produce(tokens));
 
     // assert
     ASSERT_NE(nullptr, expression);

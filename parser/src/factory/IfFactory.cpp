@@ -10,7 +10,7 @@
 namespace dem {
     namespace parser {
         If *IfFactory::produce(std::deque<lexer::Token> &tokens) {
-            // if_stmt = "if(" conditional ")" block
+            // if_stmt = "if(" conditional ")" ( block | statement )
             //              [ "else" ( block | statement ) ] ;
 
             // "if("
@@ -23,8 +23,18 @@ namespace dem {
             // ")"
             expect(tokens, lexer::TokenType::CLOSE);
 
-            // block
-            Block *block = BlockFactory::produce(tokens);
+            // block | statement
+            Block *block = nullptr;
+            if(tokens.front().is(lexer::TokenType::START)) {
+                // block
+                block = BlockFactory::produce(tokens);
+            } else {
+                // statement
+                Statement *statement = StatementFactory::produce(tokens);
+                std::vector<Statement*> statements{statement};
+
+                block = new Block(statements);
+            }
 
             // [ "else" ( block | statement ) ]
             if(accept(tokens, lexer::TokenType::ELSE)) {

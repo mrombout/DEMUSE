@@ -12,12 +12,16 @@ namespace dem {
             If(Expression *expression, Block *block);
             If(Expression *expression, Block *block, Block *elseBlock);
 
+            virtual bool accept(Visitor &visitor);
+
+            Expression &expression() const;
+            Block &block() const;
+            Block *elseBlock() const;
+
         private:
             Expression *mExpression;
             Block *mBlock;
             Block *mElseBlock;
-        public:
-            virtual bool accept(Visitor &visitor);
         };
     }
 }

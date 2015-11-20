@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "VariableDeclarationFactory.h"
+#include "factory/VariableDeclarationFactory.h"
 
 class VariableDefinitionFactory : public ::testing::Test {
 protected:

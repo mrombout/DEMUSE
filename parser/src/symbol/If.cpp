@@ -26,5 +26,17 @@ namespace dem {
 
             return visitor.visitLeave(*this);
         }
+
+        Expression &If::expression() const {
+            return *mExpression;
+        }
+
+        Block &If::block() const {
+            return *mBlock;
+        }
+
+        Block *If::elseBlock() const {
+            return mElseBlock;
+        }
     }
 }
