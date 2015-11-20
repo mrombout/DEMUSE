@@ -19,5 +19,13 @@ namespace dem {
 
             return visitor.visitLeave(*this);
         }
+
+        Expression &While::expression() const {
+            return *mExpression;
+        }
+
+        Block &While::block() const {
+            return *mBlock;
+        }
     }
 }

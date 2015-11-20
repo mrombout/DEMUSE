@@ -16,11 +16,14 @@ namespace dem {
         public:
             While(Expression *expression, Block *block);
 
+            virtual bool accept(Visitor &visitor);
+
+            Expression &expression() const;
+            Block &block() const;
+
         private:
             Expression *mExpression;
             Block *mBlock;
-        public:
-            virtual bool accept(Visitor &visitor);
         };
     }
 }
