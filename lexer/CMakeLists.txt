@@ -36,6 +36,7 @@ set(TestLexer_SRCS
     test/TokenTest.cpp
     test/TokenDefinitionTest.cpp
     test/LexerTest.cpp
+    test/MuseLexerTest.cpp
     test/matcher/NullMatcherTest.cpp
     test/matcher/CharMatcherTest.cpp
     test/matcher/StringMatcherTest.cpp
