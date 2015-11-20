@@ -42,6 +42,9 @@ namespace dem {
                 case TokenType::MOD:
                     str = "MOD";
                     break;
+                case TokenType::EXP:
+                    str = "EXP";
+                    break;
                 case TokenType::TEQ:
                     str = "TEQ";
                     break;

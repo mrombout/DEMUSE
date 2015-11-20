@@ -18,6 +18,7 @@ namespace dem {
             addDefinition(new TokenDefinition(TokenType::DIVIDE,     new CharMatcher('/')));
             addDefinition(new TokenDefinition(TokenType::MOD,        new CharMatcher('%')));
             addDefinition(new TokenDefinition(TokenType::EQ,         new StringMatcher("==")));
+            addDefinition(new TokenDefinition(TokenType::EXP,        new CharMatcher('^')));
             addDefinition(new TokenDefinition(TokenType::TEQ,        new StringMatcher("===")));
             addDefinition(new TokenDefinition(TokenType::NEQ,        new StringMatcher("!=")));
             addDefinition(new TokenDefinition(TokenType::TNEQ,       new StringMatcher("!==")));

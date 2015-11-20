@@ -18,6 +18,7 @@ namespace dem {
             TIMES,
             DIVIDE,
             MOD,
+            EXP,
             EQ,
             TEQ,
             NEQ,
