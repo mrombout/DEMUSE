@@ -3,20 +3,24 @@
 
 #include "Statement.h"
 #include "symbol/expression/Expression.h"
-#include "symbol/Assignment.h"
+#include "symbol/expression/AssignmentExpression.h"
 
 namespace dem {
     namespace parser {
         class For : public Statement {
         public:
-            For(Statement *initialization, Expression *condition, Assignment *afterThought);
+            For(Statement *initialization, Expression *condition, AssignmentExpression *afterThought);
+
+            virtual bool accept(Visitor &visitor);
+
+            Statement *initialization() const;
+            Expression *condition() const;
+            AssignmentExpression *afterThought() const;
 
         private:
             Statement *mInitialization;
             Expression *mCondition;
-            Assignment *mAfterThought;
-        public:
-            virtual bool accept(Visitor &visitor);
+            AssignmentExpression *mAfterThought;
         };
     }
 }

@@ -3,7 +3,7 @@
 
 namespace dem {
     namespace parser {
-        For::For(Statement *initialization, Expression *condition, Assignment *afterThought) :
+        For::For(Statement *initialization, Expression *condition, AssignmentExpression *afterThought) :
             mInitialization(initialization),
             mCondition(condition),
             mAfterThought(afterThought) {
@@ -18,6 +18,18 @@ namespace dem {
             }
 
             return visitor.visitLeave(*this);
+        }
+
+        Statement *For::initialization() const {
+            return mInitialization;
+        }
+
+        Expression *For::condition() const {
+            return mCondition;
+        }
+
+        AssignmentExpression *For::afterThought() const {
+            return mAfterThought;
         }
     }
 }

@@ -1,8 +1,11 @@
+#include <symbol/VariableDeclaration.h>
+#include <factory/VariableDeclarationFactory.h>
 #include "factory/ForFactory.h"
 #include "factory/AssignmentFactory.h"
 #include "factory/ExpressionFactory.h"
-#include "symbol/Statement.h"
+#include "factory/BlockFactory.h"
 #include "symbol/For.h"
+#include "symbol/Block.h"
 
 namespace dem {
     namespace parser {
@@ -20,10 +23,12 @@ namespace dem {
                 expect(tokens, lexer::TokenType::TERMINATOR);
             } else if(tokens.front().is(lexer::TokenType::VAR)) {
                 // variable_def_stmt
-                // TODO: Variable def
+                initializerStatement = VariableDeclarationFactory::produce(tokens);
+                expect(tokens, lexer::TokenType::TERMINATOR);
             } else {
                 // assignment_stmt
-                initializerStatement = AssignmentFactory::produce(tokens);
+                initializerStatement = ExpressionFactory::produce(tokens);
+                expect(tokens, lexer::TokenType::TERMINATOR);
             }
 
             // ( terminator | conditional )
@@ -33,10 +38,17 @@ namespace dem {
                 expect(tokens, lexer::TokenType::TERMINATOR);
             } else {
                 conditionalExpression = ExpressionFactory::produce(tokens);
+                expect(tokens, lexer::TokenType::TERMINATOR);
             }
 
             // ( terminator | assignment_stmt )
-            Assignment *assignmentStatement = AssignmentFactory::produce(tokens);
+            AssignmentExpression *assignmentStatement = dynamic_cast<AssignmentExpression*>(ExpressionFactory::produce(tokens));
+
+            // ")"
+            expect(tokens, lexer::TokenType::CLOSE);
+
+            // block
+            Block *block = BlockFactory::produce(tokens);
 
             return new For(initializerStatement, conditionalExpression, assignmentStatement);
         }
