@@ -6,6 +6,7 @@
 #include "symbol/expression/MultiplicationExpression.h"
 #include "symbol/expression/DivisionExpression.h"
 #include "symbol/expression/ModuloExpression.h"
+#include "symbol/expression/AssignmentExpression.h"
 #include "symbol/expression/SmallerThanCondition.h"
 #include "symbol/expression/SmallerThanOrEqualCondition.h"
 #include "symbol/expression/LargerThanCondition.h"
@@ -23,44 +24,46 @@ namespace dem {
     namespace parser {
         const std::map<lexer::TokenType, int> ExpressionFactory::mOperatorPrecedence = {
             // TODO: (), []  -- 1
-            { lexer::TokenType::PERIOD, 1 },
+            { lexer::TokenType::PERIOD,     1 },
             // TODO: ! ~ - + ++ -- -- 2
-            { lexer::TokenType::TIMES,  3 },
-            { lexer::TokenType::DIVIDE, 3 },
-            { lexer::TokenType::MOD,    3 },
-            { lexer::TokenType::PLUS,   4 },
-            { lexer::TokenType::MINUS,  4 },
-            { lexer::TokenType::SM,     6 },
-            { lexer::TokenType::SMEQ,   6 },
-            { lexer::TokenType::LR,     6 },
-            { lexer::TokenType::LREQ,   6 },
-            { lexer::TokenType::EQ,     7 },
-            { lexer::TokenType::TEQ,    7 },
-            { lexer::TokenType::NEQ,    7 },
-            { lexer::TokenType::TNEQ,   7 },
-            { lexer::TokenType::AND,    11 },
-            { lexer::TokenType::OR,     12 },
-            // TODO: = += -= *= /= %= &= |= ^= -- 14
+            { lexer::TokenType::TIMES,      3 },
+            { lexer::TokenType::DIVIDE,     3 },
+            { lexer::TokenType::MOD,        3 },
+            { lexer::TokenType::PLUS,       4 },
+            { lexer::TokenType::MINUS,      4 },
+            { lexer::TokenType::SM,         6 },
+            { lexer::TokenType::SMEQ,       6 },
+            { lexer::TokenType::LR,         6 },
+            { lexer::TokenType::LREQ,       6 },
+            { lexer::TokenType::EQ,         7 },
+            { lexer::TokenType::TEQ,        7 },
+            { lexer::TokenType::NEQ,        7 },
+            { lexer::TokenType::TNEQ,       7 },
+            { lexer::TokenType::AND,        11 },
+            { lexer::TokenType::OR,         12 },
+            { lexer::TokenType::ASSIGNMENT, 14 },
+            // TODO: += -= *= /= %= &= |= ^= -- 14
             // TODO: , -- 15
         };
 
         const std::map<lexer::TokenType, ExpressionFactory::Associativity> ExpressionFactory::mOperatorAssociativity = {
-            { lexer::TokenType::PERIOD, ExpressionFactory::Associativity::RIGHT },
-            { lexer::TokenType::TIMES,  ExpressionFactory::Associativity::LEFT },
-            { lexer::TokenType::DIVIDE, ExpressionFactory::Associativity::LEFT },
-            { lexer::TokenType::MOD,    ExpressionFactory::Associativity::LEFT },
-            { lexer::TokenType::PLUS,   ExpressionFactory::Associativity::LEFT },
-            { lexer::TokenType::MINUS,  ExpressionFactory::Associativity::LEFT },
-            { lexer::TokenType::SM,     ExpressionFactory::Associativity::LEFT },
-            { lexer::TokenType::SMEQ,   ExpressionFactory::Associativity::LEFT },
-            { lexer::TokenType::LR,     ExpressionFactory::Associativity::LEFT },
-            { lexer::TokenType::LREQ,   ExpressionFactory::Associativity::LEFT },
-            { lexer::TokenType::EQ,     ExpressionFactory::Associativity::LEFT },
-            { lexer::TokenType::TEQ,    ExpressionFactory::Associativity::LEFT },
-            { lexer::TokenType::NEQ,    ExpressionFactory::Associativity::LEFT },
-            { lexer::TokenType::TNEQ,   ExpressionFactory::Associativity::LEFT },
-            { lexer::TokenType::AND,    ExpressionFactory::Associativity::LEFT },
-            { lexer::TokenType::OR,     ExpressionFactory::Associativity::LEFT },
+            { lexer::TokenType::PERIOD,     ExpressionFactory::Associativity::RIGHT },
+            { lexer::TokenType::TIMES,      ExpressionFactory::Associativity::LEFT },
+            { lexer::TokenType::DIVIDE,     ExpressionFactory::Associativity::LEFT },
+            { lexer::TokenType::MOD,        ExpressionFactory::Associativity::LEFT },
+            { lexer::TokenType::PLUS,       ExpressionFactory::Associativity::LEFT },
+            { lexer::TokenType::MINUS,      ExpressionFactory::Associativity::LEFT },
+            { lexer::TokenType::SM,         ExpressionFactory::Associativity::LEFT },
+            { lexer::TokenType::SMEQ,       ExpressionFactory::Associativity::LEFT },
+            { lexer::TokenType::LR,         ExpressionFactory::Associativity::LEFT },
+            { lexer::TokenType::LREQ,       ExpressionFactory::Associativity::LEFT },
+            { lexer::TokenType::EQ,         ExpressionFactory::Associativity::LEFT },
+            { lexer::TokenType::TEQ,        ExpressionFactory::Associativity::LEFT },
+            { lexer::TokenType::NEQ,        ExpressionFactory::Associativity::LEFT },
+            { lexer::TokenType::TNEQ,       ExpressionFactory::Associativity::LEFT },
+            { lexer::TokenType::AND,        ExpressionFactory::Associativity::LEFT },
+            { lexer::TokenType::OR,         ExpressionFactory::Associativity::LEFT },
+            { lexer::TokenType::ASSIGNMENT, ExpressionFactory::Associativity::LEFT }
         };
 
         Expression *ExpressionFactory::produce(std::deque <lexer::Token> &tokens) {
@@ -125,6 +128,7 @@ namespace dem {
                 || token.is(lexer::TokenType::TIMES)
                 || token.is(lexer::TokenType::DIVIDE)
                 || token.is(lexer::TokenType::MOD)
+                || token.is(lexer::TokenType::ASSIGNMENT)
                 || token.is(lexer::TokenType::EQ)
                 || token.is(lexer::TokenType::NEQ)
                 || token.is(lexer::TokenType::TEQ)
@@ -174,6 +178,12 @@ namespace dem {
                     return new DivisionExpression(lhs, rhs);
                 case lexer::TokenType::MOD:
                     return new ModuloExpression(lhs, rhs);
+                case lexer::TokenType::ASSIGNMENT: {
+                    Identifier *identifier = dynamic_cast<Identifier*>(lhs);
+                    if(identifier == nullptr)
+                        throw "Some error"; // TODO: Throw a proper exception
+                    return new AssignmentExpression(identifier, rhs);
+                }
                 case lexer::TokenType::SM:
                     return new SmallerThanCondition(lhs, rhs);
                 case lexer::TokenType::SMEQ:

@@ -8,11 +8,11 @@
 #include "factory/WhileFactory.h"
 #include "factory/ForFactory.h"
 #include "factory/FunctionDefinitionFactory.h"
-#include "factory/VariableDefinitionFactory.h"
+#include "factory/VariableDeclarationFactory.h"
 #include "symbol/Return.h"
 #include "symbol/Break.h"
 #include "symbol/Continue.h"
-#include "symbol/VariableDefinition.h"
+#include "symbol/VariableDeclaration.h"
 #include "symbol/If.h"
 #include "symbol/While.h"
 #include "symbol/For.h"
@@ -24,7 +24,7 @@ namespace dem {
             // statement = ( simple_statement | compound_statement ) terminator ;
             Statement *statement = nullptr;
 
-            // simple_stmt = return_stmt | break_stmt | continue_stmt | variable_def_stmt | assignment_stmt | expression_stmt ;
+            // simple_stmt = return_stmt | break_stmt | continue_stmt | variable_def_stmt | expression_stmt ;
             if(tokens.front().is(lexer::TokenType::RETURN)) {
                 // return_stmt
                 statement = ReturnFactory::produce(tokens);
@@ -36,16 +36,10 @@ namespace dem {
                 statement = ContinueFactory::produce(tokens);
             } else if(tokens.front().is(lexer::TokenType::VAR)) {
                 // variable_def_stmt
-                statement = VariableDefinitionFactory::produce(tokens);
+                statement = VariableDeclarationFactory::produce(tokens);
             } else if(tokens.front().is(lexer::TokenType::IDENTIFIER)) {
-                // assignment_stmt
-                Assignment *assignment = AssignmentFactory::produce(tokens);
-                if(assignment) {
-                    statement = assignment;
-                } else {
-                    // expression_stmt
-                    statement = ExpressionFactory::produce(tokens);
-                }
+                // expression_stmt
+                statement = ExpressionFactory::produce(tokens);
             }
 
             // compound_stmt = if_stmt | while_stmt | for_stmt | function_def | play_stmt ;

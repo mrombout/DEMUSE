@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "factory/VariableDefinitionFactory.h"
+#include "VariableDeclarationFactory.h"
 
 class VariableDefinitionFactory : public ::testing::Test {
 protected:
@@ -7,7 +7,7 @@ protected:
 
     }
 
-    dem::parser::VariableDefinitionFactory factory;
+    dem::parser::VariableDeclarationFactory factory;
 };
 
 TEST_F(VariableDefinitionFactory, PrimitiveVariableDefinition) {

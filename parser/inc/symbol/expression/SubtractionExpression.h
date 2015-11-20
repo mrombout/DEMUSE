@@ -5,7 +5,7 @@
 
 namespace dem {
     namespace parser {
-        class SubtractionExpression : public BinaryExpression {
+        class SubtractionExpression : public BinaryExpression<Expression, Expression> {
         public:
             virtual bool accept(Visitor &visitor);
 

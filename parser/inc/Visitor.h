@@ -1,47 +1,44 @@
 #ifndef DEMUSE_DEMUSEVISITOR_H
 #define DEMUSE_DEMUSEVISITOR_H
 
-namespace dem {
-    namespace parser {
-        class ArgumentList;
-        class Assignment;
-        class Block;
-        class Bool;
-        class Break;
-        class Continue;
-        class For;
-        class FunctionDefinition;
-        class Identifier;
-        class If;
-        class Number;
-        class ParameterList;
-        class Program;
-        class Return;
-        class Statement;
-        class Symbol;
-        class Text;
-        class VariableDefinition;
-        class While;
-        class AdditionExpression;
-        class AndCondition;
-        class BinaryExpression;
-        class Condition;
-        class DivisionExpression;
-        class EqualCondition;
-        class Expression;
-        class LargerThanCondition;
-        class LargerThanOrEqualCondition;
-        class ModuloExpression;
-        class MultiplicationExpression;
-        class NotEqualCondition;
-        class OrCondition;
-        class SmallerThanCondition;
-        class SmallerThanOrEqualCondition;
-        class StrictEqualCondition;
-        class StrictNotEqualCondition;
-        class SubtractionExpression;
-    }
-}
+#include "symbol/expression/AssignmentExpression.h"
+#include "symbol/ArgumentList.h"
+#include "symbol/Assignment.h"
+#include "symbol/Block.h"
+#include "symbol/Bool.h"
+#include "symbol/Break.h"
+#include "symbol/Continue.h"
+#include "symbol/For.h"
+#include "symbol/FunctionDefinition.h"
+#include "symbol/Identifier.h"
+#include "symbol/If.h"
+#include "symbol/Number.h"
+#include "symbol/ParameterList.h"
+#include "symbol/Program.h"
+#include "symbol/Return.h"
+#include "symbol/Statement.h"
+#include "symbol/Symbol.h"
+#include "symbol/Text.h"
+#include "symbol/VariableDeclaration.h"
+#include "symbol/While.h"
+#include "symbol/expression/AdditionExpression.h"
+#include "symbol/expression/AndCondition.h"
+#include "symbol/expression/BinaryExpression.h"
+#include "symbol/expression/Condition.h"
+#include "symbol/expression/DivisionExpression.h"
+#include "symbol/expression/EqualCondition.h"
+#include "symbol/expression/Expression.h"
+#include "symbol/expression/LargerThanCondition.h"
+#include "symbol/expression/LargerThanOrEqualCondition.h"
+#include "symbol/expression/ModuloExpression.h"
+#include "symbol/expression/MultiplicationExpression.h"
+#include "symbol/expression/NotEqualCondition.h"
+#include "symbol/expression/OrCondition.h"
+#include "symbol/expression/SmallerThanCondition.h"
+#include "symbol/expression/SmallerThanOrEqualCondition.h"
+#include "symbol/expression/StrictEqualCondition.h"
+#include "symbol/expression/StrictNotEqualCondition.h"
+#include "symbol/expression/SubtractionExpression.h"
 
 namespace dem {
     namespace parser {
@@ -53,7 +50,7 @@ namespace dem {
             bool visitEnter(parser::Assignment &assignment);
             bool visitLeave(parser::Assignment &assignment);
 
-            bool visitEnter(parser::Block &block);
+            virtual bool visitEnter(parser::Block &block);
             bool visitLeave(parser::Block &block);
 
             bool visit(parser::Bool &boolSymbol);
@@ -78,7 +75,7 @@ namespace dem {
             bool visitEnter(parser::ParameterList &parameterList);
             bool visitLeave(parser::ParameterList &parameterList);
 
-            bool visitEnter(parser::Program &program);
+            virtual bool visitEnter(parser::Program &program);
             bool visitLeave(parser::Program &program);
 
             bool visitEnter(parser::Return &returnSymbol);
@@ -94,8 +91,8 @@ namespace dem {
 
             bool visit(parser::Text &text);
 
-            bool visitEnter(parser::VariableDefinition &variableDefinition);
-            bool visitLeave(parser::VariableDefinition &variableDefinition);
+            virtual bool visitEnter(parser::VariableDeclaration &variableDefinition);
+            bool visitLeave(parser::VariableDeclaration &variableDefinition);
 
             bool visitEnter(parser::While &whileSymbol);
             bool visitLeave(parser::While &whileSymbol);
@@ -106,8 +103,8 @@ namespace dem {
             bool visitEnter(parser::AndCondition &andCondition);
             bool visitLeave(parser::AndCondition &andCondition);
 
-            bool visitEnter(parser::BinaryExpression &binaryExpression);
-            bool visitLeave(parser::BinaryExpression &binaryExpression);
+            bool visitEnter(parser::AssignmentExpression &assignmentExpression);
+            bool visitLeave(parser::AssignmentExpression &assignmentExpression);
 
             bool visitEnter(parser::Condition &condition);
             bool visit(parser::Condition &condition);

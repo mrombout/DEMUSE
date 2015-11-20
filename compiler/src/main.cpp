@@ -2,6 +2,7 @@
 #include <fstream>
 #include "MuseLexer.h"
 #include "MuseParser.h"
+#include "MidiCompiler.h"
 
 int main(int argc, char* argv[]) {
     if(argc < 2) {
@@ -22,5 +23,6 @@ int main(int argc, char* argv[]) {
     dem::parser::Symbol *program = museParser.parse(tokens);
 
     // compile input
-    dem::
+    dem::compiler::MidiCompiler midiCompiler;
+    midiCompiler.compile(static_cast<dem::parser::Program*>(program));
 }

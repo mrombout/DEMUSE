@@ -52,8 +52,8 @@ set(Parser_SRCS
     inc/symbol/Block.h
     src/symbol/Block.cpp
 
-    inc/symbol/VariableDefinition.h
-    src/symbol/VariableDefinition.cpp
+    inc/symbol/VariableDeclaration.h
+    src/symbol/VariableDeclaration.cpp
 
     inc/symbol/ArgumentList.h
     src/symbol/ArgumentList.cpp
@@ -76,7 +76,6 @@ set(Parser_SRCS
     src/symbol/expression/Expression.cpp
 
     inc/symbol/expression/BinaryExpression.h
-    src/symbol/expression/BinaryExpression.cpp
 
     inc/symbol/expression/AdditionExpression.h
     src/symbol/expression/AdditionExpression.cpp
@@ -92,6 +91,9 @@ set(Parser_SRCS
 
     inc/symbol/expression/ModuloExpression.h
     src/symbol/expression/ModuloExpression.cpp
+
+    inc/symbol/expression/AssignmentExpression.h
+    src/symbol/expression/AssignmentExpression.cpp
 
     inc/symbol/expression/Condition.h
     src/symbol/expression/Condition.cpp
@@ -168,8 +170,8 @@ set(Parser_SRCS
     inc/factory/BlockFactory.h
     src/factory/BlockFactory.cpp
 
-    inc/factory/VariableDefinitionFactory.h
-    src/factory/VariableDefinitionFactory.cpp
+    inc/factory/VariableDeclarationFactory.h
+    src/factory/VariableDeclarationFactory.cpp
 
     inc/factory/ArgumentListFactory.h
     src/factory/ArgumentListFactory.cpp

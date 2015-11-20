@@ -5,7 +5,7 @@
 
 namespace dem {
     namespace parser {
-        class ModuloExpression : public BinaryExpression {
+        class ModuloExpression : public BinaryExpression<Expression, Expression> {
         public:
             ModuloExpression(Expression *left, Expression *right);
 

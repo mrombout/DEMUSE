@@ -5,13 +5,11 @@ block         = "{" { statement } "}" ;
 
 (* statements *)
 statement         = ( simple_statement | compound_statement ) terminator ;
-simple_stmt       = return_stmt | break_stmt | continue_stmt | variable_def_stmt | assignment_stmt | expression_stmt ;
+simple_stmt       = return_stmt | break_stmt | continue_stmt | variable_def_stmt | expression_stmt ;
 compound_stmt     = if_stmt | while_stmt | for_stmt | function_def | play_stmt ;
 
 expression_stmt   = expression ;
 variable_def_stmt = "var" assignment_stmt ;
-assignment_stmt   = lvalue "=" expression ;
-lvalue            = identifier ;
 return_stmt       = "return" expression ;
 break_stmt        = "break" ;
 continue_stmt     = "continue" ;
@@ -24,7 +22,9 @@ while_stmt        = "while(" conditional ")" block ;
 for_stmt          = "for(" ( terminator | variable_def_stmt | assignment_stmt ) ( terminator | conditional ) ( terminator | assignment_stmt ) ")" block ;
 
 (* expression *)
-expression        = array_init | conditional ;
+expression        = array_init | conditional | assignment ;
+assignment        = lvalue "=" ( conditional | assignment ) ;
+lvalue            = identifier ;
 conditional       = or_test ;
 
 or_test           = and_test | or_test "||" and_test ;

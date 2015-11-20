@@ -49,8 +49,8 @@ namespace dem {
 
         bool Visitor::visit(Text &text) { return true; }
 
-        bool Visitor::visitEnter(VariableDefinition &variableDefinition) { return true; }
-        bool Visitor::visitLeave(VariableDefinition &variableDefinition) { return true; }
+        bool Visitor::visitEnter(VariableDeclaration &variableDefinition) { return true; }
+        bool Visitor::visitLeave(VariableDeclaration &variableDefinition) { return true; }
 
         bool Visitor::visitEnter(While &whileSymbol) { return true; }
         bool Visitor::visitLeave(While &whileSymbol) { return true; }
@@ -61,8 +61,8 @@ namespace dem {
         bool Visitor::visitEnter(AndCondition &andCondition) { return true; }
         bool Visitor::visitLeave(AndCondition &andCondition) { return true; }
 
-        bool Visitor::visitEnter(BinaryExpression &binaryExpression) { return true; }
-        bool Visitor::visitLeave(BinaryExpression &binaryExpression) { return true; }
+        bool Visitor::visitEnter(AssignmentExpression &assignmentExpression) { return true; }
+        bool Visitor::visitLeave(AssignmentExpression &assignmentExpression) { return true; }
 
         bool Visitor::visitEnter(Condition &condition) { return true; }
         bool Visitor::visit(Condition &condition) { return true; }

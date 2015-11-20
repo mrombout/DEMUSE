@@ -2,6 +2,21 @@ cmake_minimum_required(VERSION 3.3 FATAL_ERROR)
 project(Compiler VERSION 0.1 LANGUAGES CXX)
 
 set(Compiler_SRCS
+    inc/Scope.h
+    src/Scope.cpp
+
+    inc/GlobalScope.h
+    src/GlobalScope.cpp
+
+    inc/Variable.h
+    src/Variable.cpp
+
+    inc/value/Value.h
+    src/value/Value.cpp
+
+    inc/value/NullValue.h
+    src/value/NullValue.cpp
+
     inc/Compiler.h
     src/Compiler.cpp
 
@@ -26,6 +41,12 @@ target_link_libraries(libcompiler PRIVATE dem::libparser)
 
 target_include_directories(compiler PRIVATE ${Compiler_INCLUDE_DIRS} ${Parser_INCLUDE_DIRS} ${Lexer_INCLUDE_DIRS})
 target_link_libraries(compiler PRIVATE dem::libparser dem::liblexer)
+
+# dependencies
+find_package(Jdksmidi REQUIRED)
+if(Jdksmidi_FOUND)
+
+endif()
 
 # install
 install(TARGETS compiler DESTINATION bin)

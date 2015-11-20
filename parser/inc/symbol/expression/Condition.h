@@ -5,7 +5,7 @@
 
 namespace dem {
     namespace parser {
-        class Condition : public BinaryExpression {
+        class Condition : public BinaryExpression<Expression, Expression> {
         public:
             Condition(Expression *left, Expression *right);
         };

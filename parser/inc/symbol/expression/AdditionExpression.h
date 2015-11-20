@@ -11,7 +11,7 @@ namespace dem {
 
 namespace dem {
     namespace parser {
-        class AdditionExpression : public BinaryExpression {
+        class AdditionExpression : public BinaryExpression<Expression, Expression> {
         public:
             AdditionExpression(Expression *left, Expression *right);
 

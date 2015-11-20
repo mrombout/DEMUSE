@@ -5,16 +5,26 @@
 
 namespace dem {
     namespace parser {
+        template<typename TLeft, typename TRight>
         class BinaryExpression : public Expression {
         public:
-            BinaryExpression(Expression *left, Expression *right);
+            BinaryExpression(TLeft *left, TRight *right) :
+                mLeft(left),
+                mRight(right) {
 
-            Expression &left() const;
-            Expression &right() const;
+            }
+
+            TLeft &left() const {
+                return *mLeft;
+            }
+
+            TRight &right() const {
+                return *mRight;
+            }
 
         private:
-            Expression *mLeft;
-            Expression *mRight;
+            TLeft *mLeft;
+            TRight *mRight;
         };
     }
 }
