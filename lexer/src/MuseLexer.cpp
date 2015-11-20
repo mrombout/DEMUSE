@@ -10,8 +10,8 @@ namespace dem {
             addDefinition(new TokenDefinition(TokenType::NUMBER,     new RegexMatcher("\\d+(?:\\.\\d+)?")));
             addDefinition(new TokenDefinition(TokenType::COMMA,      new CharMatcher(',')));
             addDefinition(new TokenDefinition(TokenType::PERIOD,     new CharMatcher('.')));
-            addDefinition(new TokenDefinition(TokenType::POSITIVE,   new RegexMatcher("\\-(?=\\d)")));
-            addDefinition(new TokenDefinition(TokenType::NEGATIVE,   new RegexMatcher("\\+(?=\\d)")));
+            addDefinition(new TokenDefinition(TokenType::POSITIVE,   new RegexMatcher("\\+(?=\\d)")));
+            addDefinition(new TokenDefinition(TokenType::NEGATIVE,   new RegexMatcher("\\-(?=\\d)")));
             addDefinition(new TokenDefinition(TokenType::PLUS,       new CharMatcher('+')));
             addDefinition(new TokenDefinition(TokenType::MINUS,      new CharMatcher('-')));
             addDefinition(new TokenDefinition(TokenType::TIMES,      new CharMatcher('*')));
