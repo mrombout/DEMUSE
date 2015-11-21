@@ -23,6 +23,9 @@ set(Compiler_SRCS
     inc/value/BooleanValue.h
     src/value/BooleanValue.cpp
 
+    inc/value/TextValue.h
+    src/value/TextValue.cpp
+
     inc/function/Function.h
     src/function/Function.cpp
 

@@ -20,10 +20,6 @@ namespace dem {
             mValue = value;
         }
 
-        std::string Variable::toString() {
-            return mValue->toString();
-        }
-
         Value *Variable::add(Value *b) {
             return mValue->add(b);
         }
@@ -50,6 +46,10 @@ namespace dem {
 
         bool Variable::asBool() const {
             return mValue->asBool();
+        }
+
+        std::string Variable::asString() const {
+            return mValue->asString();
         }
 
         bool Variable::operator==(const Value &other) {

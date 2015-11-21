@@ -17,8 +17,7 @@ namespace dem {
 
             virtual double asNumber() const;
             virtual bool asBool() const;
-
-            virtual std::string toString();
+            virtual std::string asString() const;
 
             virtual bool operator==(const Value &other);
             virtual bool operator!=(const Value &other);

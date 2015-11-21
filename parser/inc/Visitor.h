@@ -90,7 +90,7 @@ namespace dem {
             bool visit(parser::Symbol &symbol);
             bool visitLeave(parser::Symbol &symbol);
 
-            bool visit(parser::Text &text);
+            virtual bool visit(parser::Text &text);
 
             virtual bool visitEnter(parser::VariableDeclaration &variableDefinition);
             bool visitLeave(parser::VariableDeclaration &variableDefinition);

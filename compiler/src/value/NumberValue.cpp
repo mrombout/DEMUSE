@@ -46,7 +46,7 @@ namespace dem {
             return mValue > 0;
         }
 
-        std::string NumberValue::toString() {
+        std::string NumberValue::asString() const {
             return std::to_string(mValue);
         }
 

@@ -3,10 +3,6 @@
 
 namespace dem {
     namespace compiler {
-        std::string NullValue::toString() {
-            return "NULL";
-        }
-
         Value *NullValue::add(Value *b) {
             throw "NullValue"; // TODO: Throw proper exception
         }
@@ -33,6 +29,10 @@ namespace dem {
 
         bool NullValue::asBool() const {
             throw "NullValue"; // TODO: Throw proper exception
+        }
+
+        std::string NullValue::asString() const {
+            return "NULL";
         }
 
         bool NullValue::operator==(const Value &other) {

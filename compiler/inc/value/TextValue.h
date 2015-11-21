@@ -1,23 +1,18 @@
-#ifndef DEMUSE_VARIABLE_H
-#define DEMUSE_VARIABLE_H
+#ifndef DEMUSE_TEXTVALUE_H
+#define DEMUSE_TEXTVALUE_H
 
-#include "symbol/Identifier.h"
-#include "value/Value.h"
+#include <string>
+#include "Value.h"
 
 namespace dem {
     namespace compiler {
-        class Variable : public Value {
+        class TextValue : public Value {
         public:
-            Variable(parser::Identifier *identifier, Value *value);
-
-            parser::Identifier *identifier() const;
-
-            Value *value() const;
-            void setValue(Value *value);
+            TextValue(std::string value);
 
             virtual Value *add(Value *b);
-            virtual Value *multiply(Value *b);
             virtual Value *subtract(Value *b);
+            virtual Value *multiply(Value *b);
             virtual Value *divide(Value *b);
             virtual Value *modulo(Value *b);
 
@@ -33,10 +28,9 @@ namespace dem {
             virtual bool operator>=(const Value &other);
 
         private:
-            parser::Identifier *mIdentifier;
-            Value *mValue;
+            std::string mValue;
         };
     }
 }
 
-#endif //DEMUSE_VARIABLE_H
+#endif //DEMUSE_TEXTVALUE_H

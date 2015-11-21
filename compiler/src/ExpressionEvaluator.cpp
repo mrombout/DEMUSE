@@ -2,6 +2,7 @@
 #include "ExpressionEvaluator.h"
 #include "value/NumberValue.h"
 #include "value/BooleanValue.h"
+#include "value/TextValue.h"
 
 namespace dem {
     namespace compiler {
@@ -44,7 +45,7 @@ namespace dem {
             }
 
             // assign b to a
-            std::cout << "Assigning " << a->identifier()->name() << " = " << b->toString() << std::endl;
+            std::cout << "Assigning " << a->identifier()->name() << " = " << b->asString() << std::endl;
             a->setValue(b);
 
             mStack.push(a);
@@ -68,7 +69,7 @@ namespace dem {
             mStack.pop();
 
             // add b to a
-            std::cout << "Executing " << a->toString() << " + " << b->toString() << std::endl;
+            std::cout << "Executing " << a->asString() << " + " << b->asString() << std::endl;
             Value *c = a->add(b);
             mStack.push(c);
         }
@@ -89,7 +90,7 @@ namespace dem {
             mStack.pop();
 
             // subtract b from a
-            std::cout << "Executing " << a->toString() << " - " << b->toString() << std::endl;
+            std::cout << "Executing " << a->asString() << " - " << b->asString() << std::endl;
             Value *c = a->subtract(b);
             mStack.push(c);
 
@@ -112,7 +113,7 @@ namespace dem {
             mStack.pop();
 
             // multiply b by a
-            std::cout << "Executing " << a->toString() << " * " << b->toString() << std::endl;
+            std::cout << "Executing " << a->asString() << " * " << b->asString() << std::endl;
             Value *c = a->multiply(b);
             mStack.push(c);
 
@@ -135,7 +136,7 @@ namespace dem {
             mStack.pop();
 
             // divide b by a
-            std::cout << "Executing " << a->toString() << " / " << b->toString() << std::endl;
+            std::cout << "Executing " << a->asString() << " / " << b->asString() << std::endl;
             Value *c = a->divide(b);
             mStack.push(c);
 
@@ -158,7 +159,7 @@ namespace dem {
             mStack.pop();
 
             // divide b by a
-            std::cout << "Executing " << a->toString() << " % " << b->toString() << std::endl;
+            std::cout << "Executing " << a->asString() << " % " << b->asString() << std::endl;
             Value *c = a->modulo(b);
             mStack.push(c);
 
@@ -395,6 +396,14 @@ namespace dem {
             std::cout << "ENTER - Evaluating Bool" << std::endl;
 
             mStack.push(new BooleanValue(boolSymbol.value()));
+
+            return true;
+        }
+
+        bool ExpressionEvaluator::visit(parser::Text &text) {
+            std::cout << "ENTER - Evaluating Text" << std::endl;
+
+            mStack.push(new TextValue(text.value()));
 
             return true;
         }

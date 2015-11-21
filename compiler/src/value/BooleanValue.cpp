@@ -7,10 +7,6 @@ namespace dem {
 
         }
 
-        std::string BooleanValue::toString() {
-            return mValue ? "true" : "false";
-        }
-
         Value *BooleanValue::add(Value *b) {
             throw "Can not add booleans"; // TODO: Throw proper error
         }
@@ -37,6 +33,10 @@ namespace dem {
 
         bool BooleanValue::asBool() const {
             return mValue;
+        }
+
+        std::string BooleanValue::asString() const {
+            return mValue ? "true" : "false";
         }
 
         bool BooleanValue::operator==(const Value &other) {
