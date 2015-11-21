@@ -43,7 +43,9 @@ set(Compiler_SRCS
 )
 
 set(TestCompiler_SRCS
-
+    test/value/BooleanValueTest.cpp
+    test/value/TextValueTest.cpp
+    test/value/NumberValueTest.cpp
 )
 
 add_library(libcompiler ${Compiler_SRCS})
@@ -65,6 +67,22 @@ find_package(Jdksmidi REQUIRED)
 if(Jdksmidi_FOUND)
 
 endif()
+
+# testing
+enable_testing()
+
+add_executable(testcompiler ${Compiler_SRCS} ${TestCompiler_SRCS})
+
+target_link_libraries(testcompiler dem::libparser dem::liblexer)
+target_include_directories(testcompiler PRIVATE inc ${Lexer_INCLUDE_DIRS})
+
+find_package(GTest REQUIRED)
+if(GTEST_FOUND)
+    target_include_directories(testcompiler PRIVATE E:/Libraries/googletest-release-1.7.0/include)
+    target_link_libraries(testcompiler ${GTEST_BOTH_LIBRARIES})
+endif()
+
+add_test(AllCompilerTests testcompiler)
 
 # install
 install(TARGETS compiler DESTINATION bin)
