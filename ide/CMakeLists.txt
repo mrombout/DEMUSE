@@ -14,8 +14,8 @@ set(IDE_SRCS
     inc/MuseAuiTabArt.h
     src/MuseAuiTabArt.cpp
 
-    inc/MuseAuiToolBarArt.h
-    src/MuseAuiToolBarArt.cpp
+    inc/MuseAuiToolbarArt.h
+    src/MuseAuiToolbarArt.cpp
 )
 
 add_executable(ide
