@@ -39,6 +39,18 @@ namespace dem {
             virtual bool visitEnter(parser::NotEqualCondition &notEqualCondition) override;
             virtual bool visitLeave(parser::NotEqualCondition &notEqualCondition) override;
 
+            virtual bool visitEnter(parser::SmallerThanCondition &smallerThanCondition) override;
+            virtual bool visitLeave(parser::SmallerThanCondition &smallerThanCondition) override;
+
+            virtual bool visitEnter(parser::SmallerThanOrEqualCondition &smallerThanOrEqualCondition) override;
+            virtual bool visitLeave(parser::SmallerThanOrEqualCondition &smallerThanOrEqualCondition) override;
+
+            virtual bool visitEnter(parser::LargerThanCondition &largerThanCondition) override;
+            virtual bool visitLeave(parser::LargerThanCondition &largerThanCondition) override;
+
+            virtual bool visitEnter(parser::LargerThanOrEqualCondition &largerThanOrEqualCondition) override;
+            virtual bool visitLeave(parser::LargerThanOrEqualCondition &largerThanOrEqualCondition) override;
+
             virtual bool visit(parser::Identifier &identifier) override;
             virtual bool visit(parser::Number &number) override;
             virtual bool visit(parser::Bool &boolSymbol) override;

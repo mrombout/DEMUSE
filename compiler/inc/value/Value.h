@@ -22,6 +22,10 @@ namespace dem {
 
             virtual bool operator==(const Value &other) = 0;
             virtual bool operator!=(const Value &other) = 0;
+            virtual bool operator<(const Value &other) = 0;
+            virtual bool operator<=(const Value &other) = 0;
+            virtual bool operator>(const Value &other) = 0;
+            virtual bool operator>=(const Value &other) = 0;
         };
     }
 }

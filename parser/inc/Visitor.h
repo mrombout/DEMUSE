@@ -125,11 +125,13 @@ namespace dem {
             bool visit(parser::Expression &expression);
             bool visitLeave(parser::Expression &expression);
 
-            bool visitEnter(parser::LargerThanCondition &largerThanCondition);
-            bool visitLeave(parser::LargerThanCondition &largerThanCondition);
+            virtual bool visitEnter(parser::LargerThanCondition &largerThanCondition);
 
-            bool visitEnter(parser::LargerThanOrEqualCondition &largerThanOrEqualCondition);
-            bool visitLeave(parser::LargerThanOrEqualCondition &largerThanOrEqualCondition);
+            virtual bool visitLeave(parser::LargerThanCondition &largerThanCondition);
+
+            virtual bool visitEnter(parser::LargerThanOrEqualCondition &largerThanOrEqualCondition);
+
+            virtual bool visitLeave(parser::LargerThanOrEqualCondition &largerThanOrEqualCondition);
 
             virtual bool visitEnter(parser::ModuloExpression &moduloExpression);
 
@@ -146,11 +148,13 @@ namespace dem {
             bool visitEnter(parser::OrCondition &orCondition);
             bool visitLeave(parser::OrCondition &orCondition);
 
-            bool visitEnter(parser::SmallerThanCondition &smallerThanCondition);
-            bool visitLeave(parser::SmallerThanCondition &smallerThanCondition);
+            virtual bool visitEnter(parser::SmallerThanCondition &smallerThanCondition);
 
-            bool visitEnter(parser::SmallerThanOrEqualCondition &smallerThanOrEqualCondition);
-            bool visitLeave(parser::SmallerThanOrEqualCondition &smallerThanOrEqualCondition);
+            virtual bool visitLeave(parser::SmallerThanCondition &smallerThanCondition);
+
+            virtual bool visitEnter(parser::SmallerThanOrEqualCondition &smallerThanOrEqualCondition);
+
+            virtual bool visitLeave(parser::SmallerThanOrEqualCondition &smallerThanOrEqualCondition);
 
             bool visitEnter(parser::StrictEqualCondition &strictEqualCondition);
             bool visitLeave(parser::StrictEqualCondition &strictEqualCondition);

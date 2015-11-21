@@ -57,5 +57,21 @@ namespace dem {
         bool NumberValue::operator!=(const Value &other) {
             return mValue != other.asNumber();
         }
+
+        bool NumberValue::operator<(const Value &other) {
+            return mValue < other.asNumber();
+        }
+
+        bool NumberValue::operator<=(const Value &other) {
+            return mValue <= other.asNumber();
+        }
+
+        bool NumberValue::operator>(const Value &other) {
+            return mValue > other.asNumber();
+        }
+
+        bool NumberValue::operator>=(const Value &other) {
+            return mValue >= other.asNumber();
+        }
     }
 }

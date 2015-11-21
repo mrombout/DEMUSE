@@ -201,8 +201,92 @@ namespace dem {
             Value *a = mStack.top();
             mStack.pop();
 
-            // compare equality
+            // compare not equal
             mStack.push(new BooleanValue(*a != *b));
+
+            return true;
+        }
+
+        bool ExpressionEvaluator::visitEnter(parser::SmallerThanCondition &smallerThanCondition) {
+            std::cout << "ENTER - Evaluating SmallerThanCondition" << std::endl;
+
+            return true;
+        }
+
+        bool ExpressionEvaluator::visitLeave(parser::SmallerThanCondition &smallerThanCondition) {
+            std::cout << "LEAVE - Evaluating SmallerThanCondition" << std::endl;
+
+            Value *b = mStack.top();
+            mStack.pop();
+
+            Value *a = mStack.top();
+            mStack.pop();
+
+            // compare smaller than
+            mStack.push(new BooleanValue(*a < *b));
+
+            return true;
+        }
+
+        bool ExpressionEvaluator::visitEnter(parser::SmallerThanOrEqualCondition &smallerThanOrEqualCondition) {
+            std::cout << "ENTER - Evaluating SmallerThanOrEqualCondition" << std::endl;
+
+            return true;
+        }
+
+        bool ExpressionEvaluator::visitLeave(parser::SmallerThanOrEqualCondition &smallerThanOrEqualCondition) {
+            std::cout << "LEAVE - Evaluating SmallerThanOrEqualCondition" << std::endl;
+
+            Value *b = mStack.top();
+            mStack.pop();
+
+            Value *a = mStack.top();
+            mStack.pop();
+
+            // compare smaller or equal than
+            mStack.push(new BooleanValue(*a <= *b));
+
+            return true;
+        }
+
+        bool ExpressionEvaluator::visitEnter(parser::LargerThanCondition &largerThanCondition) {
+            std::cout << "ENTER - Evaluating LargerThanCondition" << std::endl;
+
+            return true;
+        }
+
+        bool ExpressionEvaluator::visitLeave(parser::LargerThanCondition &largerThanCondition) {
+            std::cout << "LEAVE - Evaluating LargerThanCondition" << std::endl;
+
+            Value *b = mStack.top();
+            mStack.pop();
+
+            Value *a = mStack.top();
+            mStack.pop();
+
+            // compare larger than
+            mStack.push(new BooleanValue(*a > *b));
+
+            return true;
+        }
+
+        bool ExpressionEvaluator::visitEnter(parser::LargerThanOrEqualCondition &largerThanOrEqualCondition) {
+            std::cout << "ENTER - Evaluating LargerThanOrEqualCondition" << std::endl;
+
+            return true;
+        }
+
+        bool ExpressionEvaluator::visitLeave(parser::LargerThanOrEqualCondition &largerThanOrEqualCondition) {
+            std::cout << "LEAVE - Evaluating LargerThanOrEqualCondition" << std::endl;
+
+            Value *b = mStack.top();
+            mStack.pop();
+
+            Value *a = mStack.top();
+            mStack.pop();
+
+            // compare larger than or equal
+            mStack.push(new BooleanValue(*a >= *b));
 
             return true;
         }

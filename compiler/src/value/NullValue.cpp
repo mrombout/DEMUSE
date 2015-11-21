@@ -42,5 +42,21 @@ namespace dem {
         bool NullValue::operator!=(const Value &other) {
             return typeid(dem::compiler::NullValue).name() != typeid(other).name(); // TODO: Does this work?
         }
+
+        bool NullValue::operator<(const Value &other) {
+            throw "NullValue"; // TODO: Throw proper exception, and can we actually throw responsibly in an operator?
+        }
+
+        bool NullValue::operator<=(const Value &other) {
+            throw "NullValue"; // TODO: Throw proper exception, and can we actually throw responsibly in an operator?
+        }
+
+        bool NullValue::operator>(const Value &other) {
+            throw "NullValue"; // TODO: Throw proper exception, and can we actually throw responsibly in an operator?
+        }
+
+        bool NullValue::operator>=(const Value &other) {
+            throw "NullValue"; // TODO: Throw proper exception, and can we actually throw responsibly in an operator?
+        }
     }
 }
