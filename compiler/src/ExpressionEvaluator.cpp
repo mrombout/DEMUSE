@@ -333,6 +333,46 @@ namespace dem {
             return true;
         }
 
+        bool ExpressionEvaluator::visitEnter(parser::AndCondition &andCondition) {
+            std::cout << "ENTER - Evaluating AndCondition" << std::endl;
+
+            return true;
+        }
+
+        bool ExpressionEvaluator::visitLeave(parser::AndCondition &andCondition) {
+            std::cout << "LEAVE - Evaluating AndCondition" << std::endl;
+
+            Value *b = mStack.top();
+            mStack.pop();
+
+            Value *a = mStack.top();
+            mStack.pop();
+
+            mStack.push(new BooleanValue(a->asBool() && b->asBool()));
+
+            return true;
+        }
+
+        bool ExpressionEvaluator::visitEnter(parser::OrCondition &orCondition) {
+            std::cout << "ENTER - Evaluating OrCondition" << std::endl;
+
+            return true;
+        }
+
+        bool ExpressionEvaluator::visitLeave(parser::OrCondition &orCondition) {
+            std::cout << "LEAVE - Evaluating OrCondition" << std::endl;
+
+            Value *b = mStack.top();
+            mStack.pop();
+
+            Value *a = mStack.top();
+            mStack.pop();
+
+            mStack.push(new BooleanValue(a->asBool() || b->asBool()));
+
+            return true;
+        }
+
         bool ExpressionEvaluator::visit(parser::Identifier &identifier) {
             std::cout << "ENTER - Evaluating Identifier" << std::endl;
 

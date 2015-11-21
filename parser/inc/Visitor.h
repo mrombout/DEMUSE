@@ -102,8 +102,9 @@ namespace dem {
 
             virtual bool visitLeave(parser::AdditionExpression &additionExpression);
 
-            bool visitEnter(parser::AndCondition &andCondition);
-            bool visitLeave(parser::AndCondition &andCondition);
+            virtual bool visitEnter(parser::AndCondition &andCondition);
+
+            virtual bool visitLeave(parser::AndCondition &andCondition);
 
             virtual bool visitEnter(parser::AssignmentExpression &assignmentExpression);
 
@@ -145,8 +146,9 @@ namespace dem {
 
             virtual bool visitLeave(parser::NotEqualCondition &notEqualCondition);
 
-            bool visitEnter(parser::OrCondition &orCondition);
-            bool visitLeave(parser::OrCondition &orCondition);
+            virtual bool visitEnter(parser::OrCondition &orCondition);
+
+            virtual bool visitLeave(parser::OrCondition &orCondition);
 
             virtual bool visitEnter(parser::SmallerThanCondition &smallerThanCondition);
 
