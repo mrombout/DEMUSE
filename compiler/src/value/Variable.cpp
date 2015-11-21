@@ -55,5 +55,9 @@ namespace dem {
         bool Variable::operator==(const Value &other) {
             return *mValue == other;
         }
+
+        bool Variable::operator!=(const Value &other) {
+            return *mValue != other;
+        }
     }
 }

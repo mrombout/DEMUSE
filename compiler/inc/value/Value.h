@@ -21,6 +21,7 @@ namespace dem {
             virtual std::string toString() = 0;
 
             virtual bool operator==(const Value &other) = 0;
+            virtual bool operator!=(const Value &other) = 0;
         };
     }
 }

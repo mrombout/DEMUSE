@@ -139,8 +139,9 @@ namespace dem {
 
             virtual bool visitLeave(parser::MultiplicationExpression &multiplicationExpression);
 
-            bool visitEnter(parser::NotEqualCondition &notEqualCondition);
-            bool visitLeave(parser::NotEqualCondition &notEqualCondition);
+            virtual bool visitEnter(parser::NotEqualCondition &notEqualCondition);
+
+            virtual bool visitLeave(parser::NotEqualCondition &notEqualCondition);
 
             bool visitEnter(parser::OrCondition &orCondition);
             bool visitLeave(parser::OrCondition &orCondition);

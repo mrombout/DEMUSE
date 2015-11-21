@@ -42,5 +42,9 @@ namespace dem {
         bool BooleanValue::operator==(const Value &other) {
             return mValue == other.asBool();
         }
+
+        bool BooleanValue::operator!=(const Value &other) {
+            return mValue != other.asBool();
+        }
     }
 }

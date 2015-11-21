@@ -186,6 +186,27 @@ namespace dem {
             return true;
         }
 
+        bool ExpressionEvaluator::visitEnter(parser::NotEqualCondition &notEqualCondition) {
+            std::cout << "ENTER - Evaluating NotEqualCondition" << std::endl;
+
+            return true;
+        }
+
+        bool ExpressionEvaluator::visitLeave(parser::NotEqualCondition &notEqualCondition) {
+            std::cout << "LEAVE - Evaluating NotEqualCondition" << std::endl;
+
+            Value *b = mStack.top();
+            mStack.pop();
+
+            Value *a = mStack.top();
+            mStack.pop();
+
+            // compare equality
+            mStack.push(new BooleanValue(*a != *b));
+
+            return true;
+        }
+
         bool ExpressionEvaluator::visit(parser::Identifier &identifier) {
             std::cout << "ENTER - Evaluating Identifier" << std::endl;
 
