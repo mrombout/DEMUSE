@@ -2,6 +2,7 @@
 #define DEMUSE_VALUE_H
 
 #include <string>
+#include <typeinfo>
 
 namespace dem {
     namespace compiler {
@@ -26,6 +27,18 @@ namespace dem {
             virtual bool operator<=(const Value &other) = 0;
             virtual bool operator>(const Value &other) = 0;
             virtual bool operator>=(const Value &other) = 0;
+
+            virtual bool strictEqual(const Value &other) {
+                if(typeid(*this).name() != typeid(other).name())
+                    return false;
+                return *this == other;
+            }
+
+            virtual bool strictNotEqual(const Value &other) {
+                if(typeid(*this).name() != typeid(other).name())
+                    return true;
+                return *this != other;
+            }
         };
     }
 }

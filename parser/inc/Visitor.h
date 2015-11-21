@@ -156,11 +156,13 @@ namespace dem {
 
             virtual bool visitLeave(parser::SmallerThanOrEqualCondition &smallerThanOrEqualCondition);
 
-            bool visitEnter(parser::StrictEqualCondition &strictEqualCondition);
-            bool visitLeave(parser::StrictEqualCondition &strictEqualCondition);
+            virtual bool visitEnter(parser::StrictEqualCondition &strictEqualCondition);
 
-            bool visitEnter(parser::StrictNotEqualCondition &strictNotEqualCondition);
-            bool visitLeave(parser::StrictNotEqualCondition &strictNotEqualCondition);
+            virtual bool visitLeave(parser::StrictEqualCondition &strictEqualCondition);
+
+            virtual bool visitEnter(parser::StrictNotEqualCondition &strictNotEqualCondition);
+
+            virtual bool visitLeave(parser::StrictNotEqualCondition &strictNotEqualCondition);
 
             virtual bool visitEnter(parser::SubtractionExpression &subtractionExpression);
 

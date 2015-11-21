@@ -291,6 +291,48 @@ namespace dem {
             return true;
         }
 
+        bool ExpressionEvaluator::visitEnter(parser::StrictEqualCondition &strictEqualCondition) {
+            std::cout << "ENTER - Evaluating StrictEqualCondition" << std::endl;
+
+            return true;
+        }
+
+        bool ExpressionEvaluator::visitLeave(parser::StrictEqualCondition &strictEqualCondition) {
+            std::cout << "LEAVE - Evaluating StrictEqualCondition" << std::endl;
+
+            Value *b = mStack.top();
+            mStack.pop();
+
+            Value *a = mStack.top();
+            mStack.pop();
+
+            // compare larger than or equal
+            mStack.push(new BooleanValue(a->strictEqual(*b)));
+
+            return true;
+        }
+
+        bool ExpressionEvaluator::visitEnter(parser::StrictNotEqualCondition &strictNotEqualCondition) {
+            std::cout << "ENTER - Evaluating StrictEqualCondition" << std::endl;
+
+            return true;
+        }
+
+        bool ExpressionEvaluator::visitLeave(parser::StrictNotEqualCondition &strictNotEqualCondition) {
+            std::cout << "LEAVE - Evaluating StrictEqualCondition" << std::endl;
+
+            Value *b = mStack.top();
+            mStack.pop();
+
+            Value *a = mStack.top();
+            mStack.pop();
+
+            // compare larger than or equal
+            mStack.push(new BooleanValue(a->strictNotEqual(*b)));
+
+            return true;
+        }
+
         bool ExpressionEvaluator::visit(parser::Identifier &identifier) {
             std::cout << "ENTER - Evaluating Identifier" << std::endl;
 
