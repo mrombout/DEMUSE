@@ -95,7 +95,7 @@ namespace dem {
         {
             m_normalFont = *wxNORMAL_FONT;
             m_selectedFont = *wxNORMAL_FONT;
-            m_selectedFont.SetWeight(wxBOLD);
+            m_selectedFont.SetWeight(wxNORMAL);
             m_measuringFont = m_selectedFont;
 
             m_fixedTabWidth = 100;
@@ -321,9 +321,7 @@ namespace dem {
             int drawn_tab_yoff = border_points[1].y;
             int drawn_tab_height = border_points[0].y - border_points[1].y;
 
-
-            if (page.active)
-            {
+            if (page.active) {
                 // draw active tab
 
                 // draw base background color
@@ -331,9 +329,7 @@ namespace dem {
                 dc.SetPen(*wxTRANSPARENT_PEN);
                 dc.SetBrush(wxBrush(mActiveBackgroundColor));
                 dc.DrawRectangle(r.x, r.y, r.width, r.height-4);
-            }
-            else
-            {
+            } else {
                 // draw inactive tab
 
                 // draw base background color
@@ -356,8 +352,7 @@ namespace dem {
             }
 
             int bitmap_offset = 0;
-            if (page.bitmap.IsOk())
-            {
+            if (page.bitmap.IsOk()) {
                 bitmap_offset = tab_x + 8;
 
                 // draw bitmap
@@ -368,14 +363,9 @@ namespace dem {
 
                 text_offset = bitmap_offset + page.bitmap.GetWidth();
                 text_offset += 3; // bitmap padding
-
-            }
-            else
-            {
+            } else {
                 text_offset = tab_x + 8;
             }
-            return;
-
 
             wxString draw_text = wxAuiChopText(dc,
                                                caption,
@@ -387,6 +377,7 @@ namespace dem {
                         drawn_tab_yoff + (drawn_tab_height)/2 - (texty/2) - 1);
 
             // draw focus rectangle
+            /*
             if (page.active && (wnd->FindFocus() == wnd))
             {
                 wxRect focusRectText(text_offset, (drawn_tab_yoff + (drawn_tab_height)/2 - (texty/2) - 1),
@@ -410,6 +401,7 @@ namespace dem {
 
                 wxRendererNative::Get().DrawFocusRect(wnd, dc, focusRect, 0);
             }
+            */
 
             // draw close button if necessary
             if (close_button_state != wxAUI_BUTTON_STATE_HIDDEN)
@@ -436,6 +428,8 @@ namespace dem {
 
                 *out_button_rect = rect;
             }
+
+            return;
 
             *out_tab_rect = wxRect(tab_x, tab_y, tab_width, tab_height);
 
