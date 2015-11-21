@@ -13,10 +13,20 @@ namespace dem {
             parser::Identifier *identifier() const;
 
             Value *value() const;
+            void setValue(Value *value);
+
+            virtual Value *add(Value *b);
+            virtual Value *multiply(Value *b);
+            virtual Value *subtract(Value *b);
+            virtual Value *divide(Value *b);
+            virtual Value *modulo(Value *b);
+
+            virtual double asNumber() const;
+            virtual bool asBool() const;
 
             virtual std::string toString();
 
-            void setValue(Value *value);
+            virtual bool operator==(const Value &other);
 
         private:
             parser::Identifier *mIdentifier;

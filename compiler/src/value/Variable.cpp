@@ -23,5 +23,37 @@ namespace dem {
         std::string Variable::toString() {
             return mValue->toString();
         }
+
+        Value *Variable::add(Value *b) {
+            return mValue->add(b);
+        }
+
+        Value *Variable::subtract(Value *b) {
+            return mValue->subtract(b);
+        }
+
+        Value *Variable::multiply(Value *b) {
+            return mValue->multiply(b);
+        }
+
+        Value *Variable::divide(Value *b) {
+            return mValue->divide(b);
+        }
+
+        Value *Variable::modulo(Value *b) {
+            return mValue->modulo(b);
+        }
+
+        double Variable::asNumber() const {
+            return mValue->asNumber();
+        }
+
+        bool Variable::asBool() const {
+            return mValue->asBool();
+        }
+
+        bool Variable::operator==(const Value &other) {
+            return *mValue == other;
+        }
     }
 }

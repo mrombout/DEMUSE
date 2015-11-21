@@ -22,7 +22,7 @@ namespace dem {
             parser::Primitive *primitive = nullptr;
             if(tokens.front().is(lexer::TokenType::BOOL)) {
                 tokens.pop_front();
-                primitive = new Bool(content);
+                primitive = new Bool(content == "true");
             } else if(tokens.front().is(lexer::TokenType::TEXT)) {
                 tokens.pop_front();
                 primitive = new Text(content);

@@ -18,8 +18,27 @@ namespace dem {
             virtual bool visitEnter(parser::AssignmentExpression &assignmentExpression) override;
             virtual bool visitLeave(parser::AssignmentExpression &assignmentExpression) override;
 
+            virtual bool visitEnter(parser::AdditionExpression &additionExpression) override;
+            virtual bool visitLeave(parser::AdditionExpression &additionExpression) override;
+
+            virtual bool visitEnter(parser::SubtractionExpression &subtractionExpression) override;
+            virtual bool visitLeave(parser::SubtractionExpression &subtractionExpression) override;
+
+            virtual bool visitEnter(parser::MultiplicationExpression &multiplicationExpression) override;
+            virtual bool visitLeave(parser::MultiplicationExpression &multiplicationExpression) override;
+
+            virtual bool visitEnter(parser::DivisionExpression &divisionExpression) override;
+            virtual bool visitLeave(parser::DivisionExpression &divisionExpression) override;
+
+            virtual bool visitEnter(parser::ModuloExpression &moduloExpression) override;
+            virtual bool visitLeave(parser::ModuloExpression &moduloExpression) override;
+
+            virtual bool visitEnter(parser::EqualCondition &equalCondition) override;
+            virtual bool visitLeave(parser::EqualCondition &equalCondition) override;
+
             virtual bool visit(parser::Identifier &identifier) override;
             virtual bool visit(parser::Number &number) override;
+            virtual bool visit(parser::Bool &boolSymbol) override;
 
         private:
             Compiler &mCompiler;

@@ -53,7 +53,7 @@ namespace dem {
             virtual bool visitEnter(parser::Block &block);
             bool visitLeave(parser::Block &block);
 
-            bool visit(parser::Bool &boolSymbol);
+            virtual bool visit(parser::Bool &boolSymbol);
 
             bool visit(parser::Break &breakSymbol);
 
@@ -98,8 +98,9 @@ namespace dem {
             virtual bool visitEnter(parser::While &whileSymbol);
             bool visitLeave(parser::While &whileSymbol);
 
-            bool visitEnter(parser::AdditionExpression &additionExpression);
-            bool visitLeave(parser::AdditionExpression &additionExpression);
+            virtual bool visitEnter(parser::AdditionExpression &additionExpression);
+
+            virtual bool visitLeave(parser::AdditionExpression &additionExpression);
 
             bool visitEnter(parser::AndCondition &andCondition);
             bool visitLeave(parser::AndCondition &andCondition);
@@ -112,11 +113,13 @@ namespace dem {
             bool visit(parser::Condition &condition);
             bool visitLeave(parser::Condition &condition);
 
-            bool visitEnter(parser::DivisionExpression &divisionExpression);
-            bool visitLeave(parser::DivisionExpression &divisionExpression);
+            virtual bool visitEnter(parser::DivisionExpression &divisionExpression);
 
-            bool visitEnter(parser::EqualCondition &equalCondition);
-            bool visitLeave(parser::EqualCondition &equalCondition);
+            virtual bool visitLeave(parser::DivisionExpression &divisionExpression);
+
+            virtual bool visitEnter(parser::EqualCondition &equalCondition);
+
+            virtual bool visitLeave(parser::EqualCondition &equalCondition);
 
             bool visitEnter(parser::Expression &expression);
             bool visit(parser::Expression &expression);
@@ -128,11 +131,13 @@ namespace dem {
             bool visitEnter(parser::LargerThanOrEqualCondition &largerThanOrEqualCondition);
             bool visitLeave(parser::LargerThanOrEqualCondition &largerThanOrEqualCondition);
 
-            bool visitEnter(parser::ModuloExpression &moduloExpression);
-            bool visitLeave(parser::ModuloExpression &moduloExpression);
+            virtual bool visitEnter(parser::ModuloExpression &moduloExpression);
 
-            bool visitEnter(parser::MultiplicationExpression &multiplicationExpression);
-            bool visitLeave(parser::MultiplicationExpression &multiplicationExpression);
+            virtual bool visitLeave(parser::ModuloExpression &moduloExpression);
+
+            virtual bool visitEnter(parser::MultiplicationExpression &multiplicationExpression);
+
+            virtual bool visitLeave(parser::MultiplicationExpression &multiplicationExpression);
 
             bool visitEnter(parser::NotEqualCondition &notEqualCondition);
             bool visitLeave(parser::NotEqualCondition &notEqualCondition);
@@ -152,8 +157,9 @@ namespace dem {
             bool visitEnter(parser::StrictNotEqualCondition &strictNotEqualCondition);
             bool visitLeave(parser::StrictNotEqualCondition &strictNotEqualCondition);
 
-            bool visitEnter(parser::SubtractionExpression &subtractionExpression);
-            bool visitLeave(parser::SubtractionExpression &subtractionExpression);
+            virtual bool visitEnter(parser::SubtractionExpression &subtractionExpression);
+
+            virtual bool visitLeave(parser::SubtractionExpression &subtractionExpression);
         };
     }
 }

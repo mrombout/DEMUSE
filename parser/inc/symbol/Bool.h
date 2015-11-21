@@ -8,14 +8,14 @@ namespace dem {
     namespace parser {
         class Bool : public Primitive {
         public:
-            Bool(std::string value);
+            Bool(bool value);
 
-            std::string value() const;
+            virtual bool accept(Visitor &visitor);
+
+            bool value() const;
 
         private:
-            std::string mValue;
-        public:
-            virtual bool accept(Visitor &visitor);
+            bool mValue;
         };
     }
 }

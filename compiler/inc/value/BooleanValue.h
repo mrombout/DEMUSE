@@ -1,12 +1,15 @@
-#ifndef DEMUSE_NULLVALUE_H
-#define DEMUSE_NULLVALUE_H
+#ifndef DEMUSE_BOOLEANVALUE_H
+#define DEMUSE_BOOLEANVALUE_H
 
+#include <string>
 #include "Value.h"
 
 namespace dem {
     namespace compiler {
-        class NullValue : public Value {
+        class BooleanValue : public Value {
         public:
+            BooleanValue(bool value);
+
             virtual Value *add(Value *b);
             virtual Value *subtract(Value *b);
             virtual Value *multiply(Value *b);
@@ -18,10 +21,12 @@ namespace dem {
 
             virtual std::string toString();
 
-
             virtual bool operator==(const Value &other);
+
+        private:
+            bool mValue;
         };
     }
 }
 
-#endif //DEMUSE_NULLVALUE_H
+#endif //DEMUSE_BOOLEANVALUE_H

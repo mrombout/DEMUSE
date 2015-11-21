@@ -3,12 +3,12 @@
 
 namespace dem {
     namespace parser {
-        Bool::Bool(std::string value) :
+        Bool::Bool(bool value) :
             mValue(value) {
 
         }
 
-        std::string Bool::value() const {
+        bool Bool::value() const {
             return mValue;
         }
 

@@ -9,7 +9,18 @@ namespace dem {
         public:
             NumberValue(double value);
 
+            virtual Value *add(Value *b);
+            virtual Value *subtract(Value *b);
+            virtual Value *multiply(Value *b);
+            virtual Value *divide(Value *b);
+            virtual Value *modulo(Value *b);
+
+            virtual double asNumber() const;
+            virtual bool asBool() const;
+
             virtual std::string toString();
+
+            virtual bool operator==(const Value &other);
 
         private:
             double mValue;

@@ -25,7 +25,7 @@ TEST_F(PrimitiveFactoryTest, Bool) {
 
     // assert
     ASSERT_EQ(typeid(dem::parser::Bool), typeid(*boolean));
-    ASSERT_EQ("true", boolean->value());
+    ASSERT_EQ(true, boolean->value());
 }
 
 TEST_F(PrimitiveFactoryTest, Text) {

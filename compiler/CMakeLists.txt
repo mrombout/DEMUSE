@@ -20,6 +20,9 @@ set(Compiler_SRCS
     inc/value/NumberValue.h
     src/value/NumberValue.cpp
 
+    inc/value/BooleanValue.h
+    src/value/BooleanValue.cpp
+
     inc/function/Function.h
     src/function/Function.cpp
 
