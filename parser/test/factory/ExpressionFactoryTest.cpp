@@ -316,21 +316,30 @@ TEST_F(ExpressionFactoryTest, ExponentSingle) {
 TEST_F(ExpressionFactoryTest, ExponentMultiple) {
     // arrange
     std::deque<dem::lexer::Token> tokens {
-            dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0),
+            dem::lexer::Token(dem::lexer::TokenType::NUMBER, "2", 0, 0, 0),
             dem::lexer::Token(dem::lexer::TokenType::EXP,    "^", 0, 0, 0),
-            dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0),
+            dem::lexer::Token(dem::lexer::TokenType::NUMBER, "3", 0, 0, 0),
             dem::lexer::Token(dem::lexer::TokenType::EXP,    "^", 0, 0, 0),
-            dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0)
+            dem::lexer::Token(dem::lexer::TokenType::NUMBER, "1", 0, 0, 0)
     };
 
     // act
     dem::parser::Expression *expression = factory->produce(tokens);
     dem::parser::ExponentExpression *exponentExpression = dynamic_cast<dem::parser::ExponentExpression*>(expression);
 
+    dem::parser::Expression &leftHand = exponentExpression->left();
+    dem::parser::Expression &rightHand = exponentExpression->right();
+    dem::parser::Expression &rightLeftHand = static_cast<dem::parser::ExponentExpression&>(rightHand).left();
+    dem::parser::Expression &rightRightHand = ((dem::parser::ExponentExpression&)rightHand).right();
+
     // assert
     ASSERT_NE(nullptr, exponentExpression);
-    ASSERT_EQ(typeid(dem::parser::Number), typeid(exponentExpression->left()));
-    ASSERT_EQ(typeid(dem::parser::ExponentExpression), typeid(exponentExpression->right()));
+    ASSERT_EQ(typeid(dem::parser::Number), typeid(leftHand));
+    ASSERT_EQ(typeid(dem::parser::ExponentExpression), typeid(rightHand));
+    ASSERT_EQ(typeid(dem::parser::Number), typeid(rightLeftHand));
+    ASSERT_EQ(3.0d, static_cast<dem::parser::Number&>(rightLeftHand).value());
+    ASSERT_EQ(typeid(dem::parser::Number), typeid(rightRightHand));
+    ASSERT_EQ(1.0d, static_cast<dem::parser::Number&>(rightRightHand).value());
 }
 
 TEST_F(ExpressionFactoryTest, ConditionAnd) {
