@@ -24,16 +24,17 @@ namespace dem {
         }
 
         Variable &Scope::variable(parser::Identifier *identifier) const {
-            Variable *variable = mVariables.at(identifier->name());
-            if(variable == nullptr) {
+            try {
+                Variable *variable = mVariables.at(identifier->name());
+
+                return *variable;
+            } catch(std::out_of_range &e) {
                 if(mParent) {
                     return mParent->variable(identifier);
                 } else {
                     throw "Variable does not exist"; // TODO: Proper error
                 }
             }
-
-            return *variable;
         }
     }
 }

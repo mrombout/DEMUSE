@@ -78,5 +78,21 @@ namespace dem {
 
             return false;
         }
+
+        bool MidiCompiler::visitEnter(parser::While &whileSymbol) {
+            std::cout << "ENTER - While" << std::endl;
+
+            parser::Expression &expression = whileSymbol.expression();
+            parser::Block &block = whileSymbol.block();
+
+            Value *result = nullptr;
+            do {
+                result = mEvaluator.evaluate(mScopes.front(), expression);
+                if(result->asBool())
+                    block.accept(*this);
+            } while(result->asBool());
+
+            return false;
+        }
     }
 }

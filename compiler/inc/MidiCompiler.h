@@ -27,6 +27,8 @@ namespace dem {
 
             virtual bool visitEnter(parser::If &ifSymbol) override;
 
+            virtual bool visitEnter(parser::While &whileSymbol) override;
+
         private:
             ExpressionEvaluator mEvaluator;
             std::deque<Scope*> mScopes;
