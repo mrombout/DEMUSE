@@ -120,3 +120,77 @@ TEST_F(LexerTest, ReturnsUnknownWhenNoTokenDefinitions) {
     ASSERT_EQ(dem::lexer::TokenType::UNKNOWN, result[0].type());
     ASSERT_EQ("abcdef", result[0].content());
 }
+
+TEST_F(LexerTest, Lex_OneLineFirstToken_PositionIsCorrect) {
+    // arrange
+    std::string str{"AND"};
+
+    // act
+    std::vector<dem::lexer::Token> result = lexer.lex(str.begin(), str.end());
+
+    // assert
+    ASSERT_EQ(1, result[0].line());
+    ASSERT_EQ(1, result[0].column());
+    ASSERT_EQ(0, result[0].startIndex());
+}
+
+
+TEST_F(LexerTest, Lex_OneLineSecondToken_PositionIsCorrect) {
+    // arrange
+    std::string str{"ANDOR"};
+
+    // act
+    std::vector<dem::lexer::Token> result = lexer.lex(str.begin(), str.end());
+
+    // assert
+    ASSERT_EQ(1, result[1].line());
+    ASSERT_EQ(4, result[1].column());
+    ASSERT_EQ(3, result[1].startIndex());
+}
+
+
+TEST_F(LexerTest, Lex_TwoLinesSecondToken_PositionIsCorrect) {
+    // arrange
+    std::string str{"AND\r\nOR"};
+
+    // act
+    std::vector<dem::lexer::Token> result = lexer.lex(str.begin(), str.end());
+
+    // assert
+    ASSERT_EQ(2, result[1].line());
+    ASSERT_EQ(1, result[1].column());
+    ASSERT_EQ(5, result[1].startIndex());
+}
+
+TEST_F(LexerTest, Lex_WindowsNewLine_TotalThreeLines) {
+    // arrange
+    std::string str{"AND\r\nOR\r\nAND"};
+
+    // act
+    std::vector<dem::lexer::Token> result = lexer.lex(str.begin(), str.end());
+
+    // assert
+    ASSERT_EQ(3, result[2].line());
+}
+
+TEST_F(LexerTest, Lex_LinuxNewLine_TotalThreeLines) {
+    // arrange
+    std::string str{"AND\nOR\nAND"};
+
+    // act
+    std::vector<dem::lexer::Token> result = lexer.lex(str.begin(), str.end());
+
+    // assert
+    ASSERT_EQ(3, result[2].line());
+}
+
+TEST_F(LexerTest, Lex_MacNewLine_TotalThreeLines) {
+    // arrange
+    std::string str{"AND\rOR\rAND"};
+
+    // act
+    std::vector<dem::lexer::Token> result = lexer.lex(str.begin(), str.end());
+
+    // assert
+    ASSERT_EQ(3, result[2].line());
+}
