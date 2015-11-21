@@ -87,6 +87,9 @@ namespace dem {
                 case TokenType::ELSE:
                     str = "ELSE";
                     break;
+                case TokenType::NEW:
+                    str = "NEW";
+                    break;
                 case TokenType::IF:
                     str = "IF";
                     break;
@@ -101,6 +104,9 @@ namespace dem {
                     break;
                 case TokenType::RETURN:
                     str = "RETURN";
+                    break;
+                case TokenType::TRACK:
+                    str = "TRACK";
                     break;
                 case TokenType::START:
                     str = "START";
@@ -119,6 +125,9 @@ namespace dem {
                     break;
                 case TokenType::BRACKET_CLOSE:
                     str = "BRACKET_CLOSE";
+                    break;
+                case TokenType::PLAY:
+                    str = "PLAY";
                     break;
                 case TokenType::FUNCTION:
                     str = "FUNCTION";

@@ -518,6 +518,30 @@ TEST_F(MuseLexerTest, Else_IfStatement) {
     ASSERT_EQ(script.substr(0, 4), result[0].content());
 }
 
+TEST_F(MuseLexerTest, New_Plain) {
+    // arrange
+    std::string script = "new";
+
+    // act
+    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+
+    // assert
+    ASSERT_EQ(dem::lexer::TokenType::NEW, result[0].type());
+    ASSERT_EQ(script, result[0].content());
+}
+
+TEST_F(MuseLexerTest, New_WithExpression) {
+    // arrange
+    std::string script = "new Object();";
+
+    // act
+    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+
+    // assert
+    ASSERT_EQ(dem::lexer::TokenType::NEW, result[0].type());
+    ASSERT_EQ(script.substr(0, 3), result[0].content());
+}
+
 TEST_F(MuseLexerTest, If_Plain) {
     // arrange
     std::string script = "if";
@@ -602,6 +626,18 @@ TEST_F(MuseLexerTest, Return_Plain) {
     ASSERT_EQ(script, result[0].content());
 }
 
+TEST_F(MuseLexerTest, Track_Plain) {
+    // arrange
+    std::string script = "track";
+
+    // act
+    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+
+    // assert
+    ASSERT_EQ(dem::lexer::TokenType::TRACK, result[0].type());
+    ASSERT_EQ(script, result[0].content());
+}
+
 TEST_F(MuseLexerTest, Start_Plain) {
     // arrange
     std::string script = "{";
@@ -647,6 +683,42 @@ TEST_F(MuseLexerTest, Close_Plain) {
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::CLOSE, result[0].type());
+    ASSERT_EQ(script, result[0].content());
+}
+
+TEST_F(MuseLexerTest, BracketOpen_Plain) {
+    // arrange
+    std::string script = "[";
+
+    // act
+    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+
+    // assert
+    ASSERT_EQ(dem::lexer::TokenType::BRACKET_OPEN, result[0].type());
+    ASSERT_EQ(script, result[0].content());
+}
+
+TEST_F(MuseLexerTest, BracketClose_Plain) {
+    // arrange
+    std::string script = "]";
+
+    // act
+    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+
+    // assert
+    ASSERT_EQ(dem::lexer::TokenType::BRACKET_CLOSE, result[0].type());
+    ASSERT_EQ(script, result[0].content());
+}
+
+TEST_F(MuseLexerTest, Play_Plain) {
+    // arrange
+    std::string script = "<<C>>";
+
+    // act
+    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+
+    // assert
+    ASSERT_EQ(dem::lexer::TokenType::PLAY, result[0].type());
     ASSERT_EQ(script, result[0].content());
 }
 

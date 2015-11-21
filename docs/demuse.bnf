@@ -6,20 +6,21 @@ block         = "{" { statement } "}" ;
 (* statements *)
 statement         = ( simple_statement | compound_statement ) terminator ;
 simple_stmt       = return_stmt | break_stmt | continue_stmt | variable_def_stmt | expression_stmt ;
-compound_stmt     = if_stmt | while_stmt | for_stmt | function_def | play_stmt ;
+compound_stmt     = if_stmt | while_stmt | for_stmt | function_def | play_stmt | track_stmt ;
 
 expression_stmt   = expression ;
 variable_def_stmt = "var" assignment_stmt ;
 return_stmt       = "return" expression ;
 break_stmt        = "break" ;
 continue_stmt     = "continue" ;
-play_stmt         = "<" { note } ">" ;
+play_stmt         = "<<" { note } ">>" ;
 array_init        = "[" primitive "]" ;
 
 if_stmt           = "if(" conditional ")" block
                         [ "else" ( block | statement ) ] ;
 while_stmt        = "while(" conditional ")" block ;
 for_stmt          = "for(" ( terminator | variable_def_stmt | assignment_stmt ) ( terminator | conditional ) ( terminator | assignment_stmt ) ")" block ;
+track_stmt        = "track" identifier block ;
 
 (* expression *)
 expression        = array_init | conditional | assignment ;
