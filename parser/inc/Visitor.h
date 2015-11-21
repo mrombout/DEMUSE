@@ -67,8 +67,9 @@ namespace dem {
 
             virtual bool visit(parser::Identifier &identifier);
 
-            bool visitEnter(parser::If &ifSymbol);
-            bool visitLeave(parser::If &ifSymbol);
+            virtual bool visitEnter(parser::If &ifSymbol);
+
+            virtual bool visitLeave(parser::If &ifSymbol);
 
             virtual bool visit(parser::Number &number);
 

@@ -14,7 +14,7 @@ namespace dem {
         void Scope::declareVariable(parser::Identifier *identifier) {
             std::cout << "DECLARE - Variable " << identifier->name() << std::endl;
 
-            mVariables[identifier] = new Variable(identifier, new NullValue());
+            mVariables[identifier->name()] = new Variable(identifier, new NullValue());
         }
 
         void Scope::declareFunction(Function *function) {
@@ -24,7 +24,7 @@ namespace dem {
         }
 
         Variable &Scope::variable(parser::Identifier *identifier) const {
-            Variable *variable = mVariables.at(identifier);
+            Variable *variable = mVariables.at(identifier->name());
             if(variable == nullptr) {
                 if(mParent) {
                     return mParent->variable(identifier);

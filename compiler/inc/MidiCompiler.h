@@ -23,8 +23,9 @@ namespace dem {
             virtual bool visitEnter(parser::FunctionDefinition &functionDefinition) override;
             virtual bool visitEnter(parser::VariableDeclaration &variableDefinition) override;
 
-
             virtual bool visitEnter(parser::AssignmentExpression &assignmentExpression) override;
+
+            virtual bool visitEnter(parser::If &ifSymbol) override;
 
         private:
             ExpressionEvaluator mEvaluator;

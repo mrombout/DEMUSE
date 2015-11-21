@@ -1,5 +1,8 @@
-var X = true !== 1;
+var X = "Hoi";
 
-function Test() {
-    var Y = 1;
-};
+if(false)
+    var Y = 0;
+else if(false)
+    var Z = 0;
+else
+    var A = 0;;;

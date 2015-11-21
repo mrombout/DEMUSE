@@ -34,7 +34,7 @@ namespace dem {
 
             mScopes.push_front(new Scope(mScopes.front()));
 
-            return false;
+            return true;
         }
 
         bool MidiCompiler::visitEnter(parser::VariableDeclaration &variableDefinition) {
@@ -60,6 +60,23 @@ namespace dem {
             mEvaluator.evaluate(mScopes.front(), assignmentExpression);
 
             return true;
+        }
+
+        bool MidiCompiler::visitEnter(parser::If &ifSymbol) {
+            std::cout << "ENTER - If" << std::endl;
+
+            parser::Expression &expression = ifSymbol.expression();
+            parser::Block &block = ifSymbol.block();
+            parser::Block *elseBlock = ifSymbol.elseBlock();
+
+            Value *result = mEvaluator.evaluate(mScopes.front(), expression);
+            if(result->asBool()) {
+                block.accept(*this);
+            } else if(elseBlock) {
+                elseBlock->accept(*this);
+            }
+
+            return false;
         }
     }
 }

@@ -20,7 +20,7 @@ namespace dem {
 
         private:
             Scope *mParent;
-            std::map<parser::Identifier*, Variable*> mVariables;
+            std::map<std::string, Variable*> mVariables;
             std::map<parser::Identifier*, Function*> mFunctions;
         };
     }
