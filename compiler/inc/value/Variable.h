@@ -6,12 +6,17 @@
 
 namespace dem {
     namespace compiler {
-        class Variable {
+        class Variable : public Value {
         public:
             Variable(parser::Identifier *identifier, Value *value);
 
             parser::Identifier *identifier() const;
+
             Value *value() const;
+
+            virtual std::string toString();
+
+            void setValue(Value *value);
 
         private:
             parser::Identifier *mIdentifier;

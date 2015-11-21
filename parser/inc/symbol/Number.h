@@ -8,14 +8,14 @@ namespace dem {
     namespace parser {
         class Number : public Primitive {
         public:
-            Number(std::string value);
+            Number(double value);
 
-            std::string value() const;
+            virtual bool accept(Visitor &visitor);
+
+            double value() const;
 
         private:
-            std::string mValue;
-        public:
-            virtual bool accept(Visitor &visitor);
+            double mValue;
         };
     }
 }

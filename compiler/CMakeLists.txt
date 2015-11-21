@@ -8,8 +8,8 @@ set(Compiler_SRCS
     inc/GlobalScope.h
     src/GlobalScope.cpp
 
-    inc/Variable.h
-    src/Variable.cpp
+    inc/value/Variable.h
+    src/value/Variable.cpp
 
     inc/value/Value.h
     src/value/Value.cpp
@@ -17,11 +17,23 @@ set(Compiler_SRCS
     inc/value/NullValue.h
     src/value/NullValue.cpp
 
+    inc/value/NumberValue.h
+    src/value/NumberValue.cpp
+
+    inc/function/Function.h
+    src/function/Function.cpp
+
+    inc/function/UserFunction.h
+    src/function/UserFunction.cpp
+
     inc/Compiler.h
     src/Compiler.cpp
 
     inc/MidiCompiler.h
     src/MidiCompiler.cpp
+
+    inc/ExpressionEvaluator.h
+    src/ExpressionEvaluator.cpp
 )
 
 set(TestCompiler_SRCS

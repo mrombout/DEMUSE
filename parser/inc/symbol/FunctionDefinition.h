@@ -13,9 +13,9 @@ namespace dem {
 
             virtual bool accept(Visitor &visitor);
 
-            Identifier identifier() const;
-            ParameterList parameterList() const;
-            Block block() const;
+            Identifier &identifier() const;
+            ParameterList &parameterList() const;
+            Block &block() const;
 
         private:
             Identifier *mIdentifier;

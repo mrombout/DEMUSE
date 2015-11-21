@@ -2,10 +2,11 @@
 #define DEMUSE_COMPILER_H
 
 #include "symbol/Program.h"
+#include "Visitor.h"
 
 namespace dem {
     namespace compiler {
-        class Compiler {
+        class Compiler : public parser::Visitor {
         public:
             virtual void compile(parser::Program *program) = 0;
         };

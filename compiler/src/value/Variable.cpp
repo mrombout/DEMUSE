@@ -1,4 +1,4 @@
-#include "Variable.h"
+#include "value/Variable.h"
 
 namespace dem {
     namespace compiler {
@@ -14,6 +14,14 @@ namespace dem {
 
         Value *Variable::value() const {
             return mValue;
+        }
+
+        void Variable::setValue(Value *value) {
+            mValue = value;
+        }
+
+        std::string Variable::toString() {
+            return mValue->toString();
         }
     }
 }

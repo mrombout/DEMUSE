@@ -3,12 +3,12 @@
 
 namespace dem {
     namespace parser {
-        Number::Number(std::string value) :
+        Number::Number(double value) :
             mValue(value) {
 
         }
 
-        std::string Number::value() const {
+        double Number::value() const {
             return mValue;
         }
 

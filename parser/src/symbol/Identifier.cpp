@@ -11,5 +11,9 @@ namespace dem {
         bool Identifier::accept(Visitor &visitor) {
             return visitor.visit(*this);
         }
+
+        const std::string &Identifier::name() const {
+            return mName;
+        }
     }
 }

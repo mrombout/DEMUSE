@@ -1,1 +1,5 @@
-var X = 0;
+var X = 2;
+
+function Test() {
+    var Y = 1;
+};

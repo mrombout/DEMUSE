@@ -18,15 +18,15 @@ namespace dem {
             return visitor.visitLeave(*this);
         }
 
-        Identifier FunctionDefinition::identifier() const {
+        Identifier &FunctionDefinition::identifier() const {
             return *mIdentifier;
         }
 
-        ParameterList FunctionDefinition::parameterList() const {
+        ParameterList &FunctionDefinition::parameterList() const {
             return *mParameterList;
         }
 
-        Block FunctionDefinition::block() const {
+        Block &FunctionDefinition::block() const {
             return *mBlock;
         }
     }

@@ -62,21 +62,22 @@ namespace dem {
             bool visitEnter(parser::For &forSymbol);
             bool visitLeave(parser::For &forSymbol);
 
-            bool visitEnter(parser::FunctionDefinition &functionDefinition);
+            virtual bool visitEnter(parser::FunctionDefinition &functionDefinition);
             bool visitLeave(parser::FunctionDefinition &functionDefinition);
 
-            bool visit(parser::Identifier &identifier);
+            virtual bool visit(parser::Identifier &identifier);
 
             bool visitEnter(parser::If &ifSymbol);
             bool visitLeave(parser::If &ifSymbol);
 
-            bool visit(parser::Number &number);
+            virtual bool visit(parser::Number &number);
 
             bool visitEnter(parser::ParameterList &parameterList);
             bool visitLeave(parser::ParameterList &parameterList);
 
             virtual bool visitEnter(parser::Program &program);
-            bool visitLeave(parser::Program &program);
+
+            virtual bool visitLeave(parser::Program &program);
 
             bool visitEnter(parser::Return &returnSymbol);
             bool visitLeave(parser::Return &returnSymbol);
@@ -94,7 +95,7 @@ namespace dem {
             virtual bool visitEnter(parser::VariableDeclaration &variableDefinition);
             bool visitLeave(parser::VariableDeclaration &variableDefinition);
 
-            bool visitEnter(parser::While &whileSymbol);
+            virtual bool visitEnter(parser::While &whileSymbol);
             bool visitLeave(parser::While &whileSymbol);
 
             bool visitEnter(parser::AdditionExpression &additionExpression);
@@ -103,8 +104,9 @@ namespace dem {
             bool visitEnter(parser::AndCondition &andCondition);
             bool visitLeave(parser::AndCondition &andCondition);
 
-            bool visitEnter(parser::AssignmentExpression &assignmentExpression);
-            bool visitLeave(parser::AssignmentExpression &assignmentExpression);
+            virtual bool visitEnter(parser::AssignmentExpression &assignmentExpression);
+
+            virtual bool visitLeave(parser::AssignmentExpression &assignmentExpression);
 
             bool visitEnter(parser::Condition &condition);
             bool visit(parser::Condition &condition);

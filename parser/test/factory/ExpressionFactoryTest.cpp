@@ -57,7 +57,7 @@ TEST_F(ExpressionFactoryTest, ExpressionNumberPrimitive) {
 
     // assert
     ASSERT_NE(nullptr, number);
-    ASSERT_EQ("5", number->value());
+    ASSERT_EQ(5, number->value());
 }
 
 TEST_F(ExpressionFactoryTest, ExpressionTextPrimitive) {

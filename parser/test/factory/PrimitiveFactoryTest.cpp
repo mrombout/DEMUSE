@@ -54,5 +54,5 @@ TEST_F(PrimitiveFactoryTest, Number) {
 
     // assert
     ASSERT_EQ(typeid(dem::parser::Number), typeid(*primitive));
-    ASSERT_EQ("5", primitive->value());
+    ASSERT_EQ(5, primitive->value());
 }

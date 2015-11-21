@@ -10,10 +10,12 @@ namespace dem {
         public:
             Identifier(std::string name);
 
+            virtual bool accept(Visitor &visitor);
+
+            const std::string &name() const;
+
         private:
             std::string mName;
-        public:
-            virtual bool accept(Visitor &visitor);
         };
     }
 }

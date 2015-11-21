@@ -6,7 +6,8 @@
 namespace dem {
     namespace compiler {
         class NullValue : public Value {
-
+        public:
+            virtual std::string toString();
         };
     }
 }

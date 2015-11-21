@@ -4,7 +4,8 @@
 #include <string>
 #include <map>
 #include "symbol/Identifier.h"
-#include "Variable.h"
+#include "value/Variable.h"
+#include "function/Function.h"
 
 namespace dem {
     namespace compiler {
@@ -13,10 +14,14 @@ namespace dem {
             Scope(Scope *parent);
 
             void declareVariable(parser::Identifier *identifier);
+            void declareFunction(Function *function);
+
+            Variable &variable(parser::Identifier *identifier) const;
 
         private:
             Scope *mParent;
             std::map<parser::Identifier*, Variable*> mVariables;
+            std::map<parser::Identifier*, Function*> mFunctions;
         };
     }
 }
