@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include <symbol/expression/StrictEqualCondition.h>
 #include <symbol/expression/StrictNotEqualCondition.h>
+#include <symbol/expression/ExponentExpression.h>
 #include "factory/ExpressionFactory.h"
 #include "symbol/Identifier.h"
 #include "symbol/Number.h"
@@ -31,7 +32,6 @@ protected:
     dem::parser::ExpressionFactory *factory;
 };
 
-/*
 TEST_F(ExpressionFactoryTest, SingleIdentifierExpression) {
     // arrange
     std::deque<dem::lexer::Token> tokens {
@@ -44,7 +44,6 @@ TEST_F(ExpressionFactoryTest, SingleIdentifierExpression) {
     // assert
     ASSERT_NE(nullptr, identifier);
 }
-*/
 
 TEST_F(ExpressionFactoryTest, ExpressionNumberPrimitive) {
     // arrange
@@ -294,6 +293,44 @@ TEST_F(ExpressionFactoryTest, ModuloMultiple) {
     ASSERT_NE(nullptr, moduloExpression);
     ASSERT_EQ(typeid(dem::parser::Number), typeid(moduloExpression->left()));
     ASSERT_EQ(typeid(dem::parser::ModuloExpression), typeid(moduloExpression->right()));
+}
+
+TEST_F(ExpressionFactoryTest, ExponentSingle) {
+    // arrange
+    std::deque<dem::lexer::Token> tokens {
+            dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0),
+            dem::lexer::Token(dem::lexer::TokenType::EXP,    "^", 0, 0, 0),
+            dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0)
+    };
+
+    // act
+    dem::parser::Expression *expression = factory->produce(tokens);
+    dem::parser::ExponentExpression *exponentExpression = dynamic_cast<dem::parser::ExponentExpression*>(expression);
+
+    // assert
+    ASSERT_NE(nullptr, exponentExpression);
+    ASSERT_EQ(typeid(dem::parser::Number), typeid(exponentExpression->left()));
+    ASSERT_EQ(typeid(dem::parser::Number), typeid(exponentExpression->right()));
+}
+
+TEST_F(ExpressionFactoryTest, ExponentMultiple) {
+    // arrange
+    std::deque<dem::lexer::Token> tokens {
+            dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0),
+            dem::lexer::Token(dem::lexer::TokenType::EXP,    "^", 0, 0, 0),
+            dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0),
+            dem::lexer::Token(dem::lexer::TokenType::EXP,    "^", 0, 0, 0),
+            dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0)
+    };
+
+    // act
+    dem::parser::Expression *expression = factory->produce(tokens);
+    dem::parser::ExponentExpression *exponentExpression = dynamic_cast<dem::parser::ExponentExpression*>(expression);
+
+    // assert
+    ASSERT_NE(nullptr, exponentExpression);
+    ASSERT_EQ(typeid(dem::parser::Number), typeid(exponentExpression->left()));
+    ASSERT_EQ(typeid(dem::parser::ExponentExpression), typeid(exponentExpression->right()));
 }
 
 TEST_F(ExpressionFactoryTest, ConditionAnd) {

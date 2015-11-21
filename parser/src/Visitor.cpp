@@ -74,6 +74,9 @@ namespace dem {
         bool Visitor::visitEnter(EqualCondition &equalCondition) { return true; }
         bool Visitor::visitLeave(EqualCondition &equalCondition) { return true; }
 
+        bool Visitor::visitEnter(parser::ExponentExpression &exponentExpression) { return true; }
+        bool Visitor::visitLeave(parser::ExponentExpression &exponentExpression) { return true; }
+
         bool Visitor::visitEnter(Expression &expression) { return true; }
         bool Visitor::visit(Expression &expression) { return true; }
         bool Visitor::visitLeave(Expression &expression) { return true; }

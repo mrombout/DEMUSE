@@ -32,6 +32,7 @@
 #include "symbol/expression/LargerThanOrEqualCondition.h"
 #include "symbol/expression/ModuloExpression.h"
 #include "symbol/expression/MultiplicationExpression.h"
+#include "symbol/expression/ExponentExpression.h"
 #include "symbol/expression/NotEqualCondition.h"
 #include "symbol/expression/OrCondition.h"
 #include "symbol/expression/SmallerThanCondition.h"
@@ -100,15 +101,12 @@ namespace dem {
             bool visitLeave(parser::While &whileSymbol);
 
             virtual bool visitEnter(parser::AdditionExpression &additionExpression);
-
             virtual bool visitLeave(parser::AdditionExpression &additionExpression);
 
             virtual bool visitEnter(parser::AndCondition &andCondition);
-
             virtual bool visitLeave(parser::AndCondition &andCondition);
 
             virtual bool visitEnter(parser::AssignmentExpression &assignmentExpression);
-
             virtual bool visitLeave(parser::AssignmentExpression &assignmentExpression);
 
             bool visitEnter(parser::Condition &condition);
@@ -116,59 +114,49 @@ namespace dem {
             bool visitLeave(parser::Condition &condition);
 
             virtual bool visitEnter(parser::DivisionExpression &divisionExpression);
-
             virtual bool visitLeave(parser::DivisionExpression &divisionExpression);
 
             virtual bool visitEnter(parser::EqualCondition &equalCondition);
-
             virtual bool visitLeave(parser::EqualCondition &equalCondition);
+
+            virtual bool visitEnter(parser::ExponentExpression &exponentExpression);
+            virtual bool visitLeave(parser::ExponentExpression &exponentExpression);
 
             bool visitEnter(parser::Expression &expression);
             bool visit(parser::Expression &expression);
             bool visitLeave(parser::Expression &expression);
 
             virtual bool visitEnter(parser::LargerThanCondition &largerThanCondition);
-
             virtual bool visitLeave(parser::LargerThanCondition &largerThanCondition);
 
             virtual bool visitEnter(parser::LargerThanOrEqualCondition &largerThanOrEqualCondition);
-
             virtual bool visitLeave(parser::LargerThanOrEqualCondition &largerThanOrEqualCondition);
 
             virtual bool visitEnter(parser::ModuloExpression &moduloExpression);
-
             virtual bool visitLeave(parser::ModuloExpression &moduloExpression);
 
             virtual bool visitEnter(parser::MultiplicationExpression &multiplicationExpression);
-
             virtual bool visitLeave(parser::MultiplicationExpression &multiplicationExpression);
 
             virtual bool visitEnter(parser::NotEqualCondition &notEqualCondition);
-
             virtual bool visitLeave(parser::NotEqualCondition &notEqualCondition);
 
             virtual bool visitEnter(parser::OrCondition &orCondition);
-
             virtual bool visitLeave(parser::OrCondition &orCondition);
 
             virtual bool visitEnter(parser::SmallerThanCondition &smallerThanCondition);
-
             virtual bool visitLeave(parser::SmallerThanCondition &smallerThanCondition);
 
             virtual bool visitEnter(parser::SmallerThanOrEqualCondition &smallerThanOrEqualCondition);
-
             virtual bool visitLeave(parser::SmallerThanOrEqualCondition &smallerThanOrEqualCondition);
 
             virtual bool visitEnter(parser::StrictEqualCondition &strictEqualCondition);
-
             virtual bool visitLeave(parser::StrictEqualCondition &strictEqualCondition);
 
             virtual bool visitEnter(parser::StrictNotEqualCondition &strictNotEqualCondition);
-
             virtual bool visitLeave(parser::StrictNotEqualCondition &strictNotEqualCondition);
 
             virtual bool visitEnter(parser::SubtractionExpression &subtractionExpression);
-
             virtual bool visitLeave(parser::SubtractionExpression &subtractionExpression);
         };
     }

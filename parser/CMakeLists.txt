@@ -95,6 +95,9 @@ set(Parser_SRCS
     inc/symbol/expression/AssignmentExpression.h
     src/symbol/expression/AssignmentExpression.cpp
 
+    inc/symbol/expression/ExponentExpression.h
+    src/symbol/expression/ExponentExpression.cpp
+
     inc/symbol/expression/Condition.h
     src/symbol/expression/Condition.cpp
 

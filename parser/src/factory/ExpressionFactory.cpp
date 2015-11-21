@@ -7,6 +7,7 @@
 #include "symbol/expression/DivisionExpression.h"
 #include "symbol/expression/ModuloExpression.h"
 #include "symbol/expression/AssignmentExpression.h"
+#include "symbol/expression/ExponentExpression.h"
 #include "symbol/expression/SmallerThanCondition.h"
 #include "symbol/expression/SmallerThanOrEqualCondition.h"
 #include "symbol/expression/LargerThanCondition.h"
@@ -26,6 +27,7 @@ namespace dem {
             // TODO: (), []  -- 1
             { lexer::TokenType::PERIOD,     1 },
             // TODO: ! ~ - + ++ -- -- 2
+            { lexer::TokenType::EXP,        2 },
             { lexer::TokenType::TIMES,      3 },
             { lexer::TokenType::DIVIDE,     3 },
             { lexer::TokenType::MOD,        3 },
@@ -48,6 +50,7 @@ namespace dem {
 
         const std::map<lexer::TokenType, ExpressionFactory::Associativity> ExpressionFactory::mOperatorAssociativity = {
             { lexer::TokenType::PERIOD,     ExpressionFactory::Associativity::RIGHT },
+            { lexer::TokenType::EXP,        ExpressionFactory::Associativity::RIGHT },
             { lexer::TokenType::TIMES,      ExpressionFactory::Associativity::LEFT },
             { lexer::TokenType::DIVIDE,     ExpressionFactory::Associativity::LEFT },
             { lexer::TokenType::MOD,        ExpressionFactory::Associativity::LEFT },
@@ -125,6 +128,7 @@ namespace dem {
 
             bool isBinaryOperator = token.is(lexer::TokenType::PLUS)
                 || token.is(lexer::TokenType::MINUS)
+                || token.is(lexer::TokenType::EXP)
                 || token.is(lexer::TokenType::TIMES)
                 || token.is(lexer::TokenType::DIVIDE)
                 || token.is(lexer::TokenType::MOD)
@@ -172,6 +176,8 @@ namespace dem {
                     return new AdditionExpression(lhs, rhs);
                 case lexer::TokenType::MINUS:
                     return new SubtractionExpression(lhs, rhs);
+                case lexer::TokenType::EXP:
+                    return new ExponentExpression(lhs, rhs);
                 case lexer::TokenType::TIMES:
                     return new MultiplicationExpression(lhs, rhs);
                 case lexer::TokenType::DIVIDE:
