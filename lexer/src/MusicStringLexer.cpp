@@ -1,8 +1,10 @@
 #include "MusicStringLexer.h"
+#include "matcher/StringMatcher.h"
 
 namespace dem {
     namespace lexer {
-        MusicStringLexer::MusicStringLexer() {
+        MusicStringLexer::MusicStringLexer() :
+            Lexer(new StringMatcher(">>")) {
             addDefinition(new TokenDefinition(TokenType::NOTE,          new RegexMatcher("C|D|E|F|G|A|B|R")));
             addDefinition(new TokenDefinition(TokenType::OCTAVE,        new RegexMatcher("10|[0-9]")));
             addDefinition(new TokenDefinition(TokenType::ACCIDENTAL,    new RegexMatcher("#|b|n")));

@@ -5,8 +5,14 @@
 namespace dem {
     namespace lexer {
         Lexer::Lexer() :
+            Lexer(nullptr) {
+
+        }
+
+        Lexer::Lexer(Matcher *stopMatcher) :
             mNewLineMatcher("\\r\\n?|\\n"),
-            mSkipWhitespaceMatcher("\\s*"){
+            mSkipWhitespaceMatcher("\\s*"),
+            mStopMatcher(stopMatcher) {
 
         }
 
@@ -20,7 +26,7 @@ namespace dem {
             mTokenDefinitions.push_back(tokenDefinition);
         }
 
-        std::vector<Token> Lexer::lex(std::string::iterator begin, std::string::iterator end) {
+        std::vector<Token> Lexer::lex(std::string::iterator begin, std::string::iterator end) const {
             std::vector<Token> tokens;
 
             int curLine = 1;
@@ -28,6 +34,10 @@ namespace dem {
             int curIndex = 0;
 
             while(begin != end) {
+                // should we stop?
+                if(mStopMatcher && mStopMatcher->match(begin, end, tokens).length() > 0)
+                    return tokens;
+
                 // match single token
                 bool matched = match(tokens, begin, end, curLine, curColumn, curIndex);
 
@@ -62,7 +72,7 @@ namespace dem {
             return tokens;
         }
 
-        bool Lexer::match(std::vector<Token> &tokens, std::string::iterator &begin, std::string::iterator &end, int &curLine, int &curColumn, int &curIndex) {
+        bool Lexer::match(std::vector<Token> &tokens, std::string::iterator &begin, std::string::iterator &end, int &curLine, int &curColumn, int &curIndex) const {
             for(TokenDefinition *tokenDefinition : mTokenDefinitions) {
                 if(!tokenDefinition)
                     continue;

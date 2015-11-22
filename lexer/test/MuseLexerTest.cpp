@@ -712,13 +712,13 @@ TEST_F(MuseLexerTest, BracketClose_Plain) {
 
 TEST_F(MuseLexerTest, Play_Plain) {
     // arrange
-    std::string script = "<<C>>";
+    std::string script = "<<";
 
     // act
     std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
 
     // assert
-    ASSERT_EQ(dem::lexer::TokenType::PLAY, result[0].type());
+    ASSERT_EQ(dem::lexer::TokenType::PLAY_START, result[0].type());
     ASSERT_EQ(script, result[0].content());
 }
 

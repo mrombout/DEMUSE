@@ -3,13 +3,20 @@
 
 #include <string>
 #include "matcher/Matcher.h"
+#include "matcher/StringMatcher.h"
+#include "MusicStringLexer.h"
 
 namespace dem {
     namespace lexer {
         class PlayMatcher : public Matcher {
-
         public:
-            virtual std::string match(std::string::iterator begin, std::string::iterator end, std::vector<Token> &tokens) const;
+            PlayMatcher();
+            virtual std::string match(std::string::iterator &begin, std::string::iterator &end, std::vector<Token> &tokens) const;
+
+        private:
+            StringMatcher mStartMatcher;
+            MusicStringLexer mLexer;
+
         };
     }
 }

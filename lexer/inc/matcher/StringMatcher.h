@@ -9,7 +9,7 @@ namespace dem {
         public:
             StringMatcher(std::string content);
 
-            virtual std::string match(std::string::iterator begin, std::string::iterator end, std::vector<Token> &tokens) const;
+            virtual std::string match(std::string::iterator &begin, std::string::iterator &end, std::vector<Token> &tokens) const;
 
         private:
             std::string mContent;

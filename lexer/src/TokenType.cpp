@@ -192,8 +192,11 @@ namespace dem {
                 case TokenType::BRACKET_CLOSE:
                     str = "BRACKET_CLOSE";
                     break;
-                case TokenType::PLAY:
-                    str = "PLAY";
+                case TokenType::PLAY_START:
+                    str = "PLAY_START";
+                    break;
+                case TokenType::PLAY_END:
+                    str = "PLAY_END";
                     break;
                 case TokenType::FUNCTION:
                     str = "FUNCTION";
