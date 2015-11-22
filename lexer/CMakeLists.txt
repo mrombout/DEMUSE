@@ -43,6 +43,7 @@ set(TestLexer_SRCS
     test/TokenDefinitionTest.cpp
     test/LexerTest.cpp
     test/MuseLexerTest.cpp
+    test/MusicStringLexerTest.cpp
     test/matcher/NullMatcherTest.cpp
     test/matcher/CharMatcherTest.cpp
     test/matcher/StringMatcherTest.cpp
