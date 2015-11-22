@@ -108,6 +108,72 @@ namespace dem {
                 case TokenType::TRACK:
                     str = "TRACK";
                     break;
+                case TokenType::NOTE:
+                    str = "NOTE";
+                    break;
+                case TokenType::ACCIDENTAL:
+                    str = "ACCIDENTAL";
+                    break;
+                case TokenType::OCTAVE:
+                    str = "OCTAVE";
+                    break;
+                case TokenType::CHORD:
+                    str = "CHORD";
+                    break;
+                case TokenType::DURATION:
+                    str = "DURATION";
+                    break;
+                case TokenType::HARMONY:
+                    str = "HARMONY";
+                    break;
+                case TokenType::MEASURE:
+                    str = "MEASURE";
+                    break;
+                case TokenType::TUPLET:
+                    str = "TUPLET";
+                    break;
+                case TokenType::TIE:
+                    str = "TIE";
+                    break;
+                case TokenType::ATTACK:
+                    str = "ATTACK";
+                    break;
+                case TokenType::DECAY:
+                    str = "DECAY";
+                    break;
+                case TokenType::COMBINE:
+                    str = "COMBINE";
+                    break;
+                case TokenType::KEY:
+                    str = "KEY";
+                    break;
+                case TokenType::INSTRUMENT:
+                    str = "INSTRUMENT";
+                    break;
+                case TokenType::VOICE:
+                    str = "VOICE";
+                    break;
+                case TokenType::LAYER:
+                    str = "LAYER";
+                    break;
+                case TokenType::TEMPO:
+                    str = "TEMPO";
+                    break;
+                case TokenType::PITCH:
+                    str = "PITCH";
+                    break;
+                case TokenType::PRESSURE:
+                    str = "PRESSURE";
+                    break;
+                case TokenType::POLY_PRESSURE:
+                    str = "POLY_PRESSURE";
+                    break;
+                case TokenType::CONTROLLER:
+                    str = "CONTROLLER";
+                    break;
+                case TokenType::TIME:
+                    str = "TIME";
+                    break;
                 case TokenType::START:
                     str = "START";
                     break;

@@ -8,6 +8,9 @@ set(Lexer_SRCS
     inc/MuseLexer.h
     src/MuseLexer.cpp
 
+    inc/MusicStringLexer.h
+    src/MusicStringLexer.cpp
+
     inc/Token.h
     src/Token.cpp
 
@@ -30,6 +33,9 @@ set(Lexer_SRCS
 
     inc/matcher/CharMatcher.h
     src/matcher/CharMatcher.cpp
+
+    inc/matcher/PlayMatcher.h
+    src/matcher/PlayMatcher.cpp
 )
 
 set(TestLexer_SRCS

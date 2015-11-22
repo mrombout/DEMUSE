@@ -131,6 +131,12 @@ set(Parser_SRCS
     inc/symbol/expression/StrictNotEqualCondition.h
     src/symbol/expression/StrictNotEqualCondition.cpp
 
+    inc/symbol/play/Play.h
+    src/symbol/play/Play.cpp
+
+    inc/symbol/play/Note.h
+    src/symbol/play/Note.cpp
+
     inc/factory/SymbolFactory.h
     src/factory/SymbolFactory.cpp
 
@@ -184,6 +190,9 @@ set(Parser_SRCS
 
     inc/factory/PrimitiveFactory.h
     src/factory/PrimitiveFactory.cpp
+
+    inc/factory/PlayFactory.h
+    src/factory/PlayFactory.cpp
 )
 
 set(TestParser_SRCS

@@ -28,11 +28,12 @@ namespace dem {
             int curIndex = 0;
 
             while(begin != end) {
+                // match single token
                 bool matched = match(tokens, begin, end, curLine, curColumn, curIndex);
 
                 // skip newlines
                 std::string newLine;
-                if((newLine = mNewLineMatcher.match(begin, end)).length() > 0) {
+                if((newLine = mNewLineMatcher.match(begin, end, tokens)).length() > 0) {
                     ++curLine;
                     curColumn = 1;
                     curIndex += newLine.size();
@@ -41,7 +42,7 @@ namespace dem {
                 }
 
                 // skip whitespace
-                int skippedWhitespace = mSkipWhitespaceMatcher.match(begin, end).length();
+                int skippedWhitespace = mSkipWhitespaceMatcher.match(begin, end, tokens).length();
                 curIndex += skippedWhitespace;
                 curColumn += skippedWhitespace;
                 std::advance(begin, skippedWhitespace);
@@ -66,7 +67,7 @@ namespace dem {
                 if(!tokenDefinition)
                     continue;
 
-                std::string matched = tokenDefinition->matcher().match(begin, end);
+                std::string matched = tokenDefinition->matcher().match(begin, end, tokens);
 
                 if(matched.length() > 0) {
                     std::advance(begin, matched.length());

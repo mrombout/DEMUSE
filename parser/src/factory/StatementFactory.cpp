@@ -9,6 +9,7 @@
 #include "factory/ForFactory.h"
 #include "factory/FunctionDefinitionFactory.h"
 #include "factory/VariableDeclarationFactory.h"
+#include "factory/PlayFactory.h"
 #include "symbol/Return.h"
 #include "symbol/Break.h"
 #include "symbol/Continue.h"
@@ -55,6 +56,9 @@ namespace dem {
             } else if(tokens.front().is(lexer::TokenType::FUNCTION)) {
                 // function_def
                 statement = FunctionDefinitionFactory::produce(tokens);
+            } else if(tokens.front().is(lexer::TokenType::PLAY)) {
+                // play_stmt
+                statement = PlayFactory::produce(tokens);
             }
 
             // terminator

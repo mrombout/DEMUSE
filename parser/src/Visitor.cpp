@@ -113,5 +113,10 @@ namespace dem {
 
         bool Visitor::visitEnter(SubtractionExpression &subtractionExpression) { return true; }
         bool Visitor::visitLeave(SubtractionExpression &subtractionExpression) { return true; }
+
+        bool Visitor::visitEnter(parser::Play &play) { return true; }
+        bool Visitor::visitLeave(parser::Play &play) { return true; }
+
+        bool Visitor::visit(parser::Note &note) { return true; }
     }
 }

@@ -40,6 +40,8 @@
 #include "symbol/expression/StrictEqualCondition.h"
 #include "symbol/expression/StrictNotEqualCondition.h"
 #include "symbol/expression/SubtractionExpression.h"
+#include "symbol/play/Play.h"
+#include "symbol/play/Note.h"
 
 namespace dem {
     namespace parser {
@@ -158,6 +160,11 @@ namespace dem {
 
             virtual bool visitEnter(parser::SubtractionExpression &subtractionExpression);
             virtual bool visitLeave(parser::SubtractionExpression &subtractionExpression);
+
+            virtual bool visitEnter(parser::Play &play);
+            virtual bool visitLeave(parser::Play &play);
+
+            virtual bool visit(parser::Note &note);
         };
     }
 }
