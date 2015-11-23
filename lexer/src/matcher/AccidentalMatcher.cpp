@@ -3,7 +3,7 @@
 namespace dem {
     namespace lexer {
         AccidentalMatcher::AccidentalMatcher() :
-                RegexMatcher("#|b|n"){
+                RegexMatcher("(#|b|n)\\b"){
 
         }
     }

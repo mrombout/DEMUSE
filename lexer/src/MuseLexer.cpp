@@ -15,7 +15,7 @@ namespace dem {
             addDefinition(new TokenDefinition(TokenType::TEXT,          new RegexMatcher("\\\"(?:[^\\\"\\\\]|\\\\.)*\\\"")));
             addDefinition(new TokenDefinition(TokenType::NUMBER,        new RegexMatcher("\\d+(?:\\.\\d+)?")));
             addDefinition(new TokenDefinition(TokenType::NOTE,          noteMatcher));
-            addDefinition(new TokenDefinition(TokenType::NOTE,          accidentalMatcher));
+            addDefinition(new TokenDefinition(TokenType::ACCIDENTAL,    accidentalMatcher));
             addDefinition(new TokenDefinition(TokenType::COMMA,         new CharMatcher(',')));
             addDefinition(new TokenDefinition(TokenType::PERIOD,        new CharMatcher('.')));
             addDefinition(new TokenDefinition(TokenType::POSITIVE,      new RegexMatcher("\\+(?=\\d)")));
