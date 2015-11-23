@@ -1,3 +1,4 @@
+#include <exception/ParsingException.h>
 #include "factory/StatementFactory.h"
 #include "factory/AssignmentFactory.h"
 #include "factory/ExpressionFactory.h"
@@ -60,6 +61,9 @@ namespace dem {
                 // play_stmt
                 statement = PlayFactory::produce(tokens);
             }
+
+            if(statement == nullptr)
+                throw ParsingException(); // TODO: Add clear error message
 
             // terminator
             expect(tokens, lexer::TokenType::TERMINATOR);

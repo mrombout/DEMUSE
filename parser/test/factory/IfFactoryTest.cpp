@@ -231,6 +231,22 @@ TEST_F(IfFactoryTest, Error_ForgetElseBlockOrStatement) {
     // act / assert
     EXPECT_THROW({
         dem::parser::If *ifStatement = dem::parser::IfFactory::produce(tokens);
-        std::cout << "Everything is just fine" << std::endl;
     }, dem::parser::ParsingException);
 }
+
+TEST_F(IfFactoryTest, Error_NotAStatement) {
+    // arrange
+    std::deque<dem::lexer::Token> tokens {
+        dem::lexer::Token(dem::lexer::TokenType::IF,    "if",   0, 0, 0),
+        dem::lexer::Token(dem::lexer::TokenType::OPEN,  "(",    0, 0, 0),
+        dem::lexer::Token(dem::lexer::TokenType::BOOL,  "true", 0, 0, 0),
+        dem::lexer::Token(dem::lexer::TokenType::CLOSE, ")",    0, 0, 0),
+        dem::lexer::Token(dem::lexer::TokenType::PLUS,  "+",    0, 0, 0)
+    };
+
+    // act / assert
+    EXPECT_THROW({
+        dem::parser::If *ifStatement = dem::parser::IfFactory::produce(tokens);
+    }, dem::parser::ParsingException);
+}
+
