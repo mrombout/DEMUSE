@@ -1,13 +1,18 @@
 #include "MusicStringLexer.h"
 #include "matcher/StringMatcher.h"
+#include "matcher/NoteMatcher.h"
+#include "matcher/AccidentalMatcher.h"
 
 namespace dem {
     namespace lexer {
         MusicStringLexer::MusicStringLexer() :
             Lexer(new StringMatcher(">>")) {
-            addDefinition(new TokenDefinition(TokenType::NOTE,          new RegexMatcher("C|D|E|F|G|A|B|R")));
+            AccidentalMatcher *accidentalMatcher = new AccidentalMatcher();
+            NoteMatcher *noteMatcher = new NoteMatcher(accidentalMatcher);
+
+            addDefinition(new TokenDefinition(TokenType::NOTE,          noteMatcher));
             addDefinition(new TokenDefinition(TokenType::OCTAVE,        new RegexMatcher("10|[0-9]")));
-            addDefinition(new TokenDefinition(TokenType::ACCIDENTAL,    new RegexMatcher("#|b|n")));
+            addDefinition(new TokenDefinition(TokenType::ACCIDENTAL,    accidentalMatcher));
             addDefinition(new TokenDefinition(TokenType::CHORD,         new RegexMatcher("maj|min")));
             addDefinition(new TokenDefinition(TokenType::DURATION,      new RegexMatcher("w|h|q|i|s|t|x|o|\\.")));
             addDefinition(new TokenDefinition(TokenType::PRESSURE,      new RegexMatcher("\\+(?=\\d)")));

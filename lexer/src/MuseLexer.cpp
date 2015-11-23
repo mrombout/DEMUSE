@@ -2,13 +2,20 @@
 #include "matcher/StringMatcher.h"
 #include "matcher/CharMatcher.h"
 #include "matcher/PlayMatcher.h"
+#include "matcher/NoteMatcher.h"
+#include "matcher/AccidentalMatcher.h"
 
 namespace dem {
     namespace lexer {
         MuseLexer::MuseLexer() {
+            AccidentalMatcher *accidentalMatcher = new AccidentalMatcher();
+            NoteMatcher *noteMatcher = new NoteMatcher(accidentalMatcher);
+
             addDefinition(new TokenDefinition(TokenType::BOOL,          new RegexMatcher("(true|false)")));
             addDefinition(new TokenDefinition(TokenType::TEXT,          new RegexMatcher("\\\"(?:[^\\\"\\\\]|\\\\.)*\\\"")));
             addDefinition(new TokenDefinition(TokenType::NUMBER,        new RegexMatcher("\\d+(?:\\.\\d+)?")));
+            addDefinition(new TokenDefinition(TokenType::NOTE,          noteMatcher));
+            addDefinition(new TokenDefinition(TokenType::NOTE,          accidentalMatcher));
             addDefinition(new TokenDefinition(TokenType::COMMA,         new CharMatcher(',')));
             addDefinition(new TokenDefinition(TokenType::PERIOD,        new CharMatcher('.')));
             addDefinition(new TokenDefinition(TokenType::POSITIVE,      new RegexMatcher("\\+(?=\\d)")));
@@ -19,7 +26,7 @@ namespace dem {
             addDefinition(new TokenDefinition(TokenType::DIVIDE,        new CharMatcher('/')));
             addDefinition(new TokenDefinition(TokenType::MOD,           new CharMatcher('%')));
             addDefinition(new TokenDefinition(TokenType::EXP,           new CharMatcher('^')));
-            addDefinition(new TokenDefinition(TokenType::PLAY_END,    new PlayMatcher()));
+            addDefinition(new TokenDefinition(TokenType::PLAY_END,      new PlayMatcher()));
             addDefinition(new TokenDefinition(TokenType::TEQ,           new StringMatcher("===")));
             addDefinition(new TokenDefinition(TokenType::EQ,            new StringMatcher("==")));
             addDefinition(new TokenDefinition(TokenType::TNEQ,          new StringMatcher("!==")));

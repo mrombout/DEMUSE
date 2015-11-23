@@ -13,33 +13,56 @@ protected:
 };
 
 TEST_F(RegexMatcherTest, ReturnsStringWhenMatch) {
+    // arrange
     std::string str{"abcde"};
 
-    std::string result = matcher.match(str.begin(), str.end(), tokens);
+    auto begin = str.begin();
+    auto end = str.end();
 
+    // act
+    std::string result = matcher.match(begin, end, tokens);
+
+    // assert
     ASSERT_EQ("abcd", result);
 }
 
 TEST_F(RegexMatcherTest, ReturnsEmptyWhenNoMatch) {
+    // arrange
     std::string str{"bcdefa"};
 
-    std::string result = matcher.match(str.begin(), str.end(), tokens);
+    auto begin = str.begin();
+    auto end = str.end();
 
+    // act
+    std::string result = matcher.match(begin, end, tokens);
+
+    // assert
     ASSERT_EQ("", result);
 }
 
 TEST_F(RegexMatcherTest, ReturnsEmptyWhenMatchNotAtBeginOfString) {
+    // arrange
     std::string str{"dbabcd"};
 
-    std::string result = matcher.match(str.begin(), str.end(), tokens);
+    auto begin = str.begin();
+    auto end = str.end();
 
+    // act
+    std::string result = matcher.match(begin, end, tokens);
+
+    // assert
     ASSERT_EQ("", result);
 }
 
 TEST_F(RegexMatcherTest, ReturnsEmptyWithEndIterator) {
+    // arrange
     std::string str{"abcde"};
 
-    std::string result = matcher.match(str.end(), str.end(), tokens);
+    auto end = str.end();
 
+    // act
+    std::string result = matcher.match(end, end, tokens);
+
+    // assert
     ASSERT_EQ("", result);
 }

@@ -3,7 +3,8 @@
 namespace dem {
     namespace lexer {
         RegexMatcher::RegexMatcher(std::string regex) :
-            mRegex(std::regex("^(" + regex + ")")) {
+            mRegexStr("^(" + regex + ")"),
+            mRegex(std::regex(mRegexStr)) {
         }
 
         std::string RegexMatcher::match(std::string::iterator &begin, std::string::iterator &end, std::vector<Token> &tokens) const {
@@ -11,6 +12,10 @@ namespace dem {
             if(std::regex_search<std::string::iterator>(begin, end, match, mRegex))
                 return match[0];
             return "";
+        }
+
+        std::string RegexMatcher::regex() const {
+            return mRegexStr;
         }
     }
 }

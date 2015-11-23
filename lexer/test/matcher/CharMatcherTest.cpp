@@ -13,25 +13,43 @@ protected:
 };
 
 TEST_F(CharMatcherTest, ReturnsEmptyWhenNoMatch) {
+    // arrange
     std::string str{"bcdefa"};
 
-    std::string result = matcher.match(str.begin(), str.end(), tokens);
+    auto begin = str.begin();
+    auto end = str.end();
 
+    // act
+    std::string result = matcher.match(begin, end, tokens);
+
+    // assert
     ASSERT_EQ("", result);
 }
 
 TEST_F(CharMatcherTest, ReturnsCharWhenMatch) {
+    // arrange
     std::string str{"abcde"};
 
-    std::string result = matcher.match(str.begin(), str.end(), tokens);
+    auto begin = str.begin();
+    auto end = str.end();
 
+    // act
+    std::string result = matcher.match(begin, end, tokens);
+
+    // assert
     ASSERT_EQ("a", result);
 }
 
 TEST_F(CharMatcherTest, ReturnsEmptyWithEndIterator) {
+    // arrange
     std::string str{"abcde"};
 
-    std::string result = matcher.match(str.end(), str.end(), tokens);
+    auto begin = str.begin();
+    auto end = str.end();
 
+    // act
+    std::string result = matcher.match(begin, end, tokens);
+
+    // assert
     ASSERT_EQ("", result);
 }
