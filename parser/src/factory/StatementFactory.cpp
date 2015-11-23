@@ -56,7 +56,7 @@ namespace dem {
             } else if(tokens.front().is(lexer::TokenType::FUNCTION)) {
                 // function_def
                 statement = FunctionDefinitionFactory::produce(tokens);
-            } else if(tokens.front().is(lexer::TokenType::PLAY)) {
+            } else if(tokens.front().is(lexer::TokenType::PLAY_START)) {
                 // play_stmt
                 statement = PlayFactory::produce(tokens);
             }

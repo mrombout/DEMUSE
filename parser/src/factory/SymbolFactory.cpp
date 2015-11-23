@@ -1,11 +1,15 @@
 #include "factory/SymbolFactory.h"
+#include "exception/ParsingException.h"
 
 namespace dem {
     namespace parser {
         bool SymbolFactory::expect(std::deque<lexer::Token> &tokens, lexer::TokenType tokenType) {
             if(accept(tokens, tokenType))
                 return true;
-            throw "TODO: Some proper error";
+            if(tokens.empty())
+                throw ParsingException();
+            throw ParsingException(tokens.front());
+            // TODO: Proper messages
         }
 
         bool SymbolFactory::accept(std::deque<lexer::Token> &tokens, lexer::TokenType tokenType) {

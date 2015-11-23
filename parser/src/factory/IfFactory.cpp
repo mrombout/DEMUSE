@@ -19,6 +19,7 @@ namespace dem {
 
             // conditional
             Expression *expression = ExpressionFactory::produce(tokens);
+            // TODO: Can expression ever be nullptr? If so, check and throw exception
 
             // ")"
             expect(tokens, lexer::TokenType::CLOSE);
@@ -32,6 +33,7 @@ namespace dem {
                 // statement
                 Statement *statement = StatementFactory::produce(tokens);
                 std::vector<Statement*> statements{statement};
+                // TODO: Can statement every be nullptr? If so, check and throw exception
 
                 block = new Block(statements);
             }
@@ -46,6 +48,7 @@ namespace dem {
                     // statement
                     Statement *statement = StatementFactory::produce(tokens);
                     std::vector<Statement*> statements{statement};
+                    // TODO: Can statement every be nullptr? If so, check and throw exception
 
                     elseBlock = new Block(statements);
                 }

@@ -14,6 +14,7 @@ namespace dem {
 
             // conditional
             Expression *expression = ExpressionFactory::produce(tokens);
+            // TODO: Can expression ever be nullptr? If so, check and throw exception
 
             // ")"
             expect(tokens, lexer::TokenType::CLOSE);

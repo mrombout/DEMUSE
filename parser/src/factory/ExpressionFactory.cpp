@@ -1,3 +1,4 @@
+#include <exception/ParsingException.h>
 #include "factory/IdentifierFactory.h"
 #include "factory/ExpressionFactory.h"
 #include "factory/PrimitiveFactory.h"
@@ -168,6 +169,8 @@ namespace dem {
                 // primitive
                 return PrimitiveFactory::produce(tokens);
             }
+
+            throw ParsingException(); // TODO: Add proper message
         }
 
         Expression *ExpressionFactory::produceExpression(lexer::Token token, Expression *lhs, Expression *rhs) {
@@ -187,7 +190,7 @@ namespace dem {
                 case lexer::TokenType::ASSIGNMENT: {
                     Identifier *identifier = dynamic_cast<Identifier*>(lhs);
                     if(identifier == nullptr)
-                        throw "Some error"; // TODO: Throw a proper exception
+                        throw ParsingException(); // TODO: Add clear error message
                     return new AssignmentExpression(identifier, rhs);
                 }
                 case lexer::TokenType::SM:
