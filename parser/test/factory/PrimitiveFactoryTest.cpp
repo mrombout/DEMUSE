@@ -14,10 +14,10 @@ protected:
     dem::parser::PrimitiveFactory factory;
 };
 
-TEST_F(PrimitiveFactoryTest, Bool) {
+TEST_F(PrimitiveFactoryTest, Bool_True) {
     // arrange
     std::deque<dem::lexer::Token> tokens {
-        dem::lexer::Token(dem::lexer::TokenType::BOOL,     "true",   0, 1, 1),
+        dem::lexer::Token(dem::lexer::TokenType::BOOL, "true", 0, 1, 1),
     };
 
     // act
@@ -26,6 +26,20 @@ TEST_F(PrimitiveFactoryTest, Bool) {
     // assert
     ASSERT_EQ(typeid(dem::parser::Bool), typeid(*boolean));
     ASSERT_EQ(true, boolean->value());
+}
+
+TEST_F(PrimitiveFactoryTest, Bool_False) {
+    // arrange
+    std::deque<dem::lexer::Token> tokens {
+        dem::lexer::Token(dem::lexer::TokenType::BOOL, "false", 0, 1, 1),
+    };
+
+    // act
+    dem::parser::Bool *boolean = dynamic_cast<dem::parser::Bool*>(factory.produce(tokens));
+
+    // assert
+    ASSERT_EQ(typeid(dem::parser::Bool), typeid(*boolean));
+    ASSERT_EQ(false, boolean->value());
 }
 
 TEST_F(PrimitiveFactoryTest, Text) {
@@ -43,10 +57,10 @@ TEST_F(PrimitiveFactoryTest, Text) {
     ASSERT_EQ(content, text->value());
 }
 
-TEST_F(PrimitiveFactoryTest, Number) {
+TEST_F(PrimitiveFactoryTest, Number_Integer) {
     // arrange
     std::deque<dem::lexer::Token> tokens {
-        dem::lexer::Token(dem::lexer::TokenType::NUMBER,     "5",   0, 1, 1),
+        dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 1, 1),
     };
 
     // act
@@ -56,3 +70,18 @@ TEST_F(PrimitiveFactoryTest, Number) {
     ASSERT_EQ(typeid(dem::parser::Number), typeid(*primitive));
     ASSERT_EQ(5, primitive->value());
 }
+
+TEST_F(PrimitiveFactoryTest, Number_Float) {
+    // arrange
+    std::deque<dem::lexer::Token> tokens {
+        dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5.4", 0, 1, 1),
+    };
+
+    // act
+    dem::parser::Number *primitive = dynamic_cast<dem::parser::Number*>(factory.produce(tokens));
+
+    // assert
+    ASSERT_EQ(typeid(dem::parser::Number), typeid(*primitive));
+    ASSERT_EQ(5.4d, primitive->value());
+}
+
