@@ -42,7 +42,9 @@ namespace dem {
             }
 
             // ( terminator | assignment_stmt )
-            AssignmentExpression *assignmentStatement = dynamic_cast<AssignmentExpression*>(ExpressionFactory::produce(tokens));
+            AssignmentExpression *assignmentExpression = nullptr;
+            if(!tokens.front().is(lexer::TokenType::CLOSE))
+                assignmentExpression = dynamic_cast<AssignmentExpression*>(ExpressionFactory::produce(tokens));
 
             // ")"
             expect(tokens, lexer::TokenType::CLOSE);
@@ -50,7 +52,7 @@ namespace dem {
             // block
             Block *block = BlockFactory::produce(tokens);
 
-            return new For(initializerStatement, conditionalExpression, assignmentStatement);
+            return new For(initializerStatement, conditionalExpression, assignmentExpression);
         }
     }
 }

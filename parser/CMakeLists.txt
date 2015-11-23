@@ -13,6 +13,9 @@ set(Parser_SRCS
     inc/MuseParser.h
     src/MuseParser.cpp
 
+    inc/exception/ParsingException.h
+    src/exception/ParsingException.cpp
+
     inc/symbol/Symbol.h
     src/symbol/Symbol.cpp
 
