@@ -6,6 +6,7 @@
 #include <wx/aui/aui.h>
 #include <wx/dirctrl.h>
 #include <wx/stc/stc.h>
+#include "MuseStyledTextEditor.h"
 
 namespace dem {
     namespace ide {
@@ -43,7 +44,7 @@ namespace dem {
             wxMenu *mHelpMenu;
 
             wxAuiNotebook *mNotebook;
-            wxStyledTextCtrl *mEditor;
+            MuseStyledTextEditor *mEditor;
         };
     }
 }

@@ -10,6 +10,9 @@ set(IDE_SRCS
 
     inc/MuseAuiTabArt.h
     src/MuseAuiTabArt.cpp
+
+    inc/MuseStyledTextEditor.h
+    src/MuseStyledTextEditor.cpp
 )
 
 add_executable(ide

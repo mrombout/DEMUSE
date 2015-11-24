@@ -84,7 +84,7 @@ namespace dem {
         }
 
         void MainFrame::createEditor() {
-            mEditor = new wxStyledTextCtrl(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxNO_BORDER);
+            mEditor = new MuseStyledTextEditor(this);
             mNotebook->AddPage(mEditor, "music.muse");
         }
 
