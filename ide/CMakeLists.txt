@@ -32,9 +32,9 @@ target_link_libraries(ide
 )
 
 # dependencies
-find_package(wxWidgets COMPONENTS stc aui adv core base scintilla REQUIRED)
+find_package(wxWidgets REQUIRED stc aui adv core base)
 if(wxWidgets_FOUND)
-    target_include_directories(ide PRIVATE ${wxWidgets_INCLUDE_DIRS})
+    include(${wxWidgets_USE_FILE})
     target_link_libraries(ide PRIVATE ${wxWidgets_LIBRARIES})
 endif()
 

@@ -63,10 +63,10 @@ target_include_directories(compiler PRIVATE ${Compiler_INCLUDE_DIRS} ${Parser_IN
 target_link_libraries(compiler PRIVATE dem::libparser dem::liblexer)
 
 # dependencies
-find_package(Jdksmidi REQUIRED)
-if(Jdksmidi_FOUND)
-
-endif()
+#find_package(Jdksmidi REQUIRED)
+#if(Jdksmidi_FOUND)
+#
+#endif()
 
 # testing
 enable_testing()

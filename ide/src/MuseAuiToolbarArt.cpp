@@ -1,1 +1,1 @@
-#include "MuseAuiToolBarArt.h"
+#include "MuseAuiToolbarArt.h"
