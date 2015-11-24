@@ -6,6 +6,7 @@
 #include <wx/toolbar.h>
 #include <wx/artprov.h>
 #include "MainFrame.h"
+#include "MuseAuiTabArt.h"
 
 namespace dem {
     namespace ide {
@@ -17,18 +18,13 @@ namespace dem {
 
         MainFrame::MainFrame(const wxString &title, const wxPoint &pos, const wxSize &size) :
             wxFrame(nullptr, wxID_ANY, title, pos, size) {
-            // notify wxAUI which frame to use
-            mMgr.SetManagedWindow(this);
-
             createMenu();
             createStatuBar();
 
-            createFileNavigator();
             createCenterNotebook();
+            createEditor();
 
             createToolBar();
-
-            mMgr.Update();
         }
 
         void MainFrame::createMenu() {
@@ -56,6 +52,10 @@ namespace dem {
             mEditMenu->AppendSeparator();
             mEditMenu->Append(wxID_PREFERENCES);
 
+            mRunMenu = new wxMenu;
+            mRunMenu->Append(ID_Run, "%Run", "Run the current DEMUSE file.");
+            mRunMenu->Append(ID_Stop, "&Stop", "Stop the currently running DEMUSE file.");
+
             mHelpMenu = new wxMenu;
             mHelpMenu->Append(wxID_HELP);
             mHelpMenu->AppendSeparator();
@@ -74,27 +74,42 @@ namespace dem {
             SetStatusText("Welcome to wxWidgets!");
         }
 
-        void MainFrame::createFileNavigator() {
-            mFileNavigator = new wxGenericDirCtrl(this, -1, wxT("fsdfsdf"), wxDefaultPosition, wxDefaultSize, wxNO_BORDER);
-            mMgr.AddPane(mFileNavigator, wxAuiPaneInfo().Left().Caption(wxT("File Navigator")).Name(wxT("File Navigator")));
-        }
-
         void MainFrame::createCenterNotebook() {
             mNotebook = new wxAuiNotebook(this, wxID_ANY, wxDefaultPosition, wxDefaultSize,
                                                     wxAUI_NB_TAB_SPLIT |
                                                     wxAUI_NB_TAB_MOVE | wxAUI_NB_CLOSE_ON_ALL_TABS |
                                                     wxAUI_NB_MIDDLE_CLICK_CLOSE | wxNO_BORDER);
-            mMgr.AddPane(mNotebook, wxAuiPaneInfo().Center().CaptionVisible(false)/*.PaneBorder(false)*/);
+            mNotebook->SetArtProvider(new MuseAuiTabArt);
+            mMgr.GetArtProvider()->SetMetric(wxAUI_DOCKART_PANE_BORDER_SIZE, 0);
+        }
+
+        void MainFrame::createEditor() {
+            mEditor = new wxStyledTextCtrl(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxNO_BORDER);
+            mNotebook->AddPage(mEditor, "music.muse");
         }
 
         void MainFrame::createToolBar() {
-            wxAuiToolBar *toolbar = new wxAuiToolBar(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxAUI_TB_DEFAULT_STYLE | wxAUI_TB_OVERFLOW);
-            wxBitmap exit;
+            wxToolBar *toolbar = new wxToolBar(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTB_DEFAULT_STYLE);
             toolbar->SetToolBitmapSize(wxSize(24, 24));
-            toolbar->AddTool(1, wxT("TEst"), wxArtProvider::GetBitmap(wxART_QUESTION));
+
+            toolbar->AddTool(ID_NewFile, wxT("&New File..."), wxArtProvider::GetBitmap(wxART_NEW));
+            toolbar->AddTool(wxID_OPEN, wxT("&Open..."), wxArtProvider::GetBitmap(wxART_FILE_OPEN));
+            toolbar->AddTool(wxID_SAVE, wxT("&Save"), wxArtProvider::GetBitmap(wxART_FILE_SAVE));
+            toolbar->AddTool(wxID_SAVEAS, wxT("&Save as..."), wxArtProvider::GetBitmap(wxART_FILE_SAVE_AS));
+            toolbar->AddSeparator();
+            toolbar->AddTool(wxID_CUT, wxT("Cut"), wxArtProvider::GetBitmap(wxART_CUT));
+            toolbar->AddTool(wxID_COPY, wxT("Copy"), wxArtProvider::GetBitmap(wxART_COPY));
+            toolbar->AddTool(wxID_PASTE, wxT("Paste"), wxArtProvider::GetBitmap(wxART_PASTE));
+            toolbar->AddSeparator();
+            toolbar->AddTool(wxID_UNDO, wxT("Undo"), wxArtProvider::GetBitmap(wxART_UNDO));
+            toolbar->AddTool(wxID_REDO, wxT("Redo"), wxArtProvider::GetBitmap(wxART_REDO));
+            toolbar->AddSeparator();
+            toolbar->AddTool(ID_Run, wxT("Play"), wxArtProvider::GetBitmap(wxART_UNDO));
+            toolbar->AddTool(ID_Stop, wxT("Stop"), wxArtProvider::GetBitmap(wxART_REDO));
+
             toolbar->Realize();
 
-            mMgr.AddPane(toolbar, wxAuiPaneInfo().Name(wxT("tb1")).ToolbarPane().Caption(wxT("Bit Toolbar")).Top());
+            SetToolBar(toolbar);
         }
 
         void MainFrame::onHello(wxCommandEvent &event) {
@@ -110,7 +125,7 @@ namespace dem {
         }
 
         MainFrame::~MainFrame() {
-            mMgr.UnInit();
+
         }
     }
 }

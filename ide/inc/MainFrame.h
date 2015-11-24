@@ -5,13 +5,16 @@
 #include <wx/event.h>
 #include <wx/aui/aui.h>
 #include <wx/dirctrl.h>
+#include <wx/stc/stc.h>
 
 namespace dem {
     namespace ide {
         enum {
             ID_Hello = 1,
             ID_NewProject,
-            ID_NewFile
+            ID_NewFile,
+            ID_Run,
+            ID_Stop
         };
 
         class MainFrame : public wxFrame {
@@ -22,8 +25,8 @@ namespace dem {
         private:
             void createMenu();
             void createStatuBar();
-            void createFileNavigator();
             void createCenterNotebook();
+            void createEditor();
             void createToolBar();
 
             void onHello(wxCommandEvent &event);
@@ -35,14 +38,12 @@ namespace dem {
             wxAuiManager mMgr;
 
             wxMenu *mFileMenu;
+            wxMenu *mRunMenu;
             wxMenu *mEditMenu;
             wxMenu *mHelpMenu;
 
-            wxToolBar *mToolBar;
-
-            wxGenericDirCtrl *mFileNavigator;
-
             wxAuiNotebook *mNotebook;
+            wxStyledTextCtrl *mEditor;
         };
     }
 }

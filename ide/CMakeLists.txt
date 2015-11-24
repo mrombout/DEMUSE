@@ -7,6 +7,9 @@ set(IDE_SRCS
 
     inc/MainFrame.h
     src/MainFrame.cpp
+
+    inc/MuseAuiTabArt.h
+    src/MuseAuiTabArt.cpp
 )
 
 add_executable(ide
@@ -23,7 +26,7 @@ target_link_libraries(ide
 )
 
 # dependencies
-find_package(wxWidgets REQUIRED stc adv core base)
+find_package(wxWidgets REQUIRED aui stc adv core base scintilla)
 if(wxWidgets_FOUND)
     include(${wxWidgets_USE_FILE})
     target_include_directories(ide PRIVATE ${wxWidgets_INCLUDE_DIRS} "/usr/local/include/wx-3.0/")
