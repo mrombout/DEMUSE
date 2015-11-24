@@ -36,6 +36,12 @@ set(Lexer_SRCS
 
     inc/matcher/PlayMatcher.h
     src/matcher/PlayMatcher.cpp
+
+    inc/matcher/NoteMatcher.h
+    src/matcher/NoteMatcher.cpp
+
+    inc/matcher/AccidentalMatcher.h
+    src/matcher/AccidentalMatcher.cpp
 )
 
 set(TestLexer_SRCS

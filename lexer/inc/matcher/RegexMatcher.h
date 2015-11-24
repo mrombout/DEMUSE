@@ -12,7 +12,10 @@ namespace dem {
 
             virtual std::string match(std::string::iterator &begin, std::string::iterator &end, std::vector<Token> &tokens) const;
 
+            std::string regex() const;
+
         private:
+            std::string mRegexStr;
             std::regex mRegex;
         };
     }

@@ -13,15 +13,28 @@ protected:
 };
 
 TEST_F(NullMatcherTest, MatchReturnsEmptyString) {
+    // arrange
     std::string str{"foobar"};
-    std::string result = matcher.match(str.begin(), str.end(), tokens);
 
+    auto begin = str.begin();
+    auto end = str.end();
+
+    // act
+    std::string result = matcher.match(begin, end, tokens);
+
+    // assert
     ASSERT_EQ("", result);
 }
 
 TEST_F(NullMatcherTest, MatchReturnsEmptyStringWithEndIterator) {
+    // arrange
     std::string str{"foobar"};
-    std::string result = matcher.match(str.end(), str.end(), tokens);
 
+    auto end = str.end();
+
+    // act
+    std::string result = matcher.match(end, end, tokens);
+
+    // assert
     ASSERT_EQ("", result);
 }

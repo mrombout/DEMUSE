@@ -22,6 +22,17 @@ TEST_F(MusicStringLexerTest, Note_Single) {
     ASSERT_EQ(dem::lexer::TokenType::NOTE, tokens[0].type());
 }
 
+TEST_F(MusicStringLexerTest, Note_Identifier) {
+    // arrange
+    std::string str{"Car"};
+
+    // act
+    std::vector<dem::lexer::Token> tokens = lexer.lex(str.begin(), str.end());
+
+    // assert
+    ASSERT_EQ(dem::lexer::TokenType::UNKNOWN, tokens[0].type());
+}
+
 TEST_F(MusicStringLexerTest, Octave_SingleTenOctave) {
     // arrange
     std::string str{"10"};
