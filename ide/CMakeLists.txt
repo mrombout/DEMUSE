@@ -7,15 +7,6 @@ set(IDE_SRCS
 
     inc/MainFrame.h
     src/MainFrame.cpp
-
-    inc/MuseAuiDockArt.h
-    src/MuseAuiDockArt.cpp
-
-    inc/MuseAuiTabArt.h
-    src/MuseAuiTabArt.cpp
-
-    inc/MuseAuiToolbarArt.h
-    src/MuseAuiToolbarArt.cpp
 )
 
 add_executable(ide
@@ -32,9 +23,10 @@ target_link_libraries(ide
 )
 
 # dependencies
-find_package(wxWidgets REQUIRED stc aui adv core base)
+find_package(wxWidgets REQUIRED stc adv core base)
 if(wxWidgets_FOUND)
     include(${wxWidgets_USE_FILE})
+    target_include_directories(ide PRIVATE ${wxWidgets_INCLUDE_DIRS} "/usr/local/include/wx-3.0/")
     target_link_libraries(ide PRIVATE ${wxWidgets_LIBRARIES})
 endif()
 
