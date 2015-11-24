@@ -14,8 +14,15 @@ namespace dem {
         public:
             MuseStyledTextEditor(wxWindow *parent);
 
+            bool loadFile(const wxString &fileName);
+            bool saveFile();
+
+            wxString filePath() const;
+
         private:
             void onMarginClick(wxStyledTextEvent &event);
+
+            wxString mFilePath;
         };
     }
 }

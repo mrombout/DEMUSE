@@ -82,5 +82,24 @@ namespace dem {
                 }
             }
         }
+
+        bool MuseStyledTextEditor::saveFile() {
+            if(!IsModified()) return true;
+            return wxStyledTextCtrl::SaveFile(mFilePath);
+        }
+
+        bool MuseStyledTextEditor::loadFile(const wxString &fileName) {
+            if(!fileName.empty()) mFilePath = fileName;
+
+            wxStyledTextCtrl::LoadFile(fileName);
+
+            EmptyUndoBuffer();
+
+            return true;
+        }
+
+        wxString MuseStyledTextEditor::filePath() const {
+            return mFilePath;
+        }
     }
 }

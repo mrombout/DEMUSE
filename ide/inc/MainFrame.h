@@ -1,6 +1,7 @@
 #ifndef DEMUSE_MAINFRAME_H
 #define DEMUSE_MAINFRAME_H
 
+#include <map>
 #include <wx/frame.h>
 #include <wx/event.h>
 #include <wx/aui/aui.h>
@@ -27,14 +28,27 @@ namespace dem {
             void createMenu();
             void createStatuBar();
             void createCenterNotebook();
-            void createEditor();
+            void createEditor(const wxString &filePath);
             void createToolBar();
 
             void onHello(wxCommandEvent &event);
             void onExit(wxCommandEvent &event);
             void onAbout(wxCommandEvent &event);
 
-            wxDECLARE_EVENT_TABLE();
+            void onFileOpen(wxCommandEvent &event);
+            void onFileSave(wxCommandEvent &event);
+            void onFileSaveAs(wxCommandEvent &event);
+            void onFileClose(wxCommandEvent &event);
+
+            void onEditUndo(wxCommandEvent &event);
+            void onEditRedo(wxCommandEvent &event);
+            void onEditCut(wxCommandEvent &event);
+            void onEditCopy(wxCommandEvent &event);
+            void onEditPaste(wxCommandEvent &event);
+
+            void onEditSelectAll(wxCommandEvent &event);
+
+            std::map<wxString, size_t> mFileEditors;
 
             wxAuiManager mMgr;
 
@@ -45,6 +59,8 @@ namespace dem {
 
             wxAuiNotebook *mNotebook;
             MuseStyledTextEditor *mEditor;
+
+            wxDECLARE_EVENT_TABLE();
         };
     }
 }

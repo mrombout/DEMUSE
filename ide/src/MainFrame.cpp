@@ -5,14 +5,35 @@
 #include <wx/stc/stc.h>
 #include <wx/toolbar.h>
 #include <wx/artprov.h>
+#include <wx/filedlg.h>
+#include <wx/filename.h>
 #include "MainFrame.h"
 #include "MuseAuiTabArt.h"
 
 namespace dem {
     namespace ide {
         wxBEGIN_EVENT_TABLE(MainFrame, wxFrame)
+            // common
             EVT_MENU(ID_Hello,   MainFrame::onHello)
             EVT_MENU(wxID_EXIT,  MainFrame::onExit)
+
+            // file
+            EVT_MENU(wxID_OPEN, MainFrame::onFileOpen)
+            EVT_MENU(wxID_SAVE, MainFrame::onFileSave)
+            EVT_MENU(wxID_SAVEAS, MainFrame::onFileSaveAs)
+            EVT_MENU(wxID_CLOSE, MainFrame::onFileClose)
+
+            // edit
+            EVT_MENU(wxID_UNDO, MainFrame::onEditUndo)
+            EVT_MENU(wxID_REDO, MainFrame::onEditRedo)
+
+            EVT_MENU(wxID_CUT, MainFrame::onEditCut)
+            EVT_MENU(wxID_COPY, MainFrame::onEditCopy)
+            EVT_MENU(wxID_PASTE, MainFrame::onEditPaste)
+
+            EVT_MENU(wxID_SELECTALL, MainFrame::onEditSelectAll)
+
+            // help
             EVT_MENU(wxID_ABOUT, MainFrame::onAbout)
         wxEND_EVENT_TABLE()
 
@@ -22,9 +43,12 @@ namespace dem {
             createStatuBar();
 
             createCenterNotebook();
-            createEditor();
 
             createToolBar();
+        }
+
+        MainFrame::~MainFrame() {
+
         }
 
         void MainFrame::createMenu() {
@@ -49,6 +73,8 @@ namespace dem {
             mEditMenu->Append(wxID_COPY);
             mEditMenu->Append(wxID_PASTE);
             mEditMenu->Append(wxID_DELETE);
+            mEditMenu->AppendSeparator();
+            mEditMenu->Append(wxID_SELECTALL);
             mEditMenu->AppendSeparator();
             mEditMenu->Append(wxID_PREFERENCES);
 
@@ -79,13 +105,22 @@ namespace dem {
                                                     wxAUI_NB_TAB_SPLIT |
                                                     wxAUI_NB_TAB_MOVE | wxAUI_NB_CLOSE_ON_ALL_TABS |
                                                     wxAUI_NB_MIDDLE_CLICK_CLOSE | wxNO_BORDER);
-            mNotebook->SetArtProvider(new MuseAuiTabArt);
+            //mNotebook->SetArtProvider(new MuseAuiTabArt);
             mMgr.GetArtProvider()->SetMetric(wxAUI_DOCKART_PANE_BORDER_SIZE, 0);
         }
 
-        void MainFrame::createEditor() {
-            mEditor = new MuseStyledTextEditor(this);
-            mNotebook->AddPage(mEditor, "music.muse");
+        void MainFrame::createEditor(const wxString &filePath) {
+            if(!mFileEditors.count(filePath)) {
+                mEditor = new MuseStyledTextEditor(this);
+                mEditor->LoadFile(filePath);
+
+                wxFileName fileName{filePath};
+                size_t pageId = mNotebook->GetPageCount();
+                mNotebook->InsertPage(pageId, mEditor, fileName.GetFullName(), true);
+                mFileEditors[filePath] = pageId;
+            } else {
+                mNotebook->SetSelection(mFileEditors[filePath]);
+            }
         }
 
         void MainFrame::createToolBar() {
@@ -124,8 +159,63 @@ namespace dem {
             wxMessageBox("This is a wxWidgets' Hello World sample", "About Hello World", wxOK | wxICON_INFORMATION);
         }
 
-        MainFrame::~MainFrame() {
+        void MainFrame::onEditCut(wxCommandEvent &event) {
+            mEditor->Cut();
+        }
 
+        void MainFrame::onEditCopy(wxCommandEvent &event) {
+            mEditor->Copy();
+        }
+
+        void MainFrame::onEditPaste(wxCommandEvent &event) {
+            mEditor->Paste();
+        }
+
+        void MainFrame::onEditUndo(wxCommandEvent &event) {
+            if(!mEditor->CanUndo()) return;
+            mEditor->Undo();
+        }
+
+        void MainFrame::onEditRedo(wxCommandEvent &event) {
+            if(!mEditor->CanRedo()) return;
+            mEditor->Redo();
+        }
+
+        void MainFrame::onEditSelectAll(wxCommandEvent &event) {
+            mEditor->SetSelection(0, mEditor->GetTextLength());
+        }
+
+        void MainFrame::onFileOpen(wxCommandEvent &event) {
+            wxFileDialog dlg(this, wxT("Open file"), wxEmptyString, wxEmptyString, wxT("Any file (*)|*"), wxFD_OPEN | wxFD_FILE_MUST_EXIST | wxFD_CHANGE_DIR );
+            if(dlg.ShowModal() != wxID_OK) return;
+            wxString filePath = dlg.GetPath();
+            createEditor(filePath);
+        }
+
+        void MainFrame::onFileSave(wxCommandEvent &event) {
+            mEditor->saveFile();
+        }
+
+        void MainFrame::onFileSaveAs(wxCommandEvent &event) {
+            wxString fileName = wxEmptyString;
+            wxFileDialog dlg(this, wxT("Save file..."), wxEmptyString, wxEmptyString, wxT("Any file (*)|*"), wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
+            if(dlg.ShowModal() != wxID_OK) return;
+            fileName = dlg.GetPath();
+            mEditor->SaveFile(fileName);
+        }
+
+        void MainFrame::onFileClose(wxCommandEvent &event) {
+            if(mEditor->IsModified()) {
+                if(wxMessageBox(_("Text is not saved, save before closing?"), _("Close"), wxYES_NO | wxICON_QUESTION) == wxYES) {
+                    mEditor->saveFile();
+                    if(mEditor->IsModified()) {
+                        wxMessageBox(_("Text could not be saved!"), _("Close abort"), wxOK | wxICON_EXCLAMATION);
+                        return;
+                    }
+                }
+            }
+
+            mNotebook->RemovePage(mFileEditors[mEditor->filePath()]);
         }
     }
 }

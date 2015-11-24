@@ -336,7 +336,7 @@ namespace dem {
                 wxRect r(tab_x, tab_y, tab_width, tab_height);
                 dc.SetPen(*wxTRANSPARENT_PEN);
                 dc.SetBrush(wxBrush(mInactiveBackgroundColor));
-                dc.DrawRectangle(r.x+1, r.y+1, r.width-1, r.height-5);
+                dc.DrawRectangle(r.x, r.y, r.width, r.height-4);
             }
 
             // draw tab outline
@@ -377,7 +377,6 @@ namespace dem {
                         drawn_tab_yoff + (drawn_tab_height)/2 - (texty/2) - 1);
 
             // draw focus rectangle
-            /*
             if (page.active && (wnd->FindFocus() == wnd))
             {
                 wxRect focusRectText(text_offset, (drawn_tab_yoff + (drawn_tab_height)/2 - (texty/2) - 1),
@@ -401,7 +400,6 @@ namespace dem {
 
                 wxRendererNative::Get().DrawFocusRect(wnd, dc, focusRect, 0);
             }
-            */
 
             // draw close button if necessary
             if (close_button_state != wxAUI_BUTTON_STATE_HIDDEN)
