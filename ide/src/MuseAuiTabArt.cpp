@@ -4,8 +4,9 @@
 #include <wx/renderer.h>
 #include <wx/menu.h>
 #include <wx/menuitem.h>
-#include <wx/msw/menu.h>
-#include <wx/msw/menuitem.h>
+#include <wx/menu.h>
+#include <wx/menuitem.h>
+#include <wx/settings.h>
 #include <wx/dcclient.h>
 
 namespace dem {

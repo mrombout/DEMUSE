@@ -14,7 +14,6 @@ namespace dem {
     namespace ide {
         wxBEGIN_EVENT_TABLE(MainFrame, wxFrame)
             // common
-            EVT_MENU(ID_Hello,   MainFrame::onHello)
             EVT_MENU(wxID_EXIT,  MainFrame::onExit)
 
             // file
@@ -54,8 +53,6 @@ namespace dem {
         void MainFrame::createMenu() {
             // create menu
             mFileMenu = new wxMenu;
-            mFileMenu->Append(ID_Hello, "&Hello...\tCtrl-H", "Help string shown in status bar for this menu item");
-            mFileMenu->Append(ID_NewProject, "New &Project...", "Create a new DEMUSE project.");
             mFileMenu->Append(ID_NewFile, "&New File...", "Create a new file in de current project.");
             mFileMenu->AppendSeparator();
             mFileMenu->Append(wxID_OPEN);
@@ -145,10 +142,6 @@ namespace dem {
             toolbar->Realize();
 
             SetToolBar(toolbar);
-        }
-
-        void MainFrame::onHello(wxCommandEvent &event) {
-            wxLogMessage("Hello world from wxWidgets!");
         }
 
         void MainFrame::onExit(wxCommandEvent &event) {

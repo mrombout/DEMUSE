@@ -2,6 +2,7 @@
 #define DEMUSE_MUSESTYLEDTEXTEDITOR_H
 
 #include <wx/stc/stc.h>
+#include <wx/window.h>
 
 namespace dem {
     namespace ide {

@@ -12,8 +12,6 @@
 namespace dem {
     namespace ide {
         enum {
-            ID_Hello = 1,
-            ID_NewProject,
             ID_NewFile,
             ID_Run,
             ID_Stop
@@ -31,7 +29,6 @@ namespace dem {
             void createEditor(const wxString &filePath);
             void createToolBar();
 
-            void onHello(wxCommandEvent &event);
             void onExit(wxCommandEvent &event);
             void onAbout(wxCommandEvent &event);
 
