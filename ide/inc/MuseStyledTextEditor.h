@@ -17,6 +17,7 @@ namespace dem {
 
             bool loadFile(const wxString &fileName);
             bool saveFile();
+            bool saveAsFile(const wxString &fileName);
 
             wxString filePath() const;
 

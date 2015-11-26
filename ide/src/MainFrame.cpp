@@ -18,6 +18,7 @@ namespace dem {
             EVT_MENU(wxID_EXIT,  MainFrame::onExit)
 
             // file
+            EVT_MENU(ID_NewFile, MainFrame::onFileNew)
             EVT_MENU(wxID_OPEN, MainFrame::onFileOpen)
             EVT_MENU(wxID_SAVE, MainFrame::onFileSave)
             EVT_MENU(wxID_SAVEAS, MainFrame::onFileSaveAs)
@@ -107,16 +108,24 @@ namespace dem {
             mMgr.GetArtProvider()->SetMetric(wxAUI_DOCKART_PANE_BORDER_SIZE, 0);
         }
 
-        void MainFrame::createEditor(const wxString &filePath) {
+        void MainFrame::createEditor(const wxString &filePath /*= wxT("") */) {
             if(!mFileEditors.count(filePath)) {
+                // create and new editor and load file if available
                 mEditor = new MuseStyledTextEditor(this);
-                mEditor->LoadFile(filePath);
 
-                wxFileName fileName{filePath};
+                wxString tabName{wxT("New File")};
+
+                if(!filePath.empty()) {
+                    mEditor->loadFile(filePath);
+                    wxFileName fileName{filePath};
+                    tabName = fileName.GetFullName();
+                }
+
                 size_t pageId = mNotebook->GetPageCount();
-                mNotebook->InsertPage(pageId, mEditor, fileName.GetFullName(), true);
+                mNotebook->InsertPage(pageId, mEditor, tabName, true);
                 mFileEditors[filePath] = pageId;
             } else {
+                // select page with the loaded file
                 mNotebook->SetSelection(mFileEditors[filePath]);
             }
         }
@@ -153,6 +162,60 @@ namespace dem {
             wxMessageBox("This is a wxWidgets' Hello World sample", "About Hello World", wxOK | wxICON_INFORMATION);
         }
 
+        void MainFrame::onFileNew(wxCommandEvent &event) {
+            createEditor();
+        }
+
+        void MainFrame::onFileOpen(wxCommandEvent &event) {
+            wxFileDialog dlg(this, wxT("Open file"), wxEmptyString, wxEmptyString, wxT("Any file (*)|*"), wxFD_OPEN | wxFD_FILE_MUST_EXIST | wxFD_CHANGE_DIR );
+            if(dlg.ShowModal() != wxID_OK) return;
+            wxString filePath = dlg.GetPath();
+            createEditor(filePath);
+        }
+
+        void MainFrame::onFileSave(wxCommandEvent &event) {
+            size_t editorId = mNotebook->GetSelection();
+            MuseStyledTextEditor *page = static_cast<MuseStyledTextEditor*>(mNotebook->GetPage(editorId));
+
+            if(page->filePath().empty())
+                return onFileSaveAs(event);
+            mEditor->saveFile();
+        }
+
+        void MainFrame::onFileSaveAs(wxCommandEvent &event) {
+            wxString filePath = wxEmptyString;
+            wxFileDialog dlg(this, wxT("Save file..."), wxEmptyString, wxEmptyString, wxT("Any file (*)|*"), wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
+            if(dlg.ShowModal() != wxID_OK) return;
+            filePath = dlg.GetPath();
+
+            // change editor name
+            size_t editorId = mNotebook->GetSelection();
+            wxFileName fileName{filePath};
+            MuseStyledTextEditor *page = static_cast<MuseStyledTextEditor*>(mNotebook->GetPage(editorId));
+
+            mNotebook->SetPageText(editorId, fileName.GetFullName());
+
+            mFileEditors.erase(page->filePath());
+            mFileEditors[filePath] = editorId;
+
+            // save file under new name
+            mEditor->saveAsFile(filePath);
+        }
+
+        void MainFrame::onFileClose(wxCommandEvent &event) {
+            if(mEditor->IsModified()) {
+                if(wxMessageBox(_("Text is not saved, save before closing?"), _("Close"), wxYES_NO | wxICON_QUESTION) == wxYES) {
+                    mEditor->saveFile();
+                    if(mEditor->IsModified()) {
+                        wxMessageBox(_("Text could not be saved!"), _("Close abort"), wxOK | wxICON_EXCLAMATION);
+                        return;
+                    }
+                }
+            }
+
+            mNotebook->RemovePage(mFileEditors[mEditor->filePath()]);
+        }
+
         void MainFrame::onEditCut(wxCommandEvent &event) {
             mEditor->Cut();
         }
@@ -177,39 +240,6 @@ namespace dem {
 
         void MainFrame::onEditSelectAll(wxCommandEvent &event) {
             mEditor->SetSelection(0, mEditor->GetTextLength());
-        }
-
-        void MainFrame::onFileOpen(wxCommandEvent &event) {
-            wxFileDialog dlg(this, wxT("Open file"), wxEmptyString, wxEmptyString, wxT("Any file (*)|*"), wxFD_OPEN | wxFD_FILE_MUST_EXIST | wxFD_CHANGE_DIR );
-            if(dlg.ShowModal() != wxID_OK) return;
-            wxString filePath = dlg.GetPath();
-            createEditor(filePath);
-        }
-
-        void MainFrame::onFileSave(wxCommandEvent &event) {
-            mEditor->saveFile();
-        }
-
-        void MainFrame::onFileSaveAs(wxCommandEvent &event) {
-            wxString fileName = wxEmptyString;
-            wxFileDialog dlg(this, wxT("Save file..."), wxEmptyString, wxEmptyString, wxT("Any file (*)|*"), wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
-            if(dlg.ShowModal() != wxID_OK) return;
-            fileName = dlg.GetPath();
-            mEditor->SaveFile(fileName);
-        }
-
-        void MainFrame::onFileClose(wxCommandEvent &event) {
-            if(mEditor->IsModified()) {
-                if(wxMessageBox(_("Text is not saved, save before closing?"), _("Close"), wxYES_NO | wxICON_QUESTION) == wxYES) {
-                    mEditor->saveFile();
-                    if(mEditor->IsModified()) {
-                        wxMessageBox(_("Text could not be saved!"), _("Close abort"), wxOK | wxICON_EXCLAMATION);
-                        return;
-                    }
-                }
-            }
-
-            mNotebook->RemovePage(mFileEditors[mEditor->filePath()]);
         }
     }
 }

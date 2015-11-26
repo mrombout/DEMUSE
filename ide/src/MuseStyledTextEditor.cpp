@@ -85,7 +85,18 @@ namespace dem {
 
         bool MuseStyledTextEditor::saveFile() {
             if(!IsModified()) return true;
+
+            std::cout << "Saving file " << mFilePath << std::endl;
+
             return wxStyledTextCtrl::SaveFile(mFilePath);
+        }
+
+        bool MuseStyledTextEditor::saveAsFile(const wxString &fileName) {
+            std::cout << "Saving file " << mFilePath << " as " << fileName << std::endl;
+
+            mFilePath = fileName;
+
+            return wxStyledTextCtrl::SaveFile(fileName);
         }
 
         bool MuseStyledTextEditor::loadFile(const wxString &fileName) {

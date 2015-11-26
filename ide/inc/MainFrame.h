@@ -26,12 +26,13 @@ namespace dem {
             void createMenu();
             void createStatuBar();
             void createCenterNotebook();
-            void createEditor(const wxString &filePath);
+            void createEditor(const wxString &filePath = wxT(""));
             void createToolBar();
 
             void onExit(wxCommandEvent &event);
             void onAbout(wxCommandEvent &event);
 
+            void onFileNew(wxCommandEvent &event);
             void onFileOpen(wxCommandEvent &event);
             void onFileSave(wxCommandEvent &event);
             void onFileSaveAs(wxCommandEvent &event);
