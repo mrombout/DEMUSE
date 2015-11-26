@@ -2,6 +2,7 @@
 #include "symbol/Bool.h"
 #include "symbol/Text.h"
 #include "symbol/Number.h"
+#include "symbol/Note.h"
 
 namespace dem {
     namespace parser {
@@ -29,6 +30,9 @@ namespace dem {
             } else if(tokens.front().is(lexer::TokenType::NUMBER)) {
                 tokens.pop_front();
                 primitive = new Number(std::stod(content));
+            } else if(tokens.front().is(lexer::TokenType::NOTE)) {
+                tokens.pop_front();
+                primitive = new Note();
             }
 
             // TODO: Support for POSITIVE/NEGATIVE

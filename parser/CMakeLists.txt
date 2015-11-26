@@ -43,6 +43,9 @@ set(Parser_SRCS
     inc/symbol/If.h
     src/symbol/If.cpp
 
+    inc/symbol/Note.h
+    src/symbol/Note.cpp
+
     inc/symbol/While.h
     src/symbol/While.cpp
 
