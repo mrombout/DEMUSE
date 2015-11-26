@@ -12,15 +12,19 @@ namespace dem {
         }
 
         void Scope::declareVariable(parser::Identifier *identifier) {
-            std::cout << "DECLARE - Variable " << identifier->name() << std::endl;
+            declareVariable(identifier, new NullValue());
+        }
 
-            mVariables[identifier->name()] = new Variable(identifier, new NullValue());
+        void Scope::declareVariable(parser::Identifier *identifier, Value *value) {
+            std::cout << "DECLARE - Variable " << identifier->name() << " = " << value->asString() << std::endl;
+
+            mVariables[identifier->name()] = new Variable(identifier, value);
         }
 
         void Scope::declareFunction(Function *function) {
             std::cout << "DECLARE - Function " << function->identifier().name() << std::endl;
 
-            mFunctions[&function->identifier()] = function;
+            mFunctions[function->identifier().name()] = function;
         }
 
         Variable &Scope::variable(parser::Identifier *identifier) const {
@@ -33,6 +37,20 @@ namespace dem {
                     return mParent->variable(identifier);
                 } else {
                     throw "Variable does not exist"; // TODO: Proper error
+                }
+            }
+        }
+
+        Function &Scope::function(parser::Identifier *identifier) const {
+            try {
+                Function *function = mFunctions.at(identifier->name());
+
+                return *function;
+            } catch(std::out_of_range &e) {
+                if(mParent) {
+                    return mParent->function(identifier);
+                } else {
+                    throw "Function does not exist"; // TODO: Proper error
                 }
             }
         }

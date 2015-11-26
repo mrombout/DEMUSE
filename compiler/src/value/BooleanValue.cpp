@@ -27,6 +27,10 @@ namespace dem {
             throw "Can not subtract booleans"; // TODO: Throw proper error
         }
 
+        Value *BooleanValue::exponent(Value *b) {
+            throw "Can not subtract booleans"; // TODO: Throw proper error
+        }
+
         double BooleanValue::asNumber() const {
             return mValue ? 1 : 0;
         }

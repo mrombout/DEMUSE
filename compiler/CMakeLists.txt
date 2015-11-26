@@ -46,6 +46,7 @@ set(TestCompiler_SRCS
     test/value/BooleanValueTest.cpp
     test/value/TextValueTest.cpp
     test/value/NumberValueTest.cpp
+    test/ExpressionEvaluatorTest.cpp
 )
 
 add_library(libcompiler ${Compiler_SRCS})

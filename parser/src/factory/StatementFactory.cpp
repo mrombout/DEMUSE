@@ -19,6 +19,7 @@
 #include "symbol/While.h"
 #include "symbol/For.h"
 #include "symbol/FunctionDefinition.h"
+#include "symbol/CompoundStatement.h"
 
 namespace dem {
     namespace parser {
@@ -26,7 +27,7 @@ namespace dem {
             // statement = ( simple_statement | compound_statement ) terminator ;
             Statement *statement = nullptr;
 
-            // simple_stmt = return_stmt | break_stmt | continue_stmt | variable_def_stmt | expression_stmt ;
+            // simple_stmt = return_stmt | break_stmt | continue_stmt | variable_def_stmt | expression_stmt | play_stmt ;
             if(tokens.front().is(lexer::TokenType::RETURN)) {
                 // return_stmt
                 statement = ReturnFactory::produce(tokens);
@@ -42,9 +43,12 @@ namespace dem {
             } else if(tokens.front().is(lexer::TokenType::IDENTIFIER)) {
                 // expression_stmt
                 statement = ExpressionFactory::produce(tokens);
+            } else if(tokens.front().is(lexer::TokenType::PLAY_START)) {
+                // play_stmt
+                statement = PlayFactory::produce(tokens);
             }
 
-            // compound_stmt = if_stmt | while_stmt | for_stmt | function_def | play_stmt ;
+            // compound_stmt = if_stmt | while_stmt | for_stmt | function_def | track_stmt ;
             else if(tokens.front().is(lexer::TokenType::IF)) {
                 // if_stmt
                 statement = IfFactory::produce(tokens);
@@ -57,16 +61,15 @@ namespace dem {
             } else if(tokens.front().is(lexer::TokenType::FUNCTION)) {
                 // function_def
                 statement = FunctionDefinitionFactory::produce(tokens);
-            } else if(tokens.front().is(lexer::TokenType::PLAY_START)) {
-                // play_stmt
-                statement = PlayFactory::produce(tokens);
             }
 
             if(statement == nullptr)
                 throw ParsingException(); // TODO: Add clear error message
 
-            // terminator
-            expect(tokens, lexer::TokenType::TERMINATOR);
+            if(!dynamic_cast<CompoundStatement*>(statement)) {
+                // terminator
+                expect(tokens, lexer::TokenType::TERMINATOR);
+            }
 
             // TODO: play_stmt
             // TODO: Throw some error, since this does not seem to be a statement

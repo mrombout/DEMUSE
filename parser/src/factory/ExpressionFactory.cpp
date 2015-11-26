@@ -2,6 +2,7 @@
 #include "factory/IdentifierFactory.h"
 #include "factory/ExpressionFactory.h"
 #include "factory/PrimitiveFactory.h"
+#include "factory/FunctionCallFactory.h"
 #include "symbol/expression/AdditionExpression.h"
 #include "symbol/expression/SubtractionExpression.h"
 #include "symbol/expression/MultiplicationExpression.h"
@@ -155,17 +156,21 @@ namespace dem {
         Expression *ExpressionFactory::producePrimary(std::deque<lexer::Token> &tokens) {
             if(accept(tokens, lexer::TokenType::OPEN)) {
                 // nested expression
-                Expression *expression = processExpression(tokens, 0);
+                Expression *expression = processExpression(tokens, 15);
                 expect(tokens, lexer::TokenType::CLOSE);
 
                 return expression;
             } else if(tokens.front().is(lexer::TokenType::IDENTIFIER)) {
                 // identifier | call
-                // TODO: Function call
+                Expression *expression = FunctionCallFactory::produce(tokens);
+                if(expression)
+                    return expression;
                 return IdentifierFactory::produce(tokens);
             } else if(tokens.front().is(lexer::TokenType::NUMBER)
                    || tokens.front().is(lexer::TokenType::TEXT)
-                   || tokens.front().is(lexer::TokenType::BOOL)) {
+                   || tokens.front().is(lexer::TokenType::BOOL)
+                   || tokens.front().is(lexer::TokenType::POSITIVE)
+                   || tokens.front().is(lexer::TokenType::NEGATIVE)) {
                 // primitive
                 return PrimitiveFactory::produce(tokens);
             }

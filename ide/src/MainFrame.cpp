@@ -34,6 +34,10 @@ namespace dem {
 
             EVT_MENU(wxID_SELECTALL, MainFrame::onEditSelectAll)
 
+            // run
+            EVT_MENU(ID_Run, MainFrame::onRunRun)
+            EVT_MENU(ID_Stop, MainFrame::onRunStop)
+
             // help
             EVT_MENU(wxID_ABOUT, MainFrame::onAbout)
         wxEND_EVENT_TABLE()
@@ -240,6 +244,14 @@ namespace dem {
 
         void MainFrame::onEditSelectAll(wxCommandEvent &event) {
             mEditor->SetSelection(0, mEditor->GetTextLength());
+        }
+
+        void MainFrame::onRunRun(wxCommandEvent &event) {
+
+        }
+
+        void MainFrame::onRunStop(wxCommandEvent &event) {
+
         }
     }
 }

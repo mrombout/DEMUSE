@@ -15,7 +15,7 @@ namespace dem {
     namespace parser {
         class ReturnFactory : public SymbolFactory {
         public:
-            static Return *produce(std::deque<lexer::Token> tokens);
+            static Return *produce(std::deque<lexer::Token> &tokens);
         };
     }
 }

@@ -1,0 +1,8 @@
+var X = 0;
+while(X < 5) {
+    X = X + 1;
+}
+
+for(var i = 0; i < 10; i = i + 1) {
+    var A = i;
+}

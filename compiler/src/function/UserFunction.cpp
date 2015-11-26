@@ -1,4 +1,5 @@
 #include "function/UserFunction.h"
+#include "value/NullValue.h"
 
 namespace dem {
     namespace compiler {
@@ -14,6 +15,8 @@ namespace dem {
 
         Value *UserFunction::execute(Scope &scope) const {
             mFunctionDefinition.block().accept(mCompiler);
+
+            return mCompiler.returnValue();
         }
     }
 }

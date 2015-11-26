@@ -5,8 +5,8 @@ block         = "{" { statement } "}" ;
 
 (* statements *)
 statement         = ( simple_statement | compound_statement ) terminator ;
-simple_stmt       = return_stmt | break_stmt | continue_stmt | variable_def_stmt | expression_stmt ;
-compound_stmt     = if_stmt | while_stmt | for_stmt | function_def | play_stmt | track_stmt ;
+simple_stmt       = return_stmt | break_stmt | continue_stmt | variable_def_stmt | expression_stmt | play_stmt ;
+compound_stmt     = if_stmt | while_stmt | for_stmt | function_def | track_stmt ;
 
 expression_stmt   = expression ;
 variable_def_stmt = "var" assignment_stmt ;

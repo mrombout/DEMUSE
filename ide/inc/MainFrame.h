@@ -43,8 +43,10 @@ namespace dem {
             void onEditCut(wxCommandEvent &event);
             void onEditCopy(wxCommandEvent &event);
             void onEditPaste(wxCommandEvent &event);
-
             void onEditSelectAll(wxCommandEvent &event);
+
+            void onRunRun(wxCommandEvent &event);
+            void onRunStop(wxCommandEvent &event);
 
             std::map<wxString, size_t> mFileEditors;
 

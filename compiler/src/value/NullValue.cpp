@@ -23,6 +23,11 @@ namespace dem {
             throw "NullValue"; // TODO: Throw proper exception
         }
 
+
+        Value *NullValue::exponent(Value *b) {
+            throw "NullValue"; // TODO: Throw proper exception
+        }
+
         double NullValue::asNumber() const {
             throw "NullValue"; // TODO: Throw proper exception
         }

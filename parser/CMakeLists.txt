@@ -34,6 +34,9 @@ set(Parser_SRCS
     inc/symbol/Break.h
     src/symbol/Break.cpp
 
+    inc/symbol/CompoundStatement.h
+    src/symbol/CompoundStatement.cpp
+
     inc/symbol/Continue.h
     src/symbol/Continue.cpp
 
@@ -140,6 +143,12 @@ set(Parser_SRCS
     inc/symbol/play/Note.h
     src/symbol/play/Note.cpp
 
+    inc/symbol/ProcedureCall.h
+    src/symbol/ProcedureCall.cpp
+
+    inc/symbol/FunctionCall.h
+    src/symbol/FunctionCall.cpp
+
     inc/factory/SymbolFactory.h
     src/factory/SymbolFactory.cpp
 
@@ -196,6 +205,9 @@ set(Parser_SRCS
 
     inc/factory/PlayFactory.h
     src/factory/PlayFactory.cpp
+
+    inc/factory/FunctionCallFactory.h
+    src/factory/FunctionCallFactory.cpp
 )
 
 set(TestParser_SRCS
@@ -216,6 +228,7 @@ set(TestParser_SRCS
     test/factory/VariableDefinitionTest.cpp
     test/factory/WhileFactoryTest.cpp
     test/factory/PrimitiveFactoryTest.cpp
+    test/factory/FunctionCallFactoryTest.cpp
 )
 
 add_library(libparser ${Parser_SRCS})

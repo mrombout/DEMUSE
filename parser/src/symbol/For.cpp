@@ -3,10 +3,11 @@
 
 namespace dem {
     namespace parser {
-        For::For(Statement *initialization, Expression *condition, AssignmentExpression *afterThought) :
+        For::For(Statement *initialization, Expression *condition, AssignmentExpression *afterThought, Block *block) :
             mInitialization(initialization),
             mCondition(condition),
-            mAfterThought(afterThought) {
+            mAfterThought(afterThought),
+            mBlock(block) {
 
         }
 
@@ -30,6 +31,10 @@ namespace dem {
 
         AssignmentExpression *For::afterThought() const {
             return mAfterThought;
+        }
+
+        Block &For::block() const {
+            return *mBlock;
         }
     }
 }

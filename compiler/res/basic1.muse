@@ -6,3 +6,8 @@ else if(false)
     var Z = 0;
 else
     var A = 0;;;
+
+var I = 0;
+while(I < 5) {
+    I = I + 1;
+};

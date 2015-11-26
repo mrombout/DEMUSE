@@ -1,26 +1,29 @@
 #ifndef DEMUSE_FOR_H
 #define DEMUSE_FOR_H
 
-#include "Statement.h"
+#include "CompoundStatement.h"
 #include "symbol/expression/Expression.h"
 #include "symbol/expression/AssignmentExpression.h"
+#include "symbol/Block.h"
 
 namespace dem {
     namespace parser {
-        class For : public Statement {
+        class For : public CompoundStatement {
         public:
-            For(Statement *initialization, Expression *condition, AssignmentExpression *afterThought);
+            For(Statement *initialization, Expression *condition, AssignmentExpression *afterThought, Block *block);
 
             virtual bool accept(Visitor &visitor);
 
             Statement *initialization() const;
             Expression *condition() const;
             AssignmentExpression *afterThought() const;
+            Block &block() const;
 
         private:
             Statement *mInitialization;
             Expression *mCondition;
             AssignmentExpression *mAfterThought;
+            Block *mBlock;
         };
     }
 }

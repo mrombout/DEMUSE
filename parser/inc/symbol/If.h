@@ -1,13 +1,13 @@
 #ifndef DEMUSE_IF_H
 #define DEMUSE_IF_H
 
-#include "Statement.h"
+#include "CompoundStatement.h"
 #include "symbol/expression/Expression.h"
 #include "symbol/Block.h"
 
 namespace dem {
     namespace parser {
-        class If : public Statement {
+        class If : public CompoundStatement {
         public:
             If(Expression *expression, Block *block);
             If(Expression *expression, Block *block, Block *elseBlock);

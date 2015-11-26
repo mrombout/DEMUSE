@@ -15,5 +15,9 @@ namespace dem {
 
             return visitor.visitLeave(*this);
         }
+
+        Expression *Return::expression() const {
+            return mExpression;
+        }
     }
 }

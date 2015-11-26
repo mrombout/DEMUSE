@@ -12,6 +12,7 @@ namespace dem {
             virtual Value *multiply(Value *b);
             virtual Value *divide(Value *b);
             virtual Value *modulo(Value *b);
+            virtual Value *exponent(Value *b);
 
             virtual double asNumber() const;
             virtual bool asBool() const;

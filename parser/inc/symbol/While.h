@@ -1,7 +1,7 @@
 #ifndef DEMUSE_WHILE_H
 #define DEMUSE_WHILE_H
 
-#include "Statement.h"
+#include "CompoundStatement.h"
 
 namespace dem {
     namespace parser {
@@ -12,7 +12,7 @@ namespace dem {
 
 namespace dem {
     namespace parser {
-        class While : public Statement {
+        class While : public CompoundStatement {
         public:
             While(Expression *expression, Block *block);
 

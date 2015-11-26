@@ -19,8 +19,7 @@ namespace dem {
 
             // get result
             Value *result = mStack.top();
-            while(!mStack.empty())
-                mStack.pop();
+            mStack.pop();
 
             return result;
         }
@@ -161,6 +160,29 @@ namespace dem {
             // divide b by a
             std::cout << "Executing " << a->asString() << " % " << b->asString() << std::endl;
             Value *c = a->modulo(b);
+            mStack.push(c);
+
+            return true;
+        }
+
+        bool ExpressionEvaluator::visitEnter(parser::ExponentExpression &exponentExpression) {
+            std::cout << "ENTER - Evaluating ExponentExpression" << std::endl;
+
+            return true;
+        }
+
+        bool ExpressionEvaluator::visitLeave(parser::ExponentExpression &exponentExpression) {
+            std::cout << "LEAVE - Evaluating ExponentExpression" << std::endl;
+
+            Value *b = mStack.top();
+            mStack.pop();
+
+            Value *a = mStack.top();
+            mStack.pop();
+
+            // divide b by a
+            std::cout << "Executing " << a->asString() << " ^ " << b->asString() << std::endl;
+            Value *c = a->exponent(b);
             mStack.push(c);
 
             return true;
@@ -378,6 +400,8 @@ namespace dem {
             std::cout << "ENTER - Evaluating Identifier" << std::endl;
 
             Variable &variable = mScope->variable(&identifier);
+
+            std::cout << "PUSH - " << variable.asString() << std::endl;
             mStack.push(&variable);
 
             return true;
@@ -387,7 +411,10 @@ namespace dem {
         bool ExpressionEvaluator::visit(parser::Number &number) {
             std::cout << "ENTER - Evaluating Number" << std::endl;
 
-            mStack.push(new NumberValue(number.value()));
+            NumberValue *value = new NumberValue(number.value());
+
+            std::cout << "PUSH - " << value->asString() << std::endl;
+            mStack.push(value);
 
             return true;
         }
@@ -395,7 +422,10 @@ namespace dem {
         bool ExpressionEvaluator::visit(parser::Bool &boolSymbol) {
             std::cout << "ENTER - Evaluating Bool" << std::endl;
 
-            mStack.push(new BooleanValue(boolSymbol.value()));
+            BooleanValue *value = new BooleanValue(boolSymbol.value());
+
+            std::cout << "PUSH - " << value->asString() << std::endl;
+            mStack.push(value);
 
             return true;
         }
@@ -403,7 +433,25 @@ namespace dem {
         bool ExpressionEvaluator::visit(parser::Text &text) {
             std::cout << "ENTER - Evaluating Text" << std::endl;
 
-            mStack.push(new TextValue(text.value()));
+            TextValue *value = new TextValue(text.value());
+
+            std::cout << "PUSH - " << value->asString() << std::endl;
+            mStack.push(value);
+
+            return true;
+        }
+
+
+        bool ExpressionEvaluator::visit(parser::FunctionCall &functionCall) {
+            std::cout << "ENTER - Evaluating FunctionCall" << std::endl;
+
+            // TODO: Function call with arguments
+
+            Function &function = mScope->function(&functionCall.identifier());
+            Value *value = function.execute(*mScope);
+
+            std::cout << "PUSH - " << value->asString() << std::endl;
+            mStack.push(value);
 
             return true;
         }

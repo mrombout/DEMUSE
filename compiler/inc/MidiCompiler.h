@@ -29,9 +29,21 @@ namespace dem {
 
             virtual bool visitEnter(parser::While &whileSymbol) override;
 
+            virtual Value *returnValue() override;
+
         private:
             ExpressionEvaluator mEvaluator;
             std::deque<Scope*> mScopes;
+            Value *mReturnValue;
+
+        public:
+            virtual bool visitEnter(parser::Return &returnSymbol) override;
+
+            virtual bool visitLeave(parser::Block &block) override;
+
+            virtual bool visit(parser::FunctionCall &functionCall) override;
+
+            virtual bool visitEnter(parser::For &forSymbol) override;
         };
     }
 }

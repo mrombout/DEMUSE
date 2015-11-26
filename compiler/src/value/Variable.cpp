@@ -40,6 +40,10 @@ namespace dem {
             return mValue->modulo(b);
         }
 
+        Value *Variable::exponent(Value *b) {
+            return mValue->exponent(b);
+        }
+
         double Variable::asNumber() const {
             return mValue->asNumber();
         }

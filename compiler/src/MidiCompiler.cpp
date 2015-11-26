@@ -3,6 +3,7 @@
 #include "symbol/VariableDeclaration.h"
 #include "GlobalScope.h"
 #include "function/UserFunction.h"
+#include "value/NullValue.h"
 
 namespace dem {
     namespace compiler {
@@ -33,6 +34,14 @@ namespace dem {
             std::cout << "ENTER - Block" << std::endl;
 
             mScopes.push_front(new Scope(mScopes.front()));
+
+            return true;
+        }
+
+        bool MidiCompiler::visitLeave(parser::Block &block) {
+            std::cout << "LEAVE - Block" << std::endl;
+
+            mScopes.pop_front();
 
             return true;
         }
@@ -93,6 +102,47 @@ namespace dem {
             } while(result->asBool());
 
             return false;
+        }
+
+        bool MidiCompiler::visitEnter(parser::For &forSymbol) {
+            std::cout << "ENTER - For" << std::endl;
+
+            forSymbol.initialization()->accept(*this);
+            parser::Expression *condition = forSymbol.condition();
+            parser::AssignmentExpression *afterThought = forSymbol.afterThought();
+            parser::Block &block = forSymbol.block();
+            Value *result = nullptr;
+            do {
+                result = mEvaluator.evaluate(mScopes.front(), *condition);
+                if(result->asBool()) {
+                    block.accept(*this);
+                    afterThought->accept(*this);
+                }
+            } while(result->asBool());
+
+            return false;
+        }
+
+        bool MidiCompiler::visit(parser::FunctionCall &functionCall) {
+            std::cout << "ENTER - FunctionCall" << std::endl;
+
+            mEvaluator.evaluate(mScopes.front(), functionCall);
+
+            return false;
+        }
+
+        bool MidiCompiler::visitEnter(parser::Return &returnSymbol) {
+            std::cout << "ENTER - Return" << std::endl;
+
+            mReturnValue = mEvaluator.evaluate(mScopes.front(), *returnSymbol.expression());
+
+            return false;
+        }
+
+        Value *MidiCompiler::returnValue() {
+            if(!mReturnValue)
+                return new NullValue();
+            return mReturnValue;
         }
     }
 }

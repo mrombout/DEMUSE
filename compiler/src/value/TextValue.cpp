@@ -30,6 +30,10 @@ namespace dem {
             throw "Can't modulo tex"; // TODO: Throw proper error
         }
 
+        Value *TextValue::exponent(Value *b) {
+            throw "Can't modulo tex"; // TODO: Throw proper error
+        }
+
         double TextValue::asNumber() const {
             return std::stod(mValue);
         }

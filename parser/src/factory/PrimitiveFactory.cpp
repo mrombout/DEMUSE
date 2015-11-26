@@ -31,6 +31,8 @@ namespace dem {
                 primitive = new Number(std::stod(content));
             }
 
+            // TODO: Support for POSITIVE/NEGATIVE
+            // TODO: ! (not) unary operator
             // TODO: Note
 
             return primitive;

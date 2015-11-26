@@ -67,12 +67,17 @@ namespace dem {
             virtual bool visit(parser::Number &number) override;
             virtual bool visit(parser::Bool &boolSymbol) override;
             virtual bool visit(parser::Text &text) override;
+            virtual bool visit(parser::FunctionCall &functionCall) override;
 
         private:
             Compiler &mCompiler;
 
             std::stack<Value*> mStack;
             Scope *mScope;
+        public:
+            virtual bool visitEnter(parser::ExponentExpression &exponentExpression) override;
+
+            virtual bool visitLeave(parser::ExponentExpression &exponentExpression) override;
         };
     }
 }

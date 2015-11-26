@@ -38,6 +38,12 @@ namespace dem {
             return new NumberValue(newValue);
         }
 
+        Value *NumberValue::exponent(Value *b) {
+            double newValue = pow(mValue, b->asNumber());
+
+            return new NumberValue(newValue);
+        }
+
         double NumberValue::asNumber() const {
             return mValue;
         }

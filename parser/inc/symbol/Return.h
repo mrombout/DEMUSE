@@ -16,10 +16,12 @@ namespace dem {
         public:
             Return(Expression *expression);
 
+            virtual bool accept(Visitor &visitor) override;
+
+            Expression *expression() const;
+
         private:
             Expression *mExpression;
-        public:
-            virtual bool accept(Visitor &visitor) override;
         };
     };
 }

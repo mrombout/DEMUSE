@@ -1,0 +1,11 @@
+function foo() {
+    var A = 1;
+}
+
+function bar(foo1, foo2) {
+    var B = foo1;
+    var C = foo2;
+}
+
+foo();
+bar(2, 3);

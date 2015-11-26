@@ -9,6 +9,7 @@
 #include "symbol/Break.h"
 #include "symbol/Continue.h"
 #include "symbol/For.h"
+#include "symbol/FunctionCall.h"
 #include "symbol/FunctionDefinition.h"
 #include "symbol/Identifier.h"
 #include "symbol/If.h"
@@ -54,7 +55,8 @@ namespace dem {
             bool visitLeave(parser::Assignment &assignment);
 
             virtual bool visitEnter(parser::Block &block);
-            bool visitLeave(parser::Block &block);
+
+            virtual bool visitLeave(parser::Block &block);
 
             virtual bool visit(parser::Bool &boolSymbol);
 
@@ -62,8 +64,10 @@ namespace dem {
 
             bool visit(parser::Continue &continueSymbol);
 
-            bool visitEnter(parser::For &forSymbol);
+            virtual bool visitEnter(parser::For &forSymbol);
             bool visitLeave(parser::For &forSymbol);
+
+            virtual bool visit(parser::FunctionCall &functionCall);
 
             virtual bool visitEnter(parser::FunctionDefinition &functionDefinition);
             bool visitLeave(parser::FunctionDefinition &functionDefinition);
@@ -83,7 +87,7 @@ namespace dem {
 
             virtual bool visitLeave(parser::Program &program);
 
-            bool visitEnter(parser::Return &returnSymbol);
+            virtual bool visitEnter(parser::Return &returnSymbol);
             bool visitLeave(parser::Return &returnSymbol);
 
             bool visitEnter(parser::Statement &statement);

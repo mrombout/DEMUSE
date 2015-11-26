@@ -5,7 +5,7 @@
 
 namespace dem {
     namespace parser {
-        Return *ReturnFactory::produce(std::deque<lexer::Token> tokens) {
+        Return *ReturnFactory::produce(std::deque<lexer::Token> &tokens) {
             // return_stmt = "return" expression
 
             // "return"

@@ -2,6 +2,7 @@
 #include <symbol/expression/StrictEqualCondition.h>
 #include <symbol/expression/StrictNotEqualCondition.h>
 #include <symbol/expression/ExponentExpression.h>
+#include <symbol/FunctionCall.h>
 #include "factory/ExpressionFactory.h"
 #include "symbol/Identifier.h"
 #include "symbol/Number.h"
@@ -32,7 +33,7 @@ protected:
     dem::parser::ExpressionFactory *factory;
 };
 
-TEST_F(ExpressionFactoryTest, SingleIdentifierExpression) {
+TEST_F(ExpressionFactoryTest, ExpressionIdentifier) {
     // arrange
     std::deque<dem::lexer::Token> tokens {
         dem::lexer::Token(dem::lexer::TokenType::IDENTIFIER, "X", 0, 0, 0)
@@ -45,7 +46,7 @@ TEST_F(ExpressionFactoryTest, SingleIdentifierExpression) {
     ASSERT_NE(nullptr, identifier);
 }
 
-TEST_F(ExpressionFactoryTest, ExpressionNumberPrimitive) {
+TEST_F(ExpressionFactoryTest, ExpressionPrimitiveNumber) {
     // arrange
     std::deque<dem::lexer::Token> tokens {
         dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0)
@@ -59,7 +60,7 @@ TEST_F(ExpressionFactoryTest, ExpressionNumberPrimitive) {
     ASSERT_EQ(5, number->value());
 }
 
-TEST_F(ExpressionFactoryTest, ExpressionTextPrimitive) {
+TEST_F(ExpressionFactoryTest, ExpressionPrimitiveText) {
     // arrange
     std::deque<dem::lexer::Token> tokens {
         dem::lexer::Token(dem::lexer::TokenType::TEXT, "Lorum ipsum", 0, 0, 0)
@@ -72,7 +73,7 @@ TEST_F(ExpressionFactoryTest, ExpressionTextPrimitive) {
     ASSERT_NE(nullptr, text);
 }
 
-TEST_F(ExpressionFactoryTest, ExpressionBoolPrimitive) {
+TEST_F(ExpressionFactoryTest, ExpressionPrimitiveBool) {
     // arrange
     std::deque<dem::lexer::Token> tokens {
         dem::lexer::Token(dem::lexer::TokenType::BOOL, "true", 0, 0, 0)
@@ -83,6 +84,21 @@ TEST_F(ExpressionFactoryTest, ExpressionBoolPrimitive) {
 
     // assert
     ASSERT_NE(nullptr, boolean);
+}
+
+TEST_F(ExpressionFactoryTest, ExpressionFunctionCall) {
+    // arrange
+    std::deque<dem::lexer::Token> tokens {
+        dem::lexer::Token(dem::lexer::TokenType::IDENTIFIER, "foo",   0, 0, 0),
+        dem::lexer::Token(dem::lexer::TokenType::OPEN,       "(",  0, 0, 0),
+        dem::lexer::Token(dem::lexer::TokenType::CLOSE,      ")", 0, 0, 0)
+    };
+
+    // act
+    dem::parser::FunctionCall *functionCall = dynamic_cast<dem::parser::FunctionCall*>(factory->produce(tokens));
+
+    // assert
+    ASSERT_NE(nullptr, functionCall);
 }
 
 TEST_F(ExpressionFactoryTest, AdditionSingle) {
@@ -106,11 +122,11 @@ TEST_F(ExpressionFactoryTest, AdditionSingle) {
 TEST_F(ExpressionFactoryTest, AdditionMultiple) {
     // arrange
     std::deque<dem::lexer::Token> tokens {
-            dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0),
-            dem::lexer::Token(dem::lexer::TokenType::PLUS,   "+", 0, 0, 0),
-            dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0),
-            dem::lexer::Token(dem::lexer::TokenType::PLUS,   "+", 0, 0, 0),
-            dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0)
+        dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0),
+        dem::lexer::Token(dem::lexer::TokenType::PLUS,   "+", 0, 0, 0),
+        dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0),
+        dem::lexer::Token(dem::lexer::TokenType::PLUS,   "+", 0, 0, 0),
+        dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0)
     };
 
     // act
@@ -164,11 +180,11 @@ TEST_F(ExpressionFactoryTest, SubtractionSingle) {
 TEST_F(ExpressionFactoryTest, SubtractionMultiple) {
     // arrange
     std::deque<dem::lexer::Token> tokens {
-            dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0),
-            dem::lexer::Token(dem::lexer::TokenType::MINUS,  "-", 0, 0, 0),
-            dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0),
-            dem::lexer::Token(dem::lexer::TokenType::MINUS,  "-", 0, 0, 0),
-            dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0)
+        dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0),
+        dem::lexer::Token(dem::lexer::TokenType::MINUS,  "-", 0, 0, 0),
+        dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0),
+        dem::lexer::Token(dem::lexer::TokenType::MINUS,  "-", 0, 0, 0),
+        dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0)
     };
 
     // act
@@ -202,11 +218,11 @@ TEST_F(ExpressionFactoryTest, MultiplicationSingle) {
 TEST_F(ExpressionFactoryTest, MultiplicationMultiple) {
     // arrange
     std::deque<dem::lexer::Token> tokens {
-            dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0),
-            dem::lexer::Token(dem::lexer::TokenType::TIMES,  "*", 0, 0, 0),
-            dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0),
-            dem::lexer::Token(dem::lexer::TokenType::TIMES,  "*", 0, 0, 0),
-            dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0)
+        dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0),
+        dem::lexer::Token(dem::lexer::TokenType::TIMES,  "*", 0, 0, 0),
+        dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0),
+        dem::lexer::Token(dem::lexer::TokenType::TIMES,  "*", 0, 0, 0),
+        dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0)
     };
 
     // act
@@ -240,11 +256,11 @@ TEST_F(ExpressionFactoryTest, DivisionSingle) {
 TEST_F(ExpressionFactoryTest, DivisionMultiple) {
     // arrange
     std::deque<dem::lexer::Token> tokens {
-            dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0),
-            dem::lexer::Token(dem::lexer::TokenType::DIVIDE, "/", 0, 0, 0),
-            dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0),
-            dem::lexer::Token(dem::lexer::TokenType::DIVIDE, "/", 0, 0, 0),
-            dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0)
+        dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0),
+        dem::lexer::Token(dem::lexer::TokenType::DIVIDE, "/", 0, 0, 0),
+        dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0),
+        dem::lexer::Token(dem::lexer::TokenType::DIVIDE, "/", 0, 0, 0),
+        dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0)
     };
 
     // act
@@ -278,11 +294,11 @@ TEST_F(ExpressionFactoryTest, ModuloSingle) {
 TEST_F(ExpressionFactoryTest, ModuloMultiple) {
     // arrange
     std::deque<dem::lexer::Token> tokens {
-            dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0),
-            dem::lexer::Token(dem::lexer::TokenType::MOD,    "%", 0, 0, 0),
-            dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0),
-            dem::lexer::Token(dem::lexer::TokenType::MOD,    "%", 0, 0, 0),
-            dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0)
+        dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0),
+        dem::lexer::Token(dem::lexer::TokenType::MOD,    "%", 0, 0, 0),
+        dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0),
+        dem::lexer::Token(dem::lexer::TokenType::MOD,    "%", 0, 0, 0),
+        dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0)
     };
 
     // act
@@ -298,9 +314,9 @@ TEST_F(ExpressionFactoryTest, ModuloMultiple) {
 TEST_F(ExpressionFactoryTest, ExponentSingle) {
     // arrange
     std::deque<dem::lexer::Token> tokens {
-            dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0),
-            dem::lexer::Token(dem::lexer::TokenType::EXP,    "^", 0, 0, 0),
-            dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0)
+        dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0),
+        dem::lexer::Token(dem::lexer::TokenType::EXP,    "^", 0, 0, 0),
+        dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0)
     };
 
     // act
@@ -313,14 +329,33 @@ TEST_F(ExpressionFactoryTest, ExponentSingle) {
     ASSERT_EQ(typeid(dem::parser::Number), typeid(exponentExpression->right()));
 }
 
+TEST_F(ExpressionFactoryTest, ParenthesisSingle) {
+    // arrange
+    std::deque<dem::lexer::Token> tokens {
+        dem::lexer::Token(dem::lexer::TokenType::OPEN,   "(", 0, 0, 0),
+        dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0),
+        dem::lexer::Token(dem::lexer::TokenType::PLUS,   "+", 0, 0, 0),
+        dem::lexer::Token(dem::lexer::TokenType::NUMBER, "2", 0, 0, 0),
+        dem::lexer::Token(dem::lexer::TokenType::CLOSE,  ")", 0, 0, 0),
+        dem::lexer::Token(dem::lexer::TokenType::TIMES,  "*", 0, 0, 0),
+        dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0)
+    };
+
+    // act
+    dem::parser::Expression *expression = factory->produce(tokens);
+
+    // assert
+    ASSERT_TRUE(dynamic_cast<dem::parser::MultiplicationExpression*>(expression));
+}
+
 TEST_F(ExpressionFactoryTest, ExponentMultiple) {
     // arrange
     std::deque<dem::lexer::Token> tokens {
-            dem::lexer::Token(dem::lexer::TokenType::NUMBER, "2", 0, 0, 0),
-            dem::lexer::Token(dem::lexer::TokenType::EXP,    "^", 0, 0, 0),
-            dem::lexer::Token(dem::lexer::TokenType::NUMBER, "3", 0, 0, 0),
-            dem::lexer::Token(dem::lexer::TokenType::EXP,    "^", 0, 0, 0),
-            dem::lexer::Token(dem::lexer::TokenType::NUMBER, "1", 0, 0, 0)
+        dem::lexer::Token(dem::lexer::TokenType::NUMBER, "2", 0, 0, 0),
+        dem::lexer::Token(dem::lexer::TokenType::EXP,    "^", 0, 0, 0),
+        dem::lexer::Token(dem::lexer::TokenType::NUMBER, "3", 0, 0, 0),
+        dem::lexer::Token(dem::lexer::TokenType::EXP,    "^", 0, 0, 0),
+        dem::lexer::Token(dem::lexer::TokenType::NUMBER, "1", 0, 0, 0)
     };
 
     // act
@@ -399,9 +434,9 @@ TEST_F(ExpressionFactoryTest, ConditionLargerThan) {
 TEST_F(ExpressionFactoryTest, ConditionLargerThanOrEqual) {
     // arrange
     std::deque<dem::lexer::Token> tokens {
-            dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5",  0, 0, 0),
-            dem::lexer::Token(dem::lexer::TokenType::LREQ,   ">=", 0, 0, 0),
-            dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5",  0, 0, 0)
+        dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5",  0, 0, 0),
+        dem::lexer::Token(dem::lexer::TokenType::LREQ,   ">=", 0, 0, 0),
+        dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5",  0, 0, 0)
     };
 
     // act
@@ -417,9 +452,9 @@ TEST_F(ExpressionFactoryTest, ConditionLargerThanOrEqual) {
 TEST_F(ExpressionFactoryTest, ConditionNotEqual) {
     // arrange
     std::deque<dem::lexer::Token> tokens {
-            dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5",  0, 0, 0),
-            dem::lexer::Token(dem::lexer::TokenType::NEQ,    "!=", 0, 0, 0),
-            dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5",  0, 0, 0)
+        dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5",  0, 0, 0),
+        dem::lexer::Token(dem::lexer::TokenType::NEQ,    "!=", 0, 0, 0),
+        dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5",  0, 0, 0)
     };
 
     // act
@@ -435,9 +470,9 @@ TEST_F(ExpressionFactoryTest, ConditionNotEqual) {
 TEST_F(ExpressionFactoryTest, ConditionOr) {
     // arrange
     std::deque<dem::lexer::Token> tokens {
-            dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5",  0, 0, 0),
-            dem::lexer::Token(dem::lexer::TokenType::OR,     "||", 0, 0, 0),
-            dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5",  0, 0, 0)
+        dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5",  0, 0, 0),
+        dem::lexer::Token(dem::lexer::TokenType::OR,     "||", 0, 0, 0),
+        dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5",  0, 0, 0)
     };
 
     // act
@@ -508,9 +543,9 @@ TEST_F(ExpressionFactoryTest, ConditionStrictEqual) {
 TEST_F(ExpressionFactoryTest, ConditionStrictNotEqual) {
     // arrange
     std::deque<dem::lexer::Token> tokens {
-            dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5",   0, 0, 0),
-            dem::lexer::Token(dem::lexer::TokenType::TNEQ,   "!==", 0, 0, 0),
-            dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5",   0, 0, 0)
+        dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5",   0, 0, 0),
+        dem::lexer::Token(dem::lexer::TokenType::TNEQ,   "!==", 0, 0, 0),
+        dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5",   0, 0, 0)
     };
 
     // act
@@ -526,3 +561,4 @@ TEST_F(ExpressionFactoryTest, ConditionStrictNotEqual) {
 // TODO: Test nested expressions
 // TODO: Test precedence of every operator
 // TODO: Test associativity for every operator
+// TODO: Test POSITIVE/NEGATIVE tokens

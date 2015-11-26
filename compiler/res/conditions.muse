@@ -1,0 +1,8 @@
+var A = 5 == 5;
+var B = 5 != 5;
+var C = 5 <= 5;
+var D = 5 < 5;
+var E = 5 >= 5;
+var F = 5 > 5;
+var G = true && false;
+var F = true || false;

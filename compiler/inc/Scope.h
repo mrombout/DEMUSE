@@ -14,14 +14,16 @@ namespace dem {
             Scope(Scope *parent);
 
             void declareVariable(parser::Identifier *identifier);
+            void declareVariable(parser::Identifier *identifier, Value *value);
             void declareFunction(Function *function);
 
             Variable &variable(parser::Identifier *identifier) const;
+            Function &function(parser::Identifier *function) const;
 
         private:
             Scope *mParent;
             std::map<std::string, Variable*> mVariables;
-            std::map<parser::Identifier*, Function*> mFunctions;
+            std::map<std::string, Function*> mFunctions;
         };
     }
 }

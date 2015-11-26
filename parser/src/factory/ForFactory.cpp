@@ -52,7 +52,7 @@ namespace dem {
             // block
             Block *block = BlockFactory::produce(tokens);
 
-            return new For(initializerStatement, conditionalExpression, assignmentExpression);
+            return new For(initializerStatement, conditionalExpression, assignmentExpression, block);
         }
     }
 }
