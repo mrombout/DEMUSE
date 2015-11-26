@@ -12,7 +12,7 @@
 namespace dem {
     namespace ide {
         enum {
-            ID_NewFile,
+            ID_NewFile = 1,
             ID_Run,
             ID_Stop
         };

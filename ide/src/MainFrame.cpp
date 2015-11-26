@@ -9,6 +9,7 @@
 #include <wx/filename.h>
 #include "MainFrame.h"
 #include "MuseAuiTabArt.h"
+#include "MuseArtProvider.h"
 
 namespace dem {
     namespace ide {
@@ -136,8 +137,8 @@ namespace dem {
             toolbar->AddTool(wxID_UNDO, wxT("Undo"), wxArtProvider::GetBitmap(wxART_UNDO));
             toolbar->AddTool(wxID_REDO, wxT("Redo"), wxArtProvider::GetBitmap(wxART_REDO));
             toolbar->AddSeparator();
-            toolbar->AddTool(ID_Run, wxT("Play"), wxArtProvider::GetBitmap(wxART_UNDO));
-            toolbar->AddTool(ID_Stop, wxT("Stop"), wxArtProvider::GetBitmap(wxART_REDO));
+            toolbar->AddTool(ID_Run, wxT("Play"), wxArtProvider::GetBitmap(museART_RUN));
+            toolbar->AddTool(ID_Stop, wxT("Stop"), wxArtProvider::GetBitmap(museART_STOP));
 
             toolbar->Realize();
 

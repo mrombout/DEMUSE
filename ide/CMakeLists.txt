@@ -11,6 +11,9 @@ set(IDE_SRCS
     inc/MuseAuiTabArt.h
     src/MuseAuiTabArt.cpp
 
+    inc/MuseArtProvider.h
+    src/MuseArtProvider.cpp
+
     inc/MuseStyledTextEditor.h
     src/MuseStyledTextEditor.cpp
 )
