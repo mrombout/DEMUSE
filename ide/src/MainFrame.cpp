@@ -115,18 +115,18 @@ namespace dem {
         void MainFrame::createEditor(const wxString &filePath /*= wxT("") */) {
             if(!mFileEditors.count(filePath)) {
                 // create and new editor and load file if available
-                mEditor = new MuseStyledTextEditor(this);
+                MuseStyledTextEditor *editor = new MuseStyledTextEditor(this);
 
                 wxString tabName{wxT("New File")};
 
                 if(!filePath.empty()) {
-                    mEditor->loadFile(filePath);
+                    editor->loadFile(filePath);
                     wxFileName fileName{filePath};
                     tabName = fileName.GetFullName();
                 }
 
                 size_t pageId = mNotebook->GetPageCount();
-                mNotebook->InsertPage(pageId, mEditor, tabName, true);
+                mNotebook->InsertPage(pageId, editor, tabName, true);
                 mFileEditors[filePath] = pageId;
             } else {
                 // select page with the loaded file
@@ -158,6 +158,13 @@ namespace dem {
             SetToolBar(toolbar);
         }
 
+        MuseStyledTextEditor *MainFrame::activeEditor() {
+            size_t editorId = mNotebook->GetSelection();
+            if(editorId == wxNOT_FOUND)
+                return nullptr;
+            return static_cast<MuseStyledTextEditor*>(mNotebook->GetPage(editorId));
+        }
+
         void MainFrame::onExit(wxCommandEvent &event) {
             Close(true);
         }
@@ -179,21 +186,28 @@ namespace dem {
 
         void MainFrame::onFileSave(wxCommandEvent &event) {
             size_t editorId = mNotebook->GetSelection();
+            if(editorId == wxNOT_FOUND)
+                return;
+
             MuseStyledTextEditor *page = static_cast<MuseStyledTextEditor*>(mNotebook->GetPage(editorId));
 
             if(page->filePath().empty())
                 return onFileSaveAs(event);
-            mEditor->saveFile();
+            activeEditor()->saveFile();
         }
 
         void MainFrame::onFileSaveAs(wxCommandEvent &event) {
+            size_t editorId = mNotebook->GetSelection();
+            if(editorId == wxNOT_FOUND)
+                return;
+
+            // open dialogsize_t editorId = mNotebook->GetSelection();
             wxString filePath = wxEmptyString;
             wxFileDialog dlg(this, wxT("Save file..."), wxEmptyString, wxEmptyString, wxT("Any file (*)|*"), wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
             if(dlg.ShowModal() != wxID_OK) return;
             filePath = dlg.GetPath();
 
             // change editor name
-            size_t editorId = mNotebook->GetSelection();
             wxFileName fileName{filePath};
             MuseStyledTextEditor *page = static_cast<MuseStyledTextEditor*>(mNotebook->GetPage(editorId));
 
@@ -203,47 +217,58 @@ namespace dem {
             mFileEditors[filePath] = editorId;
 
             // save file under new name
-            mEditor->saveAsFile(filePath);
+            activeEditor()->saveAsFile(filePath);
         }
 
         void MainFrame::onFileClose(wxCommandEvent &event) {
-            if(mEditor->IsModified()) {
+            MuseStyledTextEditor *editor = activeEditor();
+            if(!editor)
+                return;
+
+            if(editor->IsModified()) {
                 if(wxMessageBox(_("Text is not saved, save before closing?"), _("Close"), wxYES_NO | wxICON_QUESTION) == wxYES) {
-                    mEditor->saveFile();
-                    if(mEditor->IsModified()) {
+                    editor->saveFile();
+                    if(editor->IsModified()) {
                         wxMessageBox(_("Text could not be saved!"), _("Close abort"), wxOK | wxICON_EXCLAMATION);
                         return;
                     }
                 }
             }
 
-            mNotebook->RemovePage(mFileEditors[mEditor->filePath()]);
+            mNotebook->RemovePage(mFileEditors[activeEditor()->filePath()]);
         }
 
         void MainFrame::onEditCut(wxCommandEvent &event) {
-            mEditor->Cut();
+            if(activeEditor())
+                activeEditor()->Cut();
         }
 
         void MainFrame::onEditCopy(wxCommandEvent &event) {
-            mEditor->Copy();
+            if(activeEditor())
+                activeEditor()->Copy();
         }
 
         void MainFrame::onEditPaste(wxCommandEvent &event) {
-            mEditor->Paste();
+            if(activeEditor())
+                activeEditor()->Paste();
         }
 
         void MainFrame::onEditUndo(wxCommandEvent &event) {
-            if(!mEditor->CanUndo()) return;
-            mEditor->Undo();
+            MuseStyledTextEditor *editor = activeEditor();
+            if(!editor || !editor->CanUndo()) return;
+                editor->Undo();
         }
 
         void MainFrame::onEditRedo(wxCommandEvent &event) {
-            if(!mEditor->CanRedo()) return;
-            mEditor->Redo();
+            MuseStyledTextEditor *editor = activeEditor();
+            if(!editor || !editor->CanRedo()) return;
+                editor->Redo();
         }
 
         void MainFrame::onEditSelectAll(wxCommandEvent &event) {
-            mEditor->SetSelection(0, mEditor->GetTextLength());
+            MuseStyledTextEditor *editor = activeEditor();
+            if(editor)
+                editor->SetSelection(0, editor->GetTextLength());
         }
 
         void MainFrame::onRunRun(wxCommandEvent &event) {

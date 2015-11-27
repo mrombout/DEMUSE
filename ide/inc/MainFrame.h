@@ -29,6 +29,8 @@ namespace dem {
             void createEditor(const wxString &filePath = wxT(""));
             void createToolBar();
 
+            MuseStyledTextEditor *activeEditor();
+
             void onExit(wxCommandEvent &event);
             void onAbout(wxCommandEvent &event);
 
