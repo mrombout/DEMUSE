@@ -3,6 +3,10 @@
 
 namespace dem {
     namespace parser {
+        Note::Note() {
+
+        }
+
         bool Note::accept(Visitor &visitor) {
             return visitor.visit(*this);
         }

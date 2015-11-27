@@ -8,6 +8,7 @@ namespace dem {
                 return true;
             if(tokens.empty())
                 throw ParsingException();
+            std::cout << "Crashing on " << tokens.front().type() << ", expected " << tokenType << std::endl;
             throw ParsingException(tokens.front());
             // TODO: Proper messages
         }

@@ -176,6 +176,9 @@ set(Parser_SRCS
     inc/factory/IfFactory.h
     src/factory/IfFactory.cpp
 
+    inc/factory/NoteFactory.h
+    src/factory/NoteFactory.cpp
+
     inc/factory/WhileFactory.h
     src/factory/WhileFactory.cpp
 
@@ -211,25 +214,25 @@ set(Parser_SRCS
 )
 
 set(TestParser_SRCS
-    test/factory/ArgumentListFactoryTest.cpp
-    test/factory/AssignmentFactoryTest.cpp
-    test/factory/BlockFactoryTest.cpp
-    test/factory/BreakFactoryTest.cpp
-    test/factory/ContinueFactoryTest.cpp
-    test/factory/ExpressionFactoryTest.cpp
-    test/factory/ForFactoryTest.cpp
-    test/factory/FunctionDefinitionFactoryTest.cpp
-    test/factory/IdentifierFactoryTest.cpp
-    test/factory/IfFactoryTest.cpp
-    test/factory/ParameterListFactoryTest.cpp
-    test/factory/ProgramFactoryTest.cpp
-    test/factory/ReturnFactoryTest.cpp
-    test/factory/StatementFactoryTest.cpp
-    test/factory/VariableDefinitionTest.cpp
-    test/factory/WhileFactoryTest.cpp
-    test/factory/PrimitiveFactoryTest.cpp
-    test/factory/FunctionCallFactoryTest.cpp
-)
+        test/factory/ArgumentListFactoryTest.cpp
+        test/factory/AssignmentFactoryTest.cpp
+        test/factory/BlockFactoryTest.cpp
+        test/factory/BreakFactoryTest.cpp
+        test/factory/ContinueFactoryTest.cpp
+        test/factory/ExpressionFactoryTest.cpp
+        test/factory/ForFactoryTest.cpp
+        test/factory/FunctionDefinitionFactoryTest.cpp
+        test/factory/IdentifierFactoryTest.cpp
+        test/factory/IfFactoryTest.cpp
+        test/factory/ParameterListFactoryTest.cpp
+        test/factory/ProgramFactoryTest.cpp
+        test/factory/ReturnFactoryTest.cpp
+        test/factory/StatementFactoryTest.cpp
+        test/factory/VariableDefinitionTest.cpp
+        test/factory/WhileFactoryTest.cpp
+        test/factory/PrimitiveFactoryTest.cpp
+        test/factory/FunctionCallFactoryTest.cpp
+        src/factory/NoteFactory.cpp inc/factory/NoteFactory.h)
 
 add_library(libparser ${Parser_SRCS})
 add_library(dem::libparser ALIAS libparser)
