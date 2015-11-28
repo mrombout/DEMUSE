@@ -43,9 +43,6 @@ set(Parser_SRCS
     inc/symbol/If.h
     src/symbol/If.cpp
 
-    inc/symbol/Note.h
-    src/symbol/Note.cpp
-
     inc/symbol/While.h
     src/symbol/While.cpp
 
@@ -178,6 +175,9 @@ set(Parser_SRCS
 
     inc/factory/IfFactory.h
     src/factory/IfFactory.cpp
+
+    inc/factory/NoteFactory.h
+    src/factory/NoteFactory.cpp
 
     inc/factory/WhileFactory.h
     src/factory/WhileFactory.cpp

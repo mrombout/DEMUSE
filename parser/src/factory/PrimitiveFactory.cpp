@@ -2,7 +2,7 @@
 #include "symbol/Bool.h"
 #include "symbol/Text.h"
 #include "symbol/Number.h"
-#include "symbol/Note.h"
+#include "symbol/play/Note.h"
 
 namespace dem {
     namespace parser {

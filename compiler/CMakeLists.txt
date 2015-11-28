@@ -38,6 +38,9 @@ set(Compiler_SRCS
     inc/MidiCompiler.h
     src/MidiCompiler.cpp
 
+    inc/PlayEvaluator.h
+    src/PlayEvaluator.cpp
+
     inc/ExpressionEvaluator.h
     src/ExpressionEvaluator.cpp
 )
@@ -64,10 +67,13 @@ target_include_directories(compiler PRIVATE ${Compiler_INCLUDE_DIRS} ${Parser_IN
 target_link_libraries(compiler PRIVATE dem::libparser dem::liblexer)
 
 # dependencies
-#find_package(Jdksmidi REQUIRED)
-#if(Jdksmidi_FOUND)
-#
-#endif()
+find_package(Jdksmidi REQUIRED)
+if(Jdksmidi_FOUND)
+    message(STATUS "Include: " ${Jdksmidi_INCLUDE_DIRS})
+    message(STATUS "Include: " ${Jdksmidi_LIBRARIES})
+    target_include_directories(compiler PRIVATE ${Jdksmidi_INCLUDE_DIRS})
+    target_link_libraries(compiler PRIVATE ${Jdksmidi_LIBRARIES})
+endif()
 
 # testing
 enable_testing()

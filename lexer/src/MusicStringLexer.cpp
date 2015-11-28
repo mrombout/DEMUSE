@@ -7,12 +7,9 @@ namespace dem {
     namespace lexer {
         MusicStringLexer::MusicStringLexer() :
             Lexer(new StringMatcher(">>")) {
-            AccidentalMatcher *accidentalMatcher = new AccidentalMatcher();
-            NoteMatcher *noteMatcher = new NoteMatcher(accidentalMatcher);
-
-            addDefinition(new TokenDefinition(TokenType::NOTE,          noteMatcher));
+            addDefinition(new TokenDefinition(TokenType::NOTE,          new NoteMatcher()));
             addDefinition(new TokenDefinition(TokenType::OCTAVE,        new RegexMatcher("10|[0-9]")));
-            addDefinition(new TokenDefinition(TokenType::ACCIDENTAL,    accidentalMatcher));
+            addDefinition(new TokenDefinition(TokenType::ACCIDENTAL,    new AccidentalMatcher()));
             addDefinition(new TokenDefinition(TokenType::CHORD,         new RegexMatcher("maj|min")));
             addDefinition(new TokenDefinition(TokenType::DURATION,      new RegexMatcher("w|h|q|i|s|t|x|o|\\.")));
             addDefinition(new TokenDefinition(TokenType::PRESSURE,      new RegexMatcher("\\+(?=\\d)")));

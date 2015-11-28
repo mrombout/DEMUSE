@@ -1,5 +1,12 @@
 #include <iostream>
 #include <fstream>
+#include <jdksmidi/world.h>
+#include <jdksmidi/track.h>
+#include <jdksmidi/multitrack.h>
+#include <jdksmidi/filereadmultitrack.h>
+#include <jdksmidi/fileread.h>
+#include <jdksmidi/fileshow.h>
+#include <jdksmidi/filewritemultitrack.h>
 #include "MuseLexer.h"
 #include "MuseParser.h"
 #include "MidiCompiler.h"
@@ -10,6 +17,7 @@ int main(int argc, char* argv[]) {
         return -1;
     }
 
+    // read input
     std::string inputPath{argv[1]};
     std::ifstream is{inputPath};
     std::string content{std::istreambuf_iterator<char>(is), std::istreambuf_iterator<char>()};

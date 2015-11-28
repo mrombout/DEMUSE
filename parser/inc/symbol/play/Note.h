@@ -2,11 +2,11 @@
 #define DEMUSE_NOTE_H
 
 #include <string>
-#include "symbol/Symbol.h"
+#include "symbol/Primitive.h"
 
 namespace dem {
     namespace parser {
-        class Note : public Symbol {
+        class Note : public Primitive {
         public:
             Note();
 
