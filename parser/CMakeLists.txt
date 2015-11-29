@@ -75,6 +75,9 @@ set(Parser_SRCS
     inc/symbol/Text.h
     src/symbol/Text.cpp
 
+    inc/symbol/Track.h
+    src/symbol/Track.cpp
+
     inc/symbol/Number.h
     src/symbol/Number.cpp
 
@@ -151,6 +154,9 @@ set(Parser_SRCS
 
     inc/factory/SymbolFactory.h
     src/factory/SymbolFactory.cpp
+
+    inc/factory/TrackFactory.h
+    src/factory/TrackFactory.cpp
 
     inc/factory/ProgramFactory.h
     src/factory/ProgramFactory.cpp

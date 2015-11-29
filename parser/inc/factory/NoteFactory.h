@@ -1,6 +1,7 @@
 #ifndef DEMUSE_NOTEFACTORY_H
 #define DEMUSE_NOTEFACTORY_H
 
+#include <regex>
 #include <deque>
 #include "SymbolFactory.h"
 #include "symbol/play/Note.h"

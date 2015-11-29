@@ -1,0 +1,7 @@
+track 1 {
+    var Z = 1;
+}
+
+track 2 {
+    var X = 1;
+}

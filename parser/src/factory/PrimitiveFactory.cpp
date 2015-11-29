@@ -1,4 +1,5 @@
 #include "factory/PrimitiveFactory.h"
+#include "factory/NoteFactory.h"
 #include "symbol/Bool.h"
 #include "symbol/Text.h"
 #include "symbol/Number.h"
@@ -31,8 +32,7 @@ namespace dem {
                 tokens.pop_front();
                 primitive = new Number(std::stod(content));
             } else if(tokens.front().is(lexer::TokenType::NOTE)) {
-                tokens.pop_front();
-                primitive = new Note();
+                primitive = NoteFactory::produce(tokens);
             }
 
             // TODO: Support for POSITIVE/NEGATIVE

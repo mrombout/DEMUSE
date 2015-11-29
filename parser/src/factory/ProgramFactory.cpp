@@ -1,25 +1,25 @@
 #include <vector>
 #include "factory/ProgramFactory.h"
-#include "factory/StatementFactory.h"
+#include "factory/TrackFactory.h"
 #include "symbol/Program.h"
 
 namespace dem {
     namespace parser {
         Program *ProgramFactory::produce(std::deque<lexer::Token> &tokens) {
-            // program = { statement } ;
+            // program = { track } ;
 
-            std::vector<Statement*> statements;
+            std::vector<Track*> tracks;
 
             while(!tokens.empty()) {
-                Statement *statement = StatementFactory::produce(tokens);
-                if(statement == nullptr)
+                Track *track = TrackFactory::produce(tokens);
+                if(track == nullptr)
                     break;
-                statements.push_back(statement);
+                tracks.push_back(track);
             }
 
             // TODO: Error when tokens !empty, tokens should be empty since all tokens should have been processed. Possible change line 16
 
-            return new Program(statements);
+            return new Program(tracks);
         }
     }
 }

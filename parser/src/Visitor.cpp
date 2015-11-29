@@ -51,6 +51,9 @@ namespace dem {
 
         bool Visitor::visit(Text &text) { return true; }
 
+        bool Visitor::visitEnter(parser::Track &track) { return true; }
+        bool Visitor::visitLeave(parser::Track &track) { return true; }
+
         bool Visitor::visitEnter(VariableDeclaration &variableDefinition) { return true; }
         bool Visitor::visitLeave(VariableDeclaration &variableDefinition) { return true; }
 

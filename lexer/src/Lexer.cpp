@@ -26,7 +26,7 @@ namespace dem {
             mTokenDefinitions.push_back(tokenDefinition);
         }
 
-        std::vector<Token> Lexer::lex(std::string::iterator begin, std::string::iterator end) const {
+        std::vector<Token> Lexer::lex(std::string::iterator &begin, std::string::iterator &end) const {
             std::vector<Token> tokens;
 
             int curLine = 1;

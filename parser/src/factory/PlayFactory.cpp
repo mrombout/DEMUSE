@@ -12,15 +12,17 @@ namespace dem {
             expect(tokens, lexer::TokenType::PLAY_START);
 
             // { note }
-            Note *note = nullptr;
+            std::vector<Note*> notes;
             do {
-                note = NoteFactory::produce(tokens);
+                Note *note = NoteFactory::produce(tokens);
+                if(note)
+                    notes.push_back(note);
             } while(!tokens.front().is(lexer::TokenType::PLAY_END));
 
             // ">>"
             expect(tokens, lexer::TokenType::PLAY_END);
 
-            return new Play();
+            return new Play(notes);
         }
     }
 }

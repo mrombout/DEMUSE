@@ -17,10 +17,10 @@ namespace dem {
             tokens.push_back(Token(TokenType::PLAY_START, startToken, 0, 0, 0));
 
             std::vector<Token> playTokens = mLexer.lex(begin, end);
-            for (Token &token : playTokens)
+            for (Token &token : playTokens) {
                 tokens.push_back(token);
+            }
 
-            begin++;
             return ">>";
         }
     }

@@ -4,8 +4,8 @@
 
 namespace dem {
     namespace parser {
-        Program::Program(std::vector<Statement*> statements) :
-            mStatements(statements) {
+        Program::Program(std::vector<Track*> tracks) :
+            mTracks(tracks) {
 
         }
 
@@ -13,14 +13,14 @@ namespace dem {
 
         }
 
-        const std::vector<Statement*> &Program::statements() const {
-            return mStatements;
+        const std::vector<Track*> &Program::tracks() const {
+            return mTracks;
         }
 
         bool Program::accept(Visitor &visitor) {
             if(visitor.visitEnter(*this)) {
-                for(Statement *statement : mStatements) {
-                    statement->accept(visitor);
+                for(Track *track : mTracks) {
+                    track->accept(visitor);
                 }
             }
 

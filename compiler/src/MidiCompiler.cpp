@@ -27,6 +27,20 @@ namespace dem {
         bool MidiCompiler::visitLeave(parser::Program &program) {
             std::cout << "LEAVE - Program" << std::endl;
 
+            mPlayEvaluator.write();
+
+            return true;
+        }
+
+        bool MidiCompiler::visitEnter(parser::Track &track) {
+            std::cout << "ENTER - Track" << std::endl;
+
+            return true;
+        }
+
+        bool MidiCompiler::visitLeave(parser::Track &track) {
+            std::cout << "LEAVE - Track" << std::endl;
+
             return true;
         }
 
@@ -129,6 +143,20 @@ namespace dem {
             mEvaluator.evaluate(mScopes.front(), functionCall);
 
             return false;
+        }
+
+        bool MidiCompiler::visitEnter(parser::Play &play) {
+            std::cout << "ENTER - Play" << std::endl;
+
+            mPlayEvaluator.play(play);
+
+            return false;
+        }
+
+        bool MidiCompiler::visitLeave(parser::Play &play) {
+            std::cout << "LEAVE - Play" << std::endl;
+
+            return true;
         }
 
         bool MidiCompiler::visitEnter(parser::Return &returnSymbol) {

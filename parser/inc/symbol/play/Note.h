@@ -6,14 +6,27 @@
 
 namespace dem {
     namespace parser {
+        typedef char NoteT;
+        typedef int Octave;
+        typedef char Accidental;
+        typedef char Duration;
+
         class Note : public Primitive {
         public:
-            Note();
+            Note(NoteT note, Octave octave, Accidental accidental = 'n', Duration duration = 'w');
+
+            NoteT note() const;
+            Octave octave() const;
+            Accidental accidental() const;
+            Duration duration() const;
 
             virtual bool accept(Visitor &visitor);
 
         private:
-            std::string mNote;
+            NoteT mNote;
+            Octave mOctave;
+            Accidental mAccidental;
+            Duration mDuration;
         };
     }
 }

@@ -20,6 +20,7 @@
 #include "symbol/Statement.h"
 #include "symbol/Symbol.h"
 #include "symbol/Text.h"
+#include "symbol/Track.h"
 #include "symbol/VariableDeclaration.h"
 #include "symbol/While.h"
 #include "symbol/expression/AdditionExpression.h"
@@ -48,11 +49,11 @@ namespace dem {
     namespace parser {
         class Visitor {
         public:
-            bool visitEnter(parser::ArgumentList &argumentList);
-            bool visitLeave(parser::ArgumentList &argumentList);
+            virtual bool visitEnter(parser::ArgumentList &argumentList);
+            virtual bool visitLeave(parser::ArgumentList &argumentList);
 
-            bool visitEnter(parser::Assignment &assignment);
-            bool visitLeave(parser::Assignment &assignment);
+            virtual bool visitEnter(parser::Assignment &assignment);
+            virtual bool visitLeave(parser::Assignment &assignment);
 
             virtual bool visitEnter(parser::Block &block);
 
@@ -60,17 +61,17 @@ namespace dem {
 
             virtual bool visit(parser::Bool &boolSymbol);
 
-            bool visit(parser::Break &breakSymbol);
+            virtual bool visit(parser::Break &breakSymbol);
 
-            bool visit(parser::Continue &continueSymbol);
+            virtual bool visit(parser::Continue &continueSymbol);
 
             virtual bool visitEnter(parser::For &forSymbol);
-            bool visitLeave(parser::For &forSymbol);
+            virtual bool visitLeave(parser::For &forSymbol);
 
             virtual bool visit(parser::FunctionCall &functionCall);
 
             virtual bool visitEnter(parser::FunctionDefinition &functionDefinition);
-            bool visitLeave(parser::FunctionDefinition &functionDefinition);
+            virtual bool visitLeave(parser::FunctionDefinition &functionDefinition);
 
             virtual bool visit(parser::Identifier &identifier);
 
@@ -80,31 +81,34 @@ namespace dem {
 
             virtual bool visit(parser::Number &number);
 
-            bool visitEnter(parser::ParameterList &parameterList);
-            bool visitLeave(parser::ParameterList &parameterList);
+            virtual bool visitEnter(parser::ParameterList &parameterList);
+            virtual bool visitLeave(parser::ParameterList &parameterList);
 
             virtual bool visitEnter(parser::Program &program);
 
             virtual bool visitLeave(parser::Program &program);
 
             virtual bool visitEnter(parser::Return &returnSymbol);
-            bool visitLeave(parser::Return &returnSymbol);
+            virtual bool visitLeave(parser::Return &returnSymbol);
 
-            bool visitEnter(parser::Statement &statement);
-            bool visit(parser::Statement &statement);
-            bool visitLeave(parser::Statement &statement);
+            virtual bool visitEnter(parser::Statement &statement);
+            virtual bool visit(parser::Statement &statement);
+            virtual bool visitLeave(parser::Statement &statement);
 
-            bool visitEnter(parser::Symbol &symbol);
-            bool visit(parser::Symbol &symbol);
-            bool visitLeave(parser::Symbol &symbol);
+            virtual bool visitEnter(parser::Symbol &symbol);
+            virtual bool visit(parser::Symbol &symbol);
+            virtual bool visitLeave(parser::Symbol &symbol);
 
             virtual bool visit(parser::Text &text);
 
+            virtual bool visitEnter(parser::Track &track);
+            virtual bool visitLeave(parser::Track &track);
+
             virtual bool visitEnter(parser::VariableDeclaration &variableDefinition);
-            bool visitLeave(parser::VariableDeclaration &variableDefinition);
+            virtual bool visitLeave(parser::VariableDeclaration &variableDefinition);
 
             virtual bool visitEnter(parser::While &whileSymbol);
-            bool visitLeave(parser::While &whileSymbol);
+            virtual bool visitLeave(parser::While &whileSymbol);
 
             virtual bool visitEnter(parser::AdditionExpression &additionExpression);
             virtual bool visitLeave(parser::AdditionExpression &additionExpression);
@@ -115,9 +119,9 @@ namespace dem {
             virtual bool visitEnter(parser::AssignmentExpression &assignmentExpression);
             virtual bool visitLeave(parser::AssignmentExpression &assignmentExpression);
 
-            bool visitEnter(parser::Condition &condition);
-            bool visit(parser::Condition &condition);
-            bool visitLeave(parser::Condition &condition);
+            virtual bool visitEnter(parser::Condition &condition);
+            virtual bool visit(parser::Condition &condition);
+            virtual bool visitLeave(parser::Condition &condition);
 
             virtual bool visitEnter(parser::DivisionExpression &divisionExpression);
             virtual bool visitLeave(parser::DivisionExpression &divisionExpression);
@@ -128,9 +132,9 @@ namespace dem {
             virtual bool visitEnter(parser::ExponentExpression &exponentExpression);
             virtual bool visitLeave(parser::ExponentExpression &exponentExpression);
 
-            bool visitEnter(parser::Expression &expression);
-            bool visit(parser::Expression &expression);
-            bool visitLeave(parser::Expression &expression);
+            virtual bool visitEnter(parser::Expression &expression);
+            virtual bool visit(parser::Expression &expression);
+            virtual bool visitLeave(parser::Expression &expression);
 
             virtual bool visitEnter(parser::LargerThanCondition &largerThanCondition);
             virtual bool visitLeave(parser::LargerThanCondition &largerThanCondition);

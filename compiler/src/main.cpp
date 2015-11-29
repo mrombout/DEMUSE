@@ -24,7 +24,9 @@ int main(int argc, char* argv[]) {
 
     // lex input
     dem::lexer::MuseLexer museLexer;
-    std::vector<dem::lexer::Token> tokens = museLexer.lex(content.begin(), content.end());
+    auto begin = content.begin();
+    auto end = content.end();
+    std::vector<dem::lexer::Token> tokens = museLexer.lex(begin, end);
 
     // parse input
     dem::parser::MuseParser museParser;

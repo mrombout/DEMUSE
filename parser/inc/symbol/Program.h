@@ -6,7 +6,7 @@
 
 namespace dem {
     namespace parser {
-        class Statement;
+        class Track;
     }
 }
 
@@ -14,15 +14,15 @@ namespace dem {
     namespace parser {
         class Program : public Symbol {
         public:
-            Program(std::vector<Statement*> statements);
+            Program(std::vector<Track*> statements);
             virtual ~Program();
 
-            const std::vector<Statement*> &statements() const;
+            const std::vector<Track*> &tracks() const;
 
             virtual bool accept(Visitor &visitor);
 
         private:
-            std::vector<Statement*> mStatements;
+            std::vector<Track*> mTracks;
         };
     }
 }

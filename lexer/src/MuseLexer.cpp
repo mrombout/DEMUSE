@@ -11,8 +11,6 @@ namespace dem {
             addDefinition(new TokenDefinition(TokenType::BOOL,          new RegexMatcher("(true|false)")));
             addDefinition(new TokenDefinition(TokenType::TEXT,          new RegexMatcher("\\\"(?:[^\\\"\\\\]|\\\\.)*\\\"")));
             addDefinition(new TokenDefinition(TokenType::NUMBER,        new RegexMatcher("\\d+(?:\\.\\d+)?")));
-            addDefinition(new TokenDefinition(TokenType::NOTE,          new NoteMatcher()));
-            addDefinition(new TokenDefinition(TokenType::ACCIDENTAL,    new AccidentalMatcher()));
             addDefinition(new TokenDefinition(TokenType::COMMA,         new CharMatcher(',')));
             addDefinition(new TokenDefinition(TokenType::PERIOD,        new CharMatcher('.')));
             addDefinition(new TokenDefinition(TokenType::POSITIVE,      new RegexMatcher("\\+(?=\\d)")));
@@ -44,7 +42,7 @@ namespace dem {
             addDefinition(new TokenDefinition(TokenType::CONTINUE,      new StringMatcher("continue")));
             addDefinition(new TokenDefinition(TokenType::BREAK,         new StringMatcher("break")));
             addDefinition(new TokenDefinition(TokenType::RETURN,        new StringMatcher("return")));
-            addDefinition(new TokenDefinition(TokenType::TRACK,        new StringMatcher("track")));
+            addDefinition(new TokenDefinition(TokenType::TRACK,         new StringMatcher("track")));
             addDefinition(new TokenDefinition(TokenType::START,         new CharMatcher('{')));
             addDefinition(new TokenDefinition(TokenType::END,           new CharMatcher('}')));
             addDefinition(new TokenDefinition(TokenType::OPEN,          new CharMatcher('(')));

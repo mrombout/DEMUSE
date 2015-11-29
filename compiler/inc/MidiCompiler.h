@@ -6,6 +6,7 @@
 #include "Visitor.h"
 #include "Scope.h"
 #include "ExpressionEvaluator.h"
+#include "PlayEvaluator.h"
 
 namespace dem {
     namespace compiler {
@@ -31,12 +32,6 @@ namespace dem {
 
             virtual Value *returnValue() override;
 
-        private:
-            ExpressionEvaluator mEvaluator;
-            std::deque<Scope*> mScopes;
-            Value *mReturnValue;
-
-        public:
             virtual bool visitEnter(parser::Return &returnSymbol) override;
 
             virtual bool visitLeave(parser::Block &block) override;
@@ -44,6 +39,19 @@ namespace dem {
             virtual bool visit(parser::FunctionCall &functionCall) override;
 
             virtual bool visitEnter(parser::For &forSymbol) override;
+
+            virtual bool visitEnter(parser::Play &play) override;
+            virtual bool visitLeave(parser::Play &play) override;
+
+        private:
+            ExpressionEvaluator mEvaluator;
+            PlayEvaluator mPlayEvaluator;
+            std::deque<Scope*> mScopes;
+            Value *mReturnValue;
+        public:
+            virtual bool visitEnter(parser::Track &track) override;
+
+            virtual bool visitLeave(parser::Track &track) override;
         };
     }
 }
