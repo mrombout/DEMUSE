@@ -10,6 +10,7 @@
 #include "MainFrame.h"
 #include "MuseAuiTabArt.h"
 #include "MuseArtProvider.h"
+#include "MuseLexer.h"
 
 namespace dem {
     namespace ide {
@@ -50,6 +51,8 @@ namespace dem {
             createCenterNotebook();
 
             createToolBar();
+
+            createEditor("E:\\Programming\\CPP\\DEMUSE\\compiler\\res\\test.muse");
         }
 
         MainFrame::~MainFrame() {
@@ -115,7 +118,7 @@ namespace dem {
         void MainFrame::createEditor(const wxString &filePath /*= wxT("") */) {
             if(!mFileEditors.count(filePath)) {
                 // create and new editor and load file if available
-                MuseStyledTextEditor *editor = new MuseStyledTextEditor(this);
+                MuseStyledTextEditor *editor = new MuseStyledTextEditor(this, new lexer::MuseLexer());
 
                 wxString tabName{wxT("New File")};
 

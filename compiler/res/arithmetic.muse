@@ -1,14 +1,3 @@
-function test() {
-    return 5;
-};
-
-var A = 1 + 1;
-var B = 1^6;
-var C = 2^3^4;
-var D = 14 % 5;
-var E = 1 - 1;
-var F = 2 * 3;
-var G = 10 / 2;
-var H = 1 + 6 * (1 + 1);
-var I = 6 / 2 * 1 + 2;
-var J = test() + 5;
+track 1 {
+    var K = 1 + 2 * 3 + 5;
+}

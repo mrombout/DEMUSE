@@ -1,12 +1,13 @@
 #ifndef DEMUSE_TOKENTYPE_H
 #define DEMUSE_TOKENTYPE_H
 
+#include <cstdint>
 #include <iostream>
 
 namespace dem {
     namespace lexer {
-        enum class TokenType {
-            BOOL,
+        enum class TokenType : std::int8_t {
+            BOOL = 1,
             TEXT,
             NUMBER,
             COMMA,
@@ -31,7 +32,7 @@ namespace dem {
             OR,
             AND,
             FOR,
-            IN,
+            IN_ARRAY,
             ELSE,
             NEW,
             IF,

@@ -528,7 +528,7 @@ TEST_F(MuseLexerTest, In_Plain) {
     std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
 
     // assert
-    ASSERT_EQ(dem::lexer::TokenType::IN, result[0].type());
+    ASSERT_EQ(dem::lexer::TokenType::IN_ARRAY, result[0].type());
     ASSERT_EQ(script, result[0].content());
 }
 
