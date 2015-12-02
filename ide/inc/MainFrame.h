@@ -47,6 +47,7 @@ namespace dem {
             void onEditCopy(wxCommandEvent &event);
             void onEditPaste(wxCommandEvent &event);
             void onEditSelectAll(wxCommandEvent &event);
+            void onEditPreferences(wxCommandEvent &event);
 
             void onRunRun(wxCommandEvent &event);
             void onRunStop(wxCommandEvent &event);

@@ -7,6 +7,9 @@
 #include <wx/artprov.h>
 #include <wx/filedlg.h>
 #include <wx/filename.h>
+#include <wx/preferences.h>
+#include "preference/GeneralPage.h"
+#include "preference/ExecutionPage.h"
 #include "MainFrame.h"
 #include "MuseAuiTabArt.h"
 #include "MuseArtProvider.h"
@@ -34,6 +37,8 @@ namespace dem {
             EVT_MENU(wxID_PASTE, MainFrame::onEditPaste)
 
             EVT_MENU(wxID_SELECTALL, MainFrame::onEditSelectAll)
+
+            EVT_MENU(wxID_PREFERENCES, MainFrame::onEditPreferences)
 
             // run
             EVT_MENU(ID_Run, MainFrame::onRunRun)
@@ -274,6 +279,13 @@ namespace dem {
             MuseStyledTextEditor *editor = activeEditor();
             if(editor)
                 editor->SetSelection(0, editor->GetTextLength());
+        }
+
+        void MainFrame::onEditPreferences(wxCommandEvent &event) {
+            wxPreferencesEditor *preferencesEditor = new wxPreferencesEditor();
+            preferencesEditor->AddPage(new GeneralPage());
+            preferencesEditor->AddPage(new ExecutionPage());
+            preferencesEditor->Show(this);
         }
 
         void MainFrame::onRunRun(wxCommandEvent &event) {

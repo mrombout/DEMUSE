@@ -16,6 +16,18 @@ set(IDE_SRCS
 
     inc/MuseStyledTextEditor.h
     src/MuseStyledTextEditor.cpp
+
+    inc/preference/GeneralPanel.h
+    src/preference/GeneralPanel.cpp
+
+    inc/preference/GeneralPage.h
+    src/preference/GeneralPage.cpp
+
+    inc/preference/ExecutionPanel.h
+    src/preference/ExecutionPanel.cpp
+
+    inc/preference/ExecutionPage.h
+    src/preference/ExecutionPage.cpp
 )
 
 add_executable(ide
