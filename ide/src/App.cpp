@@ -10,6 +10,7 @@ namespace dem {
         bool dem::ide::App::OnInit() {
             wxInitAllImageHandlers();
 
+            SetAppName("DEMUSE IDE");
             SetAppDisplayName("DEMUSE IDE");
 
             /*
@@ -21,7 +22,8 @@ namespace dem {
 
             wxArtProvider::Push(new MuseArtProvider());
 
-            MainFrame *frame = new MainFrame(GetAppName(), wxPoint(50, 50), wxSize(450, 340));
+            MainFrame *frame = new MainFrame(GetAppDisplayName(), wxPoint(50, 50), wxSize(450, 340));
+            frame->SetIcon(wxICON(frame_icon));
             frame->Show(true);
 
             return true;

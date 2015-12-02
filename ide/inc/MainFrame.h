@@ -66,6 +66,8 @@ namespace dem {
 
             wxSlider *mZoomSlider;
 
+            wxProcess *mActiveProcess;
+
             wxDECLARE_EVENT_TABLE();
         };
     }

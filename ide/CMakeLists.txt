@@ -42,6 +42,10 @@ set(IDE_SRCS
     src/preference/ColorsPanel.cpp
 )
 
+if(WIN32)
+    set(IDE_SRCS ${IDE_SRCS} resources.rc)
+endif()
+
 add_executable(ide
     src/main.cpp
     ${IDE_SRCS}

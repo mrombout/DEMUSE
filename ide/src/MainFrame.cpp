@@ -8,6 +8,8 @@
 #include <wx/filedlg.h>
 #include <wx/filename.h>
 #include <wx/preferences.h>
+#include <wx/process.h>
+#include <wx/stdstream.h>
 #include "preference/GeneralPage.h"
 #include "preference/EditorPage.h"
 #include "preference/ColorsPage.h"
@@ -52,6 +54,9 @@ namespace dem {
 
         MainFrame::MainFrame(const wxString &title, const wxPoint &pos, const wxSize &size) :
             wxFrame(nullptr, wxID_ANY, title, pos, size) {
+            auto tset = wxICON(icon);
+            SetIcon(tset);
+
             createMenu();
             createStatusBar();
 
@@ -293,11 +298,11 @@ namespace dem {
         }
 
         void MainFrame::onRunRun(wxCommandEvent &event) {
-
+            mActiveProcess = wxProcess::Open("D:\\Program Files (x86)\\VideoLAN\\VLC\\vlc.exe");
         }
 
         void MainFrame::onRunStop(wxCommandEvent &event) {
-
+            wxProcess::Kill(mActiveProcess->GetPid());
         }
     }
 }
