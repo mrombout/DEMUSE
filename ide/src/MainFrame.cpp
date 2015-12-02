@@ -46,7 +46,7 @@ namespace dem {
         MainFrame::MainFrame(const wxString &title, const wxPoint &pos, const wxSize &size) :
             wxFrame(nullptr, wxID_ANY, title, pos, size) {
             createMenu();
-            createStatuBar();
+            createStatusBar();
 
             createCenterNotebook();
 
@@ -101,9 +101,11 @@ namespace dem {
             SetMenuBar(menuBar);
         }
 
-        void MainFrame::createStatuBar() {
+        void MainFrame::createStatusBar() {
             CreateStatusBar();
             SetStatusText("Welcome to wxWidgets!");
+            GetStatusBar()->SetFieldsCount(2);
+            // TODO: Show current active editor line:column in statusbar
         }
 
         void MainFrame::createCenterNotebook() {

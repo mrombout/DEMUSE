@@ -12,7 +12,7 @@
 #define demSTC_DEMUSE_OPERATOR 4
 #define demSTC_DEMUSE_CONDITION 5
 #define demSTC_DEMUSE_UNARY 6
-#define demSTC_DEMUSE_STATEMENT 7
+#define demSTC_DEMUSE_KEYWORD 7
 #define demSTC_DEMUSE_TRACK 8
 #define demSTC_DEMUSE_NOTE 9
 #define demSTC_DEMUSE_ACCIDENTAL 10
@@ -27,6 +27,9 @@
 #define demSTC_DEMUSE_VAR 17
 #define demSTC_DEMUSE_TERMINATOR 18
 #define demSTC_DEMUSE_IDENTIFIER 19
+
+#define demSTC_INDIC_UNKNOWN 8
+#define demSTC_INDIC_BRACE 9
 
 namespace dem {
     namespace ide {
@@ -51,11 +54,17 @@ namespace dem {
             void onMarginClick(wxStyledTextEvent &event);
             void onChange(wxStyledTextEvent &event);
             void onStyleNeeded(wxStyledTextEvent &event);
+            void onUpdateUI(wxStyledTextEvent &event);
+            void onCharAdded(wxStyledTextEvent &event);
+
+            bool isBrace(int c);
 
             wxString mFilePath;
             lexer::MuseLexer *mLexer;
 
             static std::map<lexer::TokenType, int> mTokenTypeStyles;
+
+            int mLastCaretPos;
         };
     }
 }
