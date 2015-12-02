@@ -83,20 +83,20 @@ namespace dem {
             SetStyleBits(8);
 
             // defaults
-            SetViewWhiteSpace(wxSTC_WS_VISIBLEALWAYS); // TODO: Make WS visibility configurable
-            SetViewEOL(false); // TODO: Make EOL visibility configurable
-            SetCaretLineVisible(true); // TODO: Make caret line visibility configurable
-            SetCaretLineBackground(wxColour(255, 250, 227));
+            SetViewWhiteSpace(wxSTC_WS_VISIBLEALWAYS);
+            SetViewEOL(false);
+            SetCaretLineVisible(true);
+            SetCaretLineBackground(wxColour(255, 250, 227)); // Make caret line colour configurable
             // TODO: Show annotations for compiler errors
-            SetTabWidth(4); // TODO: Make tabwidth configurable
-            SetUseTabs(false); // Make use tabs configurable
+            SetTabWidth(4);
+            SetUseTabs(false);
             SetTabIndents(true);
             SetBackSpaceUnIndents(true);
-            SetIndentationGuides(wxSTC_IV_LOOKBOTH); // TODO: Make indentation guide visibility configurable
-            SetEdgeMode(wxSTC_EDGE_LINE); // TODO: Make edge line visibility configurable
-            SetEdgeColumn(120); // TODO: Make edge column configurable
+            SetIndentationGuides(wxSTC_IV_LOOKBOTH);
+            SetEdgeMode(wxSTC_EDGE_LINE);
+            SetEdgeColumn(120);
             // TODO: Check if edge column is at correct column (is seems off)
-            SetWrapMode(wxSTC_WRAP_NONE); // TODO: Make wrapping configurable
+            SetWrapMode(wxSTC_WRAP_NONE);
             // TODO: Autocompletion (read from AST)
             // TODO: Implement find functionality
             // TODO: Show error marker on tokenization errors, compilation errors and vm errors
@@ -107,6 +107,7 @@ namespace dem {
             // TODO: Folding (update lexer with levels for this)
 
             // fonts
+            // TODO: Make configurable
             StyleClearAll();
             wxFont font(wxFontInfo(10).Family(wxFONTFAMILY_MODERN));
             StyleSetFont(wxSTC_STYLE_DEFAULT, font);

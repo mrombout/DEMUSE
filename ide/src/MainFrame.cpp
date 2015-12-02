@@ -9,6 +9,8 @@
 #include <wx/filename.h>
 #include <wx/preferences.h>
 #include "preference/GeneralPage.h"
+#include "preference/EditorPage.h"
+#include "preference/ColorsPage.h"
 #include "preference/ExecutionPage.h"
 #include "MainFrame.h"
 #include "MuseAuiTabArt.h"
@@ -284,6 +286,8 @@ namespace dem {
         void MainFrame::onEditPreferences(wxCommandEvent &event) {
             wxPreferencesEditor *preferencesEditor = new wxPreferencesEditor();
             preferencesEditor->AddPage(new GeneralPage());
+            preferencesEditor->AddPage(new EditorPage());
+            preferencesEditor->AddPage(new ColorsPage());
             preferencesEditor->AddPage(new ExecutionPage());
             preferencesEditor->Show(this);
         }

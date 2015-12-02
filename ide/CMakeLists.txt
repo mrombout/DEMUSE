@@ -28,6 +28,18 @@ set(IDE_SRCS
 
     inc/preference/ExecutionPage.h
     src/preference/ExecutionPage.cpp
+
+    inc/preference/EditorPanel.h
+    src/preference/EditorPanel.cpp
+
+    inc/preference/EditorPage.h
+    src/preference/EditorPage.cpp
+
+    inc/preference/ColorsPage.h
+    src/preference/ColorsPage.cpp
+
+    inc/preference/ColorsPanel.h
+    src/preference/ColorsPanel.cpp
 )
 
 add_executable(ide
@@ -44,7 +56,7 @@ target_link_libraries(ide
 )
 
 # dependencies
-find_package(wxWidgets REQUIRED aui stc adv core base scintilla)
+find_package(wxWidgets REQUIRED propgrid aui stc adv core base scintilla)
 if(wxWidgets_FOUND)
     include(${wxWidgets_USE_FILE})
     target_include_directories(ide PRIVATE ${wxWidgets_INCLUDE_DIRS} "/usr/local/include/wx-3.0/")
