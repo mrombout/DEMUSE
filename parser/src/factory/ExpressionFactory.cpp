@@ -27,25 +27,25 @@ namespace dem {
     namespace parser {
         const std::map<lexer::TokenType, int> ExpressionFactory::mOperatorPrecedence = {
             // TODO: (), []  -- 1
-            { lexer::TokenType::PERIOD,     1 },
+            { lexer::TokenType::PERIOD,     9 },
             // TODO: ! ~ - + ++ -- -- 2
-            { lexer::TokenType::EXP,        2 },
-            { lexer::TokenType::TIMES,      3 },
-            { lexer::TokenType::DIVIDE,     3 },
-            { lexer::TokenType::MOD,        3 },
-            { lexer::TokenType::PLUS,       4 },
-            { lexer::TokenType::MINUS,      4 },
-            { lexer::TokenType::SM,         6 },
-            { lexer::TokenType::SMEQ,       6 },
-            { lexer::TokenType::LR,         6 },
-            { lexer::TokenType::LREQ,       6 },
-            { lexer::TokenType::EQ,         7 },
-            { lexer::TokenType::TEQ,        7 },
-            { lexer::TokenType::NEQ,        7 },
-            { lexer::TokenType::TNEQ,       7 },
-            { lexer::TokenType::AND,        11 },
-            { lexer::TokenType::OR,         12 },
-            { lexer::TokenType::ASSIGNMENT, 14 },
+            { lexer::TokenType::EXP,        8 },
+            { lexer::TokenType::TIMES,      7 },
+            { lexer::TokenType::DIVIDE,     7 },
+            { lexer::TokenType::MOD,        7 },
+            { lexer::TokenType::PLUS,       6 },
+            { lexer::TokenType::MINUS,      6 },
+            { lexer::TokenType::SM,         5 },
+            { lexer::TokenType::SMEQ,       5 },
+            { lexer::TokenType::LR,         5 },
+            { lexer::TokenType::LREQ,       5 },
+            { lexer::TokenType::EQ,         4 },
+            { lexer::TokenType::TEQ,        4 },
+            { lexer::TokenType::NEQ,        4 },
+            { lexer::TokenType::TNEQ,       4 },
+            { lexer::TokenType::AND,        3 },
+            { lexer::TokenType::OR,         2 },
+            { lexer::TokenType::ASSIGNMENT, 1 },
             // TODO: += -= *= /= %= &= |= ^= -- 14
             // TODO: , -- 15
         };
@@ -98,7 +98,7 @@ namespace dem {
             // multiply_op       = "*" | "/" ;
             // unary_operator    = "-" | "+" ;
 
-            return processExpression(tokens, 15);
+            return processExpression(tokens, 1);
         }
 
         Expression *ExpressionFactory::processExpression(std::deque<lexer::Token> &tokens, int minPrecedence) {
@@ -148,7 +148,11 @@ namespace dem {
                 || token.is(lexer::TokenType::SM);
             // TODO: Modulo
 
-            bool smallerOrEqual = isBinaryOperator ? mOperatorPrecedence.at(token.type()) <= minPrecedence : false;
+            if(isBinaryOperator) {
+                int prec = mOperatorPrecedence.at(token.type());
+                std::cout << prec << std::endl;
+            }
+            bool smallerOrEqual = isBinaryOperator ? mOperatorPrecedence.at(token.type()) >= minPrecedence : false;
 
             return isBinaryOperator && smallerOrEqual;
         }
@@ -156,7 +160,7 @@ namespace dem {
         Expression *ExpressionFactory::producePrimary(std::deque<lexer::Token> &tokens) {
             if(accept(tokens, lexer::TokenType::OPEN)) {
                 // nested expression
-                Expression *expression = processExpression(tokens, 15);
+                Expression *expression = processExpression(tokens, 1);
                 expect(tokens, lexer::TokenType::CLOSE);
 
                 return expression;
