@@ -1,12 +1,12 @@
 #ifndef DEMUSE_TRACK_H
 #define DEMUSE_TRACK_H
 
-#include "Symbol.h"
+#include "Statement.h"
 #include "Block.h"
 
 namespace dem {
     namespace parser {
-        class Track : public Symbol {
+        class Track : public Statement {
         public:
             Track(int channel, Block *block);
 

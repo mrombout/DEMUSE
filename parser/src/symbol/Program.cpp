@@ -1,11 +1,10 @@
 #include "symbol/Program.h"
-#include "symbol/Statement.h"
 #include "Visitor.h"
 
 namespace dem {
     namespace parser {
-        Program::Program(std::vector<Track*> tracks) :
-            mTracks(tracks) {
+        Program::Program(std::vector<Statement*> statements) :
+            mStatements(statements) {
 
         }
 
@@ -13,14 +12,14 @@ namespace dem {
 
         }
 
-        const std::vector<Track*> &Program::tracks() const {
-            return mTracks;
+        const std::vector<Statement*> &Program::statements() const {
+            return mStatements;
         }
 
         bool Program::accept(Visitor &visitor) {
             if(visitor.visitEnter(*this)) {
-                for(Track *track : mTracks) {
-                    track->accept(visitor);
+                for(Statement *statement : mStatements) {
+                    statement->accept(visitor);
                 }
             }
 

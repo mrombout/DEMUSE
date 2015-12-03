@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "symbol/Symbol.h"
+#include "Statement.h"
 
 namespace dem {
     namespace parser {
@@ -14,15 +15,15 @@ namespace dem {
     namespace parser {
         class Program : public Symbol {
         public:
-            Program(std::vector<Track*> statements);
+            Program(std::vector<Statement*> statements);
             virtual ~Program();
 
-            const std::vector<Track*> &tracks() const;
+            const std::vector<Statement*> &statements() const;
 
             virtual bool accept(Visitor &visitor);
 
         private:
-            std::vector<Track*> mTracks;
+            std::vector<Statement*> mStatements;
         };
     }
 }
