@@ -16,7 +16,7 @@ namespace dem {
             // (1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 )
             lexer::Token token = tokens.front();
             if(!std::regex_match(token.content(), RGX_CHANNEL)) {
-                throw ParsingException(); // TODO: Proper exception message
+                throw ParsingException(token, "Expected one of channel 1 to 16, but found '" + token.content() + "'."); // TODO: Proper exception message
             }
             int channel = atoi(token.content().c_str());
             tokens.pop_front();

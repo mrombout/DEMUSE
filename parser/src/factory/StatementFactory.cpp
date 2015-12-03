@@ -63,8 +63,10 @@ namespace dem {
                 statement = FunctionDefinitionFactory::produce(tokens);
             }
 
+            // TODO: Empty statement;
+
             if(statement == nullptr)
-                throw ParsingException(); // TODO: Add clear error message
+                throw ParsingException(tokens.front(), "Unrecognized statement '" + tokens.front().content() + "'."); // TODO: Add clear error message
 
             if(!dynamic_cast<CompoundStatement*>(statement)) {
                 // terminator

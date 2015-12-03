@@ -7,9 +7,7 @@ namespace dem {
             // note = ( ( "C" | "D" | "E" | "F" | "G" | "A" | "B" ) [ integer ] [ "#" | "b" | "n" ] | "R" ) [ "w" | "h" | "q" ] ;
 
             // note
-            if(!tokens.front().is(lexer::TokenType::NOTE)) {
-                throw new ParsingException();
-            }
+            expect(tokens, lexer::TokenType::NOTE, false);
             NoteT note = tokens.front().content().at(0);
             tokens.pop_front();
 

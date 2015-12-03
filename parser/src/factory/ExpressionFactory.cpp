@@ -175,7 +175,7 @@ namespace dem {
                 return PrimitiveFactory::produce(tokens);
             }
 
-            throw ParsingException(); // TODO: Add proper message
+            throw ParsingException(tokens.front(), "Unrecognized primary '" + tokens.front().content() + "' in expression.");
         }
 
         Expression *ExpressionFactory::produceExpression(lexer::Token token, Expression *lhs, Expression *rhs) {
@@ -195,7 +195,7 @@ namespace dem {
                 case lexer::TokenType::ASSIGNMENT: {
                     Identifier *identifier = dynamic_cast<Identifier*>(lhs);
                     if(identifier == nullptr)
-                        throw ParsingException(); // TODO: Add clear error message
+                        throw ParsingException(token, "Expected identifier in expression.");
                     return new AssignmentExpression(identifier, rhs);
                 }
                 case lexer::TokenType::SM:
