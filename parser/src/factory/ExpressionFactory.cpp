@@ -146,7 +146,6 @@ namespace dem {
                 || token.is(lexer::TokenType::AND)
                 || token.is(lexer::TokenType::OR)
                 || token.is(lexer::TokenType::SM);
-            // TODO: Modulo
 
             if(isBinaryOperator) {
                 int prec = mOperatorPrecedence.at(token.type());
