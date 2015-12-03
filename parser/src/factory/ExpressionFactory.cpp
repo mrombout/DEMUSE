@@ -147,10 +147,6 @@ namespace dem {
                 || token.is(lexer::TokenType::OR)
                 || token.is(lexer::TokenType::SM);
 
-            if(isBinaryOperator) {
-                int prec = mOperatorPrecedence.at(token.type());
-                std::cout << prec << std::endl;
-            }
             bool smallerOrEqual = isBinaryOperator ? mOperatorPrecedence.at(token.type()) >= minPrecedence : false;
 
             return isBinaryOperator && smallerOrEqual;
