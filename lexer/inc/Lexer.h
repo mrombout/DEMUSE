@@ -27,7 +27,7 @@ namespace dem {
 
             Matcher *mStopMatcher;
             RegexMatcher mNewLineMatcher;
-            RegexMatcher mSkipWhitespaceMatcher;
+            RegexMatcher mSkipMatcher;
         };
     }
 }

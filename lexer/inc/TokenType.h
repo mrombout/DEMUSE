@@ -76,7 +76,9 @@ namespace dem {
             TERMINATOR,
             ASSIGNMENT,
             IDENTIFIER,
-            UNKNOWN
+            UNKNOWN,
+            SINGLECOMMENT,
+            MULTICOMMENT
         };
 
         std::ostream & operator<<(std::ostream &output, const TokenType &tokenType);

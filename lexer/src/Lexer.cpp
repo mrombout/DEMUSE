@@ -11,7 +11,7 @@ namespace dem {
 
         Lexer::Lexer(Matcher *stopMatcher) :
             mNewLineMatcher("\\r\\n?|\\n"),
-            mSkipWhitespaceMatcher("\\s*"),
+            mSkipMatcher("\\s*"),
             mStopMatcher(stopMatcher) {
 
         }
@@ -52,7 +52,7 @@ namespace dem {
                 }
 
                 // skip whitespace
-                int skippedWhitespace = mSkipWhitespaceMatcher.match(begin, end, tokens).length();
+                int skippedWhitespace = mSkipMatcher.match(begin, end, tokens).length();
                 curIndex += skippedWhitespace;
                 curColumn += skippedWhitespace;
                 std::advance(begin, skippedWhitespace);
@@ -81,7 +81,9 @@ namespace dem {
 
                 if(matched.length() > 0) {
                     std::advance(begin, matched.length());
-                    tokens.push_back(Token(tokenDefinition->type(), matched, curIndex, curLine, curColumn));
+
+                    if(!tokenDefinition->ignore())
+                        tokens.push_back(Token(tokenDefinition->type(), matched, curIndex, curLine, curColumn));
 
                     curColumn += matched.length();
                     curIndex += matched.length();

@@ -2,9 +2,10 @@
 
 namespace dem {
     namespace lexer {
-        TokenDefinition::TokenDefinition(const TokenType &tokenType, Matcher *matcher) :
+        TokenDefinition::TokenDefinition(const TokenType &tokenType, Matcher *matcher, bool ignore) :
             mMatcher(matcher),
-            mTokenType(tokenType) {
+            mTokenType(tokenType),
+            mIgnore(ignore) {
 
         }
 
@@ -68,6 +69,10 @@ namespace dem {
 
         const Matcher &TokenDefinition::matcher() const {
             return *mMatcher;
+        }
+
+        const bool &TokenDefinition::ignore() const {
+            return mIgnore;
         }
     }
 }
