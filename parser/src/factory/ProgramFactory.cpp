@@ -1,9 +1,12 @@
 #include <vector>
-#include <symbol/FunctionDefinition.h>
-#include <factory/FunctionDefinitionFactory.h>
+#include "exception/ParsingException.h"
+#include "factory/VariableDeclarationFactory.h"
+#include "factory/FunctionDefinitionFactory.h"
 #include "factory/ProgramFactory.h"
 #include "factory/TrackFactory.h"
 #include "symbol/Program.h"
+#include "symbol/FunctionDefinition.h"
+#include "symbol/VariableDeclaration.h"
 
 namespace dem {
     namespace parser {
@@ -16,6 +19,9 @@ namespace dem {
                 Statement *statement = nullptr;
                 if(tokens.front().is(lexer::TokenType::FUNCTION)) {
                     statement = FunctionDefinitionFactory::produce(tokens);
+                } else if(tokens.front().is(lexer::TokenType::VAR)) {
+                    statement = VariableDeclarationFactory::produce(tokens);
+                    expect(tokens, lexer::TokenType::TERMINATOR); // TODO: Remove this expect, duplicate with statement factory. Possibly move this check to factory for each statement so they can be used separately like this
                 } else if(tokens.front().is(lexer::TokenType::TRACK)) {
                     statement = TrackFactory::produce(tokens);
                 }
@@ -24,7 +30,11 @@ namespace dem {
                 statements.push_back(statement);
             }
 
-            // TODO: Error when tokens !empty, tokens should be empty since all tokens should have been processed. Possible change line 16
+            if(!tokens.empty()) {
+                std::stringstream ss;
+                ss << "Expected function definition or track, but got '" << tokens.front().content() << "'.";
+                throw ParsingException(tokens.front(), ss.str());
+            }
 
             return new Program(statements);
         }
