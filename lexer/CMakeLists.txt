@@ -40,6 +40,9 @@ set(Lexer_SRCS
     inc/matcher/NoteMatcher.h
     src/matcher/NoteMatcher.cpp
 
+    inc/matcher/NotePrimitiveMatcher.h
+    src/matcher/NotePrimitiveMatcher.cpp
+
     inc/matcher/AccidentalMatcher.h
     src/matcher/AccidentalMatcher.cpp
 )
