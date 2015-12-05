@@ -11,10 +11,13 @@ int main(int argc, char* argv[]) {
 
     std::string inputPath{argv[1]};
     std::ifstream is{inputPath};
+
     std::string content{std::istreambuf_iterator<char>(is), std::istreambuf_iterator<char>()};
+    auto begin = content.begin();
+    auto end = content.end();
 
     dem::lexer::MuseLexer lexer;
-    std::vector<dem::lexer::Token> tokens = lexer.lex(content.begin(), content.end());
+    std::vector<dem::lexer::Token> tokens = lexer.lex(begin, end);
 
     std::cout << "  +----------------------+--------------+------------+------------+-------+\n";
     std::cout << "  | " << std::left << std::setw(20) << "Content" << " | " << std::setw(12) << "Type" << " | " << std::setw(10) << "Line" << " | " << std::setw(10) << "Column" << " | " << std::setw(5) << "Index |\n";

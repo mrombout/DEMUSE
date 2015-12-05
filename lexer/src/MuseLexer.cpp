@@ -2,14 +2,14 @@
 #include "matcher/StringMatcher.h"
 #include "matcher/CharMatcher.h"
 #include "matcher/PlayMatcher.h"
-#include "matcher/NoteMatcher.h"
-#include "matcher/AccidentalMatcher.h"
+#include "matcher/NotePrimitiveMatcher.h"
 
 namespace dem {
     namespace lexer {
         MuseLexer::MuseLexer() {
             addDefinition(new TokenDefinition(TokenType::SINGLECOMMENT, new RegexMatcher("\\/\\/.*"),       true));
             addDefinition(new TokenDefinition(TokenType::MULTICOMMENT,  new RegexMatcher("\\/\\*.*\\*\\/"), true));
+            addDefinition(new TokenDefinition(TokenType::NOTE,          new NotePrimitiveMatcher(), true));
             addDefinition(new TokenDefinition(TokenType::BOOL,          new RegexMatcher("(true|false)")));
             addDefinition(new TokenDefinition(TokenType::TEXT,          new RegexMatcher("\\\"(?:[^\\\"\\\\]|\\\\.)*\\\"")));
             addDefinition(new TokenDefinition(TokenType::NUMBER,        new RegexMatcher("\\d+(?:\\.\\d+)?")));
