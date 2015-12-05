@@ -23,7 +23,6 @@ namespace dem {
             throw "NullValue"; // TODO: Throw proper exception
         }
 
-
         Value *NullValue::exponent(Value *b) {
             throw "NullValue"; // TODO: Throw proper exception
         }

@@ -1,4 +1,5 @@
 #include <iostream>
+#include "exception/RuntimeException.h"
 #include "symbol/FunctionDefinition.h"
 #include "Scope.h"
 #include "value/NullValue.h"
@@ -33,11 +34,9 @@ namespace dem {
 
                 return *variable;
             } catch(std::out_of_range &e) {
-                if(mParent) {
+                if(mParent)
                     return mParent->variable(identifier);
-                } else {
-                    throw "Variable does not exist"; // TODO: Proper error
-                }
+                throw RuntimeException(*identifier, "Variable '" + identifier->name() + "' does not exist.");
             }
         }
 
@@ -47,11 +46,9 @@ namespace dem {
 
                 return *function;
             } catch(std::out_of_range &e) {
-                if(mParent) {
+                if(mParent)
                     return mParent->function(identifier);
-                } else {
-                    throw "Function does not exist"; // TODO: Proper error
-                }
+                throw RuntimeException(*identifier, "Function '" + identifier->name() + "' does not exist.");
             }
         }
     }

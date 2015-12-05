@@ -43,15 +43,16 @@ namespace dem {
             virtual bool visitEnter(parser::Play &play) override;
             virtual bool visitLeave(parser::Play &play) override;
 
+            virtual bool visitEnter(parser::Track &track) override;
+            virtual bool visitLeave(parser::Track &track) override;
+
+            virtual std::deque<Scope*> &scopes();
+
         private:
             ExpressionEvaluator mEvaluator;
             PlayEvaluator mPlayEvaluator;
             std::deque<Scope*> mScopes;
             Value *mReturnValue;
-        public:
-            virtual bool visitEnter(parser::Track &track) override;
-
-            virtual bool visitLeave(parser::Track &track) override;
         };
     }
 }

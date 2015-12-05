@@ -9,6 +9,7 @@ namespace dem {
     namespace parser {
         class FunctionCall : public ProcedureCall {
         public:
+            FunctionCall(Identifier *identifier);
             FunctionCall(Identifier *identifier, ArgumentList *argumentList);
 
             virtual bool accept(Visitor &visitor);

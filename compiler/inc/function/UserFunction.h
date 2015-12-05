@@ -12,6 +12,8 @@ namespace dem {
             UserFunction(Compiler &compiler, parser::FunctionDefinition &functionDefinition);
 
             virtual parser::Identifier &identifier() const;
+
+            virtual void mapScope(Scope &scope, std::vector<Value *> &arguments) const override;
             virtual Value *execute(Scope &scope) const;
 
         private:

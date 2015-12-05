@@ -2,6 +2,9 @@ cmake_minimum_required(VERSION 3.3 FATAL_ERROR)
 project(Compiler VERSION 0.1 LANGUAGES CXX)
 
 set(Compiler_SRCS
+    inc/exception/RuntimeException.h
+    src/exception/RuntimeException.cpp
+
     inc/Scope.h
     src/Scope.cpp
 

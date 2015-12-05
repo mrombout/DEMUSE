@@ -22,7 +22,7 @@ namespace dem {
             return visitor.visitLeave(*this);
         }
 
-        std::vector<Identifier *> ParameterList::identifiers() const {
+        std::vector<Identifier *> ParameterList::parameters() const {
             return mIdentifiers;
         }
 

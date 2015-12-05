@@ -3,6 +3,7 @@
 #include "value/NumberValue.h"
 #include "value/BooleanValue.h"
 #include "value/TextValue.h"
+#include "value/NullValue.h"
 
 namespace dem {
     namespace compiler {
@@ -445,12 +446,27 @@ namespace dem {
         bool ExpressionEvaluator::visit(parser::FunctionCall &functionCall) {
             std::cout << "ENTER - Evaluating FunctionCall" << std::endl;
 
-            // TODO: Function call with arguments
-
             Function &function = mScope->function(&functionCall.identifier());
-            Value *value = function.execute(*mScope);
+            parser::ArgumentList *argumentList = functionCall.argumentList();
 
-            std::cout << "PUSH - " << value->asString() << std::endl;
+            // evaluate arguments
+            std::vector<Value*> arguments;
+            for(parser::Expression *expr : argumentList->arguments()) {
+                Value *result = this->evaluate(mScope, *expr);
+                arguments.push_back(result);
+            }
+
+            // map to function scope
+            Scope functionScope(mScope);
+            function.mapScope(functionScope, arguments);
+            mCompiler.scopes().push_front(&functionScope); // TODO: Fix, proper API for adding and removing scopes
+
+            // call function
+            Value *value = function.execute(functionScope);
+            mCompiler.scopes().pop_front();
+
+            if(!dynamic_cast<NullValue*>(value))
+                std::cout << "PUSH - " << value->asString() << std::endl;
             mStack.push(value);
 
             return true;

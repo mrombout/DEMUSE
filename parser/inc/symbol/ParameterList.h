@@ -20,7 +20,7 @@ namespace dem {
 
             virtual bool accept(Visitor &visitor);
 
-            std::vector<Identifier*> identifiers() const;
+            std::vector<Identifier*> parameters() const;
             int numParameters() const;
             bool isEmpty() const;
 

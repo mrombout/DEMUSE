@@ -8,7 +8,8 @@
 namespace dem {
     namespace compiler {
         MidiCompiler::MidiCompiler() :
-                mEvaluator(*this) {
+                mEvaluator(*this),
+                mReturnValue(nullptr) {
 
         }
 
@@ -140,6 +141,7 @@ namespace dem {
         bool MidiCompiler::visit(parser::FunctionCall &functionCall) {
             std::cout << "ENTER - FunctionCall" << std::endl;
 
+            mReturnValue = nullptr;
             mEvaluator.evaluate(mScopes.front(), functionCall);
 
             return false;
@@ -171,6 +173,10 @@ namespace dem {
             if(!mReturnValue)
                 return new NullValue();
             return mReturnValue;
+        }
+
+        std::deque<Scope*> &MidiCompiler::scopes() {
+            return mScopes;
         }
     }
 }

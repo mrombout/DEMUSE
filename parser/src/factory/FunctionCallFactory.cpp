@@ -19,7 +19,7 @@ namespace dem {
             }
 
             // [ argument_list ]
-            ArgumentList *argumentList = nullptr;
+            ArgumentList *argumentList;
             if(!tokens.front().is(lexer::TokenType::CLOSE)) {
                 argumentList = ArgumentListFactory::produce(tokens);
             }

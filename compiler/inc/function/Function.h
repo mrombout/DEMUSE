@@ -1,6 +1,7 @@
 #ifndef DEMUSE_FUNCTION_H
 #define DEMUSE_FUNCTION_H
 
+#include <vector>
 #include "value/Value.h"
 
 namespace dem {
@@ -20,6 +21,8 @@ namespace dem {
         class Function {
         public:
             virtual parser::Identifier &identifier() const = 0;
+
+            virtual void mapScope(Scope &scope, std::vector<Value*> &arguments) const = 0;
             virtual Value *execute(Scope &scope) const = 0;
         };
     }
