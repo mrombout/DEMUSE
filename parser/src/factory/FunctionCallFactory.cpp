@@ -2,6 +2,7 @@
 #include "factory/IdentifierFactory.h"
 #include "factory/ArgumentListFactory.h"
 #include "symbol/FunctionCall.h"
+#include "symbol/ArgumentList.h"
 
 namespace dem {
     namespace parser {
@@ -19,7 +20,7 @@ namespace dem {
             }
 
             // [ argument_list ]
-            ArgumentList *argumentList;
+            ArgumentList *argumentList = new parser::ArgumentList(std::vector<Expression*>());
             if(!tokens.front().is(lexer::TokenType::CLOSE)) {
                 argumentList = ArgumentListFactory::produce(tokens);
             }

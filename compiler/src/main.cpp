@@ -35,4 +35,6 @@ int main(int argc, char* argv[]) {
     // compile input
     dem::compiler::MidiCompiler midiCompiler;
     midiCompiler.compile(static_cast<dem::parser::Program*>(program));
+
+    return 0;
 }

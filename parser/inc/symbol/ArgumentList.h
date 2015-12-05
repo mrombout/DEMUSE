@@ -14,10 +14,10 @@ namespace dem {
             std::vector<Expression*> &arguments();
             int numArguments();
 
+            virtual bool accept(Visitor &visitor);
+
         private:
             std::vector<Expression*> mArguments;
-        public:
-            virtual bool accept(Visitor &visitor);
         };
     }
 }

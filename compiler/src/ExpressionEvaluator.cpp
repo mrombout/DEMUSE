@@ -452,6 +452,7 @@ namespace dem {
             // evaluate arguments
             std::vector<Value*> arguments;
             for(parser::Expression *expr : argumentList->arguments()) {
+                std::cout << "evaling expr" << std::endl;
                 Value *result = this->evaluate(mScope, *expr);
                 arguments.push_back(result);
             }

@@ -7,7 +7,13 @@ function bar(foo1, foo2) {
     var C = foo2;
 }
 
+function buzz() {
+	return 1;
+}
+
 track 1 {
 	foo();
 	bar(2, 3);
+	buzz();
+	var D = buzz();
 }
