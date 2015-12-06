@@ -161,6 +161,9 @@ set(Parser_SRCS
     inc/factory/SymbolFactory.h
     src/factory/SymbolFactory.cpp
 
+    inc/factory/ArrayAccessFactory.h
+    src/factory/ArrayAccessFactory.cpp
+
     inc/factory/TrackFactory.h
     src/factory/TrackFactory.cpp
 

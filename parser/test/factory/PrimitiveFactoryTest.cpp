@@ -11,13 +11,14 @@ protected:
 
     }
 
+    dem::lexer::TokenPosition tokenPosition;
     dem::parser::PrimitiveFactory factory;
 };
 
 TEST_F(PrimitiveFactoryTest, Bool_True) {
     // arrange
     std::deque<dem::lexer::Token> tokens {
-        dem::lexer::Token(dem::lexer::TokenType::BOOL, "true", 0, 1, 1),
+        dem::lexer::Token(dem::lexer::TokenType::BOOL, "true", tokenPosition),
     };
 
     // act
@@ -31,7 +32,7 @@ TEST_F(PrimitiveFactoryTest, Bool_True) {
 TEST_F(PrimitiveFactoryTest, Bool_False) {
     // arrange
     std::deque<dem::lexer::Token> tokens {
-        dem::lexer::Token(dem::lexer::TokenType::BOOL, "false", 0, 1, 1),
+        dem::lexer::Token(dem::lexer::TokenType::BOOL, "false", tokenPosition),
     };
 
     // act
@@ -46,7 +47,7 @@ TEST_F(PrimitiveFactoryTest, Text) {
     // arrange
     std::string content{"Lorum ipsum dolor sit amet."};
     std::deque<dem::lexer::Token> tokens {
-        dem::lexer::Token(dem::lexer::TokenType::TEXT,     content,   0, 1, 1),
+        dem::lexer::Token(dem::lexer::TokenType::TEXT,     content, tokenPosition),
     };
 
     // act
@@ -60,7 +61,7 @@ TEST_F(PrimitiveFactoryTest, Text) {
 TEST_F(PrimitiveFactoryTest, Number_Integer) {
     // arrange
     std::deque<dem::lexer::Token> tokens {
-        dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 1, 1),
+        dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", tokenPosition),
     };
 
     // act
@@ -74,7 +75,7 @@ TEST_F(PrimitiveFactoryTest, Number_Integer) {
 TEST_F(PrimitiveFactoryTest, Number_Float) {
     // arrange
     std::deque<dem::lexer::Token> tokens {
-        dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5.4", 0, 1, 1),
+        dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5.4", tokenPosition),
     };
 
     // act

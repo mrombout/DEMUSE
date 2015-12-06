@@ -8,14 +8,15 @@ protected:
 
     }
 
+    dem::lexer::TokenPosition tokenPosition;
     dem::parser::BlockFactory factory;
 };
 
 TEST_F(BlockFactoryTest, NoStatements) {
     // arrange
     std::deque<dem::lexer::Token> tokens {
-        dem::lexer::Token(dem::lexer::TokenType::START, "{",   0, 1, 1),
-        dem::lexer::Token(dem::lexer::TokenType::END, "}",   0, 1, 1),
+        dem::lexer::Token(dem::lexer::TokenType::START, "{", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::END, "}", tokenPosition),
     };
 
     // act / assert
@@ -30,10 +31,10 @@ TEST_F(BlockFactoryTest, NoStatements) {
 TEST_F(BlockFactoryTest, OneStatement) {
     // arrange
     std::deque<dem::lexer::Token> tokens {
-        dem::lexer::Token(dem::lexer::TokenType::START, "{",   0, 1, 1),
-        dem::lexer::Token(dem::lexer::TokenType::BREAK, "break", 0, 0, 0),
-        dem::lexer::Token(dem::lexer::TokenType::TERMINATOR, ";", 0, 0, 0),
-        dem::lexer::Token(dem::lexer::TokenType::END, "}",   0, 1, 1),
+        dem::lexer::Token(dem::lexer::TokenType::START, "{", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::BREAK, "break", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::TERMINATOR, ";", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::END, "}", tokenPosition),
     };
 
     // act / assert
@@ -49,14 +50,14 @@ TEST_F(BlockFactoryTest, OneStatement) {
 TEST_F(BlockFactoryTest, ThreeStatements) {
     // arrange
     std::deque<dem::lexer::Token> tokens {
-        dem::lexer::Token(dem::lexer::TokenType::START, "{",   0, 1, 1),
-        dem::lexer::Token(dem::lexer::TokenType::BREAK, "break", 0, 0, 0),
-        dem::lexer::Token(dem::lexer::TokenType::TERMINATOR, ";", 0, 0, 0),
-        dem::lexer::Token(dem::lexer::TokenType::BREAK, "break", 0, 0, 0),
-        dem::lexer::Token(dem::lexer::TokenType::TERMINATOR, ";", 0, 0, 0),
-        dem::lexer::Token(dem::lexer::TokenType::BREAK, "break", 0, 0, 0),
-        dem::lexer::Token(dem::lexer::TokenType::TERMINATOR, ";", 0, 0, 0),
-        dem::lexer::Token(dem::lexer::TokenType::END, "}",   0, 1, 1),
+        dem::lexer::Token(dem::lexer::TokenType::START, "{", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::BREAK, "break", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::TERMINATOR, ";", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::BREAK, "break", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::TERMINATOR, ";", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::BREAK, "break", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::TERMINATOR, ";", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::END, "}", tokenPosition),
     };
 
     // act / assert

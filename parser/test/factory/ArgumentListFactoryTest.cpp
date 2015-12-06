@@ -8,6 +8,7 @@ protected:
 
     }
 
+    dem::lexer::TokenPosition tokenPosition;
     dem::parser::ArgumentListFactory factory;
 };
 
@@ -16,7 +17,7 @@ protected:
 TEST_F(ArgumentListFactoryTest, SingleIdentifierArgument) {
     // arrange
     std::deque<dem::lexer::Token> tokens {
-        dem::lexer::Token(dem::lexer::TokenType::IDENTIFIER, "X", 0, 0, 0)
+        dem::lexer::Token(dem::lexer::TokenType::IDENTIFIER, "X", tokenPosition)
     };
 
     // act
@@ -29,7 +30,7 @@ TEST_F(ArgumentListFactoryTest, SingleIdentifierArgument) {
 TEST_F(ArgumentListFactoryTest, SinglePrimitiveArgument) {
     // arrange
     std::deque<dem::lexer::Token> tokens {
-        dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0)
+        dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", tokenPosition)
     };
 
     // act
@@ -42,11 +43,11 @@ TEST_F(ArgumentListFactoryTest, SinglePrimitiveArgument) {
 TEST_F(ArgumentListFactoryTest, ThreeArguments) {
     // arrange
     std::deque<dem::lexer::Token> tokens {
-        dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", 0, 0, 0),
-        dem::lexer::Token(dem::lexer::TokenType::COMMA,  ",", 0, 0, 0),
-        dem::lexer::Token(dem::lexer::TokenType::NUMBER, "4", 0, 0, 0),
-        dem::lexer::Token(dem::lexer::TokenType::COMMA,  ",", 0, 0, 0),
-        dem::lexer::Token(dem::lexer::TokenType::NUMBER, "3", 0, 0, 0),
+        dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::COMMA,  ",", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::NUMBER, "4", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::COMMA,  ",", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::NUMBER, "3", tokenPosition),
     };
 
     // act
@@ -59,11 +60,11 @@ TEST_F(ArgumentListFactoryTest, ThreeArguments) {
 TEST_F(ArgumentListFactoryTest, ThreeMixedPrimitiveAndIdentifierArguments) {
     // arrange
     std::deque<dem::lexer::Token> tokens {
-        dem::lexer::Token(dem::lexer::TokenType::IDENTIFIER, "X", 0, 0, 0),
-        dem::lexer::Token(dem::lexer::TokenType::COMMA,      ",", 0, 0, 0),
-        dem::lexer::Token(dem::lexer::TokenType::NUMBER,     "4", 0, 0, 0),
-        dem::lexer::Token(dem::lexer::TokenType::COMMA,      ",", 0, 0, 0),
-        dem::lexer::Token(dem::lexer::TokenType::NUMBER,     "3", 0, 0, 0),
+        dem::lexer::Token(dem::lexer::TokenType::IDENTIFIER, "X", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::COMMA,      ",", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::NUMBER,     "4", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::COMMA,      ",", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::NUMBER,     "3", tokenPosition),
     };
 
     // act

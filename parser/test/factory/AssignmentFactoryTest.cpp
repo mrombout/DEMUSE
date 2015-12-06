@@ -9,6 +9,7 @@ protected:
 
     }
 
+    dem::lexer::TokenPosition tokenPosition;
     dem::parser::AssignmentFactory factory;
 };
 
@@ -17,9 +18,9 @@ protected:
 TEST_F(AssignmentFactoryTest, SimpleIdentifierAndPrimitiveValue) {
     // arrange
     std::deque<dem::lexer::Token> tokens {
-        dem::lexer::Token(dem::lexer::TokenType::IDENTIFIER, "X", 0, 0, 0),
-        dem::lexer::Token(dem::lexer::TokenType::ASSIGNMENT, "=", 0, 0, 0),
-        dem::lexer::Token(dem::lexer::TokenType::NUMBER,     "1", 0, 0, 0),
+        dem::lexer::Token(dem::lexer::TokenType::IDENTIFIER, "X", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::ASSIGNMENT, "=", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::NUMBER,     "1", tokenPosition),
     };
 
     // act

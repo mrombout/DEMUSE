@@ -3,6 +3,7 @@
 #include "factory/ExpressionFactory.h"
 #include "factory/PrimitiveFactory.h"
 #include "factory/FunctionCallFactory.h"
+#include "factory/ArrayAccessFactory.h"
 #include "symbol/expression/AdditionExpression.h"
 #include "symbol/expression/SubtractionExpression.h"
 #include "symbol/expression/MultiplicationExpression.h"
@@ -181,20 +182,9 @@ namespace dem {
                 if(!expression)
                     expression = IdentifierFactory::produce(tokens);
 
-                // array access? TODO: Update BNF with array access?
+                // array access?
                 if(tokens.front().is(lexer::TokenType::BRACKET_OPEN)) {
-                    ArrayAccessExpression *arrayAccessExpression = nullptr;
-                    while(accept(tokens, lexer::TokenType::BRACKET_OPEN)) {
-                        Expression *arrayIndex = processExpression(tokens, 1);
-                        expect(tokens, lexer::TokenType::BRACKET_CLOSE);
-
-                        if(!arrayAccessExpression)
-                            arrayAccessExpression = new ArrayAccessExpression(expression, arrayIndex);
-                        else
-                            arrayAccessExpression = new ArrayAccessExpression(arrayAccessExpression, arrayIndex);
-                    }
-
-                    return arrayAccessExpression;
+                    return ArrayAccessFactory::produce(tokens, expression);
                 }
 
                 return expression;
