@@ -64,6 +64,7 @@ namespace dem {
 
                 // collect unmatched character
                 if(!matched && skippedWhitespace == 0) {
+                    // TODO: Merge consecutive unknown tokens
                     // add new unknown token
                     tokens.push_back(Token(dem::lexer::TokenType::UNKNOWN, std::string(1, *begin), tokenPosition));
                     tokenPosition.index += 1;

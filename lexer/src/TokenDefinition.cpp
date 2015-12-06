@@ -15,8 +15,7 @@ namespace dem {
 
         TokenDefinition::TokenDefinition(const TokenDefinition &other) {
             std::cout << "copy-constructor" << std::endl;
-            //mTokenType = other.mTokenType;
-            mTokenType = TokenType::ASSIGNMENT;
+            mTokenType = other.mTokenType;
 
             if(other.mMatcher) {
                 *mMatcher = *other.mMatcher;

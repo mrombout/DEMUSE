@@ -21,13 +21,17 @@ namespace dem {
 
             // match note
             std::string noteToken = mNoteMatcher.match(begin, end, tokens, tokenPosition);
-            if(!noteToken.empty()) {
-                advanced += noteToken.length();
-                std::advance(begin, noteToken.length());
-                tokens.push_back(Token(TokenType::NOTE, noteToken, tokenPosition));
-                tokenPosition.column += noteToken.length();
-                tokenPosition.index += noteToken.length();
+            if(noteToken.empty()) {
+                std::advance(begin, -1);
+                tokenPosition.column -= notePrimitiveStart.length();
+                tokenPosition.index -= notePrimitiveStart.length();
+                return "";
             }
+            advanced += noteToken.length();
+            std::advance(begin, noteToken.length());
+            tokens.push_back(Token(TokenType::NOTE, noteToken, tokenPosition));
+            tokenPosition.column += noteToken.length();
+            tokenPosition.index += noteToken.length();
 
             // match octave
             std::string octaveToken = mOctaveMatcher.match(begin, end, tokens, tokenPosition);

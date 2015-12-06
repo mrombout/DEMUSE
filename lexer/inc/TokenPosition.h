@@ -4,9 +4,12 @@
 namespace dem {
     namespace lexer {
         struct TokenPosition {
-            unsigned int line = 1;
-            unsigned int column = 1;
-            unsigned int index = 0;
+            TokenPosition();
+            TokenPosition(unsigned int line, unsigned int column, unsigned int index);
+
+            unsigned int line;
+            unsigned int column;
+            unsigned int index;
         };
     }
 }
