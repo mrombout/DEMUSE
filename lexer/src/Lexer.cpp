@@ -35,7 +35,10 @@ namespace dem {
         std::vector<Token> Lexer::lex(std::string::iterator &begin, std::string::iterator &end, TokenPosition &tokenPosition) const {
             std::vector<Token> tokens;
 
+            int currentTokenSize = 0;
             while(begin != end) {
+                currentTokenSize = tokens.size();
+
                 // should we stop?
                 if(mStopMatcher && mStopMatcher->match(begin, end, tokens, tokenPosition).length() > 0)
                     return tokens;
@@ -66,6 +69,9 @@ namespace dem {
                     tokenPosition.index += 1;
                     ++begin;
                 }
+
+                if(tokens.size() == currentTokenSize)
+                    break;
             }
 
             return tokens;

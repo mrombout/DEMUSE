@@ -88,6 +88,7 @@ namespace dem {
             SetCaretLineVisible(true);
             SetCaretLineBackground(wxColour(255, 250, 227)); // Make caret line colour configurable
             // TODO: Show annotations for compiler errors
+            SetIndent(4);
             SetTabWidth(4);
             SetUseTabs(false);
             SetTabIndents(true);
@@ -259,15 +260,20 @@ namespace dem {
 
         void MuseStyledTextEditor::onCharAdded(wxStyledTextEvent &event) {
             int curPos = GetCurrentPos();
-            int c = GetCharAt(curPos);
-            if(c == '\r' || c == '\n') {
-                // TODO: Increase indent after bracket
+            int c = GetCharAt(curPos - 1);
+
+            if(c == '{'  || c == '[' || c == '(') {
+                AddText(opposite(c));
+                SetAnchor(curPos);
+                SetCurrentPos(curPos);
+            } else if(c == '\r' || c == '\n') {
                 int curLine = GetCurrentLine();
                 int curLineLength = GetLineLength(curLine);
+                int prevIndentation = GetLineIndentation(curLine - 1);
+
                 if(curLine > 0 && curLineLength <= 2) {
-                    int prevIndentation = GetLineIndentation(curLine - 1);
                     SetLineIndentation(curLine, prevIndentation);
-                    GotoPos(GetCurrentPos() + GetLineLength(curLine));
+                    HomeDisplay();
                 }
             }
         }
@@ -316,6 +322,15 @@ namespace dem {
             }
 
             return false;
+        }
+
+        const wxString MuseStyledTextEditor::opposite(int c) {
+            int offset = 0;
+            if(c == '{' || c == '[' || c == '<')
+                offset = 2;
+            else if(c == '(')
+                offset = 1;
+            return wxString::FromAscii(c + offset);
         }
     }
 }

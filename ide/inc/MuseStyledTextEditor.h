@@ -66,6 +66,8 @@ namespace dem {
             static std::map<lexer::TokenType, int> mTokenTypeStyles;
 
             int mLastCaretPos;
+
+            const wxString opposite(int c);
         };
     }
 }
