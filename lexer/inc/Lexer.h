@@ -6,6 +6,7 @@
 #include "matcher/RegexMatcher.h"
 #include "Token.h"
 #include "TokenDefinition.h"
+#include "TokenPosition.h"
 
 namespace dem {
     namespace lexer {
@@ -18,9 +19,10 @@ namespace dem {
             void addDefinition(TokenDefinition *tokenDefinition);
 
             std::vector<Token> lex(std::string::iterator &begin, std::string::iterator &end) const;
+            std::vector<Token> lex(std::string::iterator &begin, std::string::iterator &end, TokenPosition &tokenPosition) const;
 
         private:
-            bool match(std::vector<Token> &tokens, std::string::iterator &begin, std::string::iterator &end, int &curLine, int &curColumn, int &curIndex) const;
+            bool match(std::vector<Token> &tokens, std::string::iterator &begin, std::string::iterator &end, TokenPosition &tokenPosition) const;
 
         private:
             std::vector<TokenDefinition*> mTokenDefinitions;

@@ -14,11 +14,14 @@ set(Lexer_SRCS
     inc/Token.h
     src/Token.cpp
 
-    inc/TokenType.h
-    src/TokenType.cpp
-
     inc/TokenDefinition.h
     src/TokenDefinition.cpp
+
+    inc/TokenPosition.h
+    src/TokenPosition.cpp
+
+    inc/TokenType.h
+    src/TokenType.cpp
 
     inc/matcher/Matcher.h
 

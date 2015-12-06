@@ -1,4 +1,5 @@
 #include <iostream>
+#include <TokenPosition.h>
 #include "Lexer.h"
 #include "TokenType.h"
 
@@ -27,34 +28,35 @@ namespace dem {
         }
 
         std::vector<Token> Lexer::lex(std::string::iterator &begin, std::string::iterator &end) const {
-            std::vector<Token> tokens;
+            TokenPosition tokenPosition;
+            return lex(begin, end, tokenPosition);
+        }
 
-            int curLine = 1;
-            int curColumn = 1;
-            int curIndex = 0;
+        std::vector<Token> Lexer::lex(std::string::iterator &begin, std::string::iterator &end, TokenPosition &tokenPosition) const {
+            std::vector<Token> tokens;
 
             while(begin != end) {
                 // should we stop?
-                if(mStopMatcher && mStopMatcher->match(begin, end, tokens).length() > 0)
+                if(mStopMatcher && mStopMatcher->match(begin, end, tokens, tokenPosition).length() > 0)
                     return tokens;
 
                 // match single token
-                bool matched = match(tokens, begin, end, curLine, curColumn, curIndex);
+                bool matched = match(tokens, begin, end, tokenPosition);
 
                 // skip newlines
                 std::string newLine;
-                if((newLine = mNewLineMatcher.match(begin, end, tokens)).length() > 0) {
-                    ++curLine;
-                    curColumn = 1;
-                    curIndex += newLine.size();
+                if((newLine = mNewLineMatcher.match(begin, end, tokens, tokenPosition)).length() > 0) {
+                    tokenPosition.line += 1;
+                    tokenPosition.index += newLine.size();
+                    tokenPosition.column = 1;
                     std::advance(begin, newLine.length());
                     continue;
                 }
 
                 // skip whitespace
-                int skippedWhitespace = mSkipMatcher.match(begin, end, tokens).length();
-                curIndex += skippedWhitespace;
-                curColumn += skippedWhitespace;
+                int skippedWhitespace = mSkipMatcher.match(begin, end, tokens, tokenPosition).length();
+                tokenPosition.index += skippedWhitespace;
+                tokenPosition.column += skippedWhitespace;
                 std::advance(begin, skippedWhitespace);
 
                 // collect unmatched character
@@ -63,7 +65,7 @@ namespace dem {
                         Token &backToken = tokens.back();
                         backToken.setContent(backToken.content() + std::string(1, *begin));
                     } else {
-                        tokens.push_back(Token(dem::lexer::TokenType::UNKNOWN, std::string(1, *begin), curIndex, curLine, curColumn));
+                        tokens.push_back(Token(dem::lexer::TokenType::UNKNOWN, std::string(1, *begin), tokenPosition));
                     }
                     ++begin;
                 }
@@ -72,21 +74,21 @@ namespace dem {
             return tokens;
         }
 
-        bool Lexer::match(std::vector<Token> &tokens, std::string::iterator &begin, std::string::iterator &end, int &curLine, int &curColumn, int &curIndex) const {
+        bool Lexer::match(std::vector<Token> &tokens, std::string::iterator &begin, std::string::iterator &end, TokenPosition &tokenPosition) const {
             for(TokenDefinition *tokenDefinition : mTokenDefinitions) {
                 if(!tokenDefinition)
                     continue;
 
-                std::string matched = tokenDefinition->matcher().match(begin, end, tokens);
+                std::string matched = tokenDefinition->matcher().match(begin, end, tokens, tokenPosition);
 
                 if(matched.length() > 0) {
                     std::advance(begin, matched.length());
 
                     if(!tokenDefinition->ignore())
-                        tokens.push_back(Token(tokenDefinition->type(), matched, curIndex, curLine, curColumn));
+                        tokens.push_back(Token(tokenDefinition->type(), matched, tokenPosition));
 
-                    curColumn += matched.length();
-                    curIndex += matched.length();
+                    tokenPosition.column += matched.length();
+                    tokenPosition.index += matched.length();
 
                     return true;
                 }

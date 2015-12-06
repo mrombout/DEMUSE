@@ -10,7 +10,7 @@ namespace dem {
         public:
             RegexMatcher(std::string regex);
 
-            virtual std::string match(std::string::iterator &begin, std::string::iterator &end, std::vector<Token> &tokens) const;
+            virtual std::string match(std::string::iterator &begin, std::string::iterator &end, std::vector<Token> &tokens, TokenPosition &tokenPosition) const;
 
             std::string regex() const;
 
