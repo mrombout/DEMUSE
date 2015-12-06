@@ -7,7 +7,10 @@
 namespace dem {
     namespace compiler {
         class ObjectValue : public Value {
-        private:
+        public:
+            virtual Value *operator[](const std::string &index);
+
+        protected:
             std::map<std::string, Value*> mProperties;
         };
     }

@@ -405,23 +405,23 @@ namespace dem {
         bool ExpressionEvaluator::visitEnter(parser::PropertyAccessExpression &propertyAccessExpression) {
             std::cout << "ENTER - Evaluating PropertyAccess" << std::endl;
 
-            return true;
-        }
-
-        bool ExpressionEvaluator::visitLeave(parser::PropertyAccessExpression &propertyAccessExpression) {
-            std::cout << "LEAVE - Evaluating PropertyAccess" << std::endl;
-
-            Value *b = mStack.top();
-            mStack.pop();
+            propertyAccessExpression.left().accept(*this);
 
             Value *a = mStack.top();
             mStack.pop();
 
-            static_cast<std::string>(b->asString());
-            Value *value = (*a)[b->asString()];
+            parser::Identifier *identifier = dynamic_cast<parser::Identifier*>(&propertyAccessExpression.right());
+            if(!identifier)
+                throw "Can not access property."; // TODO: Throw proper error
+
+            Value *value = (*a)[identifier->name()];
             mStack.push(value);
 
-            return true;
+            return false;
+        }
+
+        bool ExpressionEvaluator::visitLeave(parser::PropertyAccessExpression &propertyAccessExpression) {
+            std::cout << "LEAVE - Evaluating PropertyAccess" << std::endl;
         }
 
         bool ExpressionEvaluator::visitEnter(parser::Array &array) {

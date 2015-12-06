@@ -1,12 +1,4 @@
 track 1 {
-	function C() {
-		return 6;
-	};
-
-	var A = function() {
-		return 5;
-	};
-
-	var B = A();
-	var D = C();
+	var A = "Lorum ipsum";
+	var B = A.length;
 }
