@@ -17,6 +17,7 @@ namespace dem {
             }
             std::advance(begin, 1);
             tokenPosition.column += notePrimitiveStart.length();
+            tokenPosition.index += notePrimitiveStart.length();
 
             // match note
             std::string noteToken = mNoteMatcher.match(begin, end, tokens, tokenPosition);
@@ -25,6 +26,7 @@ namespace dem {
                 std::advance(begin, noteToken.length());
                 tokens.push_back(Token(TokenType::NOTE, noteToken, tokenPosition));
                 tokenPosition.column += noteToken.length();
+                tokenPosition.index += noteToken.length();
             }
 
             // match octave

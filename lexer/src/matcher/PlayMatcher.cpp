@@ -15,6 +15,7 @@ namespace dem {
             std::advance(begin, startToken.length());
             tokens.push_back(Token(TokenType::PLAY_START, startToken, tokenPosition));
             tokenPosition.column += startToken.size();
+            tokenPosition.index += startToken.size();
 
             std::vector<Token> playTokens = mLexer.lex(begin, end, tokenPosition);
             for (Token &token : playTokens) {
