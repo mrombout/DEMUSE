@@ -1,10 +1,11 @@
 #include <iostream>
-#include <exception/RuntimeException.h>
+#include "exception/RuntimeException.h"
 #include "MidiCompiler.h"
 #include "symbol/VariableDeclaration.h"
 #include "GlobalScope.h"
 #include "value/NullValue.h"
-#include "value/FunctionValue.h"
+#include "value/function/FunctionValue.h"
+#include "value/function/UserFunction.h"
 
 namespace dem {
     namespace compiler {
@@ -82,7 +83,7 @@ namespace dem {
         bool MidiCompiler::visitEnter(parser::FunctionDefinition &functionDefinition) {
             std::cout << "ENTER - Function Definition" << std::endl;
 
-            mScopes.front()->declareVariable(functionDefinition.identifier(), new FunctionValue(*this, functionDefinition.parameterList(), functionDefinition.block()));
+            mScopes.front()->declareVariable(functionDefinition.identifier(), new UserFunction(*this, functionDefinition.parameterList(), functionDefinition.block()));
 
             return true;
         }

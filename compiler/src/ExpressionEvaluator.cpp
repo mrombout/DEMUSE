@@ -6,7 +6,8 @@
 #include "value/TextValue.h"
 #include "value/NullValue.h"
 #include "value/ArrayValue.h"
-#include "value/FunctionValue.h"
+#include "value/function/FunctionValue.h"
+#include "value/function/UserFunction.h"
 #include "value/Variable.h"
 
 namespace dem {
@@ -492,7 +493,7 @@ namespace dem {
         bool ExpressionEvaluator::visitEnter(parser::FunctionDefinition &functionDefinition) {
             std::cout << "ENTER - Evaluating FunctionDefinition" << std::endl;
 
-            FunctionValue *value = new FunctionValue(mCompiler, functionDefinition.parameterList(), functionDefinition.block());
+            UserFunction *value = new UserFunction(mCompiler, functionDefinition.parameterList(), functionDefinition.block());
 
             std::cout << "PUSH - " << value->asString() << std::endl;
             mStack.push(value);

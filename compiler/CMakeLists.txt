@@ -17,6 +17,12 @@ set(Compiler_SRCS
     inc/value/Value.h
     src/value/Value.cpp
 
+    inc/value/function/PrintFunction.h
+    src/value/function/PrintFunction.cpp
+
+    inc/value/function/UserFunction.h
+    src/value/function/UserFunction.cpp
+
     inc/value/ArrayValue.h
     src/value/ArrayValue.cpp
 
@@ -32,8 +38,11 @@ set(Compiler_SRCS
     inc/value/BooleanValue.h
     src/value/BooleanValue.cpp
 
-    inc/value/FunctionValue.h
-    src/value/FunctionValue.cpp
+    inc/value/function/FunctionValue.h
+    src/value/function/FunctionValue.cpp
+
+    inc/value/function/InternalFunction.h
+    src/value/function/InternalFunction.cpp
 
     inc/value/TextValue.h
     src/value/TextValue.cpp

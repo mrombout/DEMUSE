@@ -44,4 +44,7 @@ track 1 {
 		return 1;
 	};
 	var H = buzz1(); // sets D to 1
+
+	// internal function
+	print("Lorum ipsum!");
 }
