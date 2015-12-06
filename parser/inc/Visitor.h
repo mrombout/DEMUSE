@@ -25,6 +25,7 @@
 #include "symbol/While.h"
 #include "symbol/expression/AdditionExpression.h"
 #include "symbol/expression/AndCondition.h"
+#include "symbol/expression/ArrayAccessExpression.h"
 #include "symbol/expression/BinaryExpression.h"
 #include "symbol/expression/Condition.h"
 #include "symbol/expression/DivisionExpression.h"
@@ -42,6 +43,7 @@
 #include "symbol/expression/StrictEqualCondition.h"
 #include "symbol/expression/StrictNotEqualCondition.h"
 #include "symbol/expression/SubtractionExpression.h"
+#include "symbol/Array.h"
 #include "symbol/play/Play.h"
 #include "symbol/play/Note.h"
 
@@ -52,11 +54,13 @@ namespace dem {
             virtual bool visitEnter(parser::ArgumentList &argumentList);
             virtual bool visitLeave(parser::ArgumentList &argumentList);
 
+            virtual bool visitEnter(parser::Array &array);
+            virtual bool visitLeave(parser::Array &array);
+
             virtual bool visitEnter(parser::Assignment &assignment);
             virtual bool visitLeave(parser::Assignment &assignment);
 
             virtual bool visitEnter(parser::Block &block);
-
             virtual bool visitLeave(parser::Block &block);
 
             virtual bool visit(parser::Bool &boolSymbol);
@@ -115,6 +119,9 @@ namespace dem {
 
             virtual bool visitEnter(parser::AndCondition &andCondition);
             virtual bool visitLeave(parser::AndCondition &andCondition);
+
+            virtual bool visitEnter(parser::ArrayAccessExpression &arrayAccessExpression);
+            virtual bool visitLeave(parser::ArrayAccessExpression &arrayAccessExpression);
 
             virtual bool visitEnter(parser::AssignmentExpression &assignmentExpression);
             virtual bool visitLeave(parser::AssignmentExpression &assignmentExpression);

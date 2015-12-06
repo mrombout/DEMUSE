@@ -1,4 +1,5 @@
 #include <math.h>
+#include <exception/RuntimeException.h>
 #include "value/NumberValue.h"
 
 namespace dem {
@@ -78,6 +79,10 @@ namespace dem {
 
         bool NumberValue::operator>=(const Value &other) {
             return mValue >= other.asNumber();
+        }
+
+        Value *NumberValue::operator[](const int index) {
+            throw "Can not access that way"; // TODO: Throw proper error
         }
     }
 }

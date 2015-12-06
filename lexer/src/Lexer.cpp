@@ -70,8 +70,9 @@ namespace dem {
                     ++begin;
                 }
 
-                if(tokens.size() == currentTokenSize)
-                    break;
+                // TODO: Below makes sure we're not stuck on an infinite loop, but below also breaks when there is no match but a newline (causing everything to stop).
+                //if(tokens.size() == currentTokenSize)
+                //    break;
             }
 
             return tokens;

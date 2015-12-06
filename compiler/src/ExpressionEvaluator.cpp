@@ -1,9 +1,11 @@
 #include <iostream>
+#include "exception/RuntimeException.h"
 #include "ExpressionEvaluator.h"
 #include "value/NumberValue.h"
 #include "value/BooleanValue.h"
 #include "value/TextValue.h"
 #include "value/NullValue.h"
+#include "value/ArrayValue.h"
 
 namespace dem {
     namespace compiler {
@@ -397,6 +399,26 @@ namespace dem {
             return true;
         }
 
+        bool ExpressionEvaluator::visitEnter(parser::Array &array) {
+            std::cout << "ENTER - Evaluating Array" << std::endl;
+
+            std::vector<parser::Expression*> &expressions = array.expressions();
+            std::vector<Value*> values;
+
+            for(auto it = expressions.begin(); it != expressions.end(); ++it) {
+                // evaluate, new value should be on the stack
+                (*it)->accept(*this);
+
+                // add to values
+                values.push_back(mStack.top());
+                mStack.pop();
+            }
+
+            mStack.push(new ArrayValue(values));
+
+            return false;
+        }
+
         bool ExpressionEvaluator::visit(parser::Identifier &identifier) {
             std::cout << "ENTER - Evaluating Identifier" << std::endl;
 
@@ -468,6 +490,24 @@ namespace dem {
 
             if(!dynamic_cast<NullValue*>(value))
                 std::cout << "PUSH - " << value->asString() << std::endl;
+            mStack.push(value);
+
+            return true;
+        }
+
+        bool ExpressionEvaluator::visitLeave(parser::ArrayAccessExpression &arrayAccessExpression) {
+            std::cout << "LEAVE - Evaluating ArrayAccessExpression" << std::endl;
+
+            // array index
+            Value *b = mStack.top();
+            mStack.pop();
+
+            // array
+            Value *a = mStack.top();
+            mStack.pop();
+
+            static_cast<int>(b->asNumber());
+            Value *value = (*a)[b->asNumber()];
             mStack.push(value);
 
             return true;

@@ -1,4 +1,4 @@
-#include <exception/ParsingException.h>
+#include "exception/ParsingException.h"
 #include "factory/IdentifierFactory.h"
 #include "factory/ExpressionFactory.h"
 #include "factory/PrimitiveFactory.h"
@@ -20,6 +20,8 @@
 #include "symbol/expression/StrictNotEqualCondition.h"
 #include "symbol/expression/AndCondition.h"
 #include "symbol/expression/OrCondition.h"
+#include "symbol/expression/ArrayAccessExpression.h"
+#include "symbol/Array.h"
 #include "symbol/Identifier.h"
 #include "symbol/Primitive.h"
 
@@ -159,12 +161,43 @@ namespace dem {
                 expect(tokens, lexer::TokenType::CLOSE);
 
                 return expression;
+            } else if(accept(tokens, lexer::TokenType::BRACKET_OPEN)) {
+                std::vector<Expression*> values;
+
+                if(!tokens.front().is(lexer::TokenType::BRACKET_CLOSE)) {
+                    do {
+                        Expression *expression = processExpression(tokens, 1);
+                        values.push_back(expression);
+                    } while(accept(tokens, lexer::TokenType::COMMA));
+                }
+                expect(tokens, lexer::TokenType::BRACKET_CLOSE);
+
+                return new Array(values);
             } else if(tokens.front().is(lexer::TokenType::IDENTIFIER)) {
+                Expression *expression = nullptr;
+
                 // identifier | call
-                Expression *expression = FunctionCallFactory::produce(tokens);
-                if(expression)
-                    return expression;
-                return IdentifierFactory::produce(tokens);
+                expression = FunctionCallFactory::produce(tokens);
+                if(!expression)
+                    expression = IdentifierFactory::produce(tokens);
+
+                // array access? TODO: Update BNF with array access?
+                if(tokens.front().is(lexer::TokenType::BRACKET_OPEN)) {
+                    ArrayAccessExpression *arrayAccessExpression = nullptr;
+                    while(accept(tokens, lexer::TokenType::BRACKET_OPEN)) {
+                        Expression *arrayIndex = processExpression(tokens, 1);
+                        expect(tokens, lexer::TokenType::BRACKET_CLOSE);
+
+                        if(!arrayAccessExpression)
+                            arrayAccessExpression = new ArrayAccessExpression(expression, arrayIndex);
+                        else
+                            arrayAccessExpression = new ArrayAccessExpression(arrayAccessExpression, arrayIndex);
+                    }
+
+                    return arrayAccessExpression;
+                }
+
+                return expression;
             } else if(tokens.front().is(lexer::TokenType::NUMBER)
                    || tokens.front().is(lexer::TokenType::TEXT)
                    || tokens.front().is(lexer::TokenType::BOOL)
@@ -192,10 +225,14 @@ namespace dem {
                 case lexer::TokenType::MOD:
                     return new ModuloExpression(lhs, rhs);
                 case lexer::TokenType::ASSIGNMENT: {
-                    Identifier *identifier = dynamic_cast<Identifier*>(lhs);
-                    if(identifier == nullptr)
-                        throw ParsingException(token, "Expected identifier in expression.");
-                    return new AssignmentExpression(identifier, rhs);
+                    Expression *lvalue = nullptr;
+                    lvalue = dynamic_cast<Identifier*>(lhs);
+                    if(lvalue == nullptr)
+                        lvalue = dynamic_cast<ArrayAccessExpression*>(lhs);
+                    if(lvalue == nullptr)
+                        throw ParsingException(token, "Invalid lvalue for assignment.");
+                    // TODO: Make proper lvalue class for identifier and array access
+                    return new AssignmentExpression(lvalue, rhs);
                 }
                 case lexer::TokenType::SM:
                     return new SmallerThanCondition(lhs, rhs);

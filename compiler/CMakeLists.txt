@@ -17,6 +17,9 @@ set(Compiler_SRCS
     inc/value/Value.h
     src/value/Value.cpp
 
+    inc/value/ArrayValue.h
+    src/value/ArrayValue.cpp
+
     inc/value/NullValue.h
     src/value/NullValue.cpp
 

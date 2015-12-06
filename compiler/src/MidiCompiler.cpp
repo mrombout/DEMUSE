@@ -1,4 +1,5 @@
 #include <iostream>
+#include <exception/RuntimeException.h>
 #include "MidiCompiler.h"
 #include "symbol/VariableDeclaration.h"
 #include "GlobalScope.h"
@@ -64,7 +65,15 @@ namespace dem {
         bool MidiCompiler::visitEnter(parser::VariableDeclaration &variableDefinition) {
             std::cout << "ENTER - Variable Declaration" << std::endl;
 
-            mScopes.front()->declareVariable(&variableDefinition.assignment().left());
+            // TODO: Make proper lvalue class and move this logic?
+            parser::Expression &left = variableDefinition.assignment().left();
+            if(dynamic_cast<parser::Identifier*>(&left)) {
+                parser::Identifier &identifier = static_cast<parser::Identifier&>(left);
+                mScopes.front()->declareVariable(&identifier);
+            } else if(dynamic_cast<parser::ArrayAccessExpression*>(&left)) {
+                // TODO: Array assignment
+                throw RuntimeException(variableDefinition, "Array index assignment not implemented yet.");
+            }
 
             return true;
         }

@@ -1,14 +1,14 @@
-#include "symbol/expression/AssignmentExpression.h"
+#include "symbol/expression/ArrayAccessExpression.h"
 #include "Visitor.h"
 
 namespace dem {
     namespace parser {
-        AssignmentExpression::AssignmentExpression(Expression *left, Expression *right) :
+        ArrayAccessExpression::ArrayAccessExpression(Expression *left, Expression *right) :
             BinaryExpression(left, right) {
-            // TODO: Make proper lvalue base class for identifier and arrayaccess?
+
         }
 
-        bool dem::parser::AssignmentExpression::accept(Visitor &visitor) {
+        bool dem::parser::ArrayAccessExpression::accept(Visitor &visitor) {
             if(visitor.visitEnter(*this)) {
                 left().accept(visitor);
                 right().accept(visitor);

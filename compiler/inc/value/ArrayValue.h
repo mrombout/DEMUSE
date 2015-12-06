@@ -1,12 +1,15 @@
-#ifndef DEMUSE_NULLVALUE_H
-#define DEMUSE_NULLVALUE_H
+#ifndef DEMUSE_ARRAYVALUE_H
+#define DEMUSE_ARRAYVALUE_H
 
-#include "Value.h"
+#include <vector>
+#include "value/Value.h"
 
 namespace dem {
     namespace compiler {
-        class NullValue : public Value {
+        class ArrayValue : public Value {
         public:
+            ArrayValue(std::vector<Value*> values);
+
             virtual Value *add(Value *b);
             virtual Value *subtract(Value *b);
             virtual Value *multiply(Value *b);
@@ -25,8 +28,11 @@ namespace dem {
             virtual bool operator>(const Value &other);
             virtual bool operator>=(const Value &other);
             virtual Value *operator[](const int index);
+
+        private:
+            std::vector<Value*> mValues;
         };
     }
 }
 
-#endif //DEMUSE_NULLVALUE_H
+#endif //DEMUSE_ARRAYVALUE_H

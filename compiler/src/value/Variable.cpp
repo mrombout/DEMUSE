@@ -79,5 +79,9 @@ namespace dem {
         bool Variable::operator>=(const Value &other) {
             return *mValue >= other;
         }
+
+        Value *Variable::operator[](const int index) {
+            return (*mValue)[index];
+        }
     }
 }

@@ -5,6 +5,9 @@ namespace dem {
         bool Visitor::visitEnter(ArgumentList &argumentList) { return true; }
         bool Visitor::visitLeave(ArgumentList &argumentList) { return true; }
 
+        bool Visitor::visitEnter(Array &array) { return true; }
+        bool Visitor::visitLeave(Array &array) { return true; }
+
         bool Visitor::visitEnter(Assignment &assignment) { return true; }
         bool Visitor::visitLeave(Assignment &assignment) { return true; }
 
@@ -65,6 +68,9 @@ namespace dem {
 
         bool Visitor::visitEnter(AndCondition &andCondition) { return true; }
         bool Visitor::visitLeave(AndCondition &andCondition) { return true; }
+
+        bool Visitor::visitEnter(ArrayAccessExpression &arrayAccessExpression) { return true; }
+        bool Visitor::visitLeave(ArrayAccessExpression &arrayAccessExpression) { return true; }
 
         bool Visitor::visitEnter(AssignmentExpression &assignmentExpression) { return true; }
         bool Visitor::visitLeave(AssignmentExpression &assignmentExpression) { return true; }

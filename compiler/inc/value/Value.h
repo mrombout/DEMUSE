@@ -27,6 +27,7 @@ namespace dem {
             virtual bool operator<=(const Value &other) = 0;
             virtual bool operator>(const Value &other) = 0;
             virtual bool operator>=(const Value &other) = 0;
+            virtual Value *operator[](const int index) = 0;
 
             virtual bool strictEqual(const Value &other) {
                 if(typeid(*this).name() != typeid(other).name())

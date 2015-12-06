@@ -19,6 +19,9 @@ set(Parser_SRCS
     inc/symbol/Symbol.h
     src/symbol/Symbol.cpp
 
+    inc/symbol/Array.h
+    src/symbol/Array.cpp
+
     inc/symbol/Program.h
     src/symbol/Program.cpp
 
@@ -83,6 +86,9 @@ set(Parser_SRCS
 
     inc/symbol/expression/Expression.h
     src/symbol/expression/Expression.cpp
+
+    inc/symbol/expression/ArrayAccessExpression.h
+    src/symbol/expression/ArrayAccessExpression.cpp
 
     inc/symbol/expression/BinaryExpression.h
 
