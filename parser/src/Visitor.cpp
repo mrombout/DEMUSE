@@ -110,6 +110,9 @@ namespace dem {
         bool Visitor::visitEnter(OrCondition &orCondition) { return true; }
         bool Visitor::visitLeave(OrCondition &orCondition) { return true; }
 
+        bool Visitor::visitEnter(PropertyAccessExpression &propertyAccessExpression) { return true; }
+        bool Visitor::visitLeave(PropertyAccessExpression &propertyAccessExpression) { return true; }
+
         bool Visitor::visitEnter(SmallerThanCondition &smallerThanCondition) { return true; }
         bool Visitor::visitLeave(SmallerThanCondition &smallerThanCondition) { return true; }
 

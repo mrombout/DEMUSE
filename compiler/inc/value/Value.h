@@ -3,6 +3,7 @@
 
 #include <string>
 #include <typeinfo>
+#include "Scope.h"
 
 namespace dem {
     namespace compiler {
@@ -28,6 +29,8 @@ namespace dem {
             virtual bool operator>(const Value &other) = 0;
             virtual bool operator>=(const Value &other) = 0;
             virtual Value *operator[](const int index) = 0;
+            virtual Value *operator[](const std::string &index) = 0;
+            virtual Value *operator()(Scope &scope) = 0;
 
             virtual bool strictEqual(const Value &other) {
                 if(typeid(*this).name() != typeid(other).name())

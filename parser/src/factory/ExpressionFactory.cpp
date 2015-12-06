@@ -4,6 +4,7 @@
 #include "factory/PrimitiveFactory.h"
 #include "factory/FunctionCallFactory.h"
 #include "factory/ArrayAccessFactory.h"
+#include "factory/FunctionDefinitionFactory.h"
 #include "symbol/expression/AdditionExpression.h"
 #include "symbol/expression/SubtractionExpression.h"
 #include "symbol/expression/MultiplicationExpression.h"
@@ -22,9 +23,11 @@
 #include "symbol/expression/AndCondition.h"
 #include "symbol/expression/OrCondition.h"
 #include "symbol/expression/ArrayAccessExpression.h"
+#include "symbol/expression/PropertyAccessExpression.h"
 #include "symbol/Array.h"
 #include "symbol/Identifier.h"
 #include "symbol/Primitive.h"
+#include "symbol/expression/FunctionDefinition.h"
 
 namespace dem {
     namespace parser {
@@ -148,7 +151,8 @@ namespace dem {
                 || token.is(lexer::TokenType::LREQ)
                 || token.is(lexer::TokenType::AND)
                 || token.is(lexer::TokenType::OR)
-                || token.is(lexer::TokenType::SM);
+                || token.is(lexer::TokenType::SM)
+                || token.is(lexer::TokenType::PERIOD);
 
             bool smallerOrEqual = isBinaryOperator ? mOperatorPrecedence.at(token.type()) >= minPrecedence : false;
 
@@ -163,6 +167,7 @@ namespace dem {
 
                 return expression;
             } else if(accept(tokens, lexer::TokenType::BRACKET_OPEN)) {
+                // array initializer
                 std::vector<Expression*> values;
 
                 if(!tokens.front().is(lexer::TokenType::BRACKET_CLOSE)) {
@@ -174,6 +179,10 @@ namespace dem {
                 expect(tokens, lexer::TokenType::BRACKET_CLOSE);
 
                 return new Array(values);
+            } else if(tokens.front().is(lexer::TokenType::NEW)) {
+                // TODO: Create new instance of object
+            } else if(tokens.front().is(lexer::TokenType::FUNCTION)) {
+                return FunctionDefinitionFactory::produce(tokens);
             } else if(tokens.front().is(lexer::TokenType::IDENTIFIER)) {
                 Expression *expression = nullptr;
 
@@ -244,6 +253,8 @@ namespace dem {
                     return new AndCondition(lhs, rhs);
                 case lexer::TokenType::OR:
                     return new OrCondition(lhs, rhs);
+                case lexer::TokenType::PERIOD:
+                    return new PropertyAccessExpression(lhs, rhs);
             }
         }
     }

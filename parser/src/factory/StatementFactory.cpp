@@ -18,7 +18,7 @@
 #include "symbol/If.h"
 #include "symbol/While.h"
 #include "symbol/For.h"
-#include "symbol/FunctionDefinition.h"
+#include "symbol/expression/FunctionDefinition.h"
 #include "symbol/CompoundStatement.h"
 
 namespace dem {

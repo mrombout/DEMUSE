@@ -33,6 +33,9 @@ namespace dem {
             virtual bool visitEnter(parser::ModuloExpression &moduloExpression) override;
             virtual bool visitLeave(parser::ModuloExpression &moduloExpression) override;
 
+            virtual bool visitEnter(parser::ExponentExpression &exponentExpression) override;
+            virtual bool visitLeave(parser::ExponentExpression &exponentExpression) override;
+
             virtual bool visitEnter(parser::EqualCondition &equalCondition) override;
             virtual bool visitLeave(parser::EqualCondition &equalCondition) override;
 
@@ -63,11 +66,15 @@ namespace dem {
             virtual bool visitEnter(parser::OrCondition &orCondition) override;
             virtual bool visitLeave(parser::OrCondition &orCondition) override;
 
+            virtual bool visitEnter(parser::PropertyAccessExpression &propertyAccessExpression) override;
+            virtual bool visitLeave(parser::PropertyAccessExpression &propertyAccessExpression) override;
+
             virtual bool visitEnter(parser::Array &array) override;
             virtual bool visit(parser::Identifier &identifier) override;
             virtual bool visit(parser::Number &number) override;
             virtual bool visit(parser::Bool &boolSymbol) override;
             virtual bool visit(parser::Text &text) override;
+            virtual bool visitEnter(parser::FunctionDefinition &functionDefinition) override;
 
             virtual bool visit(parser::FunctionCall &functionCall) override;
             virtual bool visitLeave(parser::ArrayAccessExpression &arrayAccessExpression);
@@ -77,10 +84,6 @@ namespace dem {
 
             std::stack<Value*> mStack;
             Scope *mScope;
-        public:
-            virtual bool visitEnter(parser::ExponentExpression &exponentExpression) override;
-
-            virtual bool visitLeave(parser::ExponentExpression &exponentExpression) override;
         };
     }
 }

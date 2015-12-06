@@ -3,8 +3,8 @@
 #include "MidiCompiler.h"
 #include "symbol/VariableDeclaration.h"
 #include "GlobalScope.h"
-#include "function/UserFunction.h"
 #include "value/NullValue.h"
+#include "value/FunctionValue.h"
 
 namespace dem {
     namespace compiler {
@@ -82,7 +82,7 @@ namespace dem {
         bool MidiCompiler::visitEnter(parser::FunctionDefinition &functionDefinition) {
             std::cout << "ENTER - Function Definition" << std::endl;
 
-            mScopes.front()->declareFunction(new UserFunction(*this, functionDefinition));
+            mScopes.front()->declareVariable(functionDefinition.identifier(), new FunctionValue(*this, functionDefinition.parameterList(), functionDefinition.block()));
 
             return true;
         }
@@ -92,7 +92,7 @@ namespace dem {
 
             mEvaluator.evaluate(mScopes.front(), assignmentExpression);
 
-            return true;
+            return false;
         }
 
         bool MidiCompiler::visitEnter(parser::If &ifSymbol) {

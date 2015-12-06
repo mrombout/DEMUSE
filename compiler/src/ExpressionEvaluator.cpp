@@ -6,6 +6,8 @@
 #include "value/TextValue.h"
 #include "value/NullValue.h"
 #include "value/ArrayValue.h"
+#include "value/FunctionValue.h"
+#include "value/Variable.h"
 
 namespace dem {
     namespace compiler {
@@ -24,6 +26,7 @@ namespace dem {
             Value *result = mStack.top();
             mStack.pop();
 
+            std::cout << "Returning result " << result->asString() << std::endl;
             return result;
         }
 
@@ -399,6 +402,28 @@ namespace dem {
             return true;
         }
 
+        bool ExpressionEvaluator::visitEnter(parser::PropertyAccessExpression &propertyAccessExpression) {
+            std::cout << "ENTER - Evaluating PropertyAccess" << std::endl;
+
+            return true;
+        }
+
+        bool ExpressionEvaluator::visitLeave(parser::PropertyAccessExpression &propertyAccessExpression) {
+            std::cout << "LEAVE - Evaluating PropertyAccess" << std::endl;
+
+            Value *b = mStack.top();
+            mStack.pop();
+
+            Value *a = mStack.top();
+            mStack.pop();
+
+            static_cast<std::string>(b->asString());
+            Value *value = (*a)[b->asString()];
+            mStack.push(value);
+
+            return true;
+        }
+
         bool ExpressionEvaluator::visitEnter(parser::Array &array) {
             std::cout << "ENTER - Evaluating Array" << std::endl;
 
@@ -464,11 +489,21 @@ namespace dem {
             return true;
         }
 
+        bool ExpressionEvaluator::visitEnter(parser::FunctionDefinition &functionDefinition) {
+            std::cout << "ENTER - Evaluating FunctionDefinition" << std::endl;
+
+            FunctionValue *value = new FunctionValue(mCompiler, functionDefinition.parameterList(), functionDefinition.block());
+
+            std::cout << "PUSH - " << value->asString() << std::endl;
+            mStack.push(value);
+
+            return false;
+        }
 
         bool ExpressionEvaluator::visit(parser::FunctionCall &functionCall) {
             std::cout << "ENTER - Evaluating FunctionCall" << std::endl;
 
-            Function &function = mScope->function(&functionCall.identifier());
+            Variable &variable = mScope->variable(&functionCall.identifier());
             parser::ArgumentList *argumentList = functionCall.argumentList();
 
             // evaluate arguments
@@ -481,18 +516,20 @@ namespace dem {
 
             // map to function scope
             Scope functionScope(mScope);
-            function.mapScope(functionScope, arguments);
-            mCompiler.scopes().push_front(&functionScope); // TODO: Fix, proper API for adding and removing scopes
+            if(FunctionValue *functionValue = dynamic_cast<FunctionValue*>(variable.value())) {
+                functionValue->mapScope(functionScope, arguments);
+            }
+            mCompiler.scopes().push_front(&functionScope);
 
             // call function
-            Value *value = function.execute(functionScope);
+            Value *value = variable(functionScope);
             mCompiler.scopes().pop_front();
 
             if(!dynamic_cast<NullValue*>(value))
                 std::cout << "PUSH - " << value->asString() << std::endl;
             mStack.push(value);
 
-            return true;
+            return false;
         }
 
         bool ExpressionEvaluator::visitLeave(parser::ArrayAccessExpression &arrayAccessExpression) {

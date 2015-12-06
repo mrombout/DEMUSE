@@ -1,8 +1,13 @@
-#include "symbol/FunctionDefinition.h"
+#include "symbol/expression/FunctionDefinition.h"
 #include "Visitor.h"
 
 namespace dem {
     namespace parser {
+        FunctionDefinition::FunctionDefinition(ParameterList *parameterList, Block *block) :
+            FunctionDefinition(nullptr, parameterList, block) {
+
+        }
+
         FunctionDefinition::FunctionDefinition(Identifier *identifier, ParameterList *parameterList, Block *block) :
             mIdentifier(identifier),
             mParameterList(parameterList),
@@ -18,8 +23,8 @@ namespace dem {
             return visitor.visitLeave(*this);
         }
 
-        Identifier &FunctionDefinition::identifier() const {
-            return *mIdentifier;
+        Identifier *FunctionDefinition::identifier() const {
+            return mIdentifier;
         }
 
         ParameterList &FunctionDefinition::parameterList() const {

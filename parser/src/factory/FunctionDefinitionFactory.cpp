@@ -5,7 +5,7 @@
 #include "symbol/Identifier.h"
 #include "symbol/Block.h"
 #include "symbol/ParameterList.h"
-#include "symbol/FunctionDefinition.h"
+#include "symbol/expression/FunctionDefinition.h"
 
 namespace dem {
     namespace parser {
@@ -16,7 +16,9 @@ namespace dem {
             expect(tokens, lexer::TokenType::FUNCTION);
 
             // identifier
-            Identifier *identifier = IdentifierFactory::produce(tokens);
+            Identifier *identifier = nullptr;
+            if(tokens.front().is(lexer::TokenType::IDENTIFIER))
+                identifier = IdentifierFactory::produce(tokens);
 
             // "("
             expect(tokens, lexer::TokenType::OPEN);

@@ -5,7 +5,7 @@
 #include "factory/ProgramFactory.h"
 #include "factory/TrackFactory.h"
 #include "symbol/Program.h"
-#include "symbol/FunctionDefinition.h"
+#include "symbol/expression/FunctionDefinition.h"
 #include "symbol/VariableDeclaration.h"
 
 namespace dem {

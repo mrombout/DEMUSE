@@ -26,17 +26,17 @@ set(Compiler_SRCS
     inc/value/NumberValue.h
     src/value/NumberValue.cpp
 
+    inc/value/ObjectValue.h
+    src/value/ObjectValue.cpp
+
     inc/value/BooleanValue.h
     src/value/BooleanValue.cpp
 
+    inc/value/FunctionValue.h
+    src/value/FunctionValue.cpp
+
     inc/value/TextValue.h
     src/value/TextValue.cpp
-
-    inc/function/Function.h
-    src/function/Function.cpp
-
-    inc/function/UserFunction.h
-    src/function/UserFunction.cpp
 
     inc/Compiler.h
     src/Compiler.cpp

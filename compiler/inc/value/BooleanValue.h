@@ -28,6 +28,8 @@ namespace dem {
             virtual bool operator>(const Value &other);
             virtual bool operator>=(const Value &other);
             virtual Value *operator[](const int index);
+            virtual Value *operator[](const std::string &index);
+            virtual Value *operator()(Scope &scope);
 
         private:
             bool mValue;

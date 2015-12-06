@@ -1,6 +1,7 @@
 #ifndef DEMUSE_DEMUSEVISITOR_H
 #define DEMUSE_DEMUSEVISITOR_H
 
+#include <symbol/expression/PropertyAccessExpression.h>
 #include "symbol/expression/AssignmentExpression.h"
 #include "symbol/ArgumentList.h"
 #include "symbol/Assignment.h"
@@ -10,7 +11,7 @@
 #include "symbol/Continue.h"
 #include "symbol/For.h"
 #include "symbol/FunctionCall.h"
-#include "symbol/FunctionDefinition.h"
+#include "symbol/expression/FunctionDefinition.h"
 #include "symbol/Identifier.h"
 #include "symbol/If.h"
 #include "symbol/Number.h"
@@ -160,6 +161,9 @@ namespace dem {
 
             virtual bool visitEnter(parser::OrCondition &orCondition);
             virtual bool visitLeave(parser::OrCondition &orCondition);
+
+            virtual bool visitEnter(parser::PropertyAccessExpression &propertyAccessExpression);
+            virtual bool visitLeave(parser::PropertyAccessExpression &propertyAccessExpression1);
 
             virtual bool visitEnter(parser::SmallerThanCondition &smallerThanCondition);
             virtual bool visitLeave(parser::SmallerThanCondition &smallerThanCondition);

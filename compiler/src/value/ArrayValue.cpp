@@ -1,4 +1,5 @@
 #include <sstream>
+#include <exception/RuntimeException.h>
 #include "value/ArrayValue.h"
 
 namespace dem {
@@ -80,6 +81,14 @@ namespace dem {
 
         Value *ArrayValue::operator[](const int index) {
             return mValues.at(index);
+        }
+
+        Value *ArrayValue::operator[](const std::string &index) {
+            throw "Index must be Number."; // TODO: Throw proper error
+        }
+
+        Value *ArrayValue::operator()(Scope &scope) {
+            throw "Can not call array.";
         }
     }
 }

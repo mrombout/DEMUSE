@@ -1,19 +1,20 @@
 #ifndef DEMUSE_FUNCTIONDEFINITION_H
 #define DEMUSE_FUNCTIONDEFINITION_H
 
-#include "CompoundStatement.h"
-#include "ParameterList.h"
-#include "Block.h"
+#include "symbol/CompoundStatement.h"
+#include "symbol/ParameterList.h"
+#include "symbol/Block.h"
 
 namespace dem {
     namespace parser {
-        class FunctionDefinition : public CompoundStatement {
+        class FunctionDefinition : public Expression {
         public:
+            FunctionDefinition(ParameterList *parameterList, Block *block);
             FunctionDefinition(Identifier *identifier, ParameterList *parameterList, Block *block);
 
             virtual bool accept(Visitor &visitor);
 
-            Identifier &identifier() const;
+            Identifier *identifier() const;
             ParameterList &parameterList() const;
             Block &block() const;
 

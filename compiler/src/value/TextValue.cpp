@@ -73,5 +73,13 @@ namespace dem {
         Value *TextValue::operator[](const int index) {
             return new TextValue(std::to_string(mValue.at(index)));
         }
+
+        Value *TextValue::operator[](const std::string &index) {
+            throw "Can not access Text that way";
+        }
+
+        Value *TextValue::operator()(Scope &scope) {
+            throw "Can not call text.";
+        }
     }
 }
