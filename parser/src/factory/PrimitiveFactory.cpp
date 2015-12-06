@@ -27,7 +27,7 @@ namespace dem {
                 primitive = new Bool(content == "true");
             } else if(tokens.front().is(lexer::TokenType::TEXT)) {
                 tokens.pop_front();
-                primitive = new Text(content);
+                primitive = new Text(content.substr(1, content.length() - 2));
             } else if(tokens.front().is(lexer::TokenType::NUMBER)) {
                 tokens.pop_front();
                 primitive = new Number(std::stod(content));
