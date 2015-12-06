@@ -146,6 +146,8 @@ namespace dem {
             StyleSetForeground(demSTC_DEMUSE_VAR,         wxColour(0, 0, 128));
             StyleSetForeground(demSTC_DEMUSE_TERMINATOR,  wxColour(0, 0, 0));
             StyleSetForeground(demSTC_DEMUSE_IDENTIFIER,  wxColour(0, 0, 0));
+            StyleSetForeground(demSTC_DEMUSE_UNKNOWN,     wxColour(255, 0, 0));
+            StyleSetBackground(demSTC_DEMUSE_UNKNOWN,     wxColour(128, 0, 0));
 
             StyleSetBold(demSTC_DEMUSE_BOOL, true);
             StyleSetBold(demSTC_DEMUSE_KEYWORD, true);
@@ -213,18 +215,16 @@ namespace dem {
                 // unknown tokens are not styled, but displayed using an indicator
                 if(token.type() == lexer::TokenType::UNKNOWN) {
                     IndicatorFillRange(token.startIndex(), token.content().size());
-                    continue;
                 }
 
                 // style token
                 int style = mTokenTypeStyles[token.type()];
                 int length = token.content().length() + 1;
 
-                std::cout << "Styling " << token.type() << "(" << style << ") from " << GetEndStyled() << " to " << length << std::endl;
+                std::cout << "Styling " << token.type() << "(" << style << ") from " << token.startIndex() << " to " << token.startIndex() + length << std::endl;
 
                 StartStyling(token.startIndex(), 0x1f);
                 SetStyling(length, style);
-
             }
         }
 

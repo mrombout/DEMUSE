@@ -64,7 +64,7 @@ namespace dem {
 
             createToolBar();
 
-            createEditor("E:\\Programming\\CPP\\DEMUSE\\compiler\\res\\test.muse");
+            createEditor("E:\\Programming\\CPP\\DEMUSE\\compiler\\res\\arithmetic.muse");
         }
 
         MainFrame::~MainFrame() {

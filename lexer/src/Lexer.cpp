@@ -61,12 +61,9 @@ namespace dem {
 
                 // collect unmatched character
                 if(!matched && skippedWhitespace == 0) {
-                    if(!tokens.empty() && tokens.back().type() == dem::lexer::TokenType::UNKNOWN) {
-                        Token &backToken = tokens.back();
-                        backToken.setContent(backToken.content() + std::string(1, *begin));
-                    } else {
-                        tokens.push_back(Token(dem::lexer::TokenType::UNKNOWN, std::string(1, *begin), tokenPosition));
-                    }
+                    // add new unknown token
+                    tokens.push_back(Token(dem::lexer::TokenType::UNKNOWN, std::string(1, *begin), tokenPosition));
+                    tokenPosition.index += 1;
                     ++begin;
                 }
             }

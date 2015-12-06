@@ -27,6 +27,7 @@
 #define demSTC_DEMUSE_VAR 17
 #define demSTC_DEMUSE_TERMINATOR 18
 #define demSTC_DEMUSE_IDENTIFIER 19
+#define demSTC_DEMUSE_UNKNOWN 20
 
 #define demSTC_INDIC_UNKNOWN 8
 #define demSTC_INDIC_BRACE 9

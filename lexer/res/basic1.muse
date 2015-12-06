@@ -1,9 +1,9 @@
 <<C Cq C Cq>>;
 
-var A = >C;
-var B = >C1;
-var C = >C1#;
-var D = >C#;
-var E = >C1#w;
-var F = >Cq;
-var G = print(>C);
+                  var A = >C;
+                  var B = >C1;
+                  var C = >C1#;
+                  var D = >C#;
+                  var E = >C1#w;
+                  var F = >Cq;
+                  var G = print(>C);
