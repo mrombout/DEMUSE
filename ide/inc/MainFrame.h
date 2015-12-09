@@ -69,6 +69,8 @@ namespace dem {
             wxProcess *mActiveProcess;
 
             wxDECLARE_EVENT_TABLE();
+
+            void createBottomTools();
         };
     }
 }

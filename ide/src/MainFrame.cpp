@@ -10,6 +10,7 @@
 #include <wx/preferences.h>
 #include <wx/process.h>
 #include <wx/stdstream.h>
+#include <wx/dataview.h>
 #include "preference/GeneralPage.h"
 #include "preference/EditorPage.h"
 #include "preference/ColorsPage.h"
@@ -54,21 +55,25 @@ namespace dem {
 
         MainFrame::MainFrame(const wxString &title, const wxPoint &pos, const wxSize &size) :
             wxFrame(nullptr, wxID_ANY, title, pos, size) {
+            mMgr.SetManagedWindow(this);
+
             auto tset = wxICON(icon);
             SetIcon(tset);
 
             createMenu();
-            createStatusBar();
-
-            createCenterNotebook();
-
             createToolBar();
 
+            createCenterNotebook();
             createEditor("E:\\Programming\\CPP\\DEMUSE\\compiler\\res\\arithmetic.muse");
+            createBottomTools();
+
+            createStatusBar();
+
+            mMgr.Update();
         }
 
         MainFrame::~MainFrame() {
-
+            mMgr.UnInit();
         }
 
         void MainFrame::createMenu() {
@@ -125,6 +130,7 @@ namespace dem {
                                                     wxAUI_NB_TAB_SPLIT |
                                                     wxAUI_NB_TAB_MOVE | wxAUI_NB_CLOSE_ON_ALL_TABS |
                                                     wxAUI_NB_MIDDLE_CLICK_CLOSE | wxNO_BORDER);
+            mMgr.AddPane(mNotebook, wxCENTER);
             //mNotebook->SetArtProvider(new MuseAuiTabArt);
             mMgr.GetArtProvider()->SetMetric(wxAUI_DOCKART_PANE_BORDER_SIZE, 0);
         }
@@ -151,6 +157,30 @@ namespace dem {
             }
         }
 
+        void MainFrame::createBottomTools() {
+            // error window
+            wxDataViewListCtrl *errorList = new wxDataViewListCtrl(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxDV_ROW_LINES | wxDV_HORIZ_RULES);
+            errorList->AppendIconTextColumn("");
+            errorList->AppendTextColumn("Line");
+            errorList->AppendTextColumn("Column");
+            errorList->AppendTextColumn("Description");
+            errorList->AppendTextColumn("File");
+
+            wxVector<wxVariant> data;
+            data.push_back(wxVariant(wxDataViewIconText("Warning", wxArtProvider::GetIcon(wxART_WARNING, wxART_OTHER, wxSize(16, 16)))));
+            data.push_back(wxVariant(1));
+            data.push_back(wxVariant(1));
+            data.push_back(wxVariant("Variable does not exist."));
+            data.push_back(wxVariant("arithmetic.muse"));
+            errorList->AppendItem(data);
+
+            mMgr.AddPane(errorList, wxAuiPaneInfo().Bottom().MinimizeButton(true));
+
+            // output window
+            wxTextCtrl *text3 = new wxTextCtrl(this, -1, _("Pane 2 - sample text"), wxDefaultPosition, wxSize(200, 150), wxNO_BORDER | wxTE_MULTILINE);
+            mMgr.AddPane(text3, wxBOTTOM, wxT("Pane Number Two"));
+        }
+
         void MainFrame::createToolBar() {
             wxToolBar *toolbar = new wxToolBar(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTB_DEFAULT_STYLE);
             toolbar->SetToolBitmapSize(wxSize(24, 24));
@@ -171,6 +201,8 @@ namespace dem {
             toolbar->AddTool(ID_Stop, wxT("Stop"), wxArtProvider::GetBitmap(museART_STOP));
 
             toolbar->Realize();
+
+            toolbar->EnableTool(ID_Stop, false);
 
             SetToolBar(toolbar);
         }
