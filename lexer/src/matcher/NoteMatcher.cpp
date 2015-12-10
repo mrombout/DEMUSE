@@ -3,8 +3,8 @@
 
 namespace dem {
     namespace lexer {
-        NoteMatcher::NoteMatcher(AccidentalMatcher *accidentalMatcher) :
-                RegexMatcher("(C|D|E|F|G|A|B|R)(?=" + accidentalMatcher->regex() + "|;)") {
+        NoteMatcher::NoteMatcher() :
+                RegexMatcher("C|D|E|F|G|A|B|R") {
 
         }
     }

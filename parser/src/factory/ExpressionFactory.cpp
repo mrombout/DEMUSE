@@ -1,8 +1,10 @@
-#include <exception/ParsingException.h>
+#include "exception/ParsingException.h"
 #include "factory/IdentifierFactory.h"
 #include "factory/ExpressionFactory.h"
 #include "factory/PrimitiveFactory.h"
 #include "factory/FunctionCallFactory.h"
+#include "factory/ArrayAccessFactory.h"
+#include "factory/FunctionDefinitionFactory.h"
 #include "symbol/expression/AdditionExpression.h"
 #include "symbol/expression/SubtractionExpression.h"
 #include "symbol/expression/MultiplicationExpression.h"
@@ -20,32 +22,36 @@
 #include "symbol/expression/StrictNotEqualCondition.h"
 #include "symbol/expression/AndCondition.h"
 #include "symbol/expression/OrCondition.h"
+#include "symbol/expression/ArrayAccessExpression.h"
+#include "symbol/expression/PropertyAccessExpression.h"
+#include "symbol/Array.h"
 #include "symbol/Identifier.h"
 #include "symbol/Primitive.h"
+#include "symbol/expression/FunctionDefinition.h"
 
 namespace dem {
     namespace parser {
         const std::map<lexer::TokenType, int> ExpressionFactory::mOperatorPrecedence = {
             // TODO: (), []  -- 1
-            { lexer::TokenType::PERIOD,     1 },
+            { lexer::TokenType::PERIOD,     9 },
             // TODO: ! ~ - + ++ -- -- 2
-            { lexer::TokenType::EXP,        2 },
-            { lexer::TokenType::TIMES,      3 },
-            { lexer::TokenType::DIVIDE,     3 },
-            { lexer::TokenType::MOD,        3 },
-            { lexer::TokenType::PLUS,       4 },
-            { lexer::TokenType::MINUS,      4 },
-            { lexer::TokenType::SM,         6 },
-            { lexer::TokenType::SMEQ,       6 },
-            { lexer::TokenType::LR,         6 },
-            { lexer::TokenType::LREQ,       6 },
-            { lexer::TokenType::EQ,         7 },
-            { lexer::TokenType::TEQ,        7 },
-            { lexer::TokenType::NEQ,        7 },
-            { lexer::TokenType::TNEQ,       7 },
-            { lexer::TokenType::AND,        11 },
-            { lexer::TokenType::OR,         12 },
-            { lexer::TokenType::ASSIGNMENT, 14 },
+            { lexer::TokenType::EXP,        8 },
+            { lexer::TokenType::TIMES,      7 },
+            { lexer::TokenType::DIVIDE,     7 },
+            { lexer::TokenType::MOD,        7 },
+            { lexer::TokenType::PLUS,       6 },
+            { lexer::TokenType::MINUS,      6 },
+            { lexer::TokenType::SM,         5 },
+            { lexer::TokenType::SMEQ,       5 },
+            { lexer::TokenType::LR,         5 },
+            { lexer::TokenType::LREQ,       5 },
+            { lexer::TokenType::EQ,         4 },
+            { lexer::TokenType::TEQ,        4 },
+            { lexer::TokenType::NEQ,        4 },
+            { lexer::TokenType::TNEQ,       4 },
+            { lexer::TokenType::AND,        3 },
+            { lexer::TokenType::OR,         2 },
+            { lexer::TokenType::ASSIGNMENT, 1 },
             // TODO: += -= *= /= %= &= |= ^= -- 14
             // TODO: , -- 15
         };
@@ -98,7 +104,7 @@ namespace dem {
             // multiply_op       = "*" | "/" ;
             // unary_operator    = "-" | "+" ;
 
-            return processExpression(tokens, 15);
+            return processExpression(tokens, 1);
         }
 
         Expression *ExpressionFactory::processExpression(std::deque<lexer::Token> &tokens, int minPrecedence) {
@@ -145,10 +151,10 @@ namespace dem {
                 || token.is(lexer::TokenType::LREQ)
                 || token.is(lexer::TokenType::AND)
                 || token.is(lexer::TokenType::OR)
-                || token.is(lexer::TokenType::SM);
-            // TODO: Modulo
+                || token.is(lexer::TokenType::SM)
+                || token.is(lexer::TokenType::PERIOD);
 
-            bool smallerOrEqual = isBinaryOperator ? mOperatorPrecedence.at(token.type()) <= minPrecedence : false;
+            bool smallerOrEqual = isBinaryOperator ? mOperatorPrecedence.at(token.type()) >= minPrecedence : false;
 
             return isBinaryOperator && smallerOrEqual;
         }
@@ -156,16 +162,41 @@ namespace dem {
         Expression *ExpressionFactory::producePrimary(std::deque<lexer::Token> &tokens) {
             if(accept(tokens, lexer::TokenType::OPEN)) {
                 // nested expression
-                Expression *expression = processExpression(tokens, 15);
+                Expression *expression = processExpression(tokens, 1);
                 expect(tokens, lexer::TokenType::CLOSE);
 
                 return expression;
+            } else if(accept(tokens, lexer::TokenType::BRACKET_OPEN)) {
+                // array initializer
+                std::vector<Expression*> values;
+
+                if(!tokens.front().is(lexer::TokenType::BRACKET_CLOSE)) {
+                    do {
+                        Expression *expression = processExpression(tokens, 1);
+                        values.push_back(expression);
+                    } while(accept(tokens, lexer::TokenType::COMMA));
+                }
+                expect(tokens, lexer::TokenType::BRACKET_CLOSE);
+
+                return new Array(values);
+            } else if(tokens.front().is(lexer::TokenType::NEW)) {
+                // TODO: Create new instance of object
+            } else if(tokens.front().is(lexer::TokenType::FUNCTION)) {
+                return FunctionDefinitionFactory::produce(tokens);
             } else if(tokens.front().is(lexer::TokenType::IDENTIFIER)) {
+                Expression *expression = nullptr;
+
                 // identifier | call
-                Expression *expression = FunctionCallFactory::produce(tokens);
-                if(expression)
-                    return expression;
-                return IdentifierFactory::produce(tokens);
+                expression = FunctionCallFactory::produce(tokens);
+                if(!expression)
+                    expression = IdentifierFactory::produce(tokens);
+
+                // array access?
+                if(tokens.front().is(lexer::TokenType::BRACKET_OPEN)) {
+                    return ArrayAccessFactory::produce(tokens, expression);
+                }
+
+                return expression;
             } else if(tokens.front().is(lexer::TokenType::NUMBER)
                    || tokens.front().is(lexer::TokenType::TEXT)
                    || tokens.front().is(lexer::TokenType::BOOL)
@@ -175,7 +206,7 @@ namespace dem {
                 return PrimitiveFactory::produce(tokens);
             }
 
-            throw ParsingException(); // TODO: Add proper message
+            throw ParsingException(tokens.front(), "Unrecognized primary '" + tokens.front().content() + "' in expression.");
         }
 
         Expression *ExpressionFactory::produceExpression(lexer::Token token, Expression *lhs, Expression *rhs) {
@@ -193,10 +224,14 @@ namespace dem {
                 case lexer::TokenType::MOD:
                     return new ModuloExpression(lhs, rhs);
                 case lexer::TokenType::ASSIGNMENT: {
-                    Identifier *identifier = dynamic_cast<Identifier*>(lhs);
-                    if(identifier == nullptr)
-                        throw ParsingException(); // TODO: Add clear error message
-                    return new AssignmentExpression(identifier, rhs);
+                    Expression *lvalue = nullptr;
+                    lvalue = dynamic_cast<Identifier*>(lhs);
+                    if(lvalue == nullptr)
+                        lvalue = dynamic_cast<ArrayAccessExpression*>(lhs);
+                    if(lvalue == nullptr)
+                        throw ParsingException(token, "Invalid lvalue for assignment.");
+                    // TODO: Make proper lvalue class for identifier and array access
+                    return new AssignmentExpression(lvalue, rhs);
                 }
                 case lexer::TokenType::SM:
                     return new SmallerThanCondition(lhs, rhs);
@@ -218,6 +253,8 @@ namespace dem {
                     return new AndCondition(lhs, rhs);
                 case lexer::TokenType::OR:
                     return new OrCondition(lhs, rhs);
+                case lexer::TokenType::PERIOD:
+                    return new PropertyAccessExpression(lhs, rhs);
             }
         }
     }

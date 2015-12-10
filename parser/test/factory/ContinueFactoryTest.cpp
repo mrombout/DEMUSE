@@ -7,13 +7,14 @@ protected:
 
     }
 
+    dem::lexer::TokenPosition tokenPosition;
     dem::parser::ContinueFactory factory;
 };
 
 TEST_F(ContinueFactoryTest, SingleBreak) {
     // arrange
     std::deque<dem::lexer::Token> tokens {
-        dem::lexer::Token(dem::lexer::TokenType::CONTINUE, "continue", 0, 1, 1),
+        dem::lexer::Token(dem::lexer::TokenType::CONTINUE, "continue", tokenPosition),
     };
 
     // act / assert

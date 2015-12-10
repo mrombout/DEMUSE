@@ -2,20 +2,17 @@
 #include "matcher/StringMatcher.h"
 #include "matcher/CharMatcher.h"
 #include "matcher/PlayMatcher.h"
-#include "matcher/NoteMatcher.h"
-#include "matcher/AccidentalMatcher.h"
+#include "matcher/NotePrimitiveMatcher.h"
 
 namespace dem {
     namespace lexer {
         MuseLexer::MuseLexer() {
-            AccidentalMatcher *accidentalMatcher = new AccidentalMatcher();
-            NoteMatcher *noteMatcher = new NoteMatcher(accidentalMatcher);
-
+            addDefinition(new TokenDefinition(TokenType::SINGLECOMMENT, new RegexMatcher("\\/\\/.*"),       true));
+            addDefinition(new TokenDefinition(TokenType::MULTICOMMENT,  new RegexMatcher("\\/\\*.*\\*\\/"), true));
+            addDefinition(new TokenDefinition(TokenType::NOTE,          new NotePrimitiveMatcher(), true));
             addDefinition(new TokenDefinition(TokenType::BOOL,          new RegexMatcher("(true|false)")));
             addDefinition(new TokenDefinition(TokenType::TEXT,          new RegexMatcher("\\\"(?:[^\\\"\\\\]|\\\\.)*\\\"")));
             addDefinition(new TokenDefinition(TokenType::NUMBER,        new RegexMatcher("\\d+(?:\\.\\d+)?")));
-            addDefinition(new TokenDefinition(TokenType::NOTE,          noteMatcher));
-            addDefinition(new TokenDefinition(TokenType::ACCIDENTAL,    accidentalMatcher));
             addDefinition(new TokenDefinition(TokenType::COMMA,         new CharMatcher(',')));
             addDefinition(new TokenDefinition(TokenType::PERIOD,        new CharMatcher('.')));
             addDefinition(new TokenDefinition(TokenType::POSITIVE,      new RegexMatcher("\\+(?=\\d)")));
@@ -39,7 +36,7 @@ namespace dem {
             addDefinition(new TokenDefinition(TokenType::AND,           new StringMatcher("&&")));
             addDefinition(new TokenDefinition(TokenType::OR,            new StringMatcher("||")));
             addDefinition(new TokenDefinition(TokenType::FOR,           new StringMatcher("for")));
-            addDefinition(new TokenDefinition(TokenType::IN,            new StringMatcher("in")));
+            addDefinition(new TokenDefinition(TokenType::IN_ARRAY,      new StringMatcher("in")));
             addDefinition(new TokenDefinition(TokenType::ELSE,          new StringMatcher("else")));
             addDefinition(new TokenDefinition(TokenType::NEW,           new StringMatcher("new")));
             addDefinition(new TokenDefinition(TokenType::IF,            new StringMatcher("if")));
@@ -47,7 +44,7 @@ namespace dem {
             addDefinition(new TokenDefinition(TokenType::CONTINUE,      new StringMatcher("continue")));
             addDefinition(new TokenDefinition(TokenType::BREAK,         new StringMatcher("break")));
             addDefinition(new TokenDefinition(TokenType::RETURN,        new StringMatcher("return")));
-            addDefinition(new TokenDefinition(TokenType::TRACK,        new StringMatcher("track")));
+            addDefinition(new TokenDefinition(TokenType::TRACK,         new StringMatcher("track")));
             addDefinition(new TokenDefinition(TokenType::START,         new CharMatcher('{')));
             addDefinition(new TokenDefinition(TokenType::END,           new CharMatcher('}')));
             addDefinition(new TokenDefinition(TokenType::OPEN,          new CharMatcher('(')));

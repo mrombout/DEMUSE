@@ -3,10 +3,11 @@
 
 #include <vector>
 #include "symbol/Symbol.h"
+#include "Statement.h"
 
 namespace dem {
     namespace parser {
-        class Statement;
+        class Track;
     }
 }
 

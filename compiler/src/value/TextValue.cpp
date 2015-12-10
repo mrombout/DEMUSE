@@ -1,11 +1,12 @@
 #include "value/Value.h"
 #include "value/TextValue.h"
+#include "value/NumberValue.h"
 
 namespace dem {
     namespace compiler {
         TextValue::TextValue(std::string value) :
             mValue(value) {
-
+            mProperties["length"] = new NumberValue(value.length());
         }
 
         Value *TextValue::add(Value *b) {
@@ -68,6 +69,14 @@ namespace dem {
 
         bool TextValue::operator>=(const Value &other) {
             return mValue >= other.asString();
+        }
+
+        Value *TextValue::operator[](const int index) {
+            return new TextValue(std::to_string(mValue.at(index)));
+        }
+
+        Value *TextValue::operator()(Scope &scope) {
+            throw "Can not call text.";
         }
     }
 }

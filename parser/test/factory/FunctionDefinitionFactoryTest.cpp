@@ -10,18 +10,19 @@ protected:
 
     }
 
+    dem::lexer::TokenPosition tokenPosition;
     dem::parser::FunctionDefinitionFactory factory;
 };
 
 TEST_F(FunctionDefinitionTest, EmptyParameterList) {
     // arrange
     std::deque<dem::lexer::Token> tokens {
-        dem::lexer::Token(dem::lexer::TokenType::FUNCTION,   "function", 0, 0, 0),
-        dem::lexer::Token(dem::lexer::TokenType::IDENTIFIER, "foo", 0, 0, 0),
-        dem::lexer::Token(dem::lexer::TokenType::OPEN,       "(",  0, 0, 0),
-        dem::lexer::Token(dem::lexer::TokenType::CLOSE,      ")",  0, 0, 0),
-        dem::lexer::Token(dem::lexer::TokenType::START,      "{",  0, 0, 0),
-        dem::lexer::Token(dem::lexer::TokenType::END,        "}",  0, 0, 0),
+        dem::lexer::Token(dem::lexer::TokenType::FUNCTION,   "function", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::IDENTIFIER, "foo", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::OPEN,       "(", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::CLOSE,      ")", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::START,      "{", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::END,        "}", tokenPosition),
     };
 
     // act
@@ -37,13 +38,13 @@ TEST_F(FunctionDefinitionTest, EmptyParameterList) {
 TEST_F(FunctionDefinitionTest, SingleParameterList) {
     // arrange
     std::deque<dem::lexer::Token> tokens {
-        dem::lexer::Token(dem::lexer::TokenType::FUNCTION,   "function", 0, 0, 0),
-        dem::lexer::Token(dem::lexer::TokenType::IDENTIFIER, "foo", 0, 0, 0),
-        dem::lexer::Token(dem::lexer::TokenType::OPEN,       "(",   0, 0, 0),
-        dem::lexer::Token(dem::lexer::TokenType::IDENTIFIER, "bar",   0, 0, 0),
-        dem::lexer::Token(dem::lexer::TokenType::CLOSE,      ")",   0, 0, 0),
-        dem::lexer::Token(dem::lexer::TokenType::START,      "{",   0, 0, 0),
-        dem::lexer::Token(dem::lexer::TokenType::END,        "}",   0, 0, 0),
+        dem::lexer::Token(dem::lexer::TokenType::FUNCTION,   "function", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::IDENTIFIER, "foo", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::OPEN,       "(", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::IDENTIFIER, "bar", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::CLOSE,      ")", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::START,      "{", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::END,        "}", tokenPosition),
     };
 
     // act
@@ -59,17 +60,17 @@ TEST_F(FunctionDefinitionTest, SingleParameterList) {
 TEST_F(FunctionDefinitionTest, ThreeParameterList) {
     // arrange
     std::deque<dem::lexer::Token> tokens {
-        dem::lexer::Token(dem::lexer::TokenType::FUNCTION,   "function", 0, 0, 0),
-        dem::lexer::Token(dem::lexer::TokenType::IDENTIFIER, "foo",  0, 0, 0),
-        dem::lexer::Token(dem::lexer::TokenType::OPEN,       "(",    0, 0, 0),
-        dem::lexer::Token(dem::lexer::TokenType::IDENTIFIER, "bar1", 0, 0, 0),
-        dem::lexer::Token(dem::lexer::TokenType::COMMA,      ",",    0, 0, 0),
-        dem::lexer::Token(dem::lexer::TokenType::IDENTIFIER, "bar2", 0, 0, 0),
-        dem::lexer::Token(dem::lexer::TokenType::COMMA,      ",",    0, 0, 0),
-        dem::lexer::Token(dem::lexer::TokenType::IDENTIFIER, "bar3", 0, 0, 0),
-        dem::lexer::Token(dem::lexer::TokenType::CLOSE,      ")",    0, 0, 0),
-        dem::lexer::Token(dem::lexer::TokenType::START,      "{",    0, 0, 0),
-        dem::lexer::Token(dem::lexer::TokenType::END,        "}",    0, 0, 0),
+        dem::lexer::Token(dem::lexer::TokenType::FUNCTION,   "function", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::IDENTIFIER, "foo", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::OPEN,       "(", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::IDENTIFIER, "bar1", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::COMMA,      ",", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::IDENTIFIER, "bar2", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::COMMA,      ",", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::IDENTIFIER, "bar3", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::CLOSE,      ")", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::START,      "{", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::END,        "}", tokenPosition),
     };
 
     // act

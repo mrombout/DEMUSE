@@ -1,8 +1,9 @@
 #include <iostream>
-#include "symbol/FunctionDefinition.h"
+#include "exception/RuntimeException.h"
+#include "symbol/expression/FunctionDefinition.h"
 #include "Scope.h"
 #include "value/NullValue.h"
-#include "function/Function.h"
+#include "value/Variable.h"
 
 namespace dem {
     namespace compiler {
@@ -21,37 +22,15 @@ namespace dem {
             mVariables[identifier->name()] = new Variable(identifier, value);
         }
 
-        void Scope::declareFunction(Function *function) {
-            std::cout << "DECLARE - Function " << function->identifier().name() << std::endl;
-
-            mFunctions[function->identifier().name()] = function;
-        }
-
         Variable &Scope::variable(parser::Identifier *identifier) const {
             try {
                 Variable *variable = mVariables.at(identifier->name());
 
                 return *variable;
             } catch(std::out_of_range &e) {
-                if(mParent) {
+                if(mParent)
                     return mParent->variable(identifier);
-                } else {
-                    throw "Variable does not exist"; // TODO: Proper error
-                }
-            }
-        }
-
-        Function &Scope::function(parser::Identifier *identifier) const {
-            try {
-                Function *function = mFunctions.at(identifier->name());
-
-                return *function;
-            } catch(std::out_of_range &e) {
-                if(mParent) {
-                    return mParent->function(identifier);
-                } else {
-                    throw "Function does not exist"; // TODO: Proper error
-                }
+                throw RuntimeException(*identifier, "Variable '" + identifier->name() + "' does not exist.");
             }
         }
     }

@@ -1,5 +1,4 @@
 #include "symbol/Program.h"
-#include "symbol/Statement.h"
 #include "Visitor.h"
 
 namespace dem {

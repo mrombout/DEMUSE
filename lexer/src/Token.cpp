@@ -3,12 +3,10 @@
 
 namespace dem {
     namespace lexer {
-        Token::Token(const TokenType type, std::string content, int startIndex, int line, int column) :
+        Token::Token(const TokenType type, std::string content, TokenPosition tokenPosition) :
             mType(type),
             mContent(content),
-            mStartIndex(startIndex),
-            mLine(line),
-            mColumn(column) {
+            mTokenPosition(tokenPosition) {
 
         }
 
@@ -25,15 +23,15 @@ namespace dem {
         }
 
         const int Token::startIndex() const {
-            return mStartIndex;
+            return mTokenPosition.index;
         }
 
         const int Token::line() const {
-            return mLine;
+            return mTokenPosition.line;
         }
 
         const int Token::column() const {
-            return mColumn;
+            return mTokenPosition.column;
         }
 
         const bool Token::is(TokenType tokenType) const {

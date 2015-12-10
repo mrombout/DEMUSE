@@ -3,10 +3,11 @@
 
 #include <string>
 #include "Value.h"
+#include "ObjectValue.h"
 
 namespace dem {
     namespace compiler {
-        class TextValue : public Value {
+        class TextValue : public ObjectValue {
         public:
             TextValue(std::string value);
 
@@ -27,6 +28,8 @@ namespace dem {
             virtual bool operator<=(const Value &other);
             virtual bool operator>(const Value &other);
             virtual bool operator>=(const Value &other);
+            virtual Value *operator[](const int index);
+            virtual Value *operator()(Scope &scope);
 
         private:
             std::string mValue;

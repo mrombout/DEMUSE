@@ -1,23 +1,9 @@
-var X = 5;
+<<C Cq C Cq>>;
 
-function MyFunction() {
-    return Reverse(X);
-}
-
-<<C>>
-
-for(var i = 0; i < 5; ++i) {
-    if(i > 2)
-        break;
-    else
-        i++;
-    continue;
-}
-
-while(true && false || true) {
-    Print(X);
-}
-
-foreach(var Sheep in Herd) {
-    Print("Beh!");
-}
+                  var A = >C;
+                  var B = >C1;
+                  var C = >C1#;
+                  var D = >C#;
+                  var E = >C1#w;
+                  var F = >Cq;
+                  var G = print(>C);

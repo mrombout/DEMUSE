@@ -8,6 +8,7 @@ protected:
 
     }
 
+    dem::lexer::TokenPosition tokenPosition;
     std::vector<dem::lexer::Token> tokens;
     dem::lexer::NullMatcher matcher;
 };
@@ -20,7 +21,7 @@ TEST_F(NullMatcherTest, MatchReturnsEmptyString) {
     auto end = str.end();
 
     // act
-    std::string result = matcher.match(begin, end, tokens);
+    std::string result = matcher.match(begin, end, tokens, tokenPosition);
 
     // assert
     ASSERT_EQ("", result);
@@ -33,7 +34,7 @@ TEST_F(NullMatcherTest, MatchReturnsEmptyStringWithEndIterator) {
     auto end = str.end();
 
     // act
-    std::string result = matcher.match(end, end, tokens);
+    std::string result = matcher.match(end, end, tokens, tokenPosition);
 
     // assert
     ASSERT_EQ("", result);

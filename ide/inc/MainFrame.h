@@ -6,6 +6,7 @@
 #include <wx/event.h>
 #include <wx/aui/aui.h>
 #include <wx/dirctrl.h>
+#include <wx/slider.h>
 #include <wx/stc/stc.h>
 #include "MuseStyledTextEditor.h"
 
@@ -24,7 +25,7 @@ namespace dem {
 
         private:
             void createMenu();
-            void createStatuBar();
+            void createStatusBar();
             void createCenterNotebook();
             void createEditor(const wxString &filePath = wxT(""));
             void createToolBar();
@@ -46,6 +47,7 @@ namespace dem {
             void onEditCopy(wxCommandEvent &event);
             void onEditPaste(wxCommandEvent &event);
             void onEditSelectAll(wxCommandEvent &event);
+            void onEditPreferences(wxCommandEvent &event);
 
             void onRunRun(wxCommandEvent &event);
             void onRunStop(wxCommandEvent &event);
@@ -61,6 +63,10 @@ namespace dem {
 
             wxAuiNotebook *mNotebook;
             MuseStyledTextEditor *mEditor;
+
+            wxSlider *mZoomSlider;
+
+            wxProcess *mActiveProcess;
 
             wxDECLARE_EVENT_TABLE();
         };

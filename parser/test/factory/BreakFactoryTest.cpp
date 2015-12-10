@@ -7,13 +7,14 @@ protected:
 
     }
 
+    dem::lexer::TokenPosition tokenPosition;
     dem::parser::BreakFactory factory;
 };
 
 TEST_F(BreakFactoryTest, SingleBreak) {
     // arrange
     std::deque<dem::lexer::Token> tokens {
-        dem::lexer::Token(dem::lexer::TokenType::BREAK, "break", 0, 1, 1),
+        dem::lexer::Token(dem::lexer::TokenType::BREAK, "break", tokenPosition),
     };
 
     // act / assert

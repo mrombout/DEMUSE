@@ -66,5 +66,17 @@ namespace dem {
         bool BooleanValue::operator>=(const Value &other) {
             return mValue >= other.asBool();
         }
+
+        Value *BooleanValue::operator[](const int index) {
+            throw "Can not access boolean that way"; // TODO: Throw proper error
+        }
+
+        Value *BooleanValue::operator[](const std::string &index) {
+            throw "Can not access boolean that way"; // TODO: Throw proper error
+        }
+
+        Value *BooleanValue::operator()(Scope &scope) {
+            throw "Can not call boolean";
+        }
     }
 }

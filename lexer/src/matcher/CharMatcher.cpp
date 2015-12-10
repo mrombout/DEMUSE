@@ -7,7 +7,7 @@ namespace dem {
 
         }
 
-        std::string CharMatcher::match(std::string::iterator &begin, std::string::iterator &end, std::vector<Token> &tokens) const {
+        std::string CharMatcher::match(std::string::iterator &begin, std::string::iterator &end, std::vector<Token> &tokens, TokenPosition &tokenPosition) const {
             return (*begin) == mChar ? std::string(1, mChar) : "";
         }
     }

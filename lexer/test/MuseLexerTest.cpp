@@ -14,9 +14,11 @@ protected:
 TEST_F(MuseLexerTest, Bool_PlainTrue) {
     // arrange
     std::string script = "true";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::BOOL, result[0].type());
@@ -26,9 +28,11 @@ TEST_F(MuseLexerTest, Bool_PlainTrue) {
 TEST_F(MuseLexerTest, Bool_PlainFalse) {
     // arrange
     std::string script = "false";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::BOOL, result[0].type());
@@ -38,9 +42,11 @@ TEST_F(MuseLexerTest, Bool_PlainFalse) {
 TEST_F(MuseLexerTest, Text_Plain) {
     // arrange
     std::string script = "\"Lorum ipsum dolor sit amet\"";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::TEXT, result[0].type());
@@ -50,9 +56,11 @@ TEST_F(MuseLexerTest, Text_Plain) {
 TEST_F(MuseLexerTest, Text_PlainEscaped) {
     // arrange
     std::string script = "\"Lorum ipsum \\\"dolor sit amet\"";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::TEXT, result[0].type());
@@ -62,9 +70,11 @@ TEST_F(MuseLexerTest, Text_PlainEscaped) {
 TEST_F(MuseLexerTest, Text_PlainUnescaped) {
     // arrange
     std::string script = "\"Lorum ipsum \"dolor sit amet\"";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::TEXT, result[0].type());
@@ -76,9 +86,11 @@ TEST_F(MuseLexerTest, Text_PlainUnescaped) {
 TEST_F(MuseLexerTest, Number_Plain) {
     // arrange
     std::string script = "56";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::NUMBER, result[0].type());
@@ -88,9 +100,11 @@ TEST_F(MuseLexerTest, Number_Plain) {
 TEST_F(MuseLexerTest, Number_ZeroStart) {
     // arrange
     std::string script = "06";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::NUMBER, result[0].type());
@@ -100,9 +114,11 @@ TEST_F(MuseLexerTest, Number_ZeroStart) {
 TEST_F(MuseLexerTest, Number_PlainDecimal) {
     // arrange
     std::string script = "3.14";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::NUMBER, result[0].type());
@@ -111,22 +127,26 @@ TEST_F(MuseLexerTest, Number_PlainDecimal) {
 
 TEST_F(MuseLexerTest, Note_Plain) {
     // arrange
-    std::string script = "C;";
+    std::string script = ">C;";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::NOTE, result[0].type());
-    ASSERT_EQ(script.substr(0, 1), result[0].content());
+    ASSERT_EQ(script.substr(1, 1), result[0].content());
 }
 
 TEST_F(MuseLexerTest, Note_Identifier) {
     // arrange
     std::string script = "Cars";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::IDENTIFIER, result[0].type());
@@ -136,9 +156,11 @@ TEST_F(MuseLexerTest, Note_Identifier) {
 TEST_F(MuseLexerTest, Note_CaseSensitive) {
     // arrange
     std::string script = "c";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::IDENTIFIER, result[0].type());
@@ -147,24 +169,28 @@ TEST_F(MuseLexerTest, Note_CaseSensitive) {
 
 TEST_F(MuseLexerTest, Note_Accidental) {
     // arrange
-    std::string script = "Cb";
+    std::string script = ">Cb;";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::NOTE, result[0].type());
-    ASSERT_EQ(script.substr(0, 1), result[0].content());
+    ASSERT_EQ(script.substr(1, 1), result[0].content());
     ASSERT_EQ(dem::lexer::TokenType::ACCIDENTAL, result[1].type());
-    ASSERT_EQ(script.substr(1), result[1].content());
+    ASSERT_EQ(script.substr(2, 1), result[1].content());
 }
 
 TEST_F(MuseLexerTest, Comma_Plain) {
     // arrange
     std::string script = ",";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::COMMA, result[0].type());
@@ -174,9 +200,11 @@ TEST_F(MuseLexerTest, Comma_Plain) {
 TEST_F(MuseLexerTest, Period_Plain) {
     // arrange
     std::string script = ".";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::PERIOD, result[0].type());
@@ -186,9 +214,11 @@ TEST_F(MuseLexerTest, Period_Plain) {
 TEST_F(MuseLexerTest, Positive_Plain) {
     // arrange
     std::string script = "+1";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::POSITIVE, result[0].type());
@@ -198,9 +228,11 @@ TEST_F(MuseLexerTest, Positive_Plain) {
 TEST_F(MuseLexerTest, Negative_Plain) {
     // arrange
     std::string script = "-1";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::NEGATIVE, result[0].type());
@@ -210,9 +242,11 @@ TEST_F(MuseLexerTest, Negative_Plain) {
 TEST_F(MuseLexerTest, Plus_Plain) {
     // arrange
     std::string script = "+";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::PLUS, result[0].type());
@@ -222,9 +256,11 @@ TEST_F(MuseLexerTest, Plus_Plain) {
 TEST_F(MuseLexerTest, Plus_NoSpace) {
     // arrange
     std::string script = "+5";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_NE(dem::lexer::TokenType::PLUS, result[0].type());
@@ -234,9 +270,11 @@ TEST_F(MuseLexerTest, Plus_NoSpace) {
 TEST_F(MuseLexerTest, Minus_Plain) {
     // arrange
     std::string script = "-";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::MINUS, result[0].type());
@@ -246,9 +284,11 @@ TEST_F(MuseLexerTest, Minus_Plain) {
 TEST_F(MuseLexerTest, Minus_NoSpace) {
     // arrange
     std::string script = "-5";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_NE(dem::lexer::TokenType::MINUS, result[0].type());
@@ -258,9 +298,11 @@ TEST_F(MuseLexerTest, Minus_NoSpace) {
 TEST_F(MuseLexerTest, Times_Plain) {
     // arrange
     std::string script = "*";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::TIMES, result[0].type());
@@ -270,9 +312,11 @@ TEST_F(MuseLexerTest, Times_Plain) {
 TEST_F(MuseLexerTest, Times_NoSpace) {
     // arrange
     std::string script = "*5";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::TIMES, result[0].type());
@@ -282,9 +326,11 @@ TEST_F(MuseLexerTest, Times_NoSpace) {
 TEST_F(MuseLexerTest, Divide_Plain) {
     // arrange
     std::string script = "/";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::DIVIDE, result[0].type());
@@ -294,9 +340,11 @@ TEST_F(MuseLexerTest, Divide_Plain) {
 TEST_F(MuseLexerTest, Divide_NoSpace) {
     // arrange
     std::string script = "/5";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::DIVIDE, result[0].type());
@@ -306,9 +354,11 @@ TEST_F(MuseLexerTest, Divide_NoSpace) {
 TEST_F(MuseLexerTest, Mod_Plain) {
     // arrange
     std::string script = "%";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::MOD, result[0].type());
@@ -318,9 +368,11 @@ TEST_F(MuseLexerTest, Mod_Plain) {
 TEST_F(MuseLexerTest, Mod_NoSpace) {
     // arrange
     std::string script = "%5";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::MOD, result[0].type());
@@ -330,9 +382,11 @@ TEST_F(MuseLexerTest, Mod_NoSpace) {
 TEST_F(MuseLexerTest, Exp_Plain) {
     // arrange
     std::string script = "^";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::EXP, result[0].type());
@@ -343,9 +397,11 @@ TEST_F(MuseLexerTest, Exp_Plain) {
 TEST_F(MuseLexerTest, Exp_NoSpace) {
     // arrange
     std::string script = "^5";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::EXP, result[0].type());
@@ -355,9 +411,11 @@ TEST_F(MuseLexerTest, Exp_NoSpace) {
 TEST_F(MuseLexerTest, Eq_Plain) {
     // arrange
     std::string script = "==";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::EQ, result[0].type());
@@ -367,9 +425,11 @@ TEST_F(MuseLexerTest, Eq_Plain) {
 TEST_F(MuseLexerTest, Teq_Plain) {
     // arrange
     std::string script = "===";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::TEQ, result[0].type());
@@ -379,9 +439,11 @@ TEST_F(MuseLexerTest, Teq_Plain) {
 TEST_F(MuseLexerTest, Neq_Plain) {
     // arrange
     std::string script = "!=";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::NEQ, result[0].type());
@@ -391,9 +453,11 @@ TEST_F(MuseLexerTest, Neq_Plain) {
 TEST_F(MuseLexerTest, Tneq_Plain) {
     // arrange
     std::string script = "!==";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::TNEQ, result[0].type());
@@ -403,9 +467,11 @@ TEST_F(MuseLexerTest, Tneq_Plain) {
 TEST_F(MuseLexerTest, Smeq_Plain) {
     // arrange
     std::string script = "<=";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::SMEQ, result[0].type());
@@ -415,9 +481,11 @@ TEST_F(MuseLexerTest, Smeq_Plain) {
 TEST_F(MuseLexerTest, Lreq_Plain) {
     // arrange
     std::string script = ">=";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::LREQ, result[0].type());
@@ -427,9 +495,11 @@ TEST_F(MuseLexerTest, Lreq_Plain) {
 TEST_F(MuseLexerTest, Sm_Plain) {
     // arrange
     std::string script = "<";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::SM, result[0].type());
@@ -439,9 +509,11 @@ TEST_F(MuseLexerTest, Sm_Plain) {
 TEST_F(MuseLexerTest, Lr_Plain) {
     // arrange
     std::string script = ">";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::LR, result[0].type());
@@ -451,9 +523,11 @@ TEST_F(MuseLexerTest, Lr_Plain) {
 TEST_F(MuseLexerTest, Not_Plain) {
     // arrange
     std::string script = "!";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::NOT, result[0].type());
@@ -463,9 +537,11 @@ TEST_F(MuseLexerTest, Not_Plain) {
 TEST_F(MuseLexerTest, And_Plain) {
     // arrange
     std::string script = "&&";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::AND, result[0].type());
@@ -475,9 +551,11 @@ TEST_F(MuseLexerTest, And_Plain) {
 TEST_F(MuseLexerTest, Or_Plain) {
     // arrange
     std::string script = "||";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::OR, result[0].type());
@@ -487,9 +565,11 @@ TEST_F(MuseLexerTest, Or_Plain) {
 TEST_F(MuseLexerTest, For_Plain) {
     // arrange
     std::string script = "for";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::FOR, result[0].type());
@@ -499,9 +579,11 @@ TEST_F(MuseLexerTest, For_Plain) {
 TEST_F(MuseLexerTest, For_Empty) {
     // arrange
     std::string script = "for(;;) { }";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::FOR, result[0].type());
@@ -511,9 +593,11 @@ TEST_F(MuseLexerTest, For_Empty) {
 TEST_F(MuseLexerTest, For_WithStatements) {
     // arrange
     std::string script = "for(var i = 0; i < count; i++) { }";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::FOR, result[0].type());
@@ -523,21 +607,25 @@ TEST_F(MuseLexerTest, For_WithStatements) {
 TEST_F(MuseLexerTest, In_Plain) {
     // arrange
     std::string script = "in";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
-    ASSERT_EQ(dem::lexer::TokenType::IN, result[0].type());
+    ASSERT_EQ(dem::lexer::TokenType::IN_ARRAY, result[0].type());
     ASSERT_EQ(script, result[0].content());
 }
 
 TEST_F(MuseLexerTest, Else_Plain) {
     // arrange
     std::string script = "else";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::ELSE, result[0].type());
@@ -547,9 +635,11 @@ TEST_F(MuseLexerTest, Else_Plain) {
 TEST_F(MuseLexerTest, Else_Block) {
     // arrange
     std::string script = "else { }";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::ELSE, result[0].type());
@@ -559,9 +649,11 @@ TEST_F(MuseLexerTest, Else_Block) {
 TEST_F(MuseLexerTest, Else_IfStatement) {
     // arrange
     std::string script = "else if(true) { }";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::ELSE, result[0].type());
@@ -571,9 +663,11 @@ TEST_F(MuseLexerTest, Else_IfStatement) {
 TEST_F(MuseLexerTest, New_Plain) {
     // arrange
     std::string script = "new";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::NEW, result[0].type());
@@ -583,9 +677,11 @@ TEST_F(MuseLexerTest, New_Plain) {
 TEST_F(MuseLexerTest, New_WithExpression) {
     // arrange
     std::string script = "new Object();";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::NEW, result[0].type());
@@ -595,9 +691,11 @@ TEST_F(MuseLexerTest, New_WithExpression) {
 TEST_F(MuseLexerTest, If_Plain) {
     // arrange
     std::string script = "if";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::IF, result[0].type());
@@ -607,9 +705,11 @@ TEST_F(MuseLexerTest, If_Plain) {
 TEST_F(MuseLexerTest, If_WithExpression) {
     // arrange
     std::string script = "if(true) { }";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::IF, result[0].type());
@@ -619,9 +719,11 @@ TEST_F(MuseLexerTest, If_WithExpression) {
 TEST_F(MuseLexerTest, While_Plain) {
     // arrange
     std::string script = "while";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::WHILE, result[0].type());
@@ -631,9 +733,11 @@ TEST_F(MuseLexerTest, While_Plain) {
 TEST_F(MuseLexerTest, While_WithExpression) {
     // arrange
     std::string script = "while(true) { }";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::WHILE, result[0].type());
@@ -643,9 +747,11 @@ TEST_F(MuseLexerTest, While_WithExpression) {
 TEST_F(MuseLexerTest, Continue_Plain) {
     // arrange
     std::string script = "continue";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::CONTINUE, result[0].type());
@@ -655,9 +761,11 @@ TEST_F(MuseLexerTest, Continue_Plain) {
 TEST_F(MuseLexerTest, Break_Plain) {
     // arrange
     std::string script = "break";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::BREAK, result[0].type());
@@ -667,9 +775,11 @@ TEST_F(MuseLexerTest, Break_Plain) {
 TEST_F(MuseLexerTest, Return_Plain) {
     // arrange
     std::string script = "return";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::RETURN, result[0].type());
@@ -679,9 +789,11 @@ TEST_F(MuseLexerTest, Return_Plain) {
 TEST_F(MuseLexerTest, Track_Plain) {
     // arrange
     std::string script = "track";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::TRACK, result[0].type());
@@ -691,9 +803,11 @@ TEST_F(MuseLexerTest, Track_Plain) {
 TEST_F(MuseLexerTest, Start_Plain) {
     // arrange
     std::string script = "{";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::START, result[0].type());
@@ -703,9 +817,11 @@ TEST_F(MuseLexerTest, Start_Plain) {
 TEST_F(MuseLexerTest, End_Plain) {
     // arrange
     std::string script = "}";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::END, result[0].type());
@@ -715,9 +831,11 @@ TEST_F(MuseLexerTest, End_Plain) {
 TEST_F(MuseLexerTest, Open_Plain) {
     // arrange
     std::string script = "(";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::OPEN, result[0].type());
@@ -727,9 +845,11 @@ TEST_F(MuseLexerTest, Open_Plain) {
 TEST_F(MuseLexerTest, Close_Plain) {
     // arrange
     std::string script = ")";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::CLOSE, result[0].type());
@@ -739,9 +859,11 @@ TEST_F(MuseLexerTest, Close_Plain) {
 TEST_F(MuseLexerTest, BracketOpen_Plain) {
     // arrange
     std::string script = "[";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::BRACKET_OPEN, result[0].type());
@@ -751,9 +873,11 @@ TEST_F(MuseLexerTest, BracketOpen_Plain) {
 TEST_F(MuseLexerTest, BracketClose_Plain) {
     // arrange
     std::string script = "]";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::BRACKET_CLOSE, result[0].type());
@@ -766,7 +890,7 @@ TEST_F(MuseLexerTest, Play_Plain) {
     std::string script = "<<";
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::PLAY_START, result[0].type());
@@ -777,9 +901,11 @@ TEST_F(MuseLexerTest, Play_Plain) {
 TEST_F(MuseLexerTest, Function_Plain) {
     // arrange
     std::string script = "function";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::FUNCTION, result[0].type());
@@ -789,9 +915,11 @@ TEST_F(MuseLexerTest, Function_Plain) {
 TEST_F(MuseLexerTest, Var_Plain) {
     // arrange
     std::string script = "var";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::VAR, result[0].type());
@@ -801,9 +929,11 @@ TEST_F(MuseLexerTest, Var_Plain) {
 TEST_F(MuseLexerTest, Terminator_Plain) {
     // arrange
     std::string script = ";";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::TERMINATOR, result[0].type());
@@ -813,9 +943,11 @@ TEST_F(MuseLexerTest, Terminator_Plain) {
 TEST_F(MuseLexerTest, Assignment_Plain) {
     // arrange
     std::string script = "=";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::ASSIGNMENT, result[0].type());
@@ -825,9 +957,11 @@ TEST_F(MuseLexerTest, Assignment_Plain) {
 TEST_F(MuseLexerTest, Identifier_Plain) {
     // arrange
     std::string script = "X";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::IDENTIFIER, result[0].type());
@@ -837,9 +971,11 @@ TEST_F(MuseLexerTest, Identifier_Plain) {
 TEST_F(MuseLexerTest, Unknown_Single) {
     // arrange
     std::string script = "$";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::UNKNOWN, result[0].type());
@@ -849,23 +985,32 @@ TEST_F(MuseLexerTest, Unknown_Single) {
 TEST_F(MuseLexerTest, Unknown_MultipleOnly) {
     // arrange
     std::string script = "$$$$$$";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
-    ASSERT_EQ(dem::lexer::TokenType::UNKNOWN, result[0].type());
-    ASSERT_EQ(script, result[0].content());
+    for(int i = 0; i < 6; ++i) {
+        ASSERT_EQ(dem::lexer::TokenType::UNKNOWN, result[i].type());
+        ASSERT_EQ("$", result[i].content());
+    }
 }
 
 TEST_F(MuseLexerTest, Unknown_MultipleThenRecognized) {
     // arrange
     std::string script = "$$$$$$ if(true) { }";
+    auto begin = script.begin();
+    auto end = script.end();
 
     // act
-    std::vector<dem::lexer::Token> result = lexer.lex(script.begin(), script.end());
+    std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
-    ASSERT_EQ(dem::lexer::TokenType::UNKNOWN, result[0].type());
-    ASSERT_EQ(script.substr(0, 6), result[0].content());
+    for(int i = 0; i < 6; ++i) {
+        ASSERT_EQ(dem::lexer::TokenType::UNKNOWN, result[i].type());
+        ASSERT_EQ("$", result[i].content());
+    }
+    ASSERT_EQ(dem::lexer::TokenType::IF, result[6].type());
 }

@@ -1,0 +1,4 @@
+track 1 {
+	var A = "Lorum ipsum";
+	var B = A.length;
+}

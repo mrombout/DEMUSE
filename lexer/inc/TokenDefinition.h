@@ -8,7 +8,7 @@ namespace dem {
     namespace lexer {
         struct TokenDefinition {
         public:
-            TokenDefinition(const TokenType &tokenType, Matcher *matcher);
+            TokenDefinition(const TokenType &tokenType, Matcher *matcher, bool ignore = false);
             ~TokenDefinition();
 
             TokenDefinition(const TokenDefinition &other);
@@ -19,10 +19,12 @@ namespace dem {
 
             const Matcher &matcher() const;
             const TokenType &type() const;
+            const bool &ignore() const;
 
         public:
             Matcher *mMatcher;
             TokenType mTokenType;
+            bool mIgnore;
         };
     }
 }

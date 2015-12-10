@@ -1,8 +1,10 @@
-var X = 0;
-while(X < 5) {
-    X = X + 1;
-}
+track 1 {
+	var X = 0;
+	while(X < 5) {
+		X = X + 1;
+	}
 
-for(var i = 0; i < 10; i = i + 1) {
-    var A = i;
+	for(var i = 0; i < 10; i = i + 1) {
+		var A = i;
+	}
 }

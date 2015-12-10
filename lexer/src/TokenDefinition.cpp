@@ -2,9 +2,10 @@
 
 namespace dem {
     namespace lexer {
-        TokenDefinition::TokenDefinition(const TokenType &tokenType, Matcher *matcher) :
+        TokenDefinition::TokenDefinition(const TokenType &tokenType, Matcher *matcher, bool ignore) :
             mMatcher(matcher),
-            mTokenType(tokenType) {
+            mTokenType(tokenType),
+            mIgnore(ignore) {
 
         }
 
@@ -14,8 +15,7 @@ namespace dem {
 
         TokenDefinition::TokenDefinition(const TokenDefinition &other) {
             std::cout << "copy-constructor" << std::endl;
-            //mTokenType = other.mTokenType;
-            mTokenType = TokenType::ASSIGNMENT;
+            mTokenType = other.mTokenType;
 
             if(other.mMatcher) {
                 *mMatcher = *other.mMatcher;
@@ -68,6 +68,10 @@ namespace dem {
 
         const Matcher &TokenDefinition::matcher() const {
             return *mMatcher;
+        }
+
+        const bool &TokenDefinition::ignore() const {
+            return mIgnore;
         }
     }
 }

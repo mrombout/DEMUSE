@@ -11,7 +11,7 @@ namespace dem {
         class PlayMatcher : public Matcher {
         public:
             PlayMatcher();
-            virtual std::string match(std::string::iterator &begin, std::string::iterator &end, std::vector<Token> &tokens) const;
+            virtual std::string match(std::string::iterator &begin, std::string::iterator &end, std::vector<Token> &tokens, TokenPosition &tokenPosition) const;
 
         private:
             StringMatcher mStartMatcher;

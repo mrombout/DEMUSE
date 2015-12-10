@@ -8,8 +8,15 @@ namespace dem {
     namespace parser {
         class ParsingException : public std::exception {
         public:
-            ParsingException();
-            ParsingException(lexer::Token &token);
+            ParsingException(lexer::Token &token, const std::string msg);
+
+            const lexer::Token &token() const;
+
+            virtual const char *what() const noexcept override;
+
+        private:
+            lexer::Token &mToken;
+            const std::string mMsg;
         };
     }
 }

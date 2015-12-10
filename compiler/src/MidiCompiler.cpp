@@ -1,14 +1,17 @@
 #include <iostream>
+#include "exception/RuntimeException.h"
 #include "MidiCompiler.h"
 #include "symbol/VariableDeclaration.h"
 #include "GlobalScope.h"
-#include "function/UserFunction.h"
 #include "value/NullValue.h"
+#include "value/function/FunctionValue.h"
+#include "value/function/UserFunction.h"
 
 namespace dem {
     namespace compiler {
         MidiCompiler::MidiCompiler() :
-                mEvaluator(*this) {
+                mEvaluator(*this),
+                mReturnValue(nullptr) {
 
         }
 
@@ -26,6 +29,20 @@ namespace dem {
 
         bool MidiCompiler::visitLeave(parser::Program &program) {
             std::cout << "LEAVE - Program" << std::endl;
+
+            mPlayEvaluator.write();
+
+            return true;
+        }
+
+        bool MidiCompiler::visitEnter(parser::Track &track) {
+            std::cout << "ENTER - Track" << std::endl;
+
+            return true;
+        }
+
+        bool MidiCompiler::visitLeave(parser::Track &track) {
+            std::cout << "LEAVE - Track" << std::endl;
 
             return true;
         }
@@ -49,7 +66,15 @@ namespace dem {
         bool MidiCompiler::visitEnter(parser::VariableDeclaration &variableDefinition) {
             std::cout << "ENTER - Variable Declaration" << std::endl;
 
-            mScopes.front()->declareVariable(&variableDefinition.assignment().left());
+            // TODO: Make proper lvalue class and move this logic?
+            parser::Expression &left = variableDefinition.assignment().left();
+            if(dynamic_cast<parser::Identifier*>(&left)) {
+                parser::Identifier &identifier = static_cast<parser::Identifier&>(left);
+                mScopes.front()->declareVariable(&identifier);
+            } else if(dynamic_cast<parser::ArrayAccessExpression*>(&left)) {
+                // TODO: Array assignment
+                throw RuntimeException(variableDefinition, "Array index assignment not implemented yet.");
+            }
 
             return true;
         }
@@ -58,7 +83,7 @@ namespace dem {
         bool MidiCompiler::visitEnter(parser::FunctionDefinition &functionDefinition) {
             std::cout << "ENTER - Function Definition" << std::endl;
 
-            mScopes.front()->declareFunction(new UserFunction(*this, functionDefinition));
+            mScopes.front()->declareVariable(functionDefinition.identifier(), new UserFunction(*this, functionDefinition.parameterList(), functionDefinition.block()));
 
             return true;
         }
@@ -68,7 +93,7 @@ namespace dem {
 
             mEvaluator.evaluate(mScopes.front(), assignmentExpression);
 
-            return true;
+            return false;
         }
 
         bool MidiCompiler::visitEnter(parser::If &ifSymbol) {
@@ -126,9 +151,24 @@ namespace dem {
         bool MidiCompiler::visit(parser::FunctionCall &functionCall) {
             std::cout << "ENTER - FunctionCall" << std::endl;
 
+            mReturnValue = nullptr;
             mEvaluator.evaluate(mScopes.front(), functionCall);
 
             return false;
+        }
+
+        bool MidiCompiler::visitEnter(parser::Play &play) {
+            std::cout << "ENTER - Play" << std::endl;
+
+            mPlayEvaluator.play(play);
+
+            return false;
+        }
+
+        bool MidiCompiler::visitLeave(parser::Play &play) {
+            std::cout << "LEAVE - Play" << std::endl;
+
+            return true;
         }
 
         bool MidiCompiler::visitEnter(parser::Return &returnSymbol) {
@@ -143,6 +183,10 @@ namespace dem {
             if(!mReturnValue)
                 return new NullValue();
             return mReturnValue;
+        }
+
+        std::deque<Scope*> &MidiCompiler::scopes() {
+            return mScopes;
         }
     }
 }

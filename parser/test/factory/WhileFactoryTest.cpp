@@ -10,17 +10,19 @@ protected:
     WhileFactoryTest() {
 
     }
+
+    dem::lexer::TokenPosition tokenPosition;
 };
 
 TEST_F(WhileFactoryTest, SimpleWhile) {
     // arrange
     std::deque<dem::lexer::Token> tokens {
-        dem::lexer::Token(dem::lexer::TokenType::WHILE, "while",   0, 0, 0),
-        dem::lexer::Token(dem::lexer::TokenType::OPEN,  "(",    0, 0, 0),
-        dem::lexer::Token(dem::lexer::TokenType::BOOL,  "true", 0, 0, 0),
-        dem::lexer::Token(dem::lexer::TokenType::CLOSE, ")",    0, 0, 0),
-        dem::lexer::Token(dem::lexer::TokenType::START, "{",    0, 0, 0),
-        dem::lexer::Token(dem::lexer::TokenType::END,   "}",    0, 0, 0),
+        dem::lexer::Token(dem::lexer::TokenType::WHILE, "while", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::OPEN,  "(", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::BOOL,  "true", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::CLOSE, ")", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::START, "{", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::END,   "}", tokenPosition),
     };
 
     // act
@@ -35,11 +37,11 @@ TEST_F(WhileFactoryTest, Error_ForgetWhile) {
     // arrange
     std::deque<dem::lexer::Token> tokens {
             //dem::lexer::Token(dem::lexer::TokenType::WHILE, "while",   0, 0, 0),
-            dem::lexer::Token(dem::lexer::TokenType::OPEN,  "(",    0, 0, 0),
-            dem::lexer::Token(dem::lexer::TokenType::BOOL,  "true", 0, 0, 0),
-            dem::lexer::Token(dem::lexer::TokenType::CLOSE, ")",    0, 0, 0),
-            dem::lexer::Token(dem::lexer::TokenType::START, "{",    0, 0, 0),
-            dem::lexer::Token(dem::lexer::TokenType::END,   "}",    0, 0, 0),
+            dem::lexer::Token(dem::lexer::TokenType::OPEN,  "(", tokenPosition),
+            dem::lexer::Token(dem::lexer::TokenType::BOOL,  "true", tokenPosition),
+            dem::lexer::Token(dem::lexer::TokenType::CLOSE, ")", tokenPosition),
+            dem::lexer::Token(dem::lexer::TokenType::START, "{", tokenPosition),
+            dem::lexer::Token(dem::lexer::TokenType::END,   "}", tokenPosition),
     };
 
     // act / assert
@@ -49,12 +51,12 @@ TEST_F(WhileFactoryTest, Error_ForgetWhile) {
 TEST_F(WhileFactoryTest, Error_ForgetOpen) {
     // arrange
     std::deque<dem::lexer::Token> tokens {
-            dem::lexer::Token(dem::lexer::TokenType::WHILE, "while",   0, 0, 0),
+            dem::lexer::Token(dem::lexer::TokenType::WHILE, "while", tokenPosition),
             //dem::lexer::Token(dem::lexer::TokenType::OPEN,  "(",    0, 0, 0),
-            dem::lexer::Token(dem::lexer::TokenType::BOOL,  "true", 0, 0, 0),
-            dem::lexer::Token(dem::lexer::TokenType::CLOSE, ")",    0, 0, 0),
-            dem::lexer::Token(dem::lexer::TokenType::START, "{",    0, 0, 0),
-            dem::lexer::Token(dem::lexer::TokenType::END,   "}",    0, 0, 0),
+            dem::lexer::Token(dem::lexer::TokenType::BOOL,  "true", tokenPosition),
+            dem::lexer::Token(dem::lexer::TokenType::CLOSE, ")", tokenPosition),
+            dem::lexer::Token(dem::lexer::TokenType::START, "{", tokenPosition),
+            dem::lexer::Token(dem::lexer::TokenType::END,   "}", tokenPosition),
     };
 
     // act / assert
@@ -65,12 +67,12 @@ TEST_F(WhileFactoryTest, Error_ForgetOpen) {
 TEST_F(WhileFactoryTest, Error_ForgetCondition) {
     // arrange
     std::deque<dem::lexer::Token> tokens {
-            dem::lexer::Token(dem::lexer::TokenType::WHILE, "while",   0, 0, 0),
-            dem::lexer::Token(dem::lexer::TokenType::OPEN,  "(",    0, 0, 0),
+            dem::lexer::Token(dem::lexer::TokenType::WHILE, "while", tokenPosition),
+            dem::lexer::Token(dem::lexer::TokenType::OPEN,  "(", tokenPosition),
             //dem::lexer::Token(dem::lexer::TokenType::BOOL,  "true", 0, 0, 0),
-            dem::lexer::Token(dem::lexer::TokenType::CLOSE, ")",    0, 0, 0),
-            dem::lexer::Token(dem::lexer::TokenType::START, "{",    0, 0, 0),
-            dem::lexer::Token(dem::lexer::TokenType::END,   "}",    0, 0, 0),
+            dem::lexer::Token(dem::lexer::TokenType::CLOSE, ")", tokenPosition),
+            dem::lexer::Token(dem::lexer::TokenType::START, "{", tokenPosition),
+            dem::lexer::Token(dem::lexer::TokenType::END,   "}", tokenPosition),
     };
 
     // act / assert
@@ -80,12 +82,12 @@ TEST_F(WhileFactoryTest, Error_ForgetCondition) {
 TEST_F(WhileFactoryTest, Error_ForgetClose) {
     // arrange
     std::deque<dem::lexer::Token> tokens {
-            dem::lexer::Token(dem::lexer::TokenType::WHILE, "while",   0, 0, 0),
-            dem::lexer::Token(dem::lexer::TokenType::OPEN,  "(",    0, 0, 0),
-            dem::lexer::Token(dem::lexer::TokenType::BOOL,  "true", 0, 0, 0),
-            //dem::lexer::Token(dem::lexer::TokenType::CLOSE, ")",    0, 0, 0),
-            dem::lexer::Token(dem::lexer::TokenType::START, "{",    0, 0, 0),
-            dem::lexer::Token(dem::lexer::TokenType::END,   "}",    0, 0, 0),
+            dem::lexer::Token(dem::lexer::TokenType::WHILE, "while",   tokenPosition),
+            dem::lexer::Token(dem::lexer::TokenType::OPEN,  "(",    tokenPosition),
+            dem::lexer::Token(dem::lexer::TokenType::BOOL,  "true", tokenPosition),
+            //dem::lexer::Token(dem::lexer::TokenType::CLOSE, ")",    tokenPosition),
+            dem::lexer::Token(dem::lexer::TokenType::START, "{",    tokenPosition),
+            dem::lexer::Token(dem::lexer::TokenType::END,   "}",    tokenPosition),
     };
 
     // act / assert
@@ -95,12 +97,12 @@ TEST_F(WhileFactoryTest, Error_ForgetClose) {
 TEST_F(WhileFactoryTest, Error_ForgetBlock) {
     // arrange
     std::deque<dem::lexer::Token> tokens {
-            dem::lexer::Token(dem::lexer::TokenType::WHILE, "while",   0, 0, 0),
-            dem::lexer::Token(dem::lexer::TokenType::OPEN,  "(",    0, 0, 0),
-            dem::lexer::Token(dem::lexer::TokenType::BOOL,  "true", 0, 0, 0),
-            dem::lexer::Token(dem::lexer::TokenType::CLOSE, ")",    0, 0, 0),
-            //dem::lexer::Token(dem::lexer::TokenType::START, "{",    0, 0, 0),
-            //dem::lexer::Token(dem::lexer::TokenType::END,   "}",    0, 0, 0),
+            dem::lexer::Token(dem::lexer::TokenType::WHILE, "while",   tokenPosition),
+            dem::lexer::Token(dem::lexer::TokenType::OPEN,  "(",    tokenPosition),
+            dem::lexer::Token(dem::lexer::TokenType::BOOL,  "true", tokenPosition),
+            dem::lexer::Token(dem::lexer::TokenType::CLOSE, ")",    tokenPosition),
+            //dem::lexer::Token(dem::lexer::TokenType::START, "{",    tokenPosition),
+            //dem::lexer::Token(dem::lexer::TokenType::END,   "}",    tokenPosition),
     };
 
     // act / assert
@@ -110,12 +112,12 @@ TEST_F(WhileFactoryTest, Error_ForgetBlock) {
 TEST_F(WhileFactoryTest, Error_ForgetStart) {
     // arrange
     std::deque<dem::lexer::Token> tokens {
-            dem::lexer::Token(dem::lexer::TokenType::WHILE, "while",   0, 0, 0),
-            dem::lexer::Token(dem::lexer::TokenType::OPEN,  "(",    0, 0, 0),
-            dem::lexer::Token(dem::lexer::TokenType::BOOL,  "true", 0, 0, 0),
-            dem::lexer::Token(dem::lexer::TokenType::CLOSE, ")",    0, 0, 0),
-            //dem::lexer::Token(dem::lexer::TokenType::START, "{",    0, 0, 0),
-            dem::lexer::Token(dem::lexer::TokenType::END,   "}",    0, 0, 0),
+            dem::lexer::Token(dem::lexer::TokenType::WHILE, "while",   tokenPosition),
+            dem::lexer::Token(dem::lexer::TokenType::OPEN,  "(",    tokenPosition),
+            dem::lexer::Token(dem::lexer::TokenType::BOOL,  "true", tokenPosition),
+            dem::lexer::Token(dem::lexer::TokenType::CLOSE, ")",    tokenPosition),
+            //dem::lexer::Token(dem::lexer::TokenType::START, "{",    tokenPosition),
+            dem::lexer::Token(dem::lexer::TokenType::END,   "}",    tokenPosition),
     };
 
     // act / assert
@@ -125,12 +127,12 @@ TEST_F(WhileFactoryTest, Error_ForgetStart) {
 TEST_F(WhileFactoryTest, Error_ForgetEnd) {
     // arrange
     std::deque<dem::lexer::Token> tokens {
-            dem::lexer::Token(dem::lexer::TokenType::WHILE, "while",   0, 0, 0),
-            dem::lexer::Token(dem::lexer::TokenType::OPEN,  "(",    0, 0, 0),
-            dem::lexer::Token(dem::lexer::TokenType::BOOL,  "true", 0, 0, 0),
-            dem::lexer::Token(dem::lexer::TokenType::CLOSE, ")",    0, 0, 0),
-            dem::lexer::Token(dem::lexer::TokenType::START, "{",    0, 0, 0),
-            //dem::lexer::Token(dem::lexer::TokenType::END,   "}",    0, 0, 0),
+            dem::lexer::Token(dem::lexer::TokenType::WHILE, "while",   tokenPosition),
+            dem::lexer::Token(dem::lexer::TokenType::OPEN,  "(",    tokenPosition),
+            dem::lexer::Token(dem::lexer::TokenType::BOOL,  "true", tokenPosition),
+            dem::lexer::Token(dem::lexer::TokenType::CLOSE, ")",    tokenPosition),
+            dem::lexer::Token(dem::lexer::TokenType::START, "{",    tokenPosition),
+            //dem::lexer::Token(dem::lexer::TokenType::END,   "}",    tokenPosition),
     };
 
     // act / assert

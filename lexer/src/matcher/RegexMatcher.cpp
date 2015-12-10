@@ -7,7 +7,7 @@ namespace dem {
             mRegex(std::regex(mRegexStr)) {
         }
 
-        std::string RegexMatcher::match(std::string::iterator &begin, std::string::iterator &end, std::vector<Token> &tokens) const {
+        std::string RegexMatcher::match(std::string::iterator &begin, std::string::iterator &end, std::vector<Token> &tokens, TokenPosition &tokenPosition) const {
             std::match_results<std::string::iterator> match;
             if(std::regex_search<std::string::iterator>(begin, end, match, mRegex))
                 return match[0];

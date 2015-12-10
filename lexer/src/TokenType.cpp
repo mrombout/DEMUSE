@@ -81,7 +81,7 @@ namespace dem {
                 case TokenType::FOR:
                     str = "FOR";
                     break;
-                case TokenType::IN:
+                case TokenType::IN_ARRAY:
                     str = "IN";
                     break;
                 case TokenType::ELSE:

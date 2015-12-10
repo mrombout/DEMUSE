@@ -6,9 +6,9 @@
 
 namespace dem {
     namespace parser {
-        class AssignmentExpression : public BinaryExpression<Identifier, Expression> {
+        class AssignmentExpression : public BinaryExpression<Expression, Expression> {
         public:
-            AssignmentExpression(Identifier *left, Expression *right);
+            AssignmentExpression(Expression *left, Expression *right);
 
             virtual bool accept(Visitor &visitor);
         };

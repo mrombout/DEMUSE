@@ -7,9 +7,17 @@
 #include <wx/artprov.h>
 #include <wx/filedlg.h>
 #include <wx/filename.h>
+#include <wx/preferences.h>
+#include <wx/process.h>
+#include <wx/stdstream.h>
+#include "preference/GeneralPage.h"
+#include "preference/EditorPage.h"
+#include "preference/ColorsPage.h"
+#include "preference/ExecutionPage.h"
 #include "MainFrame.h"
 #include "MuseAuiTabArt.h"
 #include "MuseArtProvider.h"
+#include "MuseLexer.h"
 
 namespace dem {
     namespace ide {
@@ -34,6 +42,8 @@ namespace dem {
 
             EVT_MENU(wxID_SELECTALL, MainFrame::onEditSelectAll)
 
+            EVT_MENU(wxID_PREFERENCES, MainFrame::onEditPreferences)
+
             // run
             EVT_MENU(ID_Run, MainFrame::onRunRun)
             EVT_MENU(ID_Stop, MainFrame::onRunStop)
@@ -44,12 +54,17 @@ namespace dem {
 
         MainFrame::MainFrame(const wxString &title, const wxPoint &pos, const wxSize &size) :
             wxFrame(nullptr, wxID_ANY, title, pos, size) {
+            auto tset = wxICON(icon);
+            SetIcon(tset);
+
             createMenu();
-            createStatuBar();
+            createStatusBar();
 
             createCenterNotebook();
 
             createToolBar();
+
+            createEditor("E:\\Programming\\CPP\\DEMUSE\\compiler\\res\\arithmetic.muse");
         }
 
         MainFrame::~MainFrame() {
@@ -98,9 +113,11 @@ namespace dem {
             SetMenuBar(menuBar);
         }
 
-        void MainFrame::createStatuBar() {
+        void MainFrame::createStatusBar() {
             CreateStatusBar();
             SetStatusText("Welcome to wxWidgets!");
+            GetStatusBar()->SetFieldsCount(2);
+            // TODO: Show current active editor line:column in statusbar
         }
 
         void MainFrame::createCenterNotebook() {
@@ -115,7 +132,7 @@ namespace dem {
         void MainFrame::createEditor(const wxString &filePath /*= wxT("") */) {
             if(!mFileEditors.count(filePath)) {
                 // create and new editor and load file if available
-                MuseStyledTextEditor *editor = new MuseStyledTextEditor(this);
+                MuseStyledTextEditor *editor = new MuseStyledTextEditor(this, new lexer::MuseLexer());
 
                 wxString tabName{wxT("New File")};
 
@@ -271,12 +288,21 @@ namespace dem {
                 editor->SetSelection(0, editor->GetTextLength());
         }
 
-        void MainFrame::onRunRun(wxCommandEvent &event) {
+        void MainFrame::onEditPreferences(wxCommandEvent &event) {
+            wxPreferencesEditor *preferencesEditor = new wxPreferencesEditor();
+            preferencesEditor->AddPage(new GeneralPage());
+            preferencesEditor->AddPage(new EditorPage());
+            preferencesEditor->AddPage(new ColorsPage());
+            preferencesEditor->AddPage(new ExecutionPage());
+            preferencesEditor->Show(this);
+        }
 
+        void MainFrame::onRunRun(wxCommandEvent &event) {
+            mActiveProcess = wxProcess::Open("D:\\Program Files (x86)\\VideoLAN\\VLC\\vlc.exe");
         }
 
         void MainFrame::onRunStop(wxCommandEvent &event) {
-
+            wxProcess::Kill(mActiveProcess->GetPid());
         }
     }
 }

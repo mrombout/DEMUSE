@@ -13,10 +13,12 @@ int main(int argc, char* argv[]) {
     std::string inputPath{argv[1]};
     std::ifstream is{inputPath};
     std::string content{std::istreambuf_iterator<char>(is), std::istreambuf_iterator<char>()};
+    auto begin = content.begin();
+    auto end = content.end();
 
     // lex input
     dem::lexer::MuseLexer museLexer;
-    std::vector<dem::lexer::Token> tokens = museLexer.lex(content.begin(), content.end());
+    std::vector<dem::lexer::Token> tokens = museLexer.lex(begin, end);
 
     // parse
     dem::parser::MuseParser museParser;

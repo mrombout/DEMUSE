@@ -19,6 +19,9 @@ set(Parser_SRCS
     inc/symbol/Symbol.h
     src/symbol/Symbol.cpp
 
+    inc/symbol/Array.h
+    src/symbol/Array.cpp
+
     inc/symbol/Program.h
     src/symbol/Program.cpp
 
@@ -43,14 +46,17 @@ set(Parser_SRCS
     inc/symbol/If.h
     src/symbol/If.cpp
 
+    inc/symbol/NewInstance.h
+    src/symbol/NewInstance.cpp
+
     inc/symbol/While.h
     src/symbol/While.cpp
 
     inc/symbol/For.h
     src/symbol/For.cpp
 
-    inc/symbol/FunctionDefinition.h
-    src/symbol/FunctionDefinition.cpp
+    inc/symbol/expression/FunctionDefinition.h
+    src/symbol/expression/FunctionDefinition.cpp
 
     inc/symbol/Identifier.h
     src/symbol/Identifier.cpp
@@ -75,11 +81,17 @@ set(Parser_SRCS
     inc/symbol/Text.h
     src/symbol/Text.cpp
 
+    inc/symbol/Track.h
+    src/symbol/Track.cpp
+
     inc/symbol/Number.h
     src/symbol/Number.cpp
 
     inc/symbol/expression/Expression.h
     src/symbol/expression/Expression.cpp
+
+    inc/symbol/expression/ArrayAccessExpression.h
+    src/symbol/expression/ArrayAccessExpression.cpp
 
     inc/symbol/expression/BinaryExpression.h
 
@@ -128,6 +140,9 @@ set(Parser_SRCS
     inc/symbol/expression/OrCondition.h
     src/symbol/expression/OrCondition.cpp
 
+    inc/symbol/expression/PropertyAccessExpression.h
+    src/symbol/expression/PropertyAccessExpression.cpp
+
     inc/symbol/expression/SmallerThanOrEqualCondition.h
     src/symbol/expression/SmallerThanOrEqualCondition.cpp
 
@@ -151,6 +166,12 @@ set(Parser_SRCS
 
     inc/factory/SymbolFactory.h
     src/factory/SymbolFactory.cpp
+
+    inc/factory/ArrayAccessFactory.h
+    src/factory/ArrayAccessFactory.cpp
+
+    inc/factory/TrackFactory.h
+    src/factory/TrackFactory.cpp
 
     inc/factory/ProgramFactory.h
     src/factory/ProgramFactory.cpp

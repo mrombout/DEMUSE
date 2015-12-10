@@ -14,13 +14,22 @@ set(Lexer_SRCS
     inc/Token.h
     src/Token.cpp
 
-    inc/TokenType.h
-    src/TokenType.cpp
-
     inc/TokenDefinition.h
     src/TokenDefinition.cpp
 
+    inc/TokenPosition.h
+    src/TokenPosition.cpp
+
+    inc/TokenType.h
+    src/TokenType.cpp
+
     inc/matcher/Matcher.h
+
+    inc/matcher/CharMatcher.h
+    src/matcher/CharMatcher.cpp
+
+    inc/matcher/DurationMatcher.h
+    src/matcher/DurationMatcher.cpp
 
     inc/matcher/RegexMatcher.h
     src/matcher/RegexMatcher.cpp
@@ -31,14 +40,17 @@ set(Lexer_SRCS
     inc/matcher/NullMatcher.h
     src/matcher/NullMatcher.cpp
 
-    inc/matcher/CharMatcher.h
-    src/matcher/CharMatcher.cpp
+    inc/matcher/OctaveMatcher.h
+    src/matcher/OctaveMatcher.cpp
 
     inc/matcher/PlayMatcher.h
     src/matcher/PlayMatcher.cpp
 
     inc/matcher/NoteMatcher.h
     src/matcher/NoteMatcher.cpp
+
+    inc/matcher/NotePrimitiveMatcher.h
+    src/matcher/NotePrimitiveMatcher.cpp
 
     inc/matcher/AccidentalMatcher.h
     src/matcher/AccidentalMatcher.cpp

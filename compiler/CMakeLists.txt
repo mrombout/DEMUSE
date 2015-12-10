@@ -2,6 +2,9 @@ cmake_minimum_required(VERSION 3.3 FATAL_ERROR)
 project(Compiler VERSION 0.1 LANGUAGES CXX)
 
 set(Compiler_SRCS
+    inc/exception/RuntimeException.h
+    src/exception/RuntimeException.cpp
+
     inc/Scope.h
     src/Scope.cpp
 
@@ -14,29 +17,44 @@ set(Compiler_SRCS
     inc/value/Value.h
     src/value/Value.cpp
 
+    inc/value/function/PrintFunction.h
+    src/value/function/PrintFunction.cpp
+
+    inc/value/function/UserFunction.h
+    src/value/function/UserFunction.cpp
+
+    inc/value/ArrayValue.h
+    src/value/ArrayValue.cpp
+
     inc/value/NullValue.h
     src/value/NullValue.cpp
 
     inc/value/NumberValue.h
     src/value/NumberValue.cpp
 
+    inc/value/ObjectValue.h
+    src/value/ObjectValue.cpp
+
     inc/value/BooleanValue.h
     src/value/BooleanValue.cpp
 
+    inc/value/function/FunctionValue.h
+    src/value/function/FunctionValue.cpp
+
+    inc/value/function/InternalFunction.h
+    src/value/function/InternalFunction.cpp
+
     inc/value/TextValue.h
     src/value/TextValue.cpp
-
-    inc/function/Function.h
-    src/function/Function.cpp
-
-    inc/function/UserFunction.h
-    src/function/UserFunction.cpp
 
     inc/Compiler.h
     src/Compiler.cpp
 
     inc/MidiCompiler.h
     src/MidiCompiler.cpp
+
+    inc/PlayEvaluator.h
+    src/PlayEvaluator.cpp
 
     inc/ExpressionEvaluator.h
     src/ExpressionEvaluator.cpp
@@ -64,10 +82,13 @@ target_include_directories(compiler PRIVATE ${Compiler_INCLUDE_DIRS} ${Parser_IN
 target_link_libraries(compiler PRIVATE dem::libparser dem::liblexer)
 
 # dependencies
-#find_package(Jdksmidi REQUIRED)
-#if(Jdksmidi_FOUND)
-#
-#endif()
+find_package(Jdksmidi REQUIRED)
+if(Jdksmidi_FOUND)
+    message(STATUS "Include: " ${Jdksmidi_INCLUDE_DIRS})
+    message(STATUS "Include: " ${Jdksmidi_LIBRARIES})
+    target_include_directories(compiler PRIVATE ${Jdksmidi_INCLUDE_DIRS})
+    target_link_libraries(compiler PRIVATE ${Jdksmidi_LIBRARIES})
+endif()
 
 # testing
 enable_testing()

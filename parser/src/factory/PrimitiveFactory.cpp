@@ -1,7 +1,9 @@
 #include "factory/PrimitiveFactory.h"
+#include "factory/NoteFactory.h"
 #include "symbol/Bool.h"
 #include "symbol/Text.h"
 #include "symbol/Number.h"
+#include "symbol/play/Note.h"
 
 namespace dem {
     namespace parser {
@@ -25,10 +27,12 @@ namespace dem {
                 primitive = new Bool(content == "true");
             } else if(tokens.front().is(lexer::TokenType::TEXT)) {
                 tokens.pop_front();
-                primitive = new Text(content);
+                primitive = new Text(content.substr(1, content.length() - 2));
             } else if(tokens.front().is(lexer::TokenType::NUMBER)) {
                 tokens.pop_front();
                 primitive = new Number(std::stod(content));
+            } else if(tokens.front().is(lexer::TokenType::NOTE)) {
+                primitive = NoteFactory::produce(tokens);
             }
 
             // TODO: Support for POSITIVE/NEGATIVE

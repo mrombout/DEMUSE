@@ -13,7 +13,7 @@ namespace dem {
     namespace lexer {
         class NoteMatcher : public RegexMatcher {
         public:
-            NoteMatcher(AccidentalMatcher *accidentalMatcher);
+            NoteMatcher();
         };
     }
 }

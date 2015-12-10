@@ -23,7 +23,6 @@ namespace dem {
             throw "NullValue"; // TODO: Throw proper exception
         }
 
-
         Value *NullValue::exponent(Value *b) {
             throw "NullValue"; // TODO: Throw proper exception
         }
@@ -62,6 +61,18 @@ namespace dem {
 
         bool NullValue::operator>=(const Value &other) {
             throw "NullValue"; // TODO: Throw proper exception, and can we actually throw responsibly in an operator?
+        }
+
+        Value *NullValue::operator[](const int index) {
+            throw "NullValue"; // TODO: Throw proper exception, and can we actually throw responsibly in an operator?
+        }
+
+        Value *NullValue::operator[](const std::string &index) {
+            throw "NullValue"; // TODO: Throw proper exception, and can we actually throw responsibly in an operator?
+        }
+
+        Value *NullValue::operator()(Scope &scope) {
+            throw "NullValue";
         }
     }
 }

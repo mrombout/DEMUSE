@@ -5,6 +5,9 @@ namespace dem {
         bool Visitor::visitEnter(ArgumentList &argumentList) { return true; }
         bool Visitor::visitLeave(ArgumentList &argumentList) { return true; }
 
+        bool Visitor::visitEnter(Array &array) { return true; }
+        bool Visitor::visitLeave(Array &array) { return true; }
+
         bool Visitor::visitEnter(Assignment &assignment) { return true; }
         bool Visitor::visitLeave(Assignment &assignment) { return true; }
 
@@ -51,6 +54,9 @@ namespace dem {
 
         bool Visitor::visit(Text &text) { return true; }
 
+        bool Visitor::visitEnter(parser::Track &track) { return true; }
+        bool Visitor::visitLeave(parser::Track &track) { return true; }
+
         bool Visitor::visitEnter(VariableDeclaration &variableDefinition) { return true; }
         bool Visitor::visitLeave(VariableDeclaration &variableDefinition) { return true; }
 
@@ -62,6 +68,9 @@ namespace dem {
 
         bool Visitor::visitEnter(AndCondition &andCondition) { return true; }
         bool Visitor::visitLeave(AndCondition &andCondition) { return true; }
+
+        bool Visitor::visitEnter(ArrayAccessExpression &arrayAccessExpression) { return true; }
+        bool Visitor::visitLeave(ArrayAccessExpression &arrayAccessExpression) { return true; }
 
         bool Visitor::visitEnter(AssignmentExpression &assignmentExpression) { return true; }
         bool Visitor::visitLeave(AssignmentExpression &assignmentExpression) { return true; }
@@ -100,6 +109,9 @@ namespace dem {
 
         bool Visitor::visitEnter(OrCondition &orCondition) { return true; }
         bool Visitor::visitLeave(OrCondition &orCondition) { return true; }
+
+        bool Visitor::visitEnter(PropertyAccessExpression &propertyAccessExpression) { return true; }
+        bool Visitor::visitLeave(PropertyAccessExpression &propertyAccessExpression) { return true; }
 
         bool Visitor::visitEnter(SmallerThanCondition &smallerThanCondition) { return true; }
         bool Visitor::visitLeave(SmallerThanCondition &smallerThanCondition) { return true; }
