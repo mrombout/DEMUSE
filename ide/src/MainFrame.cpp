@@ -10,7 +10,8 @@
 #include <wx/preferences.h>
 #include <wx/process.h>
 #include <wx/stdstream.h>
-#include <wx/dataview.h>
+#include <wx/wfstream.h>
+#include <App.h>
 #include "preference/GeneralPage.h"
 #include "preference/EditorPage.h"
 #include "preference/ColorsPage.h"
@@ -159,12 +160,12 @@ namespace dem {
 
         void MainFrame::createBottomTools() {
             // error window
-            wxDataViewListCtrl *errorList = new wxDataViewListCtrl(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxDV_ROW_LINES | wxDV_HORIZ_RULES);
-            errorList->AppendIconTextColumn("");
-            errorList->AppendTextColumn("Line");
-            errorList->AppendTextColumn("Column");
-            errorList->AppendTextColumn("Description");
-            errorList->AppendTextColumn("File");
+            mErrorList = new wxDataViewListCtrl(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxDV_ROW_LINES | wxDV_HORIZ_RULES | wxNO_BORDER);
+            mErrorList->AppendIconTextColumn("");
+            mErrorList->AppendTextColumn("Line");
+            mErrorList->AppendTextColumn("Column");
+            mErrorList->AppendTextColumn("Description");
+            mErrorList->AppendTextColumn("File");
 
             wxVector<wxVariant> data;
             data.push_back(wxVariant(wxDataViewIconText("Warning", wxArtProvider::GetIcon(wxART_WARNING, wxART_OTHER, wxSize(16, 16)))));
@@ -172,13 +173,13 @@ namespace dem {
             data.push_back(wxVariant(1));
             data.push_back(wxVariant("Variable does not exist."));
             data.push_back(wxVariant("arithmetic.muse"));
-            errorList->AppendItem(data);
+            mErrorList->AppendItem(data);
 
-            mMgr.AddPane(errorList, wxAuiPaneInfo().Bottom().MinimizeButton(true));
+            mMgr.AddPane(mErrorList, wxAuiPaneInfo().Name("Errors").Bottom().MinimizeButton(true).PaneBorder(true));
 
             // output window
-            wxTextCtrl *text3 = new wxTextCtrl(this, -1, _("Pane 2 - sample text"), wxDefaultPosition, wxSize(200, 150), wxNO_BORDER | wxTE_MULTILINE);
-            mMgr.AddPane(text3, wxBOTTOM, wxT("Pane Number Two"));
+            mOutput = new wxTextCtrl(this, -1, _("Output"), wxDefaultPosition, wxSize(200, 150), wxNO_BORDER | wxTE_MULTILINE);
+            mMgr.AddPane(mOutput, wxBOTTOM, wxT("Output"));
         }
 
         void MainFrame::createToolBar() {
@@ -328,6 +329,9 @@ namespace dem {
             preferencesEditor->AddPage(new ExecutionPage());
             preferencesEditor->Show(this);
 
+            // flush
+            wxGetApp().config().Flush();
+
             // re-initialize editors with new settings
             for(auto pair : mFileEditors) {
                 MuseStyledTextEditor *editor = dynamic_cast<MuseStyledTextEditor*>(mNotebook->GetPage(pair.second));
@@ -336,11 +340,17 @@ namespace dem {
         }
 
         void MainFrame::onRunRun(wxCommandEvent &event) {
-            mActiveProcess = wxProcess::Open("D:\\Program Files (x86)\\VideoLAN\\VLC\\vlc.exe");
+            wxFileConfig &config = wxGetApp().config();
+            wxString compilerPath{config.Read("execution/compiler", "") + " " + activeEditor()->filePath()};
+
+            if(!compilerPath.empty()) {
+                mActiveProcess = wxProcess::Open(compilerPath);
+            }
         }
 
         void MainFrame::onRunStop(wxCommandEvent &event) {
             wxProcess::Kill(mActiveProcess->GetPid());
+            mActiveProcess = nullptr;
         }
     }
 }
