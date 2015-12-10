@@ -327,6 +327,12 @@ namespace dem {
             preferencesEditor->AddPage(new ColorsPage());
             preferencesEditor->AddPage(new ExecutionPage());
             preferencesEditor->Show(this);
+
+            // re-initialize editors with new settings
+            for(auto pair : mFileEditors) {
+                MuseStyledTextEditor *editor = dynamic_cast<MuseStyledTextEditor*>(mNotebook->GetPage(pair.second));
+                editor->initialize();
+            }
         }
 
         void MainFrame::onRunRun(wxCommandEvent &event) {
