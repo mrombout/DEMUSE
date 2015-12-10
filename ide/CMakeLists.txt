@@ -60,7 +60,7 @@ target_link_libraries(ide
 )
 
 # dependencies
-find_package(wxWidgets REQUIRED propgrid aui stc adv core base scintilla)
+find_package(wxWidgets REQUIRED propgrid aui stc adv core base)
 if(wxWidgets_FOUND)
     include(${wxWidgets_USE_FILE})
     target_include_directories(ide PRIVATE ${wxWidgets_INCLUDE_DIRS} "/usr/local/include/wx-3.0/")

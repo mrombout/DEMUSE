@@ -54,8 +54,10 @@ namespace dem {
 
         MainFrame::MainFrame(const wxString &title, const wxPoint &pos, const wxSize &size) :
             wxFrame(nullptr, wxID_ANY, title, pos, size) {
+#ifdef __WINDOWS__
             auto tset = wxICON(icon);
             SetIcon(tset);
+#endif
 
             createMenu();
             createStatusBar();
