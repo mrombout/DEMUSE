@@ -1,4 +1,7 @@
 #include <vector>
+#include <preference/ColorsPanel.h>
+#include "preference/EditorPanel.h"
+#include "App.h"
 #include "MuseStyledTextEditor.h"
 #include "Token.h"
 
@@ -69,8 +72,8 @@ namespace dem {
             { lexer::TokenType::BRACKET_CLOSE, demSTC_DEMUSE_BRACKET },
             { lexer::TokenType::PLAY_START, demSTC_DEMUSE_PLAY },
             { lexer::TokenType::PLAY_END,   demSTC_DEMUSE_PLAY },
-            { lexer::TokenType::FUNCTION,   demSTC_DEMUSE_KEYWORD },
-            { lexer::TokenType::VAR,        demSTC_DEMUSE_KEYWORD },
+            { lexer::TokenType::FUNCTION,   demSTC_DEMUSE_FUNCTION },
+            { lexer::TokenType::VAR,        demSTC_DEMUSE_VAR },
             { lexer::TokenType::TERMINATOR, demSTC_DEMUSE_TERMINATOR },
             { lexer::TokenType::ASSIGNMENT, demSTC_DEMUSE_OPERATOR },
             { lexer::TokenType::IDENTIFIER, demSTC_DEMUSE_IDENTIFIER },
@@ -82,27 +85,28 @@ namespace dem {
                 mLexer(museLexer) {
             SetStyleBits(8);
 
+            wxFileConfig &config = wxGetApp().config();
+
             // defaults
-            SetViewWhiteSpace(wxSTC_WS_VISIBLEALWAYS);
+            SetViewWhiteSpace(config.ReadBool(KEY_EDITOR_SHOW_WHITESPACE, false) ? wxSTC_WS_VISIBLEALWAYS : wxSTC_WS_INVISIBLE);
             SetViewEOL(false);
-            SetCaretLineVisible(true);
+            SetCaretLineVisible(config.ReadBool(KEY_EDITOR_HIGHLIGHT_CURRENT_LINE, false));
             SetCaretLineBackground(wxColour(255, 250, 227)); // Make caret line colour configurable
             // TODO: Show annotations for compiler errors
-            SetIndent(4);
-            SetTabWidth(4);
-            SetUseTabs(false);
+            SetIndent(config.ReadLong(KEY_EDITOR_TAB_WIDTH, 4));
+            SetTabWidth(config.ReadLong(KEY_EDITOR_TAB_WIDTH, 4));
+            SetUseTabs(config.ReadBool(KEY_EDITOR_USE_TABS, false));
             SetTabIndents(true);
             SetBackSpaceUnIndents(true);
             SetIndentationGuides(wxSTC_IV_LOOKBOTH);
-            SetEdgeMode(wxSTC_EDGE_LINE);
-            SetEdgeColumn(120);
+            SetEdgeMode(config.ReadBool(KEY_EDITOR_SHOW_MAX_COLUMN_LINE, true) ? wxSTC_EDGE_LINE : wxSTC_EDGE_NONE);
+            SetEdgeColumn(config.ReadLong(KEY_EDITOR_MAX_COLUMN, 120));
             // TODO: Check if edge column is at correct column (is seems off)
-            SetWrapMode(wxSTC_WRAP_NONE);
+            SetWrapMode(config.ReadBool(KEY_EDITOR_WRAP, false) ? wxSTC_WRAP_WORD : wxSTC_WRAP_NONE);
             // TODO: Autocompletion (read from AST)
             // TODO: Implement find functionality
             // TODO: Show error marker on tokenization errors, compilation errors and vm errors
             // TODO: Support zooming in/out
-            // TODO: Line numbers
 
             // TODO: Call-tips
             // TODO: Folding (update lexer with levels for this)
@@ -112,8 +116,6 @@ namespace dem {
             StyleClearAll();
             wxFont font(wxFontInfo(10).Family(wxFONTFAMILY_MODERN));
             StyleSetFont(wxSTC_STYLE_DEFAULT, font);
-            StyleSetForeground(wxSTC_STYLE_DEFAULT, *wxBLACK);
-            StyleSetBackground(wxSTC_STYLE_DEFAULT, *wxWHITE);
             StyleSetForeground(wxSTC_STYLE_INDENTGUIDE, wxColour(wxT("DARK GREY")));
 
             // line margin
@@ -126,37 +128,29 @@ namespace dem {
 
             // syntax highlighting
             SetLexer(wxSTC_LEX_CONTAINER);
-            StyleSetForeground(demSTC_DEMUSE_BOOL,        wxColour(0, 0, 128));
-            StyleSetForeground(demSTC_DEMUSE_TEXT,        wxColour(0, 128, 0));
-            StyleSetForeground(demSTC_DEMUSE_NUMBER,      wxColour(0, 0, 255));
-            StyleSetForeground(demSTC_DEMUSE_OPERATOR,    wxColour(0, 0, 0));
-            StyleSetForeground(demSTC_DEMUSE_CONDITION,   wxColour(0, 0, 0));
-            StyleSetForeground(demSTC_DEMUSE_UNARY,       wxColour(0, 0, 0));
-            StyleSetForeground(demSTC_DEMUSE_KEYWORD,     wxColour(0, 0, 128));
-            StyleSetForeground(demSTC_DEMUSE_TRACK,       wxColour(102, 0, 102));
-            StyleSetForeground(demSTC_DEMUSE_NOTE,        wxColour(102, 14, 122));
-            StyleSetForeground(demSTC_DEMUSE_ACCIDENTAL,  wxColour(102, 14, 122));
-            StyleSetForeground(demSTC_DEMUSE_OCTAVE,      wxColour(102, 14, 122));
-            StyleSetForeground(demSTC_DEMUSE_CHORD,       wxColour(102, 14, 122));
-            StyleSetForeground(demSTC_DEMUSE_DURATION,    wxColour(102, 14, 122));
-            StyleSetForeground(demSTC_DEMUSE_BLOCK,       wxColour(0, 0, 0));
-            StyleSetForeground(demSTC_DEMUSE_PARENTHESIS, wxColour(0, 0, 0));
-            StyleSetForeground(demSTC_DEMUSE_BRACKET,     wxColour(0, 0, 0));
-            StyleSetForeground(demSTC_DEMUSE_PLAY,        wxColour(255, 0, 0));
-            StyleSetForeground(demSTC_DEMUSE_FUNCTION,    wxColour(0, 0, 128));
-            StyleSetForeground(demSTC_DEMUSE_VAR,         wxColour(0, 0, 128));
-            StyleSetForeground(demSTC_DEMUSE_TERMINATOR,  wxColour(0, 0, 0));
-            StyleSetForeground(demSTC_DEMUSE_IDENTIFIER,  wxColour(0, 0, 0));
             StyleSetForeground(demSTC_DEMUSE_UNKNOWN,     wxColour(255, 0, 0));
             StyleSetBackground(demSTC_DEMUSE_UNKNOWN,     wxColour(128, 0, 0));
 
-            StyleSetBold(demSTC_DEMUSE_BOOL, true);
-            StyleSetBold(demSTC_DEMUSE_KEYWORD, true);
-            StyleSetBold(demSTC_DEMUSE_FUNCTION, true);
-            StyleSetBold(demSTC_DEMUSE_VAR, true);
-            StyleSetBold(demSTC_DEMUSE_TERMINATOR, true);
-            StyleSetItalic(demSTC_DEMUSE_IDENTIFIER, true);
-            StyleSetUnderline(demSTC_DEMUSE_IDENTIFIER, true);
+            for(auto it = ColorsPanel::DEFAULTS.cbegin(); it != ColorsPanel::DEFAULTS.cend(); ++it) {
+                wxString key = "colors/" + it->first.Lower();
+
+                // background color
+                wxColour backgroundColor;
+                backgroundColor.Set(config.Read(key + "/background"));
+
+                StyleSetBackground(it->second.styleType, backgroundColor);
+
+                // foreground color
+                wxColour foregroundColor;
+                foregroundColor.Set(config.Read(key + "/foreground"));
+
+                StyleSetForeground(it->second.styleType, foregroundColor);
+
+                // font effects
+                StyleSetBold(it->second.styleType, config.ReadBool("colors/" + it->first.Lower() + "/bold", it->second.bold));
+                StyleSetItalic(it->second.styleType, config.ReadBool("colors/" + it->first.Lower() + "/italic", it->second.italic));
+                StyleSetUnderline(it->second.styleType, config.ReadBool("colors/" + it->first.Lower() + "/underline", it->second.underline));
+            }
 
             // indicators
             IndicatorSetStyle(demSTC_INDIC_UNKNOWN, wxSTC_INDIC_SQUIGGLE);
