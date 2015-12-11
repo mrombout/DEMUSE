@@ -36,7 +36,7 @@ namespace dem {
 
             virtual bool visitLeave(parser::Block &block) override;
 
-            virtual bool visit(parser::FunctionCall &functionCall) override;
+            virtual bool visitEnter(parser::PropertyAccessExpression &propertyAccessExpression) override;
 
             virtual bool visitEnter(parser::For &forSymbol) override;
 
@@ -53,6 +53,12 @@ namespace dem {
             PlayEvaluator mPlayEvaluator;
             std::deque<Scope*> mScopes;
             Value *mReturnValue;
+        public:
+            virtual bool visitEnter(parser::Expression &expression) override;
+
+            virtual bool visit(parser::Expression &expression) override;
+
+            virtual bool visitLeave(parser::Expression &expression) override;
         };
     }
 }

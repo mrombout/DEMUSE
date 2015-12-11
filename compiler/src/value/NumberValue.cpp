@@ -85,7 +85,7 @@ namespace dem {
             throw "Can not access that way"; // TODO: Throw proper error
         }
 
-        Value *NumberValue::operator[](const std::string &index) {
+        Variable *NumberValue::operator[](const std::string &index) {
             throw "Can not access that way"; // TODO: Throw proper error
         }
 

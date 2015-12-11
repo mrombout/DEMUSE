@@ -148,11 +148,28 @@ namespace dem {
             return false;
         }
 
-        bool MidiCompiler::visit(parser::FunctionCall &functionCall) {
-            std::cout << "ENTER - FunctionCall" << std::endl;
+        bool MidiCompiler::visitEnter(parser::Expression &expression) {
+            std::cout << "ENTER - Expression" << std::endl;
 
-            mReturnValue = nullptr;
-            mEvaluator.evaluate(mScopes.front(), functionCall);
+            return true;
+        }
+
+        bool MidiCompiler::visit(parser::Expression &expression) {
+            std::cout << "VISIT - Expression" << std::endl;
+
+            return true;
+        }
+
+        bool MidiCompiler::visitLeave(parser::Expression &expression) {
+            std::cout << "LEAVE - Expression" << std::endl;
+
+            return true;
+        }
+
+        bool MidiCompiler::visitEnter(parser::PropertyAccessExpression &propertyAccessExpression) {
+            std::cout << "ENTER - PropertyAccessExpression" << std::endl;
+
+            mEvaluator.evaluate(mScopes.front(), propertyAccessExpression);
 
             return false;
         }

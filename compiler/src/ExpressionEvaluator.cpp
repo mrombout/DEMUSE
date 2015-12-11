@@ -450,7 +450,7 @@ namespace dem {
 
             Variable &variable = mScope->variable(&identifier);
 
-            std::cout << "PUSH - " << variable.asString() << std::endl;
+            std::cout << "(I)PUSH - " << variable.asString() << std::endl;
             mStack.push(&variable);
 
             return true;
@@ -496,38 +496,6 @@ namespace dem {
             UserFunction *value = new UserFunction(mCompiler, functionDefinition.parameterList(), functionDefinition.block());
 
             std::cout << "PUSH - " << value->asString() << std::endl;
-            mStack.push(value);
-
-            return false;
-        }
-
-        bool ExpressionEvaluator::visit(parser::FunctionCall &functionCall) {
-            std::cout << "ENTER - Evaluating FunctionCall" << std::endl;
-
-            Variable &variable = mScope->variable(&functionCall.identifier());
-            parser::ArgumentList *argumentList = functionCall.argumentList();
-
-            // evaluate arguments
-            std::vector<Value*> arguments;
-            for(parser::Expression *expr : argumentList->arguments()) {
-                std::cout << "evaling expr" << std::endl;
-                Value *result = this->evaluate(mScope, *expr);
-                arguments.push_back(result);
-            }
-
-            // map to function scope
-            Scope functionScope(mScope);
-            if(FunctionValue *functionValue = dynamic_cast<FunctionValue*>(variable.value())) {
-                functionValue->mapScope(functionScope, arguments);
-            }
-            mCompiler.scopes().push_front(&functionScope);
-
-            // call function
-            Value *value = variable(functionScope);
-            mCompiler.scopes().pop_front();
-
-            if(!dynamic_cast<NullValue*>(value))
-                std::cout << "PUSH - " << value->asString() << std::endl;
             mStack.push(value);
 
             return false;

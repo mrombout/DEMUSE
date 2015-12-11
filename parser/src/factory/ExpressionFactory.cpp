@@ -1,8 +1,9 @@
+#include <factory/NewInstanceFactory.h>
 #include "exception/ParsingException.h"
 #include "factory/IdentifierFactory.h"
 #include "factory/ExpressionFactory.h"
 #include "factory/PrimitiveFactory.h"
-#include "factory/FunctionCallFactory.h"
+#include "factory/FunctionCallExpressionFactory.h"
 #include "factory/ArrayAccessFactory.h"
 #include "factory/FunctionDefinitionFactory.h"
 #include "symbol/expression/AdditionExpression.h"
@@ -111,6 +112,7 @@ namespace dem {
             Expression *lhs = producePrimary(tokens);
             Expression *rhs = nullptr;
 
+            // rhs
             while(shouldContinueProcessingTokens(tokens, minPrecedence)) {
                 lexer::Token op = tokens.front();
                 tokens.pop_front();
@@ -180,16 +182,14 @@ namespace dem {
 
                 return new Array(values);
             } else if(tokens.front().is(lexer::TokenType::NEW)) {
-                // TODO: Create new instance of object
+                return NewInstanceFactory::produce(tokens);
             } else if(tokens.front().is(lexer::TokenType::FUNCTION)) {
                 return FunctionDefinitionFactory::produce(tokens);
             } else if(tokens.front().is(lexer::TokenType::IDENTIFIER)) {
                 Expression *expression = nullptr;
 
                 // identifier | call
-                expression = FunctionCallFactory::produce(tokens);
-                if(!expression)
-                    expression = IdentifierFactory::produce(tokens);
+                expression = IdentifierFactory::produce(tokens);
 
                 // array access?
                 if(tokens.front().is(lexer::TokenType::BRACKET_OPEN)) {
@@ -228,6 +228,8 @@ namespace dem {
                     lvalue = dynamic_cast<Identifier*>(lhs);
                     if(lvalue == nullptr)
                         lvalue = dynamic_cast<ArrayAccessExpression*>(lhs);
+                    if(lvalue == nullptr)
+                        lvalue = dynamic_cast<PropertyAccessExpression*>(lhs);
                     if(lvalue == nullptr)
                         throw ParsingException(token, "Invalid lvalue for assignment.");
                     // TODO: Make proper lvalue class for identifier and array access

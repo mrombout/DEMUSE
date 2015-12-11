@@ -23,8 +23,6 @@ namespace dem {
         bool Visitor::visitEnter(For &forSymbol) { return true; }
         bool Visitor::visitLeave(For &forSymbol) { return true; }
 
-        bool Visitor::visit(parser::FunctionCall &functionCall) { return false; }
-
         bool Visitor::visitEnter(FunctionDefinition &functionDefinition) { return true; }
         bool Visitor::visitLeave(FunctionDefinition &functionDefinition) { return true; }
 

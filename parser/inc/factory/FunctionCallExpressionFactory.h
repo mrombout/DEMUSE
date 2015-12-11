@@ -3,13 +3,13 @@
 
 #include <deque>
 #include "factory/SymbolFactory.h"
-#include "symbol/FunctionCall.h"
+#include "symbol/expression/FunctionCallExpression.h"
 
 namespace dem {
     namespace parser {
-        class FunctionCallFactory : public SymbolFactory {
+        class FunctionCallExpressionFactory : public SymbolFactory {
         public:
-            static FunctionCall *produce(std::deque<lexer::Token> &tokens);
+            static FunctionCallExpression *produce(std::deque<lexer::Token> &tokens, Expression *expression);
         };
     }
 }

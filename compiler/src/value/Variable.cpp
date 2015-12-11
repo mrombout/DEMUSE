@@ -84,7 +84,7 @@ namespace dem {
             return (*mValue)[index];
         }
 
-        Value *Variable::operator[](const std::string &index) {
+        Variable *Variable::operator[](const std::string &index) {
             return (*mValue)[index];
         }
 

@@ -76,7 +76,6 @@ namespace dem {
             virtual bool visit(parser::Text &text) override;
             virtual bool visitEnter(parser::FunctionDefinition &functionDefinition) override;
 
-            virtual bool visit(parser::FunctionCall &functionCall) override;
             virtual bool visitLeave(parser::ArrayAccessExpression &arrayAccessExpression);
 
         private:

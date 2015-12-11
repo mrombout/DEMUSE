@@ -1,4 +1,11 @@
 track 1 {
-	var A = "Lorum ipsum";
-	var B = A.length;
+	//var A = "Lorum ipsum";
+	//var B = A.length;
+
+	var Test = new Object();
+	Test.foo = function() {
+		var X = 1;
+	};
+
+	Test.foo();
 }
