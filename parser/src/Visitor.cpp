@@ -87,7 +87,6 @@ namespace dem {
         bool Visitor::visitLeave(parser::ExponentExpression &exponentExpression) { return true; }
 
         bool Visitor::visitEnter(Expression &expression) { return true; }
-        bool Visitor::visit(Expression &expression) { return true; }
         bool Visitor::visitLeave(Expression &expression) { return true; }
 
         bool Visitor::visitEnter(LargerThanCondition &largerThanCondition) { return true; }
@@ -130,5 +129,8 @@ namespace dem {
         bool Visitor::visitLeave(parser::Play &play) { return true; }
 
         bool Visitor::visit(parser::Note &note) { return true; }
+
+        bool Visitor::visitEnter(parser::FunctionCallExpression &functionCallExpression) { return true; }
+        bool Visitor::visitLeave(parser::FunctionCallExpression &functionCallExpression) { return true; }
     }
 }

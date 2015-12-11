@@ -139,7 +139,6 @@ namespace dem {
             virtual bool visitLeave(parser::ExponentExpression &exponentExpression);
 
             virtual bool visitEnter(parser::Expression &expression);
-            virtual bool visit(parser::Expression &expression);
             virtual bool visitLeave(parser::Expression &expression);
 
             virtual bool visitEnter(parser::LargerThanCondition &largerThanCondition);
@@ -180,6 +179,9 @@ namespace dem {
 
             virtual bool visitEnter(parser::Play &play);
             virtual bool visitLeave(parser::Play &play);
+
+            virtual bool visitEnter(parser::FunctionCallExpression &functionCallExpression);
+            virtual bool visitLeave(parser::FunctionCallExpression &functionCallExpression);
 
             virtual bool visit(parser::Note &note);
         };

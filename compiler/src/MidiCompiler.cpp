@@ -148,24 +148,6 @@ namespace dem {
             return false;
         }
 
-        bool MidiCompiler::visitEnter(parser::Expression &expression) {
-            std::cout << "ENTER - Expression" << std::endl;
-
-            return true;
-        }
-
-        bool MidiCompiler::visit(parser::Expression &expression) {
-            std::cout << "VISIT - Expression" << std::endl;
-
-            return true;
-        }
-
-        bool MidiCompiler::visitLeave(parser::Expression &expression) {
-            std::cout << "LEAVE - Expression" << std::endl;
-
-            return true;
-        }
-
         bool MidiCompiler::visitEnter(parser::PropertyAccessExpression &propertyAccessExpression) {
             std::cout << "ENTER - PropertyAccessExpression" << std::endl;
 
@@ -204,6 +186,20 @@ namespace dem {
 
         std::deque<Scope*> &MidiCompiler::scopes() {
             return mScopes;
+        }
+
+        bool MidiCompiler::visitEnter(parser::FunctionCallExpression &functionCallExpression) {
+            std::cout << "ENTER - FunctionCallExpression" << std::endl;
+
+            mEvaluator.evaluate(mScopes.front(), functionCallExpression);
+
+            return true;
+        }
+
+        bool MidiCompiler::visitLeave(parser::FunctionCallExpression &functionCallExpression) {
+            std::cout << "LEAVE - FunctionCallExpression" << std::endl;
+
+            return true;
         }
     }
 }

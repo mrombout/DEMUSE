@@ -20,6 +20,7 @@ namespace dem {
             // ")"
             expect(tokens, lexer::TokenType::CLOSE);
 
+            std::cout << "[CREATE] FunctionCallExpression" << std::endl;
             return new FunctionCallExpression(argumentList, expression);
         }
     }

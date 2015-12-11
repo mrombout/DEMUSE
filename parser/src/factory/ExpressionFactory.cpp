@@ -1,4 +1,3 @@
-#include <factory/NewInstanceFactory.h>
 #include "exception/ParsingException.h"
 #include "factory/IdentifierFactory.h"
 #include "factory/ExpressionFactory.h"
@@ -6,6 +5,8 @@
 #include "factory/FunctionCallExpressionFactory.h"
 #include "factory/ArrayAccessFactory.h"
 #include "factory/FunctionDefinitionFactory.h"
+#include "factory/NewInstanceFactory.h"
+#include "factory/ArgumentListFactory.h"
 #include "symbol/expression/AdditionExpression.h"
 #include "symbol/expression/SubtractionExpression.h"
 #include "symbol/expression/MultiplicationExpression.h"
@@ -154,7 +155,8 @@ namespace dem {
                 || token.is(lexer::TokenType::AND)
                 || token.is(lexer::TokenType::OR)
                 || token.is(lexer::TokenType::SM)
-                || token.is(lexer::TokenType::PERIOD);
+                || token.is(lexer::TokenType::PERIOD)
+                || token.is(lexer::TokenType::OPEN);
 
             bool smallerOrEqual = isBinaryOperator ? mOperatorPrecedence.at(token.type()) >= minPrecedence : false;
 
@@ -162,51 +164,55 @@ namespace dem {
         }
 
         Expression *ExpressionFactory::producePrimary(std::deque<lexer::Token> &tokens) {
+            Expression *expression = nullptr;
+
             if(accept(tokens, lexer::TokenType::OPEN)) {
                 // nested expression
-                Expression *expression = processExpression(tokens, 1);
+                expression = processExpression(tokens, 1);
                 expect(tokens, lexer::TokenType::CLOSE);
-
-                return expression;
             } else if(accept(tokens, lexer::TokenType::BRACKET_OPEN)) {
                 // array initializer
                 std::vector<Expression*> values;
 
                 if(!tokens.front().is(lexer::TokenType::BRACKET_CLOSE)) {
                     do {
-                        Expression *expression = processExpression(tokens, 1);
-                        values.push_back(expression);
+                        Expression *subExpression = processExpression(tokens, 1);
+                        values.push_back(subExpression);
                     } while(accept(tokens, lexer::TokenType::COMMA));
                 }
                 expect(tokens, lexer::TokenType::BRACKET_CLOSE);
 
-                return new Array(values);
+                expression = new Array(values);
             } else if(tokens.front().is(lexer::TokenType::NEW)) {
-                return NewInstanceFactory::produce(tokens);
+                expression = NewInstanceFactory::produce(tokens);
             } else if(tokens.front().is(lexer::TokenType::FUNCTION)) {
-                return FunctionDefinitionFactory::produce(tokens);
+                expression = FunctionDefinitionFactory::produce(tokens);
             } else if(tokens.front().is(lexer::TokenType::IDENTIFIER)) {
-                Expression *expression = nullptr;
-
-                // identifier | call
-                expression = IdentifierFactory::produce(tokens);
-
-                // array access?
                 if(tokens.front().is(lexer::TokenType::BRACKET_OPEN)) {
-                    return ArrayAccessFactory::produce(tokens, expression);
+                    // array access?
+                    expression = ArrayAccessFactory::produce(tokens, expression);
+                } else {
+                    // identifier | call
+                    expression = IdentifierFactory::produce(tokens);
                 }
-
-                return expression;
             } else if(tokens.front().is(lexer::TokenType::NUMBER)
                    || tokens.front().is(lexer::TokenType::TEXT)
                    || tokens.front().is(lexer::TokenType::BOOL)
                    || tokens.front().is(lexer::TokenType::POSITIVE)
                    || tokens.front().is(lexer::TokenType::NEGATIVE)) {
                 // primitive
-                return PrimitiveFactory::produce(tokens);
+                expression = PrimitiveFactory::produce(tokens);
             }
 
-            throw ParsingException(tokens.front(), "Unrecognized primary '" + tokens.front().content() + "' in expression.");
+            if(!expression)
+                throw ParsingException(tokens.front(), "Unrecognized primary '" + tokens.front().content() + "' in expression.");
+
+            // postfix
+            if(tokens.front().is(lexer::TokenType::OPEN)) {
+                expression = FunctionCallExpressionFactory::produce(tokens, expression);
+            }
+
+            return expression;
         }
 
         Expression *ExpressionFactory::produceExpression(lexer::Token token, Expression *lhs, Expression *rhs) {
@@ -256,6 +262,7 @@ namespace dem {
                 case lexer::TokenType::OR:
                     return new OrCondition(lhs, rhs);
                 case lexer::TokenType::PERIOD:
+                    std::cout << "[CREATE] PropertyAccessExpression" << std::endl;
                     return new PropertyAccessExpression(lhs, rhs);
             }
         }

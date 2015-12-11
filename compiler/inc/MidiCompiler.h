@@ -46,6 +46,9 @@ namespace dem {
             virtual bool visitEnter(parser::Track &track) override;
             virtual bool visitLeave(parser::Track &track) override;
 
+            virtual bool visitEnter(parser::FunctionCallExpression &expression) override;
+            virtual bool visitLeave(parser::FunctionCallExpression &expression) override;
+
             virtual std::deque<Scope*> &scopes();
 
         private:
@@ -53,12 +56,6 @@ namespace dem {
             PlayEvaluator mPlayEvaluator;
             std::deque<Scope*> mScopes;
             Value *mReturnValue;
-        public:
-            virtual bool visitEnter(parser::Expression &expression) override;
-
-            virtual bool visit(parser::Expression &expression) override;
-
-            virtual bool visitLeave(parser::Expression &expression) override;
         };
     }
 }

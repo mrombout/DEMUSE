@@ -7,7 +7,8 @@
 namespace dem {
     namespace parser {
         class Expression : public Statement {
-
+        public:
+            virtual ~Expression() { }
         };
     }
 }
