@@ -2,13 +2,13 @@
 #define DEMUSE_TEXT_H
 
 #include <string>
-#include "Primitive.h"
+#include "symbol/expression/Literal.h"
 
 namespace dem {
     namespace parser {
-        class Text : public Primitive {
+        class TextLiteral : public Literal {
         public:
-            Text(std::string value);
+            TextLiteral(std::string value);
 
             std::string value() const;
 

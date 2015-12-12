@@ -2,7 +2,7 @@
 #include <symbol/Block.h>
 #include "factory/FunctionDefinitionFactory.h"
 #include "symbol/Identifier.h"
-#include "symbol/FunctionDefinition.h"
+#include "symbol/expression/FunctionDefinition.h"
 
 class FunctionDefinitionTest : public ::testing::Test {
 protected:

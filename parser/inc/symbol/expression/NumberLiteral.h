@@ -2,13 +2,13 @@
 #define DEMUSE_NUMBER_H
 
 #include <string>
-#include "Primitive.h"
+#include "Literal.h"
 
 namespace dem {
     namespace parser {
-        class Number : public Primitive {
+        class NumberLiteral : public Literal {
         public:
-            Number(double value);
+            NumberLiteral(double value);
 
             virtual bool accept(Visitor &visitor);
 

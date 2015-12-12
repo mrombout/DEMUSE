@@ -404,7 +404,7 @@ namespace dem {
             return true;
         }
 
-        bool ExpressionEvaluator::visitEnter(parser::Array &array) {
+        bool ExpressionEvaluator::visitEnter(parser::ArrayLiteral &array) {
             std::cout << "ENTER - Evaluating Array" << std::endl;
 
             std::vector<parser::Expression*> &expressions = array.expressions();

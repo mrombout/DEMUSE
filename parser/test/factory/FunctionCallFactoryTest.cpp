@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "FunctionCallExpressionFactory.h"
+#include "factory/FunctionCallExpressionFactory.h"
 #include "exception/ParsingException.h"
 
 class FunctionCallFactoryTest : public ::testing::Test {
@@ -22,11 +22,12 @@ TEST_F(FunctionCallFactoryTest, Produce_NoArguments) {
     };
 
     // act
-    dem::parser::FunctionCall *functionCall = dem::parser::FunctionCallExpressionFactory::produce(tokens);
+    //dem::parser::FunctionCallExpression *functionCall = dem::parser::FunctionCallExpressionFactory::produce(tokens);
 
     // assert
-    ASSERT_TRUE(functionCall);
-    ASSERT_FALSE(functionCall->argumentList());
+    //ASSERT_TRUE(functionCall);
+    //ASSERT_FALSE(functionCall->argumentList());
+    FAIL();
 }
 
 TEST_F(FunctionCallFactoryTest, Produce_SingleArgument) {
@@ -40,12 +41,13 @@ TEST_F(FunctionCallFactoryTest, Produce_SingleArgument) {
     };
 
     // act
-    dem::parser::FunctionCall *functionCall = dem::parser::FunctionCallExpressionFactory::produce(tokens);
+    //dem::parser::FunctionCallExpression *functionCall = dem::parser::FunctionCallExpressionFactory::produce(tokens);
 
     // assert
-    ASSERT_TRUE(functionCall);
-    ASSERT_TRUE(functionCall->argumentList());
-    ASSERT_EQ(1, functionCall->argumentList()->numArguments());
+    //ASSERT_TRUE(functionCall);
+    //ASSERT_TRUE(functionCall->argumentList());
+    //ASSERT_EQ(1, functionCall->argumentList()->numArguments());
+    FAIL();
 }
 
 TEST_F(FunctionCallFactoryTest, Error_ForgetOpen) {
@@ -58,10 +60,11 @@ TEST_F(FunctionCallFactoryTest, Error_ForgetOpen) {
     };
 
     // act
-    dem::parser::FunctionCall *functionCall = dem::parser::FunctionCallExpressionFactory::produce(tokens);
+    //dem::parser::FunctionCallExpression *functionCall = dem::parser::FunctionCallExpressionFactory::produce(tokens);
 
     // assert
-    ASSERT_FALSE(functionCall);
+    //ASSERT_FALSE(functionCall);
+    FAIL();
 }
 
 TEST_F(FunctionCallFactoryTest, Error_ForgetClose) {
@@ -74,7 +77,8 @@ TEST_F(FunctionCallFactoryTest, Error_ForgetClose) {
     };
 
     // act / assert
-    ASSERT_THROW({ dem::parser::FunctionCallExpressionFactory::produce(tokens); }, dem::parser::ParsingException);
+    //ASSERT_THROW({ dem::parser::FunctionCallExpressionFactory::produce(tokens); }, dem::parser::ParsingException);
+    FAIL();
 }
 
 TEST_F(FunctionCallFactoryTest, Error_ForgetParenthesis) {
@@ -85,8 +89,9 @@ TEST_F(FunctionCallFactoryTest, Error_ForgetParenthesis) {
     };
 
     // act
-    dem::parser::FunctionCall *functionCall = dem::parser::FunctionCallExpressionFactory::produce(tokens);
+    //dem::parser::FunctionCall *functionCall = dem::parser::FunctionCallExpressionFactory::produce(tokens);
 
     // assert
-    ASSERT_FALSE(functionCall);
+    //ASSERT_FALSE(functionCall);
+    FAIL();
 }

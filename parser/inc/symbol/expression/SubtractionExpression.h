@@ -7,12 +7,9 @@ namespace dem {
     namespace parser {
         class SubtractionExpression : public BinaryExpression<Expression, Expression> {
         public:
+            SubtractionExpression(Expression *left, Expression *right);
+
             virtual bool accept(Visitor &visitor);
-
-            SubtractionExpression(Expression *left, Expression *right) :
-                    BinaryExpression(left, right) {
-
-            }
         };
     }
 }

@@ -66,7 +66,7 @@ namespace dem {
             virtual bool visitEnter(parser::OrCondition &orCondition) override;
             virtual bool visitLeave(parser::OrCondition &orCondition) override;
 
-            virtual bool visitEnter(parser::Array &array) override;
+            virtual bool visitEnter(parser::ArrayLiteral &array) override;
             virtual bool visit(parser::Identifier &identifier) override;
             virtual bool visit(parser::Number &number) override;
             virtual bool visit(parser::Bool &boolSymbol) override;

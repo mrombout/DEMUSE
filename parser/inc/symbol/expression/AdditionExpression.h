@@ -5,12 +5,6 @@
 
 namespace dem {
     namespace parser {
-        class Expression;
-    }
-}
-
-namespace dem {
-    namespace parser {
         class AdditionExpression : public BinaryExpression<Expression, Expression> {
         public:
             AdditionExpression(Expression *left, Expression *right);

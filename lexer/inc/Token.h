@@ -9,7 +9,7 @@ namespace dem {
     namespace lexer {
         class Token {
         public:
-            Token(const TokenType type, std::string content, TokenPosition tokenPosition);
+            Token(TokenType type, std::string content, TokenPosition tokenPosition);
 
             const TokenType &type() const;
             const bool is(TokenType tokenType) const;
@@ -21,7 +21,7 @@ namespace dem {
             const int column() const;
 
         private:
-            const TokenType mType;
+            TokenType mType;
             std::string mContent;
 
             TokenPosition mTokenPosition;

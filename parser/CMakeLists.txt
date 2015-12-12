@@ -13,14 +13,17 @@ set(Parser_SRCS
     inc/MuseParser.h
     src/MuseParser.cpp
 
+    inc/PrintVisitor.h
+    src/PrintVisitor.cpp
+
     inc/exception/ParsingException.h
     src/exception/ParsingException.cpp
 
     inc/symbol/Symbol.h
     src/symbol/Symbol.cpp
 
-    inc/symbol/Array.h
-    src/symbol/Array.cpp
+    inc/symbol/expression/ArrayLiteral.h
+    src/symbol/expression/ArrayLiteral.cpp
 
     inc/symbol/Program.h
     src/symbol/Program.cpp
@@ -78,17 +81,17 @@ set(Parser_SRCS
 
     inc/symbol/Primitive.h
 
-    inc/symbol/Bool.h
-    src/symbol/Bool.cpp
+    inc/symbol/expression/BoolLiteral.h
+    src/symbol/expression/BoolLiteral.cpp
 
-    inc/symbol/Text.h
-    src/symbol/Text.cpp
+    inc/symbol/expression/TextLiteral.h
+    src/symbol/expression/TextLiteral.cpp
 
     inc/symbol/Track.h
     src/symbol/Track.cpp
 
-    inc/symbol/Number.h
-    src/symbol/Number.cpp
+    inc/symbol/expression/NumberLiteral.h
+    src/symbol/expression/NumberLiteral.cpp
 
     inc/symbol/expression/Expression.h
     src/symbol/expression/Expression.cpp
@@ -101,11 +104,17 @@ set(Parser_SRCS
 
     inc/symbol/expression/BinaryExpression.h
 
+    inc/symbol/expression/CallExpression.h
+    src/symbol/expression/CallExpression.cpp
+
     inc/symbol/expression/AdditionExpression.h
     src/symbol/expression/AdditionExpression.cpp
 
     inc/symbol/expression/SubtractionExpression.h
     src/symbol/expression/SubtractionExpression.cpp
+
+    inc/symbol/expression/UnaryExpression.h
+    src/symbol/expression/UnaryExpression.cpp
 
     inc/symbol/expression/MultiplicationExpression.h
     src/symbol/expression/MultiplicationExpression.cpp
@@ -139,6 +148,12 @@ set(Parser_SRCS
 
     inc/symbol/expression/LargerThanOrEqualCondition.h
     src/symbol/expression/LargerThanOrEqualCondition.cpp
+
+    inc/symbol/expression/Literal.h
+    src/symbol/expression/Literal.cpp
+
+    inc/symbol/expression/MemberExpression.h
+    src/symbol/expression/MemberExpression.cpp
 
     inc/symbol/expression/NotEqualCondition.h
     src/symbol/expression/NotEqualCondition.cpp

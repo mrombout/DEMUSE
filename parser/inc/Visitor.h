@@ -1,29 +1,33 @@
 #ifndef DEMUSE_DEMUSEVISITOR_H
 #define DEMUSE_DEMUSEVISITOR_H
 
-#include <symbol/expression/PropertyAccessExpression.h>
-#include <symbol/expression/FunctionCallExpression.h>
+#include <symbol/expression/CallExpression.h>
+#include <symbol/expression/MemberExpression.h>
+#include <symbol/expression/UnaryExpression.h>
+#include "symbol/expression/PropertyAccessExpression.h"
+#include "symbol/expression/FunctionCallExpression.h"
 #include "symbol/expression/AssignmentExpression.h"
 #include "symbol/ArgumentList.h"
 #include "symbol/Assignment.h"
 #include "symbol/Block.h"
-#include "symbol/Bool.h"
 #include "symbol/Break.h"
 #include "symbol/Continue.h"
 #include "symbol/For.h"
 #include "symbol/expression/FunctionDefinition.h"
 #include "symbol/Identifier.h"
 #include "symbol/If.h"
-#include "symbol/Number.h"
 #include "symbol/ParameterList.h"
 #include "symbol/Program.h"
 #include "symbol/Return.h"
 #include "symbol/Statement.h"
 #include "symbol/Symbol.h"
-#include "symbol/Text.h"
 #include "symbol/Track.h"
 #include "symbol/VariableDeclaration.h"
 #include "symbol/While.h"
+#include "symbol/expression/BoolLiteral.h"
+#include "symbol/expression/NumberLiteral.h"
+#include "symbol/expression/TextLiteral.h"
+#include "symbol/expression/ArrayLiteral.h"
 #include "symbol/expression/AdditionExpression.h"
 #include "symbol/expression/AndCondition.h"
 #include "symbol/expression/ArrayAccessExpression.h"
@@ -44,7 +48,6 @@
 #include "symbol/expression/StrictEqualCondition.h"
 #include "symbol/expression/StrictNotEqualCondition.h"
 #include "symbol/expression/SubtractionExpression.h"
-#include "symbol/Array.h"
 #include "symbol/play/Play.h"
 #include "symbol/play/Note.h"
 
@@ -55,8 +58,8 @@ namespace dem {
             virtual bool visitEnter(parser::ArgumentList &argumentList);
             virtual bool visitLeave(parser::ArgumentList &argumentList);
 
-            virtual bool visitEnter(parser::Array &array);
-            virtual bool visitLeave(parser::Array &array);
+            virtual bool visitEnter(parser::ArrayLiteral &array);
+            virtual bool visitLeave(parser::ArrayLiteral &array);
 
             virtual bool visitEnter(parser::Assignment &assignment);
             virtual bool visitLeave(parser::Assignment &assignment);
@@ -64,11 +67,14 @@ namespace dem {
             virtual bool visitEnter(parser::Block &block);
             virtual bool visitLeave(parser::Block &block);
 
-            virtual bool visit(parser::Bool &boolSymbol);
+            virtual bool visit(parser::BoolLiteral &boolSymbol);
 
             virtual bool visit(parser::Break &breakSymbol);
 
             virtual bool visit(parser::Continue &continueSymbol);
+
+            virtual bool visitEnter(parser::CallExpression &continueSymbol);
+            virtual bool visitLeave(parser::CallExpression &continueSymbol);
 
             virtual bool visitEnter(parser::For &forSymbol);
             virtual bool visitLeave(parser::For &forSymbol);
@@ -82,7 +88,7 @@ namespace dem {
 
             virtual bool visitLeave(parser::If &ifSymbol);
 
-            virtual bool visit(parser::Number &number);
+            virtual bool visit(parser::NumberLiteral &number);
 
             virtual bool visitEnter(parser::ParameterList &parameterList);
             virtual bool visitLeave(parser::ParameterList &parameterList);
@@ -102,7 +108,7 @@ namespace dem {
             virtual bool visit(parser::Symbol &symbol);
             virtual bool visitLeave(parser::Symbol &symbol);
 
-            virtual bool visit(parser::Text &text);
+            virtual bool visit(parser::TextLiteral &text);
 
             virtual bool visitEnter(parser::Track &track);
             virtual bool visitLeave(parser::Track &track);
@@ -182,6 +188,12 @@ namespace dem {
 
             virtual bool visitEnter(parser::FunctionCallExpression &functionCallExpression);
             virtual bool visitLeave(parser::FunctionCallExpression &functionCallExpression);
+
+            virtual bool visitEnter(parser::MemberExpression &memberExpression);
+            virtual bool visitLeave(parser::MemberExpression &memberExpression);
+
+            virtual bool visitEnter(parser::UnaryExpression &unaryExpression);
+            virtual bool visitLeave(parser::UnaryExpression &unaryExpression);
 
             virtual bool visit(parser::Note &note);
         };

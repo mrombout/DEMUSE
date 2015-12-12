@@ -2,13 +2,13 @@
 #define DEMUSE_BOOL_H
 
 #include <string>
-#include "Primitive.h"
+#include "Literal.h"
 
 namespace dem {
     namespace parser {
-        class Bool : public Primitive {
+        class BoolLiteral : public Literal {
         public:
-            Bool(bool value);
+            BoolLiteral(bool value);
 
             virtual bool accept(Visitor &visitor);
 

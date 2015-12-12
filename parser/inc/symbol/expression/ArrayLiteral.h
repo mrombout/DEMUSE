@@ -2,13 +2,13 @@
 #define DEMUSE_ARRAY_H
 
 #include <vector>
-#include "symbol/expression/Expression.h"
+#include "symbol/expression/Literal.h"
 
 namespace dem {
     namespace parser {
-        class Array : public Expression {
+        class ArrayLiteral : public Literal {
         public:
-            Array(std::vector<Expression*> values);
+            ArrayLiteral(std::vector<Expression*> values);
 
             std::vector<Expression*> &expressions();
 

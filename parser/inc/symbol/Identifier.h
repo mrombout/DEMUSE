@@ -3,17 +3,16 @@
 
 #include <string>
 #include "expression/Expression.h"
-#include "Identifiable.h"
 
 namespace dem {
     namespace parser {
-        class Identifier : public Expression, public parser::Identifiable {
+        class Identifier : public Expression {
         public:
             Identifier(std::string name);
 
             virtual bool accept(Visitor &visitor);
 
-            virtual const std::string &name() const override;
+            virtual const std::string &name() const;
 
         private:
             std::string mName;

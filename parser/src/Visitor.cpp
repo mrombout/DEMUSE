@@ -5,8 +5,8 @@ namespace dem {
         bool Visitor::visitEnter(ArgumentList &argumentList) { return true; }
         bool Visitor::visitLeave(ArgumentList &argumentList) { return true; }
 
-        bool Visitor::visitEnter(Array &array) { return true; }
-        bool Visitor::visitLeave(Array &array) { return true; }
+        bool Visitor::visitEnter(ArrayLiteral &array) { return true; }
+        bool Visitor::visitLeave(ArrayLiteral &array) { return true; }
 
         bool Visitor::visitEnter(Assignment &assignment) { return true; }
         bool Visitor::visitLeave(Assignment &assignment) { return true; }
@@ -14,7 +14,7 @@ namespace dem {
         bool Visitor::visitEnter(Block &block) { return true; }
         bool Visitor::visitLeave(Block &block) { return true; }
 
-        bool Visitor::visit(Bool &boolSymbol) { return true; }
+        bool Visitor::visit(BoolLiteral &boolSymbol) { return true; }
 
         bool Visitor::visit(Break &breakSymbol) { return true; }
 
@@ -31,7 +31,7 @@ namespace dem {
         bool Visitor::visitEnter(If &ifSymbol) { return true; }
         bool Visitor::visitLeave(If &ifSymbol) { return true; }
 
-        bool Visitor::visit(Number &number) { return true; }
+        bool Visitor::visit(NumberLiteral &number) { return true; }
 
         bool Visitor::visitEnter(ParameterList &parameterList) { return true; }
         bool Visitor::visitLeave(ParameterList &parameterList) { return true; }
@@ -50,7 +50,7 @@ namespace dem {
         bool Visitor::visit(Symbol &symbol) { return true; }
         bool Visitor::visitLeave(Symbol &symbol) { return true; }
 
-        bool Visitor::visit(Text &text) { return true; }
+        bool Visitor::visit(TextLiteral &text) { return true; }
 
         bool Visitor::visitEnter(parser::Track &track) { return true; }
         bool Visitor::visitLeave(parser::Track &track) { return true; }
@@ -132,5 +132,14 @@ namespace dem {
 
         bool Visitor::visitEnter(parser::FunctionCallExpression &functionCallExpression) { return true; }
         bool Visitor::visitLeave(parser::FunctionCallExpression &functionCallExpression) { return true; }
+
+        bool Visitor::visitEnter(parser::CallExpression &continueSymbol) { return true; }
+        bool Visitor::visitLeave(parser::CallExpression &continueSymbol) { return true; }
+
+        bool Visitor::visitEnter(parser::MemberExpression &memberExpression) { return true; }
+        bool Visitor::visitLeave(parser::MemberExpression &memberExpression) { return true; }
+
+        bool Visitor::visitEnter(parser::UnaryExpression &unaryExpression) { return true; }
+        bool Visitor::visitLeave(parser::UnaryExpression &unaryExpression) { return true; }
     }
 }

@@ -1,18 +1,18 @@
-#include "symbol/Number.h"
+#include "symbol/expression/BoolLiteral.h"
 #include "Visitor.h"
 
 namespace dem {
     namespace parser {
-        Number::Number(double value) :
+        BoolLiteral::BoolLiteral(bool value) :
             mValue(value) {
 
         }
 
-        double Number::value() const {
+        bool BoolLiteral::value() const {
             return mValue;
         }
 
-        bool Number::accept(Visitor &visitor) {
+        bool BoolLiteral::accept(Visitor &visitor) {
             visitor.visit(*this);
         }
     }
