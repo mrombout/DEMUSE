@@ -253,6 +253,9 @@ set(Parser_SRCS
 
     inc/factory/FunctionCallExpressionFactory.h
     src/factory/FunctionCallExpressionFactory.cpp
+
+    inc/factory/NoteFactory.h
+    src/factory/NoteFactory.cpp
 )
 
 set(TestParser_SRCS
@@ -274,7 +277,8 @@ set(TestParser_SRCS
     test/factory/WhileFactoryTest.cpp
     test/factory/PrimitiveFactoryTest.cpp
     test/factory/FunctionCallFactoryTest.cpp
-    src/factory/NewInstanceFactory.cpp inc/factory/NewInstanceFactory.h)
+    src/factory/NewInstanceFactory.cpp inc/factory/NewInstanceFactory.h
+)
 
 add_library(libparser ${Parser_SRCS})
 add_library(dem::libparser ALIAS libparser)

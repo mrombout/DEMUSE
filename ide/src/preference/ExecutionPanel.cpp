@@ -54,12 +54,12 @@ namespace dem {
 
         void ExecutionPanel::changedCompilerPath(wxCommandEvent &e) {
             wxFileConfig &config = wxGetApp().config();
-            config.Write("execution/compiler", mCompilerPath->GetTextCtrlValue());
+            config.Write("execution/compiler", mCompilerPath->GetPath());
         }
 
         void ExecutionPanel::changedMediaPlayerPath(wxCommandEvent &e) {
             wxFileConfig &config = wxGetApp().config();
-            config.Write("execution/media_player", mMediaPlayerPath->GetTextCtrlValue());
+            config.Write("execution/media_player", mMediaPlayerPath->GetPath());
         }
     }
 }
