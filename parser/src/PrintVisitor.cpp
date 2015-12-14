@@ -13,6 +13,23 @@ namespace dem {
             symbol->accept(*this);
         }
 
+        bool PrintVisitor::visitEnter(parser::AssignmentExpression &assignmentExpression) {
+            std::cout << std::string(mIndentation, '\t') << "- type: AssignmentExpression" << std::endl;
+            std::cout << std::string(mIndentation, '\t') << "- operator: =" << std::endl;
+
+            std::cout << std::string(mIndentation, '\t') << "- left: " << std::endl;
+            ++mIndentation;
+            assignmentExpression.left().accept(*this);
+            --mIndentation;
+
+            std::cout << std::string(mIndentation, '\t') << "- right: " << std::endl;
+            ++mIndentation;
+            assignmentExpression.right().accept(*this);
+            --mIndentation;
+
+            return false;
+        }
+
         bool PrintVisitor::visitEnter(parser::AdditionExpression &additionExpression) {
             std::cout << std::string(mIndentation, '\t') << "- type: AdditionExpression" << std::endl;
             std::cout << std::string(mIndentation, '\t') << "- operator: +" << std::endl;
@@ -321,6 +338,21 @@ namespace dem {
         bool PrintVisitor::visit(parser::BoolLiteral &boolSymbol) {
             std::cout << std::string(mIndentation, '\t') << "- type: BoolLiteral" << std::endl;
             std::cout << std::string(mIndentation, '\t') << "- value: " << boolSymbol.value() << std::endl;
+
+            return true;
+        }
+
+        bool PrintVisitor::visitEnter(parser::ArrayLiteral &array) {
+            std::cout << std::string(mIndentation, '\t') << "- type: ArrayLiteral" << std::endl;
+            std::cout << std::string(mIndentation, '\t') << "- elements:" << std::endl;
+
+            mIndentation++;
+
+            return true;
+        }
+
+        bool PrintVisitor::visitLeave(parser::ArrayLiteral &array) {
+            mIndentation--;
 
             return true;
         }

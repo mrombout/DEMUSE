@@ -11,6 +11,8 @@ namespace dem {
 
             void print(Symbol *symbol);
 
+            virtual bool visitEnter(parser::AssignmentExpression &assignmentExpression) override;
+
             virtual bool visitEnter(parser::AdditionExpression &additionExpression) override;
             virtual bool visitEnter(parser::SubtractionExpression &subtractionExpression) override;
             virtual bool visitEnter(parser::MultiplicationExpression &multiplicationExpression) override;
@@ -32,6 +34,8 @@ namespace dem {
             virtual bool visitEnter(parser::UnaryExpression &unaryExpression) override;
 
             virtual bool visit(parser::Identifier &identifier) override;
+            virtual bool visitEnter(parser::ArrayLiteral &array) override;
+            virtual bool visitLeave(parser::ArrayLiteral &array) override;
             virtual bool visit(parser::NumberLiteral &number) override;
             virtual bool visit(parser::TextLiteral &text) override;
             virtual bool visit(parser::BoolLiteral &boolSymbol) override;

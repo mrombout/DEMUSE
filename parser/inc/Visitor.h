@@ -73,8 +73,8 @@ namespace dem {
 
             virtual bool visit(parser::Continue &continueSymbol);
 
-            virtual bool visitEnter(parser::CallExpression &continueSymbol);
-            virtual bool visitLeave(parser::CallExpression &continueSymbol);
+            virtual bool visitEnter(parser::CallExpression &callExpression);
+            virtual bool visitLeave(parser::CallExpression &callExpression);
 
             virtual bool visitEnter(parser::For &forSymbol);
             virtual bool visitLeave(parser::For &forSymbol);

@@ -1,16 +1,5 @@
 #include <sstream>
 #include <stack>
-#include <symbol/expression/AndCondition.h>
-#include <symbol/expression/EqualCondition.h>
-#include <symbol/expression/LargerThanCondition.h>
-#include <symbol/expression/LargerThanOrEqualCondition.h>
-#include <symbol/expression/NotEqualCondition.h>
-#include <symbol/expression/OrCondition.h>
-#include <symbol/expression/SmallerThanCondition.h>
-#include <symbol/expression/SmallerThanOrEqualCondition.h>
-#include <symbol/expression/StrictEqualCondition.h>
-#include <symbol/expression/StrictNotEqualCondition.h>
-#include <symbol/expression/UnaryExpression.h>
 #include "exception/ParsingException.h"
 #include "factory/IdentifierFactory.h"
 #include "factory/ExpressionFactory.h"
@@ -23,33 +12,48 @@
 #include "symbol/expression/MemberExpression.h"
 #include "symbol/expression/BoolLiteral.h"
 #include "symbol/expression/TextLiteral.h"
+#include "symbol/expression/AndCondition.h"
+#include "symbol/expression/EqualCondition.h"
+#include "symbol/expression/LargerThanCondition.h"
+#include "symbol/expression/LargerThanOrEqualCondition.h"
+#include "symbol/expression/NotEqualCondition.h"
+#include "symbol/expression/OrCondition.h"
+#include "symbol/expression/SmallerThanCondition.h"
+#include "symbol/expression/SmallerThanOrEqualCondition.h"
+#include "symbol/expression/StrictEqualCondition.h"
+#include "symbol/expression/StrictNotEqualCondition.h"
+#include "symbol/expression/UnaryExpression.h"
+#include "symbol/expression/AssignmentExpression.h"
+#include "symbol/expression/ExponentExpression.h"
+#include "symbol/expression/ArrayAccessExpression.h"
 #include "symbol/Identifier.h"
 
 namespace dem {
     namespace parser {
-        const std::map<lexer::TokenType, unsigned int> ExpressionFactory::BINARY_OPS = {
-            { lexer::TokenType::OR,    1 },
-            { lexer::TokenType::AND,   2 },
+        const std::map<lexer::TokenType, OperatorInfo> ExpressionFactory::BINARY_OPS = {
+            { lexer::TokenType::ASSIGNMENT, { 1, Associativity::RIGHT } },
+            { lexer::TokenType::OR,         { 2, Associativity::LEFT } },
+            { lexer::TokenType::AND,        { 3, Associativity::LEFT } },
             // TODO: { lexer::TokenType::BW_OR,  3 }
             // TODO: { lexer::TokenType::BW_XOW, 4 }
             // TODO: { lexer::TokenType::BW_AND, 5 },
-            { lexer::TokenType::EQ,   6 },
-            { lexer::TokenType::NEQ,   6 },
-            { lexer::TokenType::TEQ,   6 },
-            { lexer::TokenType::TNEQ,   6 },
-            { lexer::TokenType::SM,   7 },
-            { lexer::TokenType::LR,   7 },
-            { lexer::TokenType::SMEQ,   7 },
-            { lexer::TokenType::LREQ,   7 },
+            { lexer::TokenType::EQ,         { 6, Associativity::LEFT } },
+            { lexer::TokenType::NEQ,        { 6, Associativity::LEFT } },
+            { lexer::TokenType::TEQ,        { 6, Associativity::LEFT } },
+            { lexer::TokenType::TNEQ,       { 6, Associativity::LEFT } },
+            { lexer::TokenType::SM,         { 7, Associativity::LEFT } },
+            { lexer::TokenType::LR,         { 7, Associativity::LEFT } },
+            { lexer::TokenType::SMEQ,       { 7, Associativity::LEFT } },
+            { lexer::TokenType::LREQ,       { 7, Associativity::LEFT } },
             // TODO: { lexer::TokenType::BW_SHIFT_LEFT,   8 },
             // TODO: { lexer::TokenType::BW_SHIFT_RIGHT,   8 },
             // TODO: { lexer::TokenType::BW_U_SHIFT_RIGHT,   8 },
-            { lexer::TokenType::PLUS,   9 },
-            { lexer::TokenType::MINUS,  9 },
-            { lexer::TokenType::TIMES,   10 },
-            { lexer::TokenType::DIVIDE,   10 },
-            { lexer::TokenType::MOD,   10 },
-
+            { lexer::TokenType::PLUS,       { 9, Associativity::LEFT } },
+            { lexer::TokenType::MINUS,      { 9, Associativity::LEFT } },
+            { lexer::TokenType::TIMES,      { 10, Associativity::LEFT } },
+            { lexer::TokenType::DIVIDE,     { 10, Associativity::LEFT } },
+            { lexer::TokenType::MOD,        { 10, Associativity::LEFT } },
+            { lexer::TokenType::EXP,        { 11, Associativity::RIGHT } },
         };
 
         Expression *ExpressionFactory::produce(std::deque <lexer::Token> &tokens) {
@@ -84,8 +88,10 @@ namespace dem {
                 if(prec == 0)
                     break;
 
+                ExprInfo biopInfo = ExprInfo(biop);
+
                 Expression *node = nullptr;
-                while(stack.size() > 2 && prec <= binaryPrecedence(stack.at(stack.size() - 2).tokenType)) {
+                while(stack.size() > 2 && prec <= binaryPrecedence(stack.at(stack.size() - 2).tokenType) && associativity(stack.at(stack.size() - 2).tokenType) == Associativity::LEFT) {
                     right = stack.back().expression;
                     stack.pop_back();
 
@@ -105,7 +111,7 @@ namespace dem {
                     ss << "Expected expression after " << biop;
                     throw ParsingException(deque.front(), ss.str());
                 }
-                stack.push_back(ExprInfo(biop));
+                stack.push_back(biopInfo);
                 stack.push_back(ExprInfo(node));
             }
 
@@ -152,6 +158,9 @@ namespace dem {
          * from 3 to 2 to 1 character until a matching binary operation is found then return at binary operation.
          */
         lexer::TokenType ExpressionFactory::gobbleBinaryOp(std::deque<lexer::Token> &deque) {
+            if(deque.empty())
+                return lexer::TokenType::UNKNOWN;
+
             if(BINARY_OPS.count(deque.front().type()) == 1) {
                 lexer::Token token = deque.front();
 
@@ -212,12 +221,12 @@ namespace dem {
                     node = new MemberExpression(node, gobbleIdentifier(deque), false);
                 } else if(deque.front().is(lexer::TokenType::BRACKET_OPEN)) {
                     expect(deque, lexer::TokenType::BRACKET_OPEN);
-                    node = new MemberExpression(node, gobbleExpression(deque), true);
+                    node = new ArrayAccessExpression(node, gobbleExpression(deque), true);
                     expect(deque, lexer::TokenType::BRACKET_CLOSE);
                 } else if(deque.front().is(lexer::TokenType::OPEN)) {
                     expect(deque, lexer::TokenType::OPEN);
                     node = new CallExpression(node, gobbleArguments(deque, lexer::TokenType::CLOSE));
-                    expect(deque, lexer::TokenType::CLOSE);
+                    //expect(deque, lexer::TokenType::CLOSE);
                 }
             }
 
@@ -287,8 +296,10 @@ namespace dem {
             std::vector<Expression*> expressions;
 
             do {
-                if(deque.front().is(termination))
+                if(deque.front().is(termination)) {
+                    deque.pop_front();
                     return expressions;
+                }
                 expressions.push_back(ExpressionFactory::produce(deque));
             } while(accept(deque, lexer::TokenType::COMMA) || deque.front().is(termination));
 
@@ -300,8 +311,14 @@ namespace dem {
          */
         unsigned int ExpressionFactory::binaryPrecedence(lexer::TokenType tokenType) {
             if(BINARY_OPS.count(tokenType) == 1)
-                return BINARY_OPS.at(tokenType);
+                return BINARY_OPS.at(tokenType).precedence;
             return 0;
+        }
+
+        Associativity ExpressionFactory::associativity(lexer::TokenType tokenType) {
+            if(BINARY_OPS.count(tokenType) == 1)
+                return BINARY_OPS.at(tokenType).associativity;
+            return Associativity::LEFT;
         }
 
         /**
@@ -340,6 +357,10 @@ namespace dem {
                 return new StrictEqualCondition(left, right);
             } else if(op == lexer::TokenType::TNEQ) {
                 return new StrictNotEqualCondition(left, right);
+            } else if(op == lexer::TokenType::ASSIGNMENT) {
+                return new AssignmentExpression(left, right);
+            } else if(op == lexer::TokenType::EXP) {
+                return new ExponentExpression(left, right);
             }
 
             throw "Can not make binary for that op"; // TODO: Throw proper error

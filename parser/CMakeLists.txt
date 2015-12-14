@@ -96,6 +96,9 @@ set(Parser_SRCS
     inc/symbol/expression/Expression.h
     src/symbol/expression/Expression.cpp
 
+    inc/symbol/expression/ExpressionStatement.h
+    src/symbol/expression/ExpressionStatement.cpp
+
     inc/symbol/expression/FunctionCallExpression.h
     src/symbol/expression/FunctionCallExpression.cpp
 
@@ -184,9 +187,6 @@ set(Parser_SRCS
 
     inc/factory/SymbolFactory.h
     src/factory/SymbolFactory.cpp
-
-    inc/factory/ArrayAccessFactory.h
-    src/factory/ArrayAccessFactory.cpp
 
     inc/factory/TrackFactory.h
     src/factory/TrackFactory.cpp

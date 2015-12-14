@@ -1,0 +1,10 @@
+#ifndef DEMUSE_EXPRESSIONSTATEMENT_H
+#define DEMUSE_EXPRESSIONSTATEMENT_H
+
+
+class ExpressionStatement {
+
+};
+
+
+#endif //DEMUSE_EXPRESSIONSTATEMENT_H

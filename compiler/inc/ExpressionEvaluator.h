@@ -68,14 +68,19 @@ namespace dem {
 
             virtual bool visitEnter(parser::ArrayLiteral &array) override;
             virtual bool visit(parser::Identifier &identifier) override;
-            virtual bool visit(parser::Number &number) override;
-            virtual bool visit(parser::Bool &boolSymbol) override;
-            virtual bool visit(parser::Text &text) override;
+            virtual bool visit(parser::NumberLiteral &number) override;
+            virtual bool visit(parser::BoolLiteral &boolSymbol) override;
+            virtual bool visit(parser::TextLiteral &text) override;
             virtual bool visitEnter(parser::FunctionDefinition &functionDefinition) override;
+
+            virtual bool visitEnter(parser::ArrayAccessExpression &arrayAccessExpression);
             virtual bool visitLeave(parser::ArrayAccessExpression &arrayAccessExpression);
 
             virtual bool visitEnter(parser::FunctionCallExpression &functionCallExpression) override;
             virtual bool visitLeave(parser::FunctionCallExpression &functionCallExpression) override;
+
+            virtual bool visitEnter(parser::CallExpression &continueSymbol) override;
+            virtual bool visitLeave(parser::CallExpression &continueSymbol) override;
 
             virtual bool visitEnter(parser::PropertyAccessExpression &propertyAccessExpression) override;
             virtual bool visitLeave(parser::PropertyAccessExpression &propertyAccessExpression1) override;

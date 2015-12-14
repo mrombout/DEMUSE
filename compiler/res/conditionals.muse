@@ -1,29 +1,29 @@
-var x = 4;
+var x = 4;               // should be 4
 
 track 1 {
 	if(x == 4) {
-		var a = 1;
+		var a = 1;      // should be 1
 	}
 
 	if(x < 5) {
-		var B = 2;
+		var B = 2;      // should be 2
 	} else if(x > 9) {
-		var C = 3;
+		var C = 3;      // should not be set
 	} else {
-		var D = 4;
+		var D = 4;      // should not be set
 	}
 
 	if(x > 7) {
-		var E = true;
+		var E = true;   // should not be set
 	} else if(x < 5) {
-		var F = true;
+		var F = true;   // should be true
 	}
 
-	var y = "1";
+	var y = "1";        // should be "1"
 
 	if(y === 1) {
-		var G = true;
+		var G = true;   // should not be set
 	} else {
-		var H = true;
+		var H = true;   // should be true
 	}
 }

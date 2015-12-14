@@ -1,16 +1,23 @@
 #ifndef DEMUSE_ARRAYACCESSEXPRESSION_H
 #define DEMUSE_ARRAYACCESSEXPRESSION_H
 
-#include "symbol/expression/Expression.h"
-#include "symbol/expression/BinaryExpression.h"
+#include "Expression.h"
 
 namespace dem {
     namespace parser {
-        class ArrayAccessExpression : public BinaryExpression<Expression, Expression> {
+        class ArrayAccessExpression : public Expression {
         public:
-            ArrayAccessExpression(Expression *left, Expression *right);
+            ArrayAccessExpression(Expression *object, Expression *index, bool computed);
+
+            Expression &object();
+            Expression &index();
 
             virtual bool accept(Visitor &visitor);
+
+        private:
+            Expression *mObject;
+            Expression *mIndex;
+            bool mComputed;
         };
     }
 }

@@ -3,15 +3,25 @@
 
 namespace dem {
     namespace parser {
-        ArrayAccessExpression::ArrayAccessExpression(Expression *left, Expression *right) :
-            BinaryExpression(left, right) {
+        ArrayAccessExpression::ArrayAccessExpression(Expression *object, Expression *index, bool computed) :
+            mObject(object),
+            mIndex(index),
+            mComputed(computed) {
 
         }
 
-        bool dem::parser::ArrayAccessExpression::accept(Visitor &visitor) {
+        Expression &ArrayAccessExpression::object() {
+            return *mObject;
+        }
+
+        Expression &ArrayAccessExpression::index() {
+            return *mIndex;
+        }
+
+        bool ArrayAccessExpression::accept(Visitor &visitor) {
             if(visitor.visitEnter(*this)) {
-                left().accept(visitor);
-                right().accept(visitor);
+                mObject->accept(visitor);
+                mIndex->accept(visitor);
             }
 
             return visitor.visitLeave(*this);

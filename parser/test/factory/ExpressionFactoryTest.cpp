@@ -2,31 +2,6 @@
 #include <symbol/expression/UnaryExpression.h>
 #include "PrintVisitor.h"
 #include "factory/ExpressionFactory.h"
-#include "symbol/Identifier.h"
-#include "symbol/expression/MemberExpression.h"
-#include "symbol/expression/NumberLiteral.h"
-#include "symbol/expression/TextLiteral.h"
-#include "symbol/expression/BoolLiteral.h"
-#include "symbol/expression/StrictEqualCondition.h"
-#include "symbol/expression/StrictNotEqualCondition.h"
-#include "symbol/expression/ExponentExpression.h"
-#include "symbol/expression/ArrayAccessExpression.h"
-#include "symbol/expression/AdditionExpression.h"
-#include "symbol/expression/SubtractionExpression.h"
-#include "symbol/expression/MultiplicationExpression.h"
-#include "symbol/expression/DivisionExpression.h"
-#include "symbol/expression/ModuloExpression.h"
-#include "symbol/expression/SmallerThanCondition.h"
-#include "symbol/expression/SmallerThanOrEqualCondition.h"
-#include "symbol/expression/AndCondition.h"
-#include "symbol/expression/EqualCondition.h"
-#include "symbol/expression/LargerThanCondition.h"
-#include "symbol/expression/LargerThanOrEqualCondition.h"
-#include "symbol/expression/NotEqualCondition.h"
-#include "symbol/expression/OrCondition.h"
-#include "symbol/expression/BinaryExpression.h"
-#include "symbol/expression/CallExpression.h"
-
 
 class ExpressionFactoryTest : public ::testing::Test {
 protected:
@@ -94,6 +69,105 @@ TEST_F(ExpressionFactoryTest, ExpressionLiteralBool) {
     // assert
     printer.print(boolean);
     ASSERT_NE(nullptr, boolean);
+}
+
+TEST_F(ExpressionFactoryTest, ExpressionLiteralArray) {
+    // arrange
+    std::deque<dem::lexer::Token> tokens = {
+        dem::lexer::Token(dem::lexer::TokenType::BRACKET_OPEN,  "[", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::NUMBER,        "1", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::COMMA,         ",", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::NUMBER,        "2", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::COMMA,         ",", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::NUMBER,        "3", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::BRACKET_CLOSE, "]", tokenPosition),
+    };
+
+    // act
+    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens);
+    dem::parser::ArrayLiteral *arrayLiteral = dynamic_cast<dem::parser::ArrayLiteral*>(expression);
+
+    // assert
+    printer.print(expression);
+    ASSERT_TRUE(tokens.empty());
+    ASSERT_NE(nullptr, arrayLiteral);
+    ASSERT_EQ(3, arrayLiteral->expressions().size());
+}
+
+TEST_F(ExpressionFactoryTest, ExpressionLiteralArrayNested) {
+    // arrange
+    std::deque<dem::lexer::Token> tokens = {
+        dem::lexer::Token(dem::lexer::TokenType::BRACKET_OPEN,  "[", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::NUMBER,        "1", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::COMMA,         ",", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::BRACKET_OPEN,  "[", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::NUMBER,        "2", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::COMMA,         ",", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::NUMBER,        "3", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::COMMA,         ",", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::NUMBER,        "4", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::BRACKET_CLOSE, "]", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::COMMA,         ",", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::NUMBER,        "5", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::BRACKET_CLOSE, "]", tokenPosition),
+    };
+
+    // act
+    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens);
+    dem::parser::ArrayLiteral *arrayLiteral = dynamic_cast<dem::parser::ArrayLiteral*>(expression);
+
+    // assert
+    printer.print(expression);
+    ASSERT_TRUE(tokens.empty());
+    ASSERT_NE(nullptr, arrayLiteral);
+    ASSERT_EQ(3, arrayLiteral->expressions().size());
+
+    dem::parser::ArrayLiteral *nestedLiteral = dynamic_cast<dem::parser::ArrayLiteral*>(arrayLiteral->expressions().at(1));
+    ASSERT_EQ(3, nestedLiteral->expressions().size());
+}
+
+TEST_F(ExpressionFactoryTest, AssignmentSingle) {
+    // arrange
+    std::deque<dem::lexer::Token> tokens = {
+        dem::lexer::Token(dem::lexer::TokenType::IDENTIFIER, "X", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::ASSIGNMENT, "=", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::NUMBER,     "1", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::PLUS,       "+", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::NUMBER,     "1", tokenPosition)
+    };
+
+    // act
+    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens);
+    dem::parser::AssignmentExpression *assignmentExpression = dynamic_cast<dem::parser::AssignmentExpression*>(expression);
+
+    // assert
+    printer.print(expression);
+    ASSERT_NE(nullptr, assignmentExpression);
+    ASSERT_NE(nullptr, dynamic_cast<dem::parser::Identifier*>(&assignmentExpression->left()));
+    ASSERT_NE(nullptr, dynamic_cast<dem::parser::AdditionExpression*>(&assignmentExpression->right()));
+}
+
+TEST_F(ExpressionFactoryTest, AssignmentMultiple) {
+    // arrange
+    std::deque<dem::lexer::Token> tokens = {
+        dem::lexer::Token(dem::lexer::TokenType::IDENTIFIER, "X", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::ASSIGNMENT, "=", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::IDENTIFIER, "Y", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::ASSIGNMENT, "=", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::NUMBER,     "1", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::PLUS,       "+", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::NUMBER,     "1", tokenPosition)
+    };
+
+    // act
+    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens);
+    dem::parser::AssignmentExpression *assignmentExpression = dynamic_cast<dem::parser::AssignmentExpression*>(expression);
+
+    // assert
+    printer.print(expression);
+    ASSERT_NE(nullptr, assignmentExpression);
+    ASSERT_NE(nullptr, dynamic_cast<dem::parser::Identifier*>(&assignmentExpression->left()));
+    ASSERT_NE(nullptr, dynamic_cast<dem::parser::AssignmentExpression*>(&assignmentExpression->right()));
 }
 
 TEST_F(ExpressionFactoryTest, AdditionSingle) {
@@ -279,6 +353,25 @@ TEST_F(ExpressionFactoryTest, ModuloSingle) {
     ASSERT_NE(nullptr, moduloExpression);
     ASSERT_EQ(typeid(dem::parser::NumberLiteral), typeid(moduloExpression->left()));
     ASSERT_EQ(typeid(dem::parser::NumberLiteral), typeid(moduloExpression->right()));
+}
+
+TEST_F(ExpressionFactoryTest, ExponentSingle) {
+    // arrange
+    std::deque<dem::lexer::Token> tokens {
+        dem::lexer::Token(dem::lexer::TokenType::NUMBER, "2", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::EXP,    "^", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::NUMBER, "3", tokenPosition)
+    };
+
+    // act
+    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens);
+    dem::parser::ExponentExpression *exponentExpression = dynamic_cast<dem::parser::ExponentExpression*>(expression);
+
+    // assert
+    printer.print(expression);
+    ASSERT_NE(nullptr, exponentExpression);
+    ASSERT_EQ(typeid(dem::parser::NumberLiteral), typeid(exponentExpression->left()));
+    ASSERT_EQ(typeid(dem::parser::NumberLiteral), typeid(exponentExpression->right()));
 }
 
 TEST_F(ExpressionFactoryTest, ModuloMultiple) {
@@ -698,6 +791,25 @@ TEST_F(ExpressionFactoryTest, UnaryNegativeExpressionSingle) {
     ASSERT_NE(nullptr, dynamic_cast<dem::parser::NumberLiteral*>(&additionExpression->right()));
 }
 
+TEST_F(ExpressionFactoryTest, PrecedenceMultiplyAddition) {
+    // arrange
+    std::deque<dem::lexer::Token> tokens = {
+        dem::lexer::Token(dem::lexer::TokenType::NUMBER, "6", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::DIVIDE, "/", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::NUMBER, "2", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::TIMES,  "*", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::NUMBER, "1", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::PLUS,   "+", tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::NUMBER, "2", tokenPosition),
+    };
+
+    // act
+    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens);
+
+    // assert
+    printer.print(expression);
+    // TODO: Assertions
+}
 
 // TODO: Test nested expressions
 // TODO: Test precedence of every operator

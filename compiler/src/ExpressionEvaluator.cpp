@@ -436,7 +436,7 @@ namespace dem {
         }
 
 
-        bool ExpressionEvaluator::visit(parser::Number &number) {
+        bool ExpressionEvaluator::visit(parser::NumberLiteral &number) {
             std::cout << "ENTER - Evaluating Number" << std::endl;
 
             NumberValue *value = new NumberValue(number.value());
@@ -447,7 +447,7 @@ namespace dem {
             return true;
         }
 
-        bool ExpressionEvaluator::visit(parser::Bool &boolSymbol) {
+        bool ExpressionEvaluator::visit(parser::BoolLiteral &boolSymbol) {
             std::cout << "ENTER - Evaluating Bool" << std::endl;
 
             BooleanValue *value = new BooleanValue(boolSymbol.value());
@@ -458,7 +458,7 @@ namespace dem {
             return true;
         }
 
-        bool ExpressionEvaluator::visit(parser::Text &text) {
+        bool ExpressionEvaluator::visit(parser::TextLiteral &text) {
             std::cout << "ENTER - Evaluating Text" << std::endl;
 
             TextValue *value = new TextValue(text.value());
@@ -480,6 +480,12 @@ namespace dem {
             return false;
         }
 
+        bool ExpressionEvaluator::visitEnter(parser::ArrayAccessExpression &arrayAccessExpression) {
+            std::cout << "ENTER - Evaluating ArrayAccessExpression" << std::endl;
+
+            return true;
+        }
+
         bool ExpressionEvaluator::visitLeave(parser::ArrayAccessExpression &arrayAccessExpression) {
             std::cout << "LEAVE - Evaluating ArrayAccessExpression" << std::endl;
 
@@ -494,6 +500,18 @@ namespace dem {
             static_cast<int>(b->asNumber());
             Value *value = (*a)[b->asNumber()];
             mStack.push(value);
+
+            return true;
+        }
+
+        bool ExpressionEvaluator::visitEnter(parser::CallExpression &callExpression) {
+            std::cout << "ENTER - CallExpression" << std::endl;
+
+            return true;
+        }
+
+        bool ExpressionEvaluator::visitLeave(parser::CallExpression &callExpression) {
+            std::cout << "LEAVE - CallExpression" << std::endl;
 
             return true;
         }

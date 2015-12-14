@@ -133,8 +133,8 @@ namespace dem {
         bool Visitor::visitEnter(parser::FunctionCallExpression &functionCallExpression) { return true; }
         bool Visitor::visitLeave(parser::FunctionCallExpression &functionCallExpression) { return true; }
 
-        bool Visitor::visitEnter(parser::CallExpression &continueSymbol) { return true; }
-        bool Visitor::visitLeave(parser::CallExpression &continueSymbol) { return true; }
+        bool Visitor::visitEnter(parser::CallExpression &callExpression) { return true; }
+        bool Visitor::visitLeave(parser::CallExpression &callExpression) { return true; }
 
         bool Visitor::visitEnter(parser::MemberExpression &memberExpression) { return true; }
         bool Visitor::visitLeave(parser::MemberExpression &memberExpression) { return true; }

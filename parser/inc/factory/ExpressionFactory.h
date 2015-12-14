@@ -36,6 +36,16 @@ namespace dem {
             lexer::TokenType tokenType;
         };
 
+        enum class Associativity {
+            LEFT,
+            RIGHT
+        };
+
+
+        struct OperatorInfo {
+            const unsigned int precedence;
+            Associativity associativity;
+        };
         class ExpressionFactory : public SymbolFactory {
         public:
             static Expression *produce(std::deque<lexer::Token> &tokens);
@@ -53,13 +63,15 @@ namespace dem {
             static ArrayLiteral * gobbleArray(std::deque<lexer::Token> &deque);
 
             static unsigned int binaryPrecedence(lexer::TokenType tokenType);
+            static Associativity associativity(lexer::TokenType tokenType);
+
             static Expression * createBinaryExpression(lexer::TokenType op, Expression *left, Expression *right);
 
             static bool isUnaryOperator(lexer::Token &token);
             static Expression *gobbleBoolLiteral(std::deque<lexer::Token> &deque);
 
         private:
-            static const std::map<lexer::TokenType, unsigned int> BINARY_OPS;
+            static const std::map<lexer::TokenType, OperatorInfo> BINARY_OPS;
         };
     }
 }
