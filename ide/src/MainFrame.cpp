@@ -67,7 +67,6 @@ namespace dem {
             createToolBar();
 
             createCenterNotebook();
-            createEditor("E:\\Programming\\CPP\\DEMUSE\\compiler\\res\\arithmetic.muse");
             createBottomTools();
 
             createStatusBar();
@@ -171,8 +170,8 @@ namespace dem {
 
             wxVector<wxVariant> data;
             data.push_back(wxVariant(wxDataViewIconText("Warning", wxArtProvider::GetIcon(wxART_WARNING, wxART_OTHER, wxSize(16, 16)))));
-            data.push_back(wxVariant(1));
-            data.push_back(wxVariant(1));
+            data.push_back(wxVariant("1"));
+            data.push_back(wxVariant("1"));
             data.push_back(wxVariant("Variable does not exist."));
             data.push_back(wxVariant("arithmetic.muse"));
             mErrorList->AppendItem(data);
