@@ -35,9 +35,8 @@ namespace dem {
         std::vector<Token> Lexer::lex(std::string::iterator &begin, std::string::iterator &end, TokenPosition &tokenPosition) const {
             std::vector<Token> tokens;
 
-            int currentTokenSize = 0;
             while(begin != end) {
-                currentTokenSize = tokens.size();
+                std::string::iterator startIterator = begin;
 
                 // should we stop?
                 if(mStopMatcher && mStopMatcher->match(begin, end, tokens, tokenPosition).length() > 0)
@@ -71,9 +70,8 @@ namespace dem {
                     ++begin;
                 }
 
-                // TODO: Below makes sure we're not stuck on an infinite loop, but below also breaks when there is no match but a newline (causing everything to stop).
-                //if(tokens.size() == currentTokenSize)
-                //    break;
+                if(startIterator == begin)
+                    break;
             }
 
             return tokens;
@@ -87,7 +85,8 @@ namespace dem {
                 std::string matched = tokenDefinition->matcher().match(begin, end, tokens, tokenPosition);
 
                 if(matched.length() > 0) {
-                    std::advance(begin, matched.length());
+                    if(begin != end)
+                        std::advance(begin, matched.length());
 
                     if(!tokenDefinition->ignore())
                         tokens.push_back(Token(tokenDefinition->type(), matched, tokenPosition));

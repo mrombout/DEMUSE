@@ -55,6 +55,9 @@ set(Parser_SRCS
     inc/symbol/For.h
     src/symbol/For.cpp
 
+    inc/symbol/Identifiable.h
+    src/symbol/Identifiable.cpp
+
     inc/symbol/expression/FunctionDefinition.h
     src/symbol/expression/FunctionDefinition.cpp
 
@@ -89,6 +92,9 @@ set(Parser_SRCS
 
     inc/symbol/expression/Expression.h
     src/symbol/expression/Expression.cpp
+
+    inc/symbol/expression/FunctionCallExpression.h
+    src/symbol/expression/FunctionCallExpression.cpp
 
     inc/symbol/expression/ArrayAccessExpression.h
     src/symbol/expression/ArrayAccessExpression.cpp
@@ -161,9 +167,6 @@ set(Parser_SRCS
     inc/symbol/ProcedureCall.h
     src/symbol/ProcedureCall.cpp
 
-    inc/symbol/FunctionCall.h
-    src/symbol/FunctionCall.cpp
-
     inc/factory/SymbolFactory.h
     src/factory/SymbolFactory.cpp
 
@@ -196,6 +199,9 @@ set(Parser_SRCS
 
     inc/factory/IfFactory.h
     src/factory/IfFactory.cpp
+
+    inc/factory/NewInstanceFactory.h
+    src/factory/NewInstanceFactory.cpp
 
     inc/factory/NoteFactory.h
     src/factory/NoteFactory.cpp
@@ -230,30 +236,34 @@ set(Parser_SRCS
     inc/factory/PlayFactory.h
     src/factory/PlayFactory.cpp
 
-    inc/factory/FunctionCallFactory.h
-    src/factory/FunctionCallFactory.cpp
+    inc/factory/FunctionCallExpressionFactory.h
+    src/factory/FunctionCallExpressionFactory.cpp
+
+    inc/factory/NoteFactory.h
+    src/factory/NoteFactory.cpp
 )
 
 set(TestParser_SRCS
-        test/factory/ArgumentListFactoryTest.cpp
-        test/factory/AssignmentFactoryTest.cpp
-        test/factory/BlockFactoryTest.cpp
-        test/factory/BreakFactoryTest.cpp
-        test/factory/ContinueFactoryTest.cpp
-        test/factory/ExpressionFactoryTest.cpp
-        test/factory/ForFactoryTest.cpp
-        test/factory/FunctionDefinitionFactoryTest.cpp
-        test/factory/IdentifierFactoryTest.cpp
-        test/factory/IfFactoryTest.cpp
-        test/factory/ParameterListFactoryTest.cpp
-        test/factory/ProgramFactoryTest.cpp
-        test/factory/ReturnFactoryTest.cpp
-        test/factory/StatementFactoryTest.cpp
-        test/factory/VariableDefinitionTest.cpp
-        test/factory/WhileFactoryTest.cpp
-        test/factory/PrimitiveFactoryTest.cpp
-        test/factory/FunctionCallFactoryTest.cpp
-        src/factory/NoteFactory.cpp inc/factory/NoteFactory.h)
+    test/factory/ArgumentListFactoryTest.cpp
+    test/factory/AssignmentFactoryTest.cpp
+    test/factory/BlockFactoryTest.cpp
+    test/factory/BreakFactoryTest.cpp
+    test/factory/ContinueFactoryTest.cpp
+    test/factory/ExpressionFactoryTest.cpp
+    test/factory/ForFactoryTest.cpp
+    test/factory/FunctionDefinitionFactoryTest.cpp
+    test/factory/IdentifierFactoryTest.cpp
+    test/factory/IfFactoryTest.cpp
+    test/factory/ParameterListFactoryTest.cpp
+    test/factory/ProgramFactoryTest.cpp
+    test/factory/ReturnFactoryTest.cpp
+    test/factory/StatementFactoryTest.cpp
+    test/factory/VariableDefinitionTest.cpp
+    test/factory/WhileFactoryTest.cpp
+    test/factory/PrimitiveFactoryTest.cpp
+    test/factory/FunctionCallFactoryTest.cpp
+    src/factory/NewInstanceFactory.cpp inc/factory/NewInstanceFactory.h
+)
 
 add_library(libparser ${Parser_SRCS})
 add_library(dem::libparser ALIAS libparser)

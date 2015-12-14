@@ -1,12 +1,13 @@
 #include "value/Value.h"
 #include "value/TextValue.h"
 #include "value/NumberValue.h"
+#include "value/Variable.h"
 
 namespace dem {
     namespace compiler {
         TextValue::TextValue(std::string value) :
             mValue(value) {
-            mProperties["length"] = new NumberValue(value.length());
+            mProperties["length"] = new Variable(new parser::Identifier("length"), new NumberValue(value.length()));
         }
 
         Value *TextValue::add(Value *b) {

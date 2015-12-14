@@ -9,15 +9,13 @@ namespace dem {
     namespace ide {
         class GeneralPanel : public wxPanel {
         public:
-            GeneralPanel(wxWindow *parent) :
-                    wxPanel(parent) {
-                mUserMarkdow = new wxCheckBox(this, wxID_ANY, "Testbox!");
+            GeneralPanel(wxWindow *parent);
 
-                wxSizer *sizer = new wxBoxSizer(wxVERTICAL);
-                sizer->Add(mUserMarkdow, wxSizerFlags().Border());
+            virtual bool TransferDataToWindow() override;
+            virtual bool TransferDataFromWindow() override;
 
-                SetSizerAndFit(sizer);
-            }
+        private:
+            void changedUserMarkdow(wxCommandEvent & e);
 
         private:
             wxCheckBox *mUserMarkdow;

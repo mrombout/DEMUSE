@@ -12,29 +12,13 @@ namespace dem {
     namespace ide {
         class ExecutionPanel : public wxPanel {
         public:
-            ExecutionPanel(wxWindow *parent) :
-                    wxPanel(parent) {
-                wxBoxSizer *hbox = new wxBoxSizer(wxHORIZONTAL);
-                wxFlexGridSizer *fgs = new wxFlexGridSizer(3, 2, 9, 25);
+            ExecutionPanel(wxWindow *parent);
 
-                wxStaticText *compilerPathLabel = new wxStaticText(this, wxID_ANY, wxT("Compiler"));
-                mCompilerPath = new wxFilePickerCtrl(this, wxID_ANY, "Compiler Path");
+            virtual bool TransferDataToWindow() override;
+            virtual bool TransferDataFromWindow() override;
 
-                wxStaticText *mediaPlayerPathLabel = new wxStaticText(this, wxID_ANY, wxT("Media Player"));
-                mMediaPlayerPath = new wxFilePickerCtrl(this, wxID_ANY, "Mediaplayer Path");
-
-                fgs->Add(compilerPathLabel);
-                fgs->Add(mCompilerPath);
-                fgs->Add(mediaPlayerPathLabel);
-                fgs->Add(mMediaPlayerPath);
-
-                fgs->AddGrowableRow(2, 1);
-                fgs->AddGrowableCol(1, 1);
-
-                hbox->Add(fgs, 1, wxALL | wxEXPAND, 15);
-
-                SetSizerAndFit(hbox);
-            }
+            void changedCompilerPath(wxCommandEvent &e);
+            void changedMediaPlayerPath(wxCommandEvent &e);
 
         private:
             wxFilePickerCtrl *mCompilerPath;

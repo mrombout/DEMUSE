@@ -36,7 +36,7 @@ namespace dem {
 
             virtual bool visitLeave(parser::Block &block) override;
 
-            virtual bool visit(parser::FunctionCall &functionCall) override;
+            virtual bool visitEnter(parser::PropertyAccessExpression &propertyAccessExpression) override;
 
             virtual bool visitEnter(parser::For &forSymbol) override;
 
@@ -45,6 +45,9 @@ namespace dem {
 
             virtual bool visitEnter(parser::Track &track) override;
             virtual bool visitLeave(parser::Track &track) override;
+
+            virtual bool visitEnter(parser::FunctionCallExpression &expression) override;
+            virtual bool visitLeave(parser::FunctionCallExpression &expression) override;
 
             virtual std::deque<Scope*> &scopes();
 

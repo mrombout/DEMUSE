@@ -1,4 +1,5 @@
 #include <iostream>
+#include "symbol/Identifiable.h"
 #include "exception/RuntimeException.h"
 #include "ExpressionEvaluator.h"
 #include "value/NumberValue.h"
@@ -403,28 +404,6 @@ namespace dem {
             return true;
         }
 
-        bool ExpressionEvaluator::visitEnter(parser::PropertyAccessExpression &propertyAccessExpression) {
-            std::cout << "ENTER - Evaluating PropertyAccess" << std::endl;
-
-            propertyAccessExpression.left().accept(*this);
-
-            Value *a = mStack.top();
-            mStack.pop();
-
-            parser::Identifier *identifier = dynamic_cast<parser::Identifier*>(&propertyAccessExpression.right());
-            if(!identifier)
-                throw "Can not access property."; // TODO: Throw proper error
-
-            Value *value = (*a)[identifier->name()];
-            mStack.push(value);
-
-            return false;
-        }
-
-        bool ExpressionEvaluator::visitLeave(parser::PropertyAccessExpression &propertyAccessExpression) {
-            std::cout << "LEAVE - Evaluating PropertyAccess" << std::endl;
-        }
-
         bool ExpressionEvaluator::visitEnter(parser::Array &array) {
             std::cout << "ENTER - Evaluating Array" << std::endl;
 
@@ -450,7 +429,7 @@ namespace dem {
 
             Variable &variable = mScope->variable(&identifier);
 
-            std::cout << "PUSH - " << variable.asString() << std::endl;
+            std::cout << "(I)PUSH - " << variable.asString() << std::endl;
             mStack.push(&variable);
 
             return true;
@@ -501,38 +480,6 @@ namespace dem {
             return false;
         }
 
-        bool ExpressionEvaluator::visit(parser::FunctionCall &functionCall) {
-            std::cout << "ENTER - Evaluating FunctionCall" << std::endl;
-
-            Variable &variable = mScope->variable(&functionCall.identifier());
-            parser::ArgumentList *argumentList = functionCall.argumentList();
-
-            // evaluate arguments
-            std::vector<Value*> arguments;
-            for(parser::Expression *expr : argumentList->arguments()) {
-                std::cout << "evaling expr" << std::endl;
-                Value *result = this->evaluate(mScope, *expr);
-                arguments.push_back(result);
-            }
-
-            // map to function scope
-            Scope functionScope(mScope);
-            if(FunctionValue *functionValue = dynamic_cast<FunctionValue*>(variable.value())) {
-                functionValue->mapScope(functionScope, arguments);
-            }
-            mCompiler.scopes().push_front(&functionScope);
-
-            // call function
-            Value *value = variable(functionScope);
-            mCompiler.scopes().pop_front();
-
-            if(!dynamic_cast<NullValue*>(value))
-                std::cout << "PUSH - " << value->asString() << std::endl;
-            mStack.push(value);
-
-            return false;
-        }
-
         bool ExpressionEvaluator::visitLeave(parser::ArrayAccessExpression &arrayAccessExpression) {
             std::cout << "LEAVE - Evaluating ArrayAccessExpression" << std::endl;
 
@@ -547,6 +494,75 @@ namespace dem {
             static_cast<int>(b->asNumber());
             Value *value = (*a)[b->asNumber()];
             mStack.push(value);
+
+            return true;
+        }
+
+        bool ExpressionEvaluator::visitEnter(parser::FunctionCallExpression &functionCallExpression) {
+            std::cout << "[E] ENTER - FunctionCallExpression" << std::endl;
+
+            return false;
+        }
+
+        bool ExpressionEvaluator::visitLeave(parser::FunctionCallExpression &functionCallExpression) {
+            std::cout << "[E] LEAVE - FunctionCallExpression" << std::endl;
+
+            Value *value = mStack.top();
+            mStack.pop();
+
+            parser::ArgumentList *argumentList = functionCallExpression.argumentList();
+
+            // evaluate arguments
+            std::vector<Value*> arguments;
+            for(parser::Expression *expr : argumentList->arguments()) {
+                std::cout << "evaling expr" << std::endl;
+                Value *result = this->evaluate(mScope, *expr);
+                arguments.push_back(result);
+            }
+
+            // map to function scope
+            Scope functionScope(mScope);
+            if(FunctionValue *functionValue = dynamic_cast<FunctionValue*>(value)) {
+                functionValue->mapScope(functionScope, arguments);
+            }
+            mCompiler.scopes().push_front(&functionScope);
+
+            // call function
+            Value *result = (*value)(functionScope);
+            mCompiler.scopes().pop_front();
+
+            if(!dynamic_cast<NullValue*>(result))
+                std::cout << "PUSH - " << result->asString() << std::endl;
+            mStack.push(result);
+
+            return false;
+        }
+
+        bool ExpressionEvaluator::visitEnter(parser::PropertyAccessExpression &propertyAccessExpression) {
+            std::cout << "ENTER - PropertyAccessExpression" << std::endl;
+
+            propertyAccessExpression.left().accept(*this);
+
+            Value *a = mStack.top();
+            mStack.pop();
+
+            parser::Identifiable *identifiable = dynamic_cast<parser::Identifiable*>(&propertyAccessExpression.right());
+            if(!identifiable)
+                throw "Can not access property."; // TODO: Throw proper error
+
+            Value *value = (*a)[identifiable->name()];
+            mStack.push(value);
+
+            return false;
+        }
+
+        bool ExpressionEvaluator::visitLeave(parser::PropertyAccessExpression &propertyAccessExpression) {
+            std::cout << "LEAVE - PropertAccessExpression" << std::endl;
+
+            // TODO: only call when not identifier
+            parser::Identifier *identifier = dynamic_cast<parser::Identifier*>(&propertyAccessExpression.right());
+            if(!identifier)
+                propertyAccessExpression.right().accept(*this);
 
             return true;
         }

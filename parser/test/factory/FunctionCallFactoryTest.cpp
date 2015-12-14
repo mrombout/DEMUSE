@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "factory/FunctionCallFactory.h"
+#include "FunctionCallExpressionFactory.h"
 #include "exception/ParsingException.h"
 
 class FunctionCallFactoryTest : public ::testing::Test {
@@ -9,7 +9,7 @@ protected:
     }
 
     dem::lexer::TokenPosition tokenPosition;
-    dem::parser::FunctionCallFactory factory;
+    dem::parser::FunctionCallExpressionFactory factory;
 };
 
 TEST_F(FunctionCallFactoryTest, Produce_NoArguments) {
@@ -22,7 +22,7 @@ TEST_F(FunctionCallFactoryTest, Produce_NoArguments) {
     };
 
     // act
-    dem::parser::FunctionCall *functionCall = dem::parser::FunctionCallFactory::produce(tokens);
+    dem::parser::FunctionCall *functionCall = dem::parser::FunctionCallExpressionFactory::produce(tokens);
 
     // assert
     ASSERT_TRUE(functionCall);
@@ -40,7 +40,7 @@ TEST_F(FunctionCallFactoryTest, Produce_SingleArgument) {
     };
 
     // act
-    dem::parser::FunctionCall *functionCall = dem::parser::FunctionCallFactory::produce(tokens);
+    dem::parser::FunctionCall *functionCall = dem::parser::FunctionCallExpressionFactory::produce(tokens);
 
     // assert
     ASSERT_TRUE(functionCall);
@@ -58,7 +58,7 @@ TEST_F(FunctionCallFactoryTest, Error_ForgetOpen) {
     };
 
     // act
-    dem::parser::FunctionCall *functionCall = dem::parser::FunctionCallFactory::produce(tokens);
+    dem::parser::FunctionCall *functionCall = dem::parser::FunctionCallExpressionFactory::produce(tokens);
 
     // assert
     ASSERT_FALSE(functionCall);
@@ -74,7 +74,7 @@ TEST_F(FunctionCallFactoryTest, Error_ForgetClose) {
     };
 
     // act / assert
-    ASSERT_THROW({ dem::parser::FunctionCallFactory::produce(tokens); }, dem::parser::ParsingException);
+    ASSERT_THROW({ dem::parser::FunctionCallExpressionFactory::produce(tokens); }, dem::parser::ParsingException);
 }
 
 TEST_F(FunctionCallFactoryTest, Error_ForgetParenthesis) {
@@ -85,7 +85,7 @@ TEST_F(FunctionCallFactoryTest, Error_ForgetParenthesis) {
     };
 
     // act
-    dem::parser::FunctionCall *functionCall = dem::parser::FunctionCallFactory::produce(tokens);
+    dem::parser::FunctionCall *functionCall = dem::parser::FunctionCallExpressionFactory::produce(tokens);
 
     // assert
     ASSERT_FALSE(functionCall);

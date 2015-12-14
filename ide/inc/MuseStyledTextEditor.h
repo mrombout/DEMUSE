@@ -39,11 +39,12 @@ namespace dem {
             MARGIN_FOLD
         };
 
-
         class MuseStyledTextEditor : public wxStyledTextCtrl {
         public:
             MuseStyledTextEditor(wxWindow *parent, lexer::MuseLexer *museLexer);
             ~MuseStyledTextEditor();
+
+            void initialize();
 
             bool loadFile(const wxString &fileName);
             bool saveFile();

@@ -10,53 +10,29 @@
 
 namespace dem {
     namespace ide {
+        static const char *const KEY_EDITOR_SHOW_WHITESPACE = "editor/show_whitespace";
+        static const char *const KEY_EDITOR_HIGHLIGHT_CURRENT_LINE = "editor/highlight_current_line";
+        static const char *const KEY_EDITOR_USE_TABS = "editor/use_tabs";
+        static const char *const KEY_EDITOR_SHOW_MAX_COLUMN_LINE = "editor/show_max_column_line";
+        static const char *const KEY_EDITOR_TAB_WIDTH = "editor/tab_width";
+        static const char *const KEY_EDITOR_MAX_COLUMN = "editor/max_column";
+        static const char *const KEY_EDITOR_WRAP = "editor/wrap";
+
         class EditorPanel : public wxPanel {
         public:
-            EditorPanel(wxWindow *parent) :
-                    wxPanel(parent) {
-                wxBoxSizer *hbox = new wxBoxSizer(wxHORIZONTAL);
-                wxFlexGridSizer *fgs = new wxFlexGridSizer(7, 2, 9, 25);
+            EditorPanel(wxWindow *parent);
 
-                // TODO: Persist all preferences on EditorPanel
+            virtual bool TransferDataToWindow() override;
+            virtual bool TransferDataFromWindow() override;
 
-                mShowWhitespace = new wxCheckBox(this, wxID_ANY, "Show whitespace characters");
-
-                mHighlightCurrentLine = new wxCheckBox(this, wxID_ANY, "Highlight current line");
-
-                mUseTabs = new wxCheckBox(this, wxID_ANY, "Use tabs instead of spaces");
-
-                wxStaticText *tabWidthLabel = new wxStaticText(this, wxID_ANY, wxT("Tab width"));
-                mTabWidth = new wxTextCtrl(this, wxID_ANY, "4");
-
-                mShowMaxColumnLine = new wxCheckBox(this, wxID_ANY, "Show max column line");
-
-                wxStaticText *maxColumnLabel = new wxStaticText(this, wxID_ANY, wxT("Max column"));
-                mMaxColumn = new wxTextCtrl(this, wxID_ANY, "4");
-
-                mWrap = new wxCheckBox(this, wxID_ANY, "Wrap text");
-
-                fgs->Add(mShowWhitespace);
-                fgs->AddSpacer(1);
-                fgs->Add(mHighlightCurrentLine);
-                fgs->AddSpacer(1);
-                fgs->Add(mUseTabs);
-                fgs->AddSpacer(1);
-                fgs->Add(tabWidthLabel);
-                fgs->Add(mTabWidth);
-                fgs->Add(mShowMaxColumnLine);
-                fgs->AddSpacer(1);
-                fgs->Add(maxColumnLabel);
-                fgs->Add(mMaxColumn);
-                fgs->Add(mWrap);
-                fgs->AddSpacer(1);
-
-                fgs->AddGrowableRow(2, 1);
-                fgs->AddGrowableCol(1, 1);
-
-                hbox->Add(fgs, 1, wxALL | wxEXPAND, 15);
-
-                SetSizerAndFit(hbox);
-            }
+        private:
+            void changedShowWhitespace(wxCommandEvent &e);
+            void changedHighlightCurrentLine(wxCommandEvent &e);
+            void changedUseTabs(wxCommandEvent &e);
+            void changedShowMaxColumnLine(wxCommandEvent &e);
+            void changedTabWidth(wxCommandEvent &e);
+            void changedMaxColumn(wxCommandEvent &e);
+            void changedWrap(wxCommandEvent &e);
 
         private:
             wxCheckBox *mShowWhitespace;

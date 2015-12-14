@@ -71,7 +71,7 @@ namespace dem {
             throw "Can not access boolean that way"; // TODO: Throw proper error
         }
 
-        Value *BooleanValue::operator[](const std::string &index) {
+        Variable *BooleanValue::operator[](const std::string &index) {
             throw "Can not access boolean that way"; // TODO: Throw proper error
         }
 

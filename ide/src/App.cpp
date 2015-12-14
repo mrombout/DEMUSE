@@ -7,18 +7,13 @@
 
 namespace dem {
     namespace ide {
-        bool dem::ide::App::OnInit() {
+        bool App::OnInit() {
             wxInitAllImageHandlers();
 
             SetAppName("DEMUSE IDE");
             SetAppDisplayName("DEMUSE IDE");
 
-            /*
-            wxBitmap bitmap;
-            if(bitmap.LoadFile("res/splash.png", wxBITMAP_TYPE_PNG)) {
-                wxSplashScreen *splash = new wxSplashScreen(bitmap, wxSPLASH_CENTRE_ON_SCREEN | wxSPLASH_TIMEOUT, 6000, nullptr, -1, wxDefaultPosition, wxDefaultSize, wxNO_BORDER | wxSTAY_ON_TOP);
-            }
-            */
+            mConfig = new wxFileConfig(GetAppName());
 
             wxArtProvider::Push(new MuseArtProvider());
 
@@ -29,6 +24,16 @@ namespace dem {
             frame->Show(true);
 
             return true;
+        }
+
+        int App::OnExit() {
+            delete mConfig;
+
+            return wxAppBase::OnExit();
+        }
+
+        wxFileConfig &App::config() {
+            return *mConfig;
         }
     }
 }

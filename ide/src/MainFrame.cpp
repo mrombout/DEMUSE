@@ -10,6 +10,8 @@
 #include <wx/preferences.h>
 #include <wx/process.h>
 #include <wx/stdstream.h>
+#include <wx/wfstream.h>
+#include <App.h>
 #include "preference/GeneralPage.h"
 #include "preference/EditorPage.h"
 #include "preference/ColorsPage.h"
@@ -54,23 +56,27 @@ namespace dem {
 
         MainFrame::MainFrame(const wxString &title, const wxPoint &pos, const wxSize &size) :
             wxFrame(nullptr, wxID_ANY, title, pos, size) {
+            mMgr.SetManagedWindow(this);
+            
 #ifdef __WINDOWS__
             auto tset = wxICON(icon);
             SetIcon(tset);
 #endif
 
             createMenu();
-            createStatusBar();
-
-            createCenterNotebook();
-
             createToolBar();
 
+            createCenterNotebook();
             createEditor("E:\\Programming\\CPP\\DEMUSE\\compiler\\res\\arithmetic.muse");
+            createBottomTools();
+
+            createStatusBar();
+
+            mMgr.Update();
         }
 
         MainFrame::~MainFrame() {
-
+            mMgr.UnInit();
         }
 
         void MainFrame::createMenu() {
@@ -127,6 +133,7 @@ namespace dem {
                                                     wxAUI_NB_TAB_SPLIT |
                                                     wxAUI_NB_TAB_MOVE | wxAUI_NB_CLOSE_ON_ALL_TABS |
                                                     wxAUI_NB_MIDDLE_CLICK_CLOSE | wxNO_BORDER);
+            mMgr.AddPane(mNotebook, wxCENTER);
             //mNotebook->SetArtProvider(new MuseAuiTabArt);
             mMgr.GetArtProvider()->SetMetric(wxAUI_DOCKART_PANE_BORDER_SIZE, 0);
         }
@@ -153,6 +160,30 @@ namespace dem {
             }
         }
 
+        void MainFrame::createBottomTools() {
+            // error window
+            mErrorList = new wxDataViewListCtrl(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxDV_ROW_LINES | wxDV_HORIZ_RULES | wxNO_BORDER);
+            mErrorList->AppendIconTextColumn("");
+            mErrorList->AppendTextColumn("Line");
+            mErrorList->AppendTextColumn("Column");
+            mErrorList->AppendTextColumn("Description");
+            mErrorList->AppendTextColumn("File");
+
+            wxVector<wxVariant> data;
+            data.push_back(wxVariant(wxDataViewIconText("Warning", wxArtProvider::GetIcon(wxART_WARNING, wxART_OTHER, wxSize(16, 16)))));
+            data.push_back(wxVariant(1));
+            data.push_back(wxVariant(1));
+            data.push_back(wxVariant("Variable does not exist."));
+            data.push_back(wxVariant("arithmetic.muse"));
+            mErrorList->AppendItem(data);
+
+            mMgr.AddPane(mErrorList, wxAuiPaneInfo().Name("Errors").Bottom().MinimizeButton(true).PaneBorder(true));
+
+            // output window
+            mOutput = new wxTextCtrl(this, -1, _("Output"), wxDefaultPosition, wxSize(200, 150), wxNO_BORDER | wxTE_MULTILINE);
+            mMgr.AddPane(mOutput, wxBOTTOM, wxT("Output"));
+        }
+
         void MainFrame::createToolBar() {
             wxToolBar *toolbar = new wxToolBar(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTB_DEFAULT_STYLE);
             toolbar->SetToolBitmapSize(wxSize(24, 24));
@@ -173,6 +204,8 @@ namespace dem {
             toolbar->AddTool(ID_Stop, wxT("Stop"), wxArtProvider::GetBitmap(museART_STOP));
 
             toolbar->Realize();
+
+            toolbar->EnableTool(ID_Stop, false);
 
             SetToolBar(toolbar);
         }
@@ -297,14 +330,29 @@ namespace dem {
             preferencesEditor->AddPage(new ColorsPage());
             preferencesEditor->AddPage(new ExecutionPage());
             preferencesEditor->Show(this);
+
+            // flush
+            wxGetApp().config().Flush();
+
+            // re-initialize editors with new settings
+            for(auto pair : mFileEditors) {
+                MuseStyledTextEditor *editor = dynamic_cast<MuseStyledTextEditor*>(mNotebook->GetPage(pair.second));
+                editor->initialize();
+            }
         }
 
         void MainFrame::onRunRun(wxCommandEvent &event) {
-            mActiveProcess = wxProcess::Open("D:\\Program Files (x86)\\VideoLAN\\VLC\\vlc.exe");
+            wxFileConfig &config = wxGetApp().config();
+            wxString compilerPath{config.Read("execution/compiler", "") + " " + activeEditor()->filePath()};
+
+            if(!compilerPath.empty()) {
+                mActiveProcess = wxProcess::Open(compilerPath);
+            }
         }
 
         void MainFrame::onRunStop(wxCommandEvent &event) {
             wxProcess::Kill(mActiveProcess->GetPid());
+            mActiveProcess = nullptr;
         }
     }
 }

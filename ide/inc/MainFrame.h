@@ -8,6 +8,7 @@
 #include <wx/dirctrl.h>
 #include <wx/slider.h>
 #include <wx/stc/stc.h>
+#include <wx/dataview.h>
 #include "MuseStyledTextEditor.h"
 
 namespace dem {
@@ -62,13 +63,17 @@ namespace dem {
             wxMenu *mHelpMenu;
 
             wxAuiNotebook *mNotebook;
-            MuseStyledTextEditor *mEditor;
 
             wxSlider *mZoomSlider;
 
             wxProcess *mActiveProcess;
 
+            wxDataViewListCtrl *mErrorList;
+            wxTextCtrl *mOutput;
+
             wxDECLARE_EVENT_TABLE();
+
+            void createBottomTools();
         };
     }
 }

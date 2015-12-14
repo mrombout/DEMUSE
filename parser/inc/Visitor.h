@@ -2,6 +2,7 @@
 #define DEMUSE_DEMUSEVISITOR_H
 
 #include <symbol/expression/PropertyAccessExpression.h>
+#include <symbol/expression/FunctionCallExpression.h>
 #include "symbol/expression/AssignmentExpression.h"
 #include "symbol/ArgumentList.h"
 #include "symbol/Assignment.h"
@@ -10,7 +11,6 @@
 #include "symbol/Break.h"
 #include "symbol/Continue.h"
 #include "symbol/For.h"
-#include "symbol/FunctionCall.h"
 #include "symbol/expression/FunctionDefinition.h"
 #include "symbol/Identifier.h"
 #include "symbol/If.h"
@@ -72,8 +72,6 @@ namespace dem {
 
             virtual bool visitEnter(parser::For &forSymbol);
             virtual bool visitLeave(parser::For &forSymbol);
-
-            virtual bool visit(parser::FunctionCall &functionCall);
 
             virtual bool visitEnter(parser::FunctionDefinition &functionDefinition);
             virtual bool visitLeave(parser::FunctionDefinition &functionDefinition);
@@ -141,7 +139,6 @@ namespace dem {
             virtual bool visitLeave(parser::ExponentExpression &exponentExpression);
 
             virtual bool visitEnter(parser::Expression &expression);
-            virtual bool visit(parser::Expression &expression);
             virtual bool visitLeave(parser::Expression &expression);
 
             virtual bool visitEnter(parser::LargerThanCondition &largerThanCondition);
@@ -182,6 +179,9 @@ namespace dem {
 
             virtual bool visitEnter(parser::Play &play);
             virtual bool visitLeave(parser::Play &play);
+
+            virtual bool visitEnter(parser::FunctionCallExpression &functionCallExpression);
+            virtual bool visitLeave(parser::FunctionCallExpression &functionCallExpression);
 
             virtual bool visit(parser::Note &note);
         };
