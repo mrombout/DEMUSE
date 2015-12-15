@@ -18,6 +18,7 @@
 #include "symbol/If.h"
 #include "symbol/While.h"
 #include "symbol/For.h"
+#include "symbol/expression/ExpressionStatement.h"
 #include "symbol/expression/FunctionDefinition.h"
 #include "symbol/CompoundStatement.h"
 
@@ -42,7 +43,7 @@ namespace dem {
                 statement = VariableDeclarationFactory::produce(tokens);
             } else if(tokens.front().is(lexer::TokenType::IDENTIFIER)) {
                 // expression_stmt
-                statement = ExpressionFactory::produce(tokens);
+                statement = new ExpressionStatement(ExpressionFactory::produce(tokens));
             } else if(tokens.front().is(lexer::TokenType::PLAY_START)) {
                 // play_stmt
                 statement = PlayFactory::produce(tokens);

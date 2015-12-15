@@ -507,46 +507,37 @@ namespace dem {
         bool ExpressionEvaluator::visitEnter(parser::CallExpression &callExpression) {
             std::cout << "ENTER - CallExpression" << std::endl;
 
-            return true;
-        }
+            parser::Expression &calleeExpr = callExpression.callee();
+            const std::vector<parser::Expression*> arguments = callExpression.arguments();
 
-        bool ExpressionEvaluator::visitLeave(parser::CallExpression &callExpression) {
-            std::cout << "LEAVE - CallExpression" << std::endl;
-
-            return true;
-        }
-
-        bool ExpressionEvaluator::visitEnter(parser::FunctionCallExpression &functionCallExpression) {
-            std::cout << "[E] ENTER - FunctionCallExpression" << std::endl;
-
-            return false;
-        }
-
-        bool ExpressionEvaluator::visitLeave(parser::FunctionCallExpression &functionCallExpression) {
-            std::cout << "[E] LEAVE - FunctionCallExpression" << std::endl;
-
-            Value *value = mStack.top();
+            // evaluate callee
+            calleeExpr.accept(*this);
+            Value *callee = mStack.top();
             mStack.pop();
 
-            parser::ArgumentList *argumentList = functionCallExpression.argumentList();
-
             // evaluate arguments
-            std::vector<Value*> arguments;
-            for(parser::Expression *expr : argumentList->arguments()) {
-                std::cout << "evaling expr" << std::endl;
+            std::vector<Value*> argumentValues;
+            for(parser::Expression *expr : arguments) {
                 Value *result = this->evaluate(mScope, *expr);
-                arguments.push_back(result);
+                argumentValues.push_back(result);
             }
 
             // map to function scope
             Scope functionScope(mScope);
-            if(FunctionValue *functionValue = dynamic_cast<FunctionValue*>(value)) {
-                functionValue->mapScope(functionScope, arguments);
+            // TODO: Find a way to get rid of these casts
+            FunctionValue *functionValue = dynamic_cast<FunctionValue*>(callee);
+            if(!functionValue) {
+                Variable *variable = dynamic_cast<Variable*>(callee);
+                if(variable)
+                    functionValue = dynamic_cast<FunctionValue*>(variable->value());
+            }
+            if(functionValue) {
+                functionValue->mapScope(functionScope, argumentValues);
             }
             mCompiler.scopes().push_front(&functionScope);
 
             // call function
-            Value *result = (*value)(functionScope);
+            Value *result = (*callee)(functionScope);
             mCompiler.scopes().pop_front();
 
             if(!dynamic_cast<NullValue*>(result))
@@ -554,6 +545,12 @@ namespace dem {
             mStack.push(result);
 
             return false;
+        }
+
+        bool ExpressionEvaluator::visitLeave(parser::CallExpression &callExpression) {
+            std::cout << "LEAVE - CallExpression" << std::endl;
+
+            return true;
         }
 
         bool ExpressionEvaluator::visitEnter(parser::PropertyAccessExpression &propertyAccessExpression) {

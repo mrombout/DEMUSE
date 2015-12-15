@@ -201,5 +201,13 @@ namespace dem {
 
             return true;
         }
+
+        bool MidiCompiler::visitEnter(parser::ExpressionStatement &statement) {
+            std::cout << "ENTER - ExpressionStatement" << std::endl;
+
+            mEvaluator.evaluate(mScopes.front(), statement.expression());
+
+            return false;
+        }
     }
 }

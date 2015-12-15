@@ -1,12 +1,6 @@
 #ifndef DEMUSE_DEMUSEVISITOR_H
 #define DEMUSE_DEMUSEVISITOR_H
 
-#include <symbol/expression/CallExpression.h>
-#include <symbol/expression/MemberExpression.h>
-#include <symbol/expression/UnaryExpression.h>
-#include "symbol/expression/PropertyAccessExpression.h"
-#include "symbol/expression/FunctionCallExpression.h"
-#include "symbol/expression/AssignmentExpression.h"
 #include "symbol/ArgumentList.h"
 #include "symbol/Assignment.h"
 #include "symbol/Block.h"
@@ -48,6 +42,13 @@
 #include "symbol/expression/StrictEqualCondition.h"
 #include "symbol/expression/StrictNotEqualCondition.h"
 #include "symbol/expression/SubtractionExpression.h"
+#include "symbol/expression/CallExpression.h"
+#include "symbol/expression/MemberExpression.h"
+#include "symbol/expression/UnaryExpression.h"
+#include "symbol/expression/ExpressionStatement.h"
+#include "symbol/expression/PropertyAccessExpression.h"
+#include "symbol/expression/FunctionCallExpression.h"
+#include "symbol/expression/AssignmentExpression.h"
 #include "symbol/play/Play.h"
 #include "symbol/play/Note.h"
 
@@ -63,6 +64,9 @@ namespace dem {
 
             virtual bool visitEnter(parser::Assignment &assignment);
             virtual bool visitLeave(parser::Assignment &assignment);
+
+            virtual bool visitEnter(parser::ExpressionStatement &statement);
+            virtual bool visitLeave(parser::ExpressionStatement &statement);
 
             virtual bool visitEnter(parser::Block &block);
             virtual bool visitLeave(parser::Block &block);

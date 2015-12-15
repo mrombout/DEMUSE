@@ -1,5 +1,6 @@
 #include <sstream>
 #include <stack>
+#include <factory/FunctionDefinitionFactory.h>
 #include "exception/ParsingException.h"
 #include "factory/IdentifierFactory.h"
 #include "factory/ExpressionFactory.h"
@@ -26,6 +27,7 @@
 #include "symbol/expression/AssignmentExpression.h"
 #include "symbol/expression/ExponentExpression.h"
 #include "symbol/expression/ArrayAccessExpression.h"
+#include "symbol/expression/FunctionDefinition.h"
 #include "symbol/Identifier.h"
 
 namespace dem {
@@ -139,6 +141,8 @@ namespace dem {
                 return gobbleVariable(deque);
             } else if(deque.front().is(lexer::TokenType::BRACKET_OPEN)) {
                 return gobbleArray(deque);
+            } else if(deque.front().is(lexer::TokenType::FUNCTION)) {
+                return FunctionDefinitionFactory::produce(deque);
             } else {
                 if(isUnaryOperator(deque.front())) {
                     lexer::Token token = deque.front();

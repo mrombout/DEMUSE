@@ -1,1 +1,23 @@
-#include "ExpressionStatement.h"
+#include "symbol/expression/ExpressionStatement.h"
+#include "Visitor.h"
+
+namespace dem {
+    namespace parser {
+        ExpressionStatement::ExpressionStatement(Expression *expression) :
+            mExpression(expression) {
+
+        }
+
+        Expression &ExpressionStatement::expression() const {
+            return *mExpression;
+        }
+
+        bool ExpressionStatement::accept(Visitor &visitor) {
+            if(visitor.visitEnter(*this)) {
+                mExpression->accept(visitor);
+            }
+
+            return visitor.visitLeave(*this);
+        }
+    }
+}

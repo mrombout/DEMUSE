@@ -26,6 +26,8 @@ namespace dem {
 
             virtual bool visitEnter(parser::AssignmentExpression &assignmentExpression) override;
 
+            virtual bool visitEnter(parser::ExpressionStatement &statement) override;
+
             virtual bool visitEnter(parser::If &ifSymbol) override;
 
             virtual bool visitEnter(parser::While &whileSymbol) override;

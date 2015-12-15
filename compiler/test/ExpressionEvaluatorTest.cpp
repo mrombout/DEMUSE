@@ -4,7 +4,7 @@
 #include "symbol/expression/AdditionExpression.h"
 #include "symbol/expression/SubtractionExpression.h"
 #include "symbol/expression/MultiplicationExpression.h"
-#include "symbol/Number.h"
+#include "symbol/expression/NumberLiteral.h"
 #include "value/Value.h"
 
 using namespace dem::parser;
@@ -25,8 +25,8 @@ protected:
 
 TEST_F(ExpressionEvaluatorTest, Addition_Simple) {
     // arrange
-    Number lhv{5};
-    Number rhv{6};
+    NumberLiteral lhv{5};
+    NumberLiteral rhv{6};
     AdditionExpression expr{&lhv, &rhv};
 
     // act
@@ -38,8 +38,8 @@ TEST_F(ExpressionEvaluatorTest, Addition_Simple) {
 
 TEST_F(ExpressionEvaluatorTest, Subtraction_Simple) {
     // arrange
-    Number lhv{5};
-    Number rhv{6};
+    NumberLiteral lhv{5};
+    NumberLiteral rhv{6};
     SubtractionExpression expr{&lhv, &rhv};
 
     // act
@@ -51,8 +51,8 @@ TEST_F(ExpressionEvaluatorTest, Subtraction_Simple) {
 
 TEST_F(ExpressionEvaluatorTest, Multiplication_Simple) {
     // arrange
-    Number lhv{5};
-    Number rhv{6};
+    NumberLiteral lhv{5};
+    NumberLiteral rhv{6};
     MultiplicationExpression expr{&lhv, &rhv};
 
     // act
@@ -64,8 +64,8 @@ TEST_F(ExpressionEvaluatorTest, Multiplication_Simple) {
 
 TEST_F(ExpressionEvaluatorTest, Division_Simple) {
     // arrange
-    Number lhv{10};
-    Number rhv{2};
+    NumberLiteral lhv{10};
+    NumberLiteral rhv{2};
     DivisionExpression expr{&lhv, &rhv};
 
     // act
@@ -77,8 +77,8 @@ TEST_F(ExpressionEvaluatorTest, Division_Simple) {
 
 TEST_F(ExpressionEvaluatorTest, Modulo_Simple) {
     // arrange
-    Number lhv{21};
-    Number rhv{5};
+    NumberLiteral lhv{21};
+    NumberLiteral rhv{5};
     ModuloExpression expr{&lhv, &rhv};
 
     // act
@@ -90,8 +90,8 @@ TEST_F(ExpressionEvaluatorTest, Modulo_Simple) {
 
 TEST_F(ExpressionEvaluatorTest, Exponent_Simple) {
     // arrange
-    Number lhv{2};
-    Number rhv{4};
+    NumberLiteral lhv{2};
+    NumberLiteral rhv{4};
     ExponentExpression expr{&lhv, &rhv};
 
     // act
@@ -103,11 +103,11 @@ TEST_F(ExpressionEvaluatorTest, Exponent_Simple) {
 
 TEST_F(ExpressionEvaluatorTest, Order_MultDivBeforeAdd) {
     // arrange
-    Number lhv{1};
-    Number multlhv{2};
-    Number multrhv{3};
+    NumberLiteral lhv{1};
+    NumberLiteral multlhv{2};
+    NumberLiteral multrhv{3};
     MultiplicationExpression mult{&multlhv, &multrhv};
-    Number divrhv{4};
+    NumberLiteral divrhv{4};
     DivisionExpression div{&mult, &divrhv};
     AdditionExpression expr{&lhv, &div};
 
@@ -137,10 +137,10 @@ TEST_F(ExpressionEvaluatorTest, Function_SimpleAddition) {
 
 TEST_F(ExpressionEvaluatorTest, Order_ParentBeforeEverything) {
     // arrange
-    Number addl{5};
-    Number addr{2};
+    NumberLiteral addl{5};
+    NumberLiteral addr{2};
     AdditionExpression add{&addl, &addr};
-    Number multr{5};
+    NumberLiteral multr{5};
     MultiplicationExpression mult{&add, &multr};
 
     // (5 + 2) * 5

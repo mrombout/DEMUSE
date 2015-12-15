@@ -86,8 +86,9 @@ find_package(Jdksmidi REQUIRED)
 if(Jdksmidi_FOUND)
     message(STATUS "Include: " ${Jdksmidi_INCLUDE_DIRS})
     message(STATUS "Include: " ${Jdksmidi_LIBRARIES})
-    target_include_directories(compiler PRIVATE ${Jdksmidi_INCLUDE_DIRS})
+    include_directories(compiler PRIVATE ${Jdksmidi_INCLUDE_DIRS})
     target_link_libraries(compiler PRIVATE ${Jdksmidi_LIBRARIES})
+    link_libraries(${Jdksmidi_LIBRARIES})
 endif()
 
 # testing

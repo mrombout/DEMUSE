@@ -141,5 +141,8 @@ namespace dem {
 
         bool Visitor::visitEnter(parser::UnaryExpression &unaryExpression) { return true; }
         bool Visitor::visitLeave(parser::UnaryExpression &unaryExpression) { return true; }
+
+        bool Visitor::visitEnter(parser::ExpressionStatement &statement) { return true; }
+        bool Visitor::visitLeave(parser::ExpressionStatement &statement) { return true; }
     }
 }
