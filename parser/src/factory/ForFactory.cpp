@@ -1,7 +1,6 @@
 #include <symbol/VariableDeclaration.h>
 #include <factory/VariableDeclarationFactory.h>
 #include "factory/ForFactory.h"
-#include "factory/AssignmentFactory.h"
 #include "factory/ExpressionFactory.h"
 #include "factory/BlockFactory.h"
 #include "symbol/For.h"

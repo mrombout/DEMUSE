@@ -1,5 +1,9 @@
-//var X = 1;
-//var Y = 1.2;
-//var Z = 0.0;
-//var A = +1;
-var B = -1;
+var X = 1;     // should be 1
+var Y = 1.2;   // should be 1.2
+var Z = 0.0;   // should be 1
+
+var A = +1;    // should be 1
+var B = -1;    // should be -1
+var C = +1;    // should be 1
+var D = +B;    // should be -1
+var E = !true; // should be false

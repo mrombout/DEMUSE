@@ -1,5 +1,6 @@
 #include <sstream>
 #include <stack>
+#include <factory/NewInstanceFactory.h>
 #include "exception/ParsingException.h"
 #include "factory/IdentifierFactory.h"
 #include "factory/ExpressionFactory.h"
@@ -146,6 +147,8 @@ namespace dem {
                 return FunctionDefinitionFactory::produce(deque);
             } else if(deque.front().is(lexer::TokenType::NOTE)) {
                 return NoteFactory::produce(deque);
+            } else if(deque.front().is(lexer::TokenType::NEW)) {
+                return NewInstanceFactory::produce(deque);
             } else {
                 if(isUnaryOperator(deque.front())) {
                     lexer::Token token = deque.front();

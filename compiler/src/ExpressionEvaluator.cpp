@@ -52,7 +52,7 @@ namespace dem {
             }
 
             // assign b to a
-            std::cout << "Assigning " << a->identifier()->name() << " = " << b->asString() << std::endl;
+            std::cout << "ASSIGN - " << a->identifier()->name() << " = " << b->asString() << std::endl;
             a->setValue(b);
 
             mStack.push(a);
@@ -475,17 +475,29 @@ namespace dem {
         
         bool ExpressionEvaluator::visitEnter(parser::UnaryExpression &unaryExpression) {
             std::cout << "ENTER - UnaryExpression" << std::endl;
-            
+
+            // evaluate argument
+            unaryExpression.argument().accept(*this);
+
+            // take value
             Value *value = mStack.top();
             mStack.pop();
-            
+
+            // apply unary expression
+            Value *newValue = nullptr;
             if(unaryExpression.op() == "+") {
-                
+                newValue = new NumberValue(+(value->asNumber()));
             } else if(unaryExpression.op() == "-") {
-                
+                newValue = new NumberValue(-(value->asNumber()));
+            } else if(unaryExpression.op() == "!") {
+                newValue = new BooleanValue(!(value->asBool()));
+            } else {
+                newValue = value;
             }
+
+            mStack.push(newValue);
             
-            return true;
+            return false;
         }
         
         bool ExpressionEvaluator::visitLeave(parser::UnaryExpression &unaryExpression) {
@@ -603,6 +615,34 @@ namespace dem {
             parser::Identifier *identifier = dynamic_cast<parser::Identifier*>(&propertyAccessExpression.right());
             if(!identifier)
                 propertyAccessExpression.right().accept(*this);
+
+            return true;
+        }
+
+        bool ExpressionEvaluator::visitEnter(parser::MemberExpression &memberExpression) {
+            std::cout << "ENTER - MemberExpression" << std::endl;
+
+            // evaluate object
+            memberExpression.object().accept(*this);
+
+            Value *object = mStack.top();
+            mStack.pop();
+
+            // evaluate property
+            // TODO: Why must we cast? Can't we change MemberExpression to accept an Identifier
+            dem::parser::Identifier *identifier = dynamic_cast<dem::parser::Identifier*>(&memberExpression.property());
+            if(!identifier)
+                throw RuntimeException(memberExpression, "Some error"); // TODO: Some error
+
+            // fetch property
+            Variable *var = (*object)[identifier->name()];
+            mStack.push(var);
+
+            return false;
+        }
+
+        bool ExpressionEvaluator::visitLeave(parser::MemberExpression &memberExpression) {
+            std::cout << "LEAVE - MemberExpression" << std::endl;
 
             return true;
         }

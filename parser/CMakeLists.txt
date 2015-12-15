@@ -197,9 +197,6 @@ set(Parser_SRCS
     inc/factory/StatementFactory.h
     src/factory/StatementFactory.cpp
 
-    inc/factory/AssignmentFactory.h
-    src/factory/AssignmentFactory.cpp
-
     inc/factory/ExpressionFactory.h
     src/factory/ExpressionFactory.cpp
 
@@ -260,13 +257,11 @@ set(Parser_SRCS
 
 set(TestParser_SRCS
     test/factory/ArgumentListFactoryTest.cpp
-    test/factory/AssignmentFactoryTest.cpp
     test/factory/BlockFactoryTest.cpp
     test/factory/BreakFactoryTest.cpp
     test/factory/ContinueFactoryTest.cpp
     test/factory/ExpressionFactoryTest.cpp
     test/factory/ForFactoryTest.cpp
-    test/factory/FunctionDefinitionFactoryTest.cpp
     test/factory/IdentifierFactoryTest.cpp
     test/factory/IfFactoryTest.cpp
     test/factory/ParameterListFactoryTest.cpp
@@ -276,7 +271,6 @@ set(TestParser_SRCS
     test/factory/VariableDefinitionTest.cpp
     test/factory/WhileFactoryTest.cpp
     test/factory/PrimitiveFactoryTest.cpp
-    test/factory/FunctionCallFactoryTest.cpp
     src/factory/NewInstanceFactory.cpp inc/factory/NewInstanceFactory.h
 )
 

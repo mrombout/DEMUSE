@@ -1,7 +1,7 @@
 track 1 {
-	var Test = new Object();
-	Test.foo = function() {
+	var Test = new Object(); // should define new object
+	Test.foo = function() {  // should add function to object
 		var X = 1;
 	};
-	Test.foo();
+	Test.foo();              // should call foo() and set (local) X to 1
 }

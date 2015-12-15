@@ -1,6 +1,5 @@
 #include <exception/ParsingException.h>
 #include "factory/StatementFactory.h"
-#include "factory/AssignmentFactory.h"
 #include "factory/ExpressionFactory.h"
 #include "factory/ReturnFactory.h"
 #include "factory/BreakFactory.h"

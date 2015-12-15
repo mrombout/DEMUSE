@@ -1,3 +1,4 @@
 var X = "String";
 var Y = "String with spaces";
 var Z = "String with \" escape";
+var A = "foo" + "bar";
