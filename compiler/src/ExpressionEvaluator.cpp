@@ -468,6 +468,10 @@ namespace dem {
 
             return true;
         }
+        
+        bool ExpressionEvaluator::visit(parser::Note& note) {
+            std::cout << "ENTER - Evaluating Note" << std::endl;
+        }
 
         bool ExpressionEvaluator::visitEnter(parser::FunctionDefinition &functionDefinition) {
             std::cout << "ENTER - Evaluating FunctionDefinition" << std::endl;

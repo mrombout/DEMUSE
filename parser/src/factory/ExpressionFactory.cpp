@@ -1,9 +1,10 @@
 #include <sstream>
 #include <stack>
-#include <factory/FunctionDefinitionFactory.h>
 #include "exception/ParsingException.h"
 #include "factory/IdentifierFactory.h"
 #include "factory/ExpressionFactory.h"
+#include "factory/FunctionDefinitionFactory.h"
+#include "factory/NoteFactory.h"
 #include "symbol/expression/AdditionExpression.h"
 #include "symbol/expression/SubtractionExpression.h"
 #include "symbol/expression/MultiplicationExpression.h"
@@ -143,6 +144,8 @@ namespace dem {
                 return gobbleArray(deque);
             } else if(deque.front().is(lexer::TokenType::FUNCTION)) {
                 return FunctionDefinitionFactory::produce(deque);
+            } else if(deque.front().is(lexer::TokenType::NOTE)) {
+                return NoteFactory::produce(deque);
             } else {
                 if(isUnaryOperator(deque.front())) {
                     lexer::Token token = deque.front();

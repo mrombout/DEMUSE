@@ -1,5 +1,5 @@
-var X  = 1;
-var _X = 2;
-var X  = 3;
-var X4 = 4;
-var X_ = 5;
+var X  = 1; // should be set to 1
+var _X = 2; // should be set to 2
+var X  = 3; // should be set to 3
+var X4 = 4; // should be set to 4
+var X_ = 5; // should be set to 5
