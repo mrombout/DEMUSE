@@ -472,6 +472,27 @@ namespace dem {
         bool ExpressionEvaluator::visit(parser::Note& note) {
             std::cout << "ENTER - Evaluating Note" << std::endl;
         }
+        
+        bool ExpressionEvaluator::visitEnter(parser::UnaryExpression &unaryExpression) {
+            std::cout << "ENTER - UnaryExpression" << std::endl;
+            
+            Value *value = mStack.top();
+            mStack.pop();
+            
+            if(unaryExpression.op() == "+") {
+                
+            } else if(unaryExpression.op() == "-") {
+                
+            }
+            
+            return true;
+        }
+        
+        bool ExpressionEvaluator::visitLeave(parser::UnaryExpression &unaryExpression) {
+            std::cout << "LEAVE - UnaryExpression" << std::endl;
+            
+            return true;
+        }
 
         bool ExpressionEvaluator::visitEnter(parser::FunctionDefinition &functionDefinition) {
             std::cout << "ENTER - Evaluating FunctionDefinition" << std::endl;
