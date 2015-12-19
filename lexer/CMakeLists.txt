@@ -68,7 +68,7 @@ set(TestLexer_SRCS
     test/matcher/RegexMatcherTest.cpp
 )
 
-add_library(liblexer ${Lexer_SRCS})
+add_library(liblexer SHARED ${Lexer_SRCS})
 add_library(dem::liblexer ALIAS liblexer)
 set_target_properties(liblexer PROPERTIES OUTPUT_NAME "lexer")
 

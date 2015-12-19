@@ -43,7 +43,7 @@ set(IDE_SRCS
 )
 
 if(WIN32)
-    set(IDE_SRCS ${IDE_SRCS} resources.rc)
+    set(IDE_SRCS ${IDE_SRCS} resources.rc src/OutputTextCtrl.cpp src/OutputTextCtrl.h)
 endif()
 
 add_executable(ide
@@ -52,17 +52,18 @@ add_executable(ide
 )
 
 target_include_directories(ide
-    PRIVATE inc ${Lexer_INCLUDE_DIRS}
+    PRIVATE inc ${Lexer_INCLUDE_DIRS} ${Parser_INCLUDE_DIRS} ${Compiler_INCLUDE_DIRS}
 )
 
 target_link_libraries(ide
-    PRIVATE dem::liblexer
+    PRIVATE dem::liblexer dem::libparser dem::libcompiler
 )
 
 # dependencies
-find_package(wxWidgets REQUIRED propgrid aui stc adv core base)
+find_package(wxWidgets REQUIRED propgrid aui stc adv core base scintilla)
 if(wxWidgets_FOUND)
     include(${wxWidgets_USE_FILE})
+
     target_include_directories(ide PRIVATE ${wxWidgets_INCLUDE_DIRS} "/usr/local/include/wx-3.0/")
     target_link_libraries(ide PRIVATE ${wxWidgets_LIBRARIES})
 endif()

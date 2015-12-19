@@ -67,7 +67,7 @@ set(TestCompiler_SRCS
     test/ExpressionEvaluatorTest.cpp
 )
 
-add_library(libcompiler ${Compiler_SRCS})
+add_library(libcompiler SHARED ${Compiler_SRCS})
 add_library(dem::libcompiler ALIAS libcompiler)
 set_target_properties(libcompiler PROPERTIES OUTPUT_NAME "compiler")
 
@@ -86,9 +86,12 @@ find_package(Jdksmidi REQUIRED)
 if(Jdksmidi_FOUND)
     message(STATUS "Include: " ${Jdksmidi_INCLUDE_DIRS})
     message(STATUS "Include: " ${Jdksmidi_LIBRARIES})
-    include_directories(compiler PRIVATE ${Jdksmidi_INCLUDE_DIRS})
+
+    target_include_directories(compiler PRIVATE ${Jdksmidi_INCLUDE_DIRS})
     target_link_libraries(compiler PRIVATE ${Jdksmidi_LIBRARIES})
-    link_libraries(${Jdksmidi_LIBRARIES})
+
+    target_include_directories(libcompiler PUBLIC ${Jdksmidi_INCLUDE_DIRS})
+    target_link_libraries(libcompiler PRIVATE ${Jdksmidi_LIBRARIES})
 endif()
 
 # testing

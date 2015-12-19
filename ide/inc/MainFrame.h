@@ -15,6 +15,7 @@ namespace dem {
     namespace ide {
         enum {
             ID_NewFile = 1,
+            ID_Build,
             ID_Run,
             ID_Stop
         };
@@ -50,6 +51,7 @@ namespace dem {
             void onEditSelectAll(wxCommandEvent &event);
             void onEditPreferences(wxCommandEvent &event);
 
+            void onRunBuild(wxCommandEvent &event);
             void onRunRun(wxCommandEvent &event);
             void onRunStop(wxCommandEvent &event);
 

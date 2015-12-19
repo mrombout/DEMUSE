@@ -1,3 +1,4 @@
+#include <fstream>
 #include <wx/menu.h>
 #include <wx/log.h>
 #include <wx/msgdlg.h>
@@ -11,7 +12,13 @@
 #include <wx/process.h>
 #include <wx/stdstream.h>
 #include <wx/wfstream.h>
-#include <App.h>
+#include <MidiCompiler.h>
+#include "App.h"
+#include "Compiler.h"
+#include "Parser.h"
+#include "MuseParser.h"
+#include "symbol/Program.h"
+#include "symbol/Symbol.h"
 #include "preference/GeneralPage.h"
 #include "preference/EditorPage.h"
 #include "preference/ColorsPage.h"
@@ -20,6 +27,7 @@
 #include "MuseAuiTabArt.h"
 #include "MuseArtProvider.h"
 #include "MuseLexer.h"
+#include "OutputTextCtrl.h"
 
 namespace dem {
     namespace ide {
@@ -47,6 +55,7 @@ namespace dem {
             EVT_MENU(wxID_PREFERENCES, MainFrame::onEditPreferences)
 
             // run
+            EVT_MENU(ID_Build, MainFrame::onRunBuild)
             EVT_MENU(ID_Run, MainFrame::onRunRun)
             EVT_MENU(ID_Stop, MainFrame::onRunStop)
 
@@ -179,7 +188,7 @@ namespace dem {
             mMgr.AddPane(mErrorList, wxAuiPaneInfo().Name("Errors").Bottom().MinimizeButton(true).PaneBorder(true));
 
             // output window
-            mOutput = new wxTextCtrl(this, -1, _("Output"), wxDefaultPosition, wxSize(200, 150), wxNO_BORDER | wxTE_MULTILINE);
+            mOutput = new OutputTextCtrl(this, -1, _(""), wxDefaultPosition, wxSize(200, 150), wxNO_BORDER | wxTE_MULTILINE | wxTE_AUTO_URL | wxTE_RICH | wxTE_DONTWRAP);
             mMgr.AddPane(mOutput, wxBOTTOM, wxT("Output"));
         }
 
@@ -199,6 +208,7 @@ namespace dem {
             toolbar->AddTool(wxID_UNDO, wxT("Undo"), wxArtProvider::GetBitmap(wxART_UNDO));
             toolbar->AddTool(wxID_REDO, wxT("Redo"), wxArtProvider::GetBitmap(wxART_REDO));
             toolbar->AddSeparator();
+            toolbar->AddTool(ID_Build, wxT("Build"), wxArtProvider::GetBitmap(wxART_EXECUTABLE_FILE));
             toolbar->AddTool(ID_Run, wxT("Play"), wxArtProvider::GetBitmap(museART_RUN));
             toolbar->AddTool(ID_Stop, wxT("Stop"), wxArtProvider::GetBitmap(museART_STOP));
 
@@ -338,6 +348,61 @@ namespace dem {
                 MuseStyledTextEditor *editor = dynamic_cast<MuseStyledTextEditor*>(mNotebook->GetPage(pair.second));
                 editor->initialize();
             }
+        }
+
+        void MainFrame::onRunBuild(wxCommandEvent &event) {
+            wxStopWatch totalStopWatch;
+            wxStopWatch sw;
+            sw.Pause();
+
+            mOutput->SetDefaultStyle(wxTextAttr(*wxBLUE));
+            mOutput->AppendText("= Building: file:\\\\\\" + activeEditor()->filePath() + "\n");
+
+            // read file
+            mOutput->SetDefaultStyle(wxTextAttr(wxColour(255, 0, 255)));
+            mOutput->AppendText("== Reading: file:\\\\\\" + activeEditor()->filePath() + "\n");
+
+            sw.Start();
+            std::ifstream is(activeEditor()->filePath().c_str());
+            std::string content{std::istreambuf_iterator<char>(is), std::istreambuf_iterator<char>()};
+            sw.Pause();
+
+            mOutput->AppendText("== Reading finished in " + std::to_string(sw.Time()) + "ms\n");
+
+            // lexing
+            mOutput->AppendText("== Lexing: file:\\\\\\" + activeEditor()->filePath() + "\n");
+
+            sw.Start();
+            dem::lexer::MuseLexer museLexer;
+            auto begin = content.begin();
+            auto end = content.end();
+            std::vector<dem::lexer::Token> tokens = museLexer.lex(begin, end);
+            sw.Pause();
+
+            mOutput->AppendText("== Lexing finished in " + std::to_string(sw.Time()) + "ms\n");
+
+            // parsing
+            mOutput->AppendText("== Parsing: file:\\\\\\" + activeEditor()->filePath() + "\n");
+
+            sw.Start();
+            dem::parser::MuseParser parser;
+            dem::parser::Symbol *program{parser.parse(tokens)};
+            sw.Pause();
+
+            mOutput->AppendText("== Parsing finished in " + std::to_string(sw.Time()) + "ms\n");
+
+            // compiling
+            mOutput->AppendText("== Compiling: file:\\\\\\" + activeEditor()->filePath() + "ms\n");
+
+            sw.Start();
+            dem::compiler::MidiCompiler compiler;
+            compiler.compile(static_cast<dem::parser::Program*>(program));
+            sw.Pause();
+
+            mOutput->AppendText("== Compiling finished in " + std::to_string(sw.Time()) + "ms\n");
+
+            mOutput->SetDefaultStyle(wxTextAttr(*wxBLUE));
+            mOutput->AppendText("= Build finished in " + std::to_string(totalStopWatch.Time()) + "ms\n");
         }
 
         void MainFrame::onRunRun(wxCommandEvent &event) {

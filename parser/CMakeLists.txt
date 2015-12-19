@@ -274,7 +274,7 @@ set(TestParser_SRCS
     src/factory/NewInstanceFactory.cpp inc/factory/NewInstanceFactory.h
 )
 
-add_library(libparser ${Parser_SRCS})
+add_library(libparser SHARED ${Parser_SRCS})
 add_library(dem::libparser ALIAS libparser)
 set_target_properties(liblexer PROPERTIES OUTPUT_NAME "parser")
 
