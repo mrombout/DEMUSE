@@ -15,7 +15,7 @@ namespace dem {
     namespace parser {
         class BlockFactory : public SymbolFactory {
         public:
-            static Block *produce(std::deque<lexer::Token> &tokens);
+            static Block *produce(std::deque<lexer::Token> &tokens, ParseResults &results);
         };
     }
 }

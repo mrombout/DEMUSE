@@ -46,21 +46,24 @@ namespace dem {
             const unsigned int precedence;
             Associativity associativity;
         };
+
         class ExpressionFactory : public SymbolFactory {
         public:
-            static Expression *produce(std::deque<lexer::Token> &tokens);
+            static Expression *produce(std::deque<lexer::Token> &tokens, ParseResults &results);
 
-            static Expression *gobbleExpression(std::deque<lexer::Token> &deque);
-            static Expression *gobbleBinaryExpression(std::deque<lexer::Token> &deque);
-            static Expression *gobbleToken(std::deque<lexer::Token> &deque);
+            static Expression *gobbleExpression(std::deque<lexer::Token> &deque, ParseResults &results);
+            static Expression *gobbleBinaryExpression(std::deque<lexer::Token> &deque, ParseResults &results);
+            static Expression *gobbleToken(std::deque<lexer::Token> &deque, ParseResults &results);
             static lexer::TokenType gobbleBinaryOp(std::deque<lexer::Token> &deque);
             static NumberLiteral *gobbleNumericLiteral(std::deque<lexer::Token> &deque);
             static Expression *gobbleStringLiteral(std::deque<lexer::Token> &deque);
-            static Expression *gobbleVariable(std::deque<lexer::Token> &deque);
-            static Expression * gobbleGroup(std::deque<lexer::Token> &deque);
+            static Expression *gobbleVariable(std::deque<lexer::Token> &deque, ParseResults &results);
+            static Expression *gobbleGroup(std::deque<lexer::Token> &deque, ParseResults &results);
             static Expression * gobbleIdentifier(std::deque<lexer::Token> &deque);
-            static std::vector<Expression*> gobbleArguments(std::deque<lexer::Token> &deque, lexer::TokenType termination);
-            static ArrayLiteral * gobbleArray(std::deque<lexer::Token> &deque);
+            static std::vector<Expression *> gobbleArguments(std::deque<lexer::Token> &deque,
+                                                                        lexer::TokenType termination,
+                                                                        ParseResults &results);
+            static ArrayLiteral *gobbleArray(std::deque<lexer::Token> &deque, ParseResults &results);
 
             static unsigned int binaryPrecedence(lexer::TokenType tokenType);
             static Associativity associativity(lexer::TokenType tokenType);

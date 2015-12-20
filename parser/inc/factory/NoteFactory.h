@@ -10,7 +10,7 @@ namespace dem {
     namespace parser {
         class NoteFactory : public SymbolFactory {
         public:
-            static Note *produce(std::deque<lexer::Token> &tokens);
+            static Note *produce(std::deque<lexer::Token> &tokens, ParseResults &results);
         };
     }
 }

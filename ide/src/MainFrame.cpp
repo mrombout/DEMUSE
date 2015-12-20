@@ -12,7 +12,7 @@
 #include <wx/process.h>
 #include <wx/stdstream.h>
 #include <wx/wfstream.h>
-#include <MidiCompiler.h>
+#include "MuseMidiCompiler.h"
 #include "App.h"
 #include "Compiler.h"
 #include "Parser.h"
@@ -381,28 +381,53 @@ namespace dem {
 
             mOutput->AppendText("== Lexing finished in " + std::to_string(sw.Time()) + "ms\n");
 
-            // parsing
-            mOutput->AppendText("== Parsing: file:\\\\\\" + activeEditor()->filePath() + "\n");
+            try {
+                // parsing
+                mOutput->AppendText("== Parsing: file:\\\\\\" + activeEditor()->filePath() + "\n");
 
-            sw.Start();
-            dem::parser::MuseParser parser;
-            dem::parser::Symbol *program{parser.parse(tokens)};
-            sw.Pause();
+                sw.Start();
+                dem::parser::MuseParser parser;
+                dem::parser::ParseResults results = parser.parse(tokens);
+                dem::parser::Symbol *program{results.astRoot};
+                sw.Pause();
 
-            mOutput->AppendText("== Parsing finished in " + std::to_string(sw.Time()) + "ms\n");
+                mOutput->AppendText("== Parsing finished in " + std::to_string(sw.Time()) + "ms\n");
 
-            // compiling
-            mOutput->AppendText("== Compiling: file:\\\\\\" + activeEditor()->filePath() + "ms\n");
+                if(!results.successful()) {
+                    for(const parser::ParseError &error : results.errors) {
+                        wxVector<wxVariant> data;
 
-            sw.Start();
-            dem::compiler::MidiCompiler compiler;
-            compiler.compile(static_cast<dem::parser::Program*>(program));
-            sw.Pause();
+                        if(error.type == parser::ParseError::Type::T_WARNING) {
+                            data.push_back(wxVariant(wxDataViewIconText("Warning", wxArtProvider::GetIcon(wxART_WARNING, wxART_OTHER, wxSize(16, 16)))));
+                        } else {
+                            data.push_back(wxVariant(wxDataViewIconText("Error", wxArtProvider::GetIcon(wxART_ERROR, wxART_OTHER, wxSize(16, 16)))));
+                        }
 
-            mOutput->AppendText("== Compiling finished in " + std::to_string(sw.Time()) + "ms\n");
+                        data.push_back(wxVariant(error.token.line()));
+                        data.push_back(wxVariant(error.token.column()));
+                        data.push_back(wxVariant(error.description));
+                        data.push_back(wxVariant(activeEditor()->filePath()));
+                        mErrorList->AppendItem(data);
+                    }
 
-            mOutput->SetDefaultStyle(wxTextAttr(*wxBLUE));
-            mOutput->AppendText("= Build finished in " + std::to_string(totalStopWatch.Time()) + "ms\n");
+                    return;
+                }
+
+                // compiling
+                mOutput->AppendText("== Compiling: file:\\\\\\" + activeEditor()->filePath() + "ms\n");
+
+                sw.Start();
+                dem::compiler::MidiCompiler compiler;
+                compiler.compile(static_cast<dem::parser::Program*>(program));
+                sw.Pause();
+
+                mOutput->AppendText("== Compiling finished in " + std::to_string(sw.Time()) + "ms\n");
+
+                mOutput->SetDefaultStyle(wxTextAttr(*wxBLUE));
+                mOutput->AppendText("= Build finished in " + std::to_string(totalStopWatch.Time()) + "ms\n");
+            } catch(...) {
+
+            }
         }
 
         void MainFrame::onRunRun(wxCommandEvent &event) {

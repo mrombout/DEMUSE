@@ -5,22 +5,22 @@
 
 namespace dem {
     namespace parser {
-        While *WhileFactory::produce(std::deque<lexer::Token> &tokens) {
+        While *WhileFactory::produce(std::deque<lexer::Token> &tokens, ParseResults &results) {
             // while_stmt = "while(" conditional ")" block ;
 
             // "while("
-            expect(tokens, lexer::TokenType::WHILE);
-            expect(tokens, lexer::TokenType::OPEN);
+            expect(tokens, lexer::TokenType::WHILE, results);
+            expect(tokens, lexer::TokenType::OPEN, results);
 
             // conditional
-            Expression *expression = ExpressionFactory::produce(tokens);
+            Expression *expression = ExpressionFactory::produce(tokens, results);
             // TODO: Can expression ever be nullptr? If so, check and throw exception
 
             // ")"
-            expect(tokens, lexer::TokenType::CLOSE);
+            expect(tokens, lexer::TokenType::CLOSE, results);
 
             // block
-            Block *block = BlockFactory::produce(tokens);
+            Block *block = BlockFactory::produce(tokens, results);
 
             return new While(expression, block);
         }

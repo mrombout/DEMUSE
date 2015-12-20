@@ -9,28 +9,28 @@
 
 namespace dem {
     namespace parser {
-        If *IfFactory::produce(std::deque<lexer::Token> &tokens) {
+        If *IfFactory::produce(std::deque<lexer::Token> &tokens, ParseResults &results) {
             // if_stmt = "if(" conditional ")" ( block | statement )
             //              [ "else" ( block | statement ) ] ;
 
             // "if("
-            expect(tokens, lexer::TokenType::IF);
-            expect(tokens, lexer::TokenType::OPEN);
+            expect(tokens, lexer::TokenType::IF, results);
+            expect(tokens, lexer::TokenType::OPEN, results);
 
             // conditional
-            Expression *expression = ExpressionFactory::produce(tokens);
+            Expression *expression = ExpressionFactory::produce(tokens, results);
 
             // ")"
-            expect(tokens, lexer::TokenType::CLOSE);
+            expect(tokens, lexer::TokenType::CLOSE, results);
 
             // block | statement
             Block *block = nullptr;
             if(tokens.front().is(lexer::TokenType::START)) {
                 // block
-                block = BlockFactory::produce(tokens);
+                block = BlockFactory::produce(tokens, results);
             } else {
                 // statement
-                Statement *statement = StatementFactory::produce(tokens);
+                Statement *statement = StatementFactory::produce(tokens, results);
                 std::vector<Statement*> statements{statement};
 
                 block = new Block(statements);
@@ -41,10 +41,10 @@ namespace dem {
                 Block *elseBlock = nullptr;
                 if(tokens.front().is(lexer::TokenType::START)) {
                     // block
-                    elseBlock = BlockFactory::produce(tokens);
+                    elseBlock = BlockFactory::produce(tokens, results);
                 } else {
                     // statement
-                    Statement *statement = StatementFactory::produce(tokens);
+                    Statement *statement = StatementFactory::produce(tokens, results);
                     std::vector<Statement*> statements{statement};
 
                     elseBlock = new Block(statements);

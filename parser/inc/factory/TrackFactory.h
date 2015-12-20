@@ -10,7 +10,7 @@ namespace dem {
     namespace parser {
         class TrackFactory : public SymbolFactory {
         public:
-            static Track *produce(std::deque<lexer::Token> &tokens);
+            static Track *produce(std::deque<lexer::Token> &tokens, ParseResults &results);
 
         private:
             static std::regex RGX_CHANNEL;

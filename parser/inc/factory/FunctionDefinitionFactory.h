@@ -15,7 +15,7 @@ namespace dem {
     namespace parser {
         class FunctionDefinitionFactory : public SymbolFactory {
         public:
-            static FunctionDefinition *produce(std::deque<lexer::Token> &tokens);
+            static FunctionDefinition *produce(std::deque<lexer::Token> &tokens, ParseResults &results);
         };
     }
 }

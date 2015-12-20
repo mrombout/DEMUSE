@@ -60,28 +60,34 @@ namespace dem {
             { lexer::TokenType::EXP,        { 11, Associativity::RIGHT } },
         };
 
-        Expression *ExpressionFactory::produce(std::deque <lexer::Token> &tokens) {
-            return gobbleExpression(tokens);
+        Expression *ExpressionFactory::produce(std::deque <lexer::Token> &tokens, ParseResults &results) {
+            return gobbleExpression(tokens, results);
         }
 
-        Expression *ExpressionFactory::gobbleExpression(std::deque<lexer::Token> &deque) {
-            Expression *expression = gobbleBinaryExpression(deque);
+        Expression *ExpressionFactory::gobbleExpression(std::deque<lexer::Token> &deque, ParseResults &results) {
+            Expression *expression = gobbleBinaryExpression(deque, results);
             // TODO: if(deque.front().is(lexer::TokenType::QMARK)) // support for ternary expressions
             return expression;
         }
 
-        Expression *ExpressionFactory::gobbleBinaryExpression(std::deque<lexer::Token> &deque) {
-            Expression *left = gobbleToken(deque);
+        Expression *ExpressionFactory::gobbleBinaryExpression(std::deque<lexer::Token> &deque, ParseResults &results) {
+            Expression *left = gobbleToken(deque, results);
             lexer::TokenType biop = gobbleBinaryOp(deque);
 
+            if(!left) {
+                std::stringstream ss;
+                ss << "Expected expression, but found '" << deque.front().type() << "'";
+                addError(results, deque.front(), ss.str());
+                return left;
+            }
             if(biop == lexer::TokenType::UNKNOWN)
                 return left;
 
-            Expression *right = gobbleToken(deque);
+            Expression *right = gobbleToken(deque, results);
             if(!right) {
                 std::stringstream ss;
                 ss << "Expected expression after " << biop;
-                throw ParsingException(deque.front(), ss.str());
+                addError(results, deque.front(), ss.str());
             }
             std::vector<ExprInfo> stack = { ExprInfo(left), ExprInfo(biop), ExprInfo(right) };
 
@@ -109,11 +115,11 @@ namespace dem {
                     stack.push_back(ExprInfo(node));
                 }
 
-                node = gobbleToken(deque);
+                node = gobbleToken(deque, results);
                 if(!node) {
                     std::stringstream ss;
                     ss << "Expected expression after " << biop;
-                    throw ParsingException(deque.front(), ss.str());
+                    addError(results, deque.front(), ss.str());
                 }
                 stack.push_back(biopInfo);
                 stack.push_back(ExprInfo(node));
@@ -130,7 +136,7 @@ namespace dem {
             return node;
         }
 
-        Expression *ExpressionFactory::gobbleToken(std::deque<lexer::Token> &deque) {
+        Expression *ExpressionFactory::gobbleToken(std::deque<lexer::Token> &deque, ParseResults &results) {
             if(deque.front().is(lexer::TokenType::NUMBER) || deque.front().is(lexer::TokenType::PERIOD)) {
                 // A period can start off a numeric literal (i.e. `.5`)
                 return gobbleNumericLiteral(deque);
@@ -140,25 +146,24 @@ namespace dem {
                 return gobbleBoolLiteral(deque);
             } else if(deque.front().is(lexer::TokenType::IDENTIFIER) || deque.front().is(lexer::TokenType::OPEN)) {
                 // `foo`, `bar.baz`
-                return gobbleVariable(deque);
+                return gobbleVariable(deque, results);
             } else if(deque.front().is(lexer::TokenType::BRACKET_OPEN)) {
-                return gobbleArray(deque);
+                return gobbleArray(deque, results);
             } else if(deque.front().is(lexer::TokenType::FUNCTION)) {
-                return FunctionDefinitionFactory::produce(deque);
+                return FunctionDefinitionFactory::produce(deque, results);
             } else if(deque.front().is(lexer::TokenType::NOTE)) {
-                return NoteFactory::produce(deque);
+                return NoteFactory::produce(deque, results);
             } else if(deque.front().is(lexer::TokenType::NEW)) {
-                return NewInstanceFactory::produce(deque);
+                return NewInstanceFactory::produce(deque, results);
             } else {
                 if(isUnaryOperator(deque.front())) {
                     lexer::Token token = deque.front();
                     deque.pop_front();
 
-                    return new UnaryExpression(token.content(), gobbleToken(deque));
+                    return new UnaryExpression(token.content(), gobbleToken(deque, results));
                 }
             }
 
-            // TODO: Throw error if nothing was found?
             return nullptr;
         }
 
@@ -217,25 +222,25 @@ namespace dem {
          *
          * It also gobbles function calls e.g. `Math.acos(obj.angle)`.
          */
-        Expression *ExpressionFactory::gobbleVariable(std::deque<lexer::Token> &deque) {
+        Expression *ExpressionFactory::gobbleVariable(std::deque<lexer::Token> &deque, ParseResults &results) {
             Expression *node = nullptr;
             if(deque.front().is(lexer::TokenType::OPEN)) {
-                node = gobbleGroup(deque);
+                node = gobbleGroup(deque, results);
             } else {
                 node = gobbleIdentifier(deque);
             }
 
             while(deque.front().is(lexer::TokenType::PERIOD) || deque.front().is(lexer::TokenType::BRACKET_OPEN) || deque.front().is(lexer::TokenType::OPEN)) {
                 if(deque.front().is(lexer::TokenType::PERIOD)) {
-                    expect(deque, lexer::TokenType::PERIOD);
+                    expect(deque, lexer::TokenType::PERIOD, results);
                     node = new MemberExpression(node, gobbleIdentifier(deque), false);
                 } else if(deque.front().is(lexer::TokenType::BRACKET_OPEN)) {
-                    expect(deque, lexer::TokenType::BRACKET_OPEN);
-                    node = new ArrayAccessExpression(node, gobbleExpression(deque), true);
-                    expect(deque, lexer::TokenType::BRACKET_CLOSE);
+                    expect(deque, lexer::TokenType::BRACKET_OPEN, results);
+                    node = new ArrayAccessExpression(node, gobbleExpression(deque, results), true);
+                    expect(deque, lexer::TokenType::BRACKET_CLOSE, results);
                 } else if(deque.front().is(lexer::TokenType::OPEN)) {
-                    expect(deque, lexer::TokenType::OPEN);
-                    node = new CallExpression(node, gobbleArguments(deque, lexer::TokenType::CLOSE));
+                    expect(deque, lexer::TokenType::OPEN, results);
+                    node = new CallExpression(node, gobbleArguments(deque, lexer::TokenType::CLOSE, results));
                     //expect(deque, lexer::TokenType::CLOSE);
                 }
             }
@@ -250,16 +255,16 @@ namespace dem {
          * within that parenthesis, assuming that the next thing is should see is the close parenthesis. If not, then
          * the expression probably doesn't have a `)`.
          */
-        Expression *ExpressionFactory::gobbleGroup(std::deque<lexer::Token> &deque) {
-            expect(deque, lexer::TokenType::OPEN);
+        Expression *ExpressionFactory::gobbleGroup(std::deque<lexer::Token> &deque, ParseResults &results) {
+            expect(deque, lexer::TokenType::OPEN, results);
 
-            Expression *node = gobbleExpression(deque);
-            if(deque.front().is(lexer::TokenType::CLOSE)) {
+            Expression *node = gobbleExpression(deque, results);
+            if(expect(deque, lexer::TokenType::CLOSE, results)) {
                 deque.pop_front();
                 return node;
             }
 
-            throw "Unclosed ("; // TODO: Throw proper error
+            return nullptr;
         }
 
         /**
@@ -275,6 +280,7 @@ namespace dem {
             } else if(deque.front().is(lexer::TokenType::BOOL)) {
                 BoolLiteral *boolLiteral = new BoolLiteral(deque.front().content() == "true");
                 deque.pop_front();
+                // TODO: How about the gobbleBool method? This else if can be removed
 
                 return boolLiteral;
                 // TODO: Null literal
@@ -289,10 +295,10 @@ namespace dem {
          * This function assumes that is needs to gobble the opening bracket and then tries to gobble the expression
          * as arguments.
          */
-        ArrayLiteral * ExpressionFactory::gobbleArray(std::deque<lexer::Token> &deque) {
-            expect(deque, lexer::TokenType::BRACKET_OPEN);
+        ArrayLiteral * ExpressionFactory::gobbleArray(std::deque<lexer::Token> &deque, ParseResults &results) {
+            expect(deque, lexer::TokenType::BRACKET_OPEN, results);
 
-            return new ArrayLiteral(gobbleArguments(deque, lexer::TokenType::BRACKET_CLOSE));
+            return new ArrayLiteral(gobbleArguments(deque, lexer::TokenType::BRACKET_CLOSE, results));
         }
 
         /**
@@ -302,7 +308,7 @@ namespace dem {
          *
          * e.g. `foo(bar, baz)`, `my_func()`, or `[bar, baz]`
          */
-        std::vector<Expression*> ExpressionFactory::gobbleArguments(std::deque<lexer::Token> &deque, lexer::TokenType termination) {
+        std::vector<Expression *> ExpressionFactory::gobbleArguments(std::deque<lexer::Token> &deque, lexer::TokenType termination, ParseResults &results) {
             std::vector<Expression*> expressions;
 
             do {
@@ -310,10 +316,10 @@ namespace dem {
                     deque.pop_front();
                     return expressions;
                 }
-                expressions.push_back(ExpressionFactory::produce(deque));
-            } while(accept(deque, lexer::TokenType::COMMA) || deque.front().is(termination));
+                expressions.push_back(ExpressionFactory::produce(deque, results));
+            } while(accept(deque, lexer::TokenType::COMMA));
 
-            throw ParsingException(deque.front(), "Some error"); // TODO: Throw proper error
+            expect(deque, termination, results);
         }
 
         /**

@@ -9,7 +9,7 @@
 #include <jdksmidi/filewritemultitrack.h>
 #include "MuseLexer.h"
 #include "MuseParser.h"
-#include "MidiCompiler.h"
+#include "MuseMidiCompiler.h"
 
 int main(int argc, char* argv[]) {
     if(argc < 2) {
@@ -30,11 +30,13 @@ int main(int argc, char* argv[]) {
 
     // parse input
     dem::parser::MuseParser museParser;
-    dem::parser::Symbol *program = museParser.parse(tokens);
+    dem::parser::ParseResults results = museParser.parse(tokens);
 
-    // compile input
-    dem::compiler::MidiCompiler midiCompiler;
-    midiCompiler.compile(static_cast<dem::parser::Program*>(program));
+    if(results.successful()) {
+        // compile input
+        dem::compiler::MidiCompiler midiCompiler;
+        midiCompiler.compile(static_cast<dem::parser::Program*>(results.astRoot));
+    }
 
     return 0;
 }

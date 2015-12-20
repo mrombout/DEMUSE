@@ -6,10 +6,10 @@ set(Compiler_SRCS
     src/exception/RuntimeException.cpp
 
     inc/Scope.h
-    src/Scope.cpp
+        src/scope/Scope.cpp
 
     inc/GlobalScope.h
-    src/GlobalScope.cpp
+        src/scope/GlobalScope.cpp
 
     inc/value/Variable.h
     src/value/Variable.cpp
@@ -50,11 +50,11 @@ set(Compiler_SRCS
     inc/Compiler.h
     src/Compiler.cpp
 
-    inc/MidiCompiler.h
-    src/MidiCompiler.cpp
+        inc/MuseMidiCompiler.h
+        src/MuseMidiCompiler.cpp
 
-    inc/PlayEvaluator.h
-    src/PlayEvaluator.cpp
+        inc/MusePlayEvaluator.h
+        src/MusePlayEvaluator.cpp
 
     inc/ExpressionEvaluator.h
     src/ExpressionEvaluator.cpp

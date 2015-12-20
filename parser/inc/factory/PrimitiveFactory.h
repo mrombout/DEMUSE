@@ -15,7 +15,7 @@ namespace dem {
     namespace parser {
         class PrimitiveFactory : public SymbolFactory {
         public:
-            static Primitive *produce(std::deque<lexer::Token> &tokens);
+            static Primitive *produce(std::deque<lexer::Token> &tokens, ParseResults &results);
         };
     }
 }

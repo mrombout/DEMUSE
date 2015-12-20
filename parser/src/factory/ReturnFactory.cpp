@@ -5,14 +5,14 @@
 
 namespace dem {
     namespace parser {
-        Return *ReturnFactory::produce(std::deque<lexer::Token> &tokens) {
+        Return *ReturnFactory::produce(std::deque<lexer::Token> &tokens, ParseResults &results) {
             // return_stmt = "return" expression
 
             // "return"
-            expect(tokens, lexer::TokenType::RETURN);
+            expect(tokens, lexer::TokenType::RETURN, results);
 
             // expression
-            Expression *expression = ExpressionFactory::produce(tokens);
+            Expression *expression = ExpressionFactory::produce(tokens, results);
 
             return new Return(expression);
         }

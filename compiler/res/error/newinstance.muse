@@ -1,0 +1,8 @@
+// error 1 - "Expected expression, but found 'TERMINATOR'", "Expected 'CLOSE', but found TERMINATOR"
+//var X = new Object(;
+
+// error 2 - "Expected 'OPEN', but found CLOSE"
+//var Y = new Object);
+
+// error 3 - "Expected 'IDENTIFIER', but found OPEN"
+var Z = new ();

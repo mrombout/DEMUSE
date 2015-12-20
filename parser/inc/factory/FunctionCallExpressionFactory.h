@@ -9,7 +9,7 @@ namespace dem {
     namespace parser {
         class FunctionCallExpressionFactory : public SymbolFactory {
         public:
-            static FunctionCallExpression *produce(std::deque<lexer::Token> &tokens, Expression *expression);
+            static FunctionCallExpression *produce(std::deque<lexer::Token> &tokens, Expression *expression, ParseResults &results);
         };
     }
 }

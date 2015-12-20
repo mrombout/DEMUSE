@@ -9,7 +9,7 @@ namespace dem {
     namespace parser {
         class MuseParser : public Parser {
         public:
-            virtual Symbol *parse(std::vector<lexer::Token> &symbols);
+            virtual ParseResults parse(std::vector<lexer::Token> &symbols);
         };
     }
 }

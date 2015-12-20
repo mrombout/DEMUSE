@@ -78,7 +78,8 @@ namespace dem {
             IDENTIFIER,
             UNKNOWN,
             SINGLECOMMENT,
-            MULTICOMMENT
+            MULTICOMMENT,
+            ENDOFFILE
         };
 
         std::ostream & operator<<(std::ostream &output, const TokenType &tokenType);

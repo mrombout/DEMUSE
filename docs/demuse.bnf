@@ -5,12 +5,12 @@ track         = "track" (1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 |
 block         = "{" { statement } "}" ;
 
 (* statements *)
-statement         = ( simple_statement | compound_statement ) terminator ;
+statement         = ( simple_statement | compound_statement ) ;
 simple_stmt       = return_stmt | break_stmt | continue_stmt | variable_def_stmt | expression_stmt | play_stmt ;
 compound_stmt     = if_stmt | while_stmt | for_stmt | function_def ;
 
 expression_stmt   = expression ;
-variable_def_stmt = "var" assignment_stmt ;
+variable_def_stmt = "var" assignment_stmt terminator ;
 return_stmt       = "return" expression ;
 break_stmt        = "break" ;
 continue_stmt     = "continue" ;

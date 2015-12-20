@@ -6,13 +6,13 @@
 
 namespace dem {
     namespace parser {
-        ParameterList *ParameterListFactory::produce(std::deque<lexer::Token> &tokens) {
+        ParameterList *ParameterListFactory::produce(std::deque<lexer::Token> &tokens, ParseResults &results) {
             // parameter_list = identifier | parameter_list "," identifier ;
 
             std::vector<Identifier*> identifiers;
 
             do {
-                identifiers.push_back(IdentifierFactory::produce(tokens));
+                identifiers.push_back(IdentifierFactory::produce(tokens, results));
             } while(accept(tokens, lexer::TokenType::COMMA));
 
             return new ParameterList(identifiers);

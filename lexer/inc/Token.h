@@ -13,12 +13,16 @@ namespace dem {
 
             const TokenType &type() const;
             const bool is(TokenType tokenType) const;
+            const bool isEOF() const;
 
             const std::string &content() const;
             void setContent(std::string content);
             const int startIndex() const;
             const int line() const;
             const int column() const;
+
+        public:
+            static const Token NULL_TOKEN;
 
         private:
             TokenType mType;

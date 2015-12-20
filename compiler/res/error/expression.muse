@@ -1,0 +1,6 @@
+var A = ;
+var B = 1 + (1 + 2;
+var C = 1 + foo(;
+var D = foo(1, ,);
+var E = foo[1;
+var F = foo1];

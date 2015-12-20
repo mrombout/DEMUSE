@@ -15,7 +15,7 @@ namespace dem {
     namespace parser {
         class ArgumentListFactory : public SymbolFactory {
         public:
-            static ArgumentList *produce(std::deque<lexer::Token> &tokens);
+            static ArgumentList *produce(std::deque<lexer::Token> &tokens, ParseResults &results);
         };
     }
 }

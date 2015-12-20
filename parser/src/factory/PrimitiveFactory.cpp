@@ -7,7 +7,7 @@
 
 namespace dem {
     namespace parser {
-        Primitive *PrimitiveFactory::produce(std::deque<lexer::Token> &tokens) {
+        Primitive *PrimitiveFactory::produce(std::deque<lexer::Token> &tokens, ParseResults &results) {
             // primitive = bool | text | number | note
             // bool      = "true" | "false"
             // text      = '"' { ? any utf8_char except unescaped '"' ? | escape } '"' ;
@@ -33,7 +33,7 @@ namespace dem {
                 //primitive = new NumberLiteral(std::stod(content));
                 // TODO: Fix me
             } else if(tokens.front().is(lexer::TokenType::NOTE)) {
-                primitive = NoteFactory::produce(tokens);
+                primitive = NoteFactory::produce(tokens, results);
             }
 
             // TODO: Support for POSITIVE/NEGATIVE

@@ -15,7 +15,7 @@ namespace dem {
     namespace parser {
         class ParameterListFactory : public SymbolFactory {
         public:
-            static ParameterList *produce(std::deque<lexer::Token> &tokens);
+            static ParameterList *produce(std::deque<lexer::Token> &tokens, ParseResults &results);
         };
     }
 }

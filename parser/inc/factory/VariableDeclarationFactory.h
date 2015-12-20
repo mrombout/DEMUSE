@@ -15,7 +15,7 @@ namespace dem {
     namespace parser {
         class VariableDeclarationFactory : public SymbolFactory {
         public:
-            static VariableDeclaration *produce(std::deque<lexer::Token> &tokens);
+            static VariableDeclaration *produce(std::deque<lexer::Token> &tokens, ParseResults &results);
         };
     }
 }

@@ -74,6 +74,8 @@ namespace dem {
                     break;
             }
 
+            tokens.push_back(Token(dem::lexer::TokenType::ENDOFFILE, "EOF", tokenPosition));
+
             return tokens;
         }
 

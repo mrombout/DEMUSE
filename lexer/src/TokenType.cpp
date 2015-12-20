@@ -216,6 +216,9 @@ namespace dem {
                 case TokenType::UNKNOWN:
                     str = "UNKNOWN";
                     break;
+                case TokenType::ENDOFFILE:
+                    str = "EOF";
+                    break;
             }
 
             return output << str;

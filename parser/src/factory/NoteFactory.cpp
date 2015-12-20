@@ -3,11 +3,11 @@
 
 namespace dem {
     namespace parser {
-        Note *NoteFactory::produce(std::deque<lexer::Token> &tokens) {
+        Note *NoteFactory::produce(std::deque<lexer::Token> &tokens, ParseResults &results) {
             // note = ( ( "C" | "D" | "E" | "F" | "G" | "A" | "B" ) [ integer ] [ "#" | "b" | "n" ] | "R" ) [ "w" | "h" | "q" ] ;
 
             // note
-            expect(tokens, lexer::TokenType::NOTE, false);
+            expect(tokens, lexer::TokenType::NOTE, results, false);
             NoteT note = tokens.front().content().at(0);
             tokens.pop_front();
 

@@ -7,10 +7,14 @@
 
 namespace dem {
     namespace parser {
-        Symbol *MuseParser::parse(std::vector<lexer::Token> &tokens) {
+        ParseResults MuseParser::parse(std::vector<lexer::Token> &tokens) {
             std::deque<lexer::Token> tokensDeque{tokens.begin(), tokens.end()};
+            ParseResults parseResults;
 
-            return ProgramFactory::produce(tokensDeque);
+            Program *program = ProgramFactory::produce(tokensDeque, parseResults);
+            parseResults.astRoot = program;
+
+            return parseResults;
         }
     }
 }

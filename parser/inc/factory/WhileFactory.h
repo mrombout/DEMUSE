@@ -15,7 +15,7 @@ namespace dem {
     namespace parser {
         class WhileFactory : public SymbolFactory {
         public:
-            static While *produce(std::deque<lexer::Token> &tokens);
+            static While *produce(std::deque<lexer::Token> &tokens, ParseResults &results);
         };
     }
 }

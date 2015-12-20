@@ -1,4 +1,5 @@
 #include <vector>
+#include "factory/StatementFactory.h"
 #include "exception/ParsingException.h"
 #include "factory/VariableDeclarationFactory.h"
 #include "factory/FunctionDefinitionFactory.h"
@@ -10,30 +11,29 @@
 
 namespace dem {
     namespace parser {
-        Program *ProgramFactory::produce(std::deque<lexer::Token> &tokens) {
-            // program = { function_def | track } ;
+        Program *ProgramFactory::produce(std::deque<lexer::Token> &tokens, ParseResults &results) {
+            // program = { function_def | variable_def_stmt | track } ;
 
             std::vector<Statement*> statements;
 
-            while(!tokens.empty()) {
+            while(!tokens.front().isEOF()) {
                 Statement *statement = nullptr;
-                if(tokens.front().is(lexer::TokenType::FUNCTION)) {
-                    statement = FunctionDefinitionFactory::produce(tokens);
-                } else if(tokens.front().is(lexer::TokenType::VAR)) {
-                    statement = VariableDeclarationFactory::produce(tokens);
-                    expect(tokens, lexer::TokenType::TERMINATOR); // TODO: Remove this expect, duplicate with statement factory. Possibly move this check to factory for each statement so they can be used separately like this
-                } else if(tokens.front().is(lexer::TokenType::TRACK)) {
-                    statement = TrackFactory::produce(tokens);
+
+                if(tokens.front().is(lexer::TokenType::TRACK)) {
+                    statement = TrackFactory::produce(tokens, results);
+                } else {
+                    statement = StatementFactory::produce(tokens, results);
                 }
+
                 if(!statement)
                     break;
                 statements.push_back(statement);
             }
 
-            if(!tokens.empty()) {
+            if(!tokens.front().isEOF()) {
                 std::stringstream ss;
-                ss << "Expected function definition or track, but got '" << tokens.front().content() << "'.";
-                throw ParsingException(tokens.front(), ss.str());
+                ss << "Unexpected '" << tokens.front().content() << "'.";
+                addError(results, tokens.front(), ss.str());
             }
 
             return new Program(statements);

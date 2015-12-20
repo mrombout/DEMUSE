@@ -15,7 +15,7 @@ namespace dem {
     namespace parser {
         class IfFactory : public SymbolFactory {
         public:
-            static If *produce(std::deque<lexer::Token> &tokens);
+            static If *produce(std::deque<lexer::Token> &tokens, ParseResults &results);
         };
     }
 }

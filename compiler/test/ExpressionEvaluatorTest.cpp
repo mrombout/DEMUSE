@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "MidiCompiler.h"
+#include "MuseMidiCompiler.h"
 #include "ExpressionEvaluator.h"
 #include "symbol/expression/AdditionExpression.h"
 #include "symbol/expression/SubtractionExpression.h"

@@ -15,7 +15,7 @@ namespace dem {
     namespace parser {
         class ContinueFactory : public SymbolFactory {
         public:
-            static Continue *produce(std::deque<lexer::Token> &tokens);
+            static Continue *produce(std::deque<lexer::Token> &tokens, ParseResults &results);
         };
     }
 }

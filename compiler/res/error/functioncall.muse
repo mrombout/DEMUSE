@@ -1,0 +1,8 @@
+// error 1
+//foo(
+
+// error 2
+//foo)
+
+// error 3
+foo(1, 2
