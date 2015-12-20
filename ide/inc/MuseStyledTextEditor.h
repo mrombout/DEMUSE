@@ -32,6 +32,8 @@
 #define demSTC_INDIC_UNKNOWN 8
 #define demSTC_INDIC_BRACE 9
 
+#define demSTC_MARK_ERROR 1
+
 namespace dem {
     namespace ide {
         enum {

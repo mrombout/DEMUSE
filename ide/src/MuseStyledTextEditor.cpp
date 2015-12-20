@@ -255,7 +255,7 @@ namespace dem {
 
             // defaults
             SetViewWhiteSpace(config.ReadBool(KEY_EDITOR_SHOW_WHITESPACE, false) ? wxSTC_WS_VISIBLEALWAYS : wxSTC_WS_INVISIBLE);
-            SetViewEOL(true);
+            SetViewEOL(false);
             SetCaretLineVisible(config.ReadBool(KEY_EDITOR_HIGHLIGHT_CURRENT_LINE, false));
             SetCaretLineBackground(wxColour(255, 250, 227)); // Make caret line colour configurable
             // TODO: Show annotations for compiler errors
@@ -330,6 +330,9 @@ namespace dem {
             StyleSetBackground(wxSTC_STYLE_BRACELIGHT, wxColour(153, 204, 255));
             StyleSetForeground(wxSTC_STYLE_BRACELIGHT, wxColour(0, 0, 0));
             StyleSetForeground(wxSTC_STYLE_BRACEBAD,   wxColour(100, 0, 0));
+
+            // markers
+            MarkerDefine(demSTC_MARK_ERROR, wxSTC_MARK_LEFTRECT, wxNullColour, *wxRED);
         }
     }
 }

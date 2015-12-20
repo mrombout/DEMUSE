@@ -176,6 +176,7 @@ namespace dem {
             mErrorList->AppendTextColumn("Column");
             mErrorList->AppendTextColumn("Description");
             mErrorList->AppendTextColumn("File");
+            mErrorList->Bind(wxEVT_DATAVIEW_ITEM_ACTIVATED, &MainFrame::onErrorListItemActivated, this, wxID_ANY);
 
             wxVector<wxVariant> data;
             data.push_back(wxVariant(wxDataViewIconText("Warning", wxArtProvider::GetIcon(wxART_WARNING, wxART_OTHER, wxSize(16, 16)))));
@@ -351,6 +352,9 @@ namespace dem {
         }
 
         void MainFrame::onRunBuild(wxCommandEvent &event) {
+            mErrorList->DeleteAllItems();
+            activeEditor()->MarkerDeleteAll(demSTC_MARK_ERROR);
+
             wxStopWatch totalStopWatch;
             wxStopWatch sw;
             sw.Pause();
@@ -395,6 +399,7 @@ namespace dem {
 
                 if(!results.successful()) {
                     for(const parser::ParseError &error : results.errors) {
+                        // add error to list
                         wxVector<wxVariant> data;
 
                         if(error.type == parser::ParseError::Type::T_WARNING) {
@@ -408,6 +413,10 @@ namespace dem {
                         data.push_back(wxVariant(error.description));
                         data.push_back(wxVariant(activeEditor()->filePath()));
                         mErrorList->AppendItem(data);
+
+                        // add marker to editor
+                        activeEditor()->MarkerAdd(error.token.line(), demSTC_MARK_ERROR);
+                        // TODO: Remove marker when line is edited
                     }
 
                     return;
@@ -442,6 +451,15 @@ namespace dem {
         void MainFrame::onRunStop(wxCommandEvent &event) {
             wxProcess::Kill(mActiveProcess->GetPid());
             mActiveProcess = nullptr;
+        }
+
+        void MainFrame::onErrorListItemActivated(wxDataViewEvent &event) {
+            wxVariant line;
+            wxVariant column;
+            mErrorList->GetValue(line, mErrorList->ItemToRow(event.GetItem()), 1);
+            mErrorList->GetValue(column, mErrorList->ItemToRow(event.GetItem()), 2);
+
+            // TODO: Move cursor to line and column
         }
     }
 }

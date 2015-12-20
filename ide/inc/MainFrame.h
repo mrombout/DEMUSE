@@ -55,6 +55,8 @@ namespace dem {
             void onRunRun(wxCommandEvent &event);
             void onRunStop(wxCommandEvent &event);
 
+            void onErrorListItemActivated(wxDataViewEvent &event);
+
             std::map<wxString, size_t> mFileEditors;
 
             wxAuiManager mMgr;
