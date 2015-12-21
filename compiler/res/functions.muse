@@ -4,7 +4,7 @@ track 1 {
     // function declaration statement, no arguments
     function foo() {
         var A = 1; // should be set to 1
-    };
+    }
 
     foo();
 
@@ -12,14 +12,14 @@ track 1 {
     function bar(foo1, foo2) {
         var B = foo1; // should be set to 2
         var C = foo2; // should be set to 3
-    };
+    }
 
     bar(2, 3); // sets B and C to arguments
 
     // function declaration statement, with return
     function buzz() {
         return 1; // should return 1
-    };
+    }
     var D = buzz(); // should be set to 1
 
     // FUNCTION DECLARATION EXPRESSION

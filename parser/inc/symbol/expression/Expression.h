@@ -2,11 +2,11 @@
 #define DEMUSE_EXPRESSION_H
 
 #include <string>
-#include "../Statement.h"
+#include "symbol/CompoundStatement.h"
 
 namespace dem {
     namespace parser {
-        class Expression : public Statement {
+        class Expression : public CompoundStatement {
         public:
             virtual ~Expression() { }
         };

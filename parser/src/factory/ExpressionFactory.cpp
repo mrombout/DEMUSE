@@ -260,7 +260,6 @@ namespace dem {
 
             Expression *node = gobbleExpression(deque, results);
             if(expect(deque, lexer::TokenType::CLOSE, results)) {
-                deque.pop_front();
                 return node;
             }
 

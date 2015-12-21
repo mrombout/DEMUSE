@@ -2,3 +2,9 @@ var A = 0;      // should be 0
 // var B = 1;   // should not run
 /* var C = 2 */ // should not run
 var D = /*3*/4; // should be 4
+
+/* should not run
+if(true) {
+
+}
+*/
