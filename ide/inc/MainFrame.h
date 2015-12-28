@@ -57,6 +57,8 @@ namespace dem {
 
             void onErrorListItemActivated(wxDataViewEvent &event);
 
+            void onNotebookPageClose(wxAuiNotebookEvent &event);
+
             std::map<wxString, size_t> mFileEditors;
 
             wxAuiManager mMgr;

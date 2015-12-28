@@ -141,6 +141,8 @@ namespace dem {
                                                     wxAUI_NB_TAB_SPLIT |
                                                     wxAUI_NB_TAB_MOVE | wxAUI_NB_CLOSE_ON_ALL_TABS |
                                                     wxAUI_NB_MIDDLE_CLICK_CLOSE | wxNO_BORDER);
+            mNotebook->Bind(wxEVT_AUINOTEBOOK_PAGE_CLOSE, &MainFrame::onNotebookPageClose, this, wxID_ANY);
+
             mMgr.AddPane(mNotebook, wxCENTER);
             //mNotebook->SetArtProvider(new MuseAuiTabArt);
             mMgr.GetArtProvider()->SetMetric(wxAUI_DOCKART_PANE_BORDER_SIZE, 0);
@@ -460,6 +462,11 @@ namespace dem {
             mErrorList->GetValue(column, mErrorList->ItemToRow(event.GetItem()), 2);
 
             // TODO: Move cursor to line and column
+        }
+
+        void MainFrame::onNotebookPageClose(wxAuiNotebookEvent &event) {
+            wxString filePath = static_cast<MuseStyledTextEditor*>(mNotebook->GetPage(event.GetSelection()))->filePath();
+            mFileEditors.erase(filePath);
         }
     }
 }
