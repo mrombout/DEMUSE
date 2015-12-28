@@ -186,14 +186,6 @@ namespace dem {
             mErrorList->AppendTextColumn("File");
             mErrorList->Bind(wxEVT_DATAVIEW_ITEM_ACTIVATED, &MainFrame::onErrorListItemActivated, this, wxID_ANY);
 
-            wxVector<wxVariant> data;
-            data.push_back(wxVariant(wxDataViewIconText("Warning", wxArtProvider::GetIcon(wxART_WARNING, wxART_OTHER, wxSize(16, 16)))));
-            data.push_back(wxVariant("1"));
-            data.push_back(wxVariant("1"));
-            data.push_back(wxVariant("Variable does not exist."));
-            data.push_back(wxVariant("arithmetic.muse"));
-            mErrorList->AppendItem(data);
-
             mMgr.AddPane(mErrorList, wxAuiPaneInfo().Name("Errors").Bottom().MinimizeButton(true).PaneBorder(true).MinSize(-1, 200));
 
             // output window
