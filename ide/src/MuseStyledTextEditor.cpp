@@ -63,6 +63,8 @@ namespace dem {
             { lexer::TokenType::POLY_PRESSURE, 0 },
             { lexer::TokenType::CONTROLLER,    0 },
             { lexer::TokenType::TIME,          0 },
+            { lexer::TokenType::SINGLECOMMENT, demSTC_DEMUSE_COMMENT },
+            { lexer::TokenType::MULTICOMMENT,  demSTC_DEMUSE_COMMENT },
             { lexer::TokenType::START,         demSTC_DEMUSE_BLOCK },
             { lexer::TokenType::END,           demSTC_DEMUSE_BLOCK },
             { lexer::TokenType::OPEN,          demSTC_DEMUSE_PARENTHESIS },
@@ -84,13 +86,13 @@ namespace dem {
                 mLexer(museLexer) {
             SetStyleBits(8);
 
-            initialize();
-
             Connect(wxEVT_STC_MARGINCLICK, wxStyledTextEventHandler(MuseStyledTextEditor::onMarginClick), nullptr, this);
             Connect(wxEVT_STC_CHANGE, wxStyledTextEventHandler(MuseStyledTextEditor::onChange), nullptr, this);
             Connect(wxEVT_STC_STYLENEEDED, wxStyledTextEventHandler(MuseStyledTextEditor::onStyleNeeded), nullptr, this);
             Connect(wxEVT_STC_UPDATEUI, wxStyledTextEventHandler(MuseStyledTextEditor::onUpdateUI), nullptr, this);
             Connect(wxEVT_STC_CHARADDED, wxStyledTextEventHandler(MuseStyledTextEditor::onCharAdded), nullptr, this);
+
+            initialize();
         }
 
         MuseStyledTextEditor::~MuseStyledTextEditor() {
@@ -125,7 +127,7 @@ namespace dem {
             auto textEnd = text.end();
 
             // tokenize
-            std::vector<lexer::Token> tokens = mLexer->lex(textBegin, textEnd);
+            std::vector<lexer::Token> tokens = mLexer->lex(textBegin, textEnd, false);
 
             // prepare styling and indicators
             SetIndicatorCurrent(demSTC_INDIC_UNKNOWN);

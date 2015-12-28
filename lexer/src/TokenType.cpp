@@ -216,6 +216,12 @@ namespace dem {
                 case TokenType::ENDOFFILE:
                     str = "EOF";
                     break;
+                case TokenType::SINGLECOMMENT:
+                    str = "SINGLECOMMENT";
+                    break;
+                case TokenType::MULTICOMMENT:
+                    str = "MULTICOMMENT";
+                    break;
             }
 
             return output << str;

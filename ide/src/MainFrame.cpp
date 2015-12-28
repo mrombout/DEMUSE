@@ -158,6 +158,7 @@ namespace dem {
             if(!mFileEditors.count(filePath)) {
                 // create and new editor and load file if available
                 MuseStyledTextEditor *editor = new MuseStyledTextEditor(this, new lexer::MuseLexer());
+                editor->initialize();
 
                 wxString tabName{wxT("New File")};
 
@@ -391,7 +392,7 @@ namespace dem {
             dem::lexer::MuseLexer museLexer;
             auto begin = content.begin();
             auto end = content.end();
-            std::vector<dem::lexer::Token> tokens = museLexer.lex(begin, end);
+            std::vector<dem::lexer::Token> tokens = museLexer.lex(begin, end, false);
             sw.Pause();
 
             mOutput->AppendText("== Lexing finished in " + std::to_string(sw.Time()) + "ms\n");

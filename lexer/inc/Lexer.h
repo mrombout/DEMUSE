@@ -18,11 +18,11 @@ namespace dem {
 
             void addDefinition(TokenDefinition *tokenDefinition);
 
-            std::vector<Token> lex(std::string::iterator &begin, std::string::iterator &end) const;
-            std::vector<Token> lex(std::string::iterator &begin, std::string::iterator &end, TokenPosition &tokenPosition) const;
+            std::vector<Token> lex(std::string::iterator &begin, std::string::iterator &end, bool ignore = true) const;
+            std::vector<Token> lex(std::string::iterator &begin, std::string::iterator &end, bool ignore, TokenPosition &tokenPosition) const;
 
         private:
-            bool match(std::vector<Token> &tokens, std::string::iterator &begin, std::string::iterator &end, TokenPosition &tokenPosition) const;
+            bool match(std::vector<Token> &tokens, std::string::iterator &begin, std::string::iterator &end, bool ignore, TokenPosition &tokenPosition) const;
 
         private:
             std::vector<TokenDefinition*> mTokenDefinitions;

@@ -27,12 +27,12 @@ namespace dem {
             mTokenDefinitions.push_back(tokenDefinition);
         }
 
-        std::vector<Token> Lexer::lex(std::string::iterator &begin, std::string::iterator &end) const {
+        std::vector<Token> Lexer::lex(std::string::iterator &begin, std::string::iterator &end, bool ignore) const {
             TokenPosition tokenPosition;
-            return lex(begin, end, tokenPosition);
+            return lex(begin, end, ignore, tokenPosition);
         }
 
-        std::vector<Token> Lexer::lex(std::string::iterator &begin, std::string::iterator &end, TokenPosition &tokenPosition) const {
+        std::vector<Token> Lexer::lex(std::string::iterator &begin, std::string::iterator &end, bool ignore, TokenPosition &tokenPosition) const {
             std::vector<Token> tokens;
 
             while(begin != end) {
@@ -43,7 +43,7 @@ namespace dem {
                     return tokens;
 
                 // match single token
-                bool matched = match(tokens, begin, end, tokenPosition);
+                bool matched = match(tokens, begin, end, ignore, tokenPosition);
 
                 // skip newlines
                 std::string newLine;
@@ -79,7 +79,7 @@ namespace dem {
             return tokens;
         }
 
-        bool Lexer::match(std::vector<Token> &tokens, std::string::iterator &begin, std::string::iterator &end, TokenPosition &tokenPosition) const {
+        bool Lexer::match(std::vector<Token> &tokens, std::string::iterator &begin, std::string::iterator &end, bool ignore, TokenPosition &tokenPosition) const {
             for(TokenDefinition *tokenDefinition : mTokenDefinitions) {
                 if(!tokenDefinition)
                     continue;
@@ -90,7 +90,7 @@ namespace dem {
                     if(begin != end)
                         std::advance(begin, matched.length());
 
-                    if(!tokenDefinition->ignore())
+                    if(!ignore || !tokenDefinition->ignore())
                         tokens.push_back(Token(tokenDefinition->type(), matched, tokenPosition));
 
                     tokenPosition.column += matched.length();

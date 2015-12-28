@@ -17,7 +17,7 @@ int main(int argc, char* argv[]) {
     auto end = content.end();
 
     dem::lexer::MuseLexer lexer;
-    std::vector<dem::lexer::Token> tokens = lexer.lex(begin, end);
+    std::vector<dem::lexer::Token> tokens = lexer.lex(begin, end, false);
 
     std::cout << "  +----------------------+--------------+------------+------------+-------+\n";
     std::cout << "  | " << std::left << std::setw(20) << "Content" << " | " << std::setw(12) << "Type" << " | " << std::setw(10) << "Line" << " | " << std::setw(10) << "Column" << " | " << std::setw(5) << "Index |\n";
