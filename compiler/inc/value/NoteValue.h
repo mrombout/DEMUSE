@@ -1,12 +1,15 @@
-#ifndef DEMUSE_NULLVALUE_H
-#define DEMUSE_NULLVALUE_H
+#ifndef DEMUSE_NOTEVALUE_H
+#define DEMUSE_NOTEVALUE_H
 
+#include "symbol/play/Note.h"
 #include "Value.h"
 
 namespace dem {
     namespace compiler {
-        class NullValue : public Value {
+        class NoteValue : public Value {
         public:
+            NoteValue(parser::Note note);
+
             virtual Value *add(Value *b);
             virtual Value *subtract(Value *b);
             virtual Value *multiply(Value *b);
@@ -27,11 +30,16 @@ namespace dem {
             virtual bool operator<=(const Value &other);
             virtual bool operator>(const Value &other);
             virtual bool operator>=(const Value &other);
+
             virtual Value *operator[](const int index);
             virtual Variable *operator[](const std::string &index);
-            virtual Value *operator()(Scope &scope);
+
+
+
+        private:
+            parser::Note mNote;
         };
     }
 }
 
-#endif //DEMUSE_NULLVALUE_H
+#endif //DEMUSE_NOTEVALUE_H

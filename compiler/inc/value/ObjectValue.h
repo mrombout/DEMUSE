@@ -19,6 +19,9 @@ namespace dem {
             virtual bool asBool() const;
             virtual std::string asString() const;
 
+
+            virtual parser::Note asNote() const;
+
             virtual bool operator==(const Value &other);
             virtual bool operator!=(const Value &other);
             virtual bool operator<(const Value &other);

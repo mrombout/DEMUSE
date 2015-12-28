@@ -43,7 +43,6 @@ namespace dem {
             TRACK,
             NOTE,
             ACCIDENTAL,
-            OCTAVE,
             CHORD,
             DURATION,
             HARMONY,

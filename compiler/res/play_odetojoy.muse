@@ -1,0 +1,3 @@
+track 1 {
+    <<Eq Eq Fq Gq | Gq Fq Eq Dq | Cq Cq Dq Eq | Eq Dq Dh | Eq Eq Fq Gq | Gq Fq Eq Dq | Cq Cq Dq Eq | Dq Cq Ch>>;
+}

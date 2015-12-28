@@ -43,6 +43,10 @@ namespace dem {
             return mValue ? "true" : "false";
         }
 
+        parser::Note BooleanValue::asNote() const {
+            throw "Can't cast to note"; // TODO: Throw proper error
+        }
+
         bool BooleanValue::operator==(const Value &other) {
             return mValue == other.asBool();
         }

@@ -7,6 +7,7 @@
 #include "value/TextValue.h"
 #include "value/NullValue.h"
 #include "value/ArrayValue.h"
+#include "value/NoteValue.h"
 #include "value/function/FunctionValue.h"
 #include "value/function/UserFunction.h"
 #include "value/Variable.h"
@@ -471,6 +472,13 @@ namespace dem {
         
         bool ExpressionEvaluator::visit(parser::Note& note) {
             std::cout << "ENTER - Evaluating Note" << std::endl;
+
+            NoteValue *value = new NoteValue(note);
+
+            std::cout << "PUSH - " << value->asString() << std::endl;
+            mStack.push(value);
+
+            return true;
         }
         
         bool ExpressionEvaluator::visitEnter(parser::UnaryExpression &unaryExpression) {

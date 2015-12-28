@@ -57,6 +57,10 @@ namespace dem {
             return std::to_string(mValue);
         }
 
+        parser::Note NumberValue::asNote() const {
+            throw "NullValue"; // TODO: Throw proper exception
+        }
+
         bool NumberValue::operator==(const Value &other) {
             return mValue == other.asNumber();
         }

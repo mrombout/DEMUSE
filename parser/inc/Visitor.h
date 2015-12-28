@@ -51,6 +51,8 @@
 #include "symbol/expression/AssignmentExpression.h"
 #include "symbol/play/Play.h"
 #include "symbol/play/Note.h"
+#include "symbol/play/Harmony.h"
+#include "symbol/play/Instrument.h"
 
 namespace dem {
     namespace parser {
@@ -200,6 +202,12 @@ namespace dem {
             virtual bool visitLeave(parser::UnaryExpression &unaryExpression);
 
             virtual bool visit(parser::Note &note);
+
+            virtual bool visitEnter(parser::Harmony &harmony);
+            virtual bool visitLeave(parser::Harmony &harmony);
+
+            virtual bool visitEnter(parser::Instrument &instrument);
+            virtual bool visitLeave(parser::Instrument &instrument);
         };
     }
 }

@@ -6,10 +6,10 @@ set(Compiler_SRCS
     src/exception/RuntimeException.cpp
 
     inc/Scope.h
-        src/scope/Scope.cpp
+    src/scope/Scope.cpp
 
     inc/GlobalScope.h
-        src/scope/GlobalScope.cpp
+    src/scope/GlobalScope.cpp
 
     inc/value/Variable.h
     src/value/Variable.cpp
@@ -47,14 +47,20 @@ set(Compiler_SRCS
     inc/value/TextValue.h
     src/value/TextValue.cpp
 
+    inc/value/NoteValue.h
+    src/value/NoteValue.cpp
+
     inc/Compiler.h
     src/Compiler.cpp
 
-        inc/MuseMidiCompiler.h
-        src/MuseMidiCompiler.cpp
+    inc/MuseMidiCompiler.h
+    src/MuseMidiCompiler.cpp
 
-        inc/MusePlayEvaluator.h
-        src/MusePlayEvaluator.cpp
+    inc/MusePlayEvaluator.h
+    src/MusePlayEvaluator.cpp
+
+    inc/MuseMidiPlayEvaluator.h
+    src/MuseMidiPlayEvaluator.cpp
 
     inc/ExpressionEvaluator.h
     src/ExpressionEvaluator.cpp
@@ -92,6 +98,18 @@ if(Jdksmidi_FOUND)
 
     target_include_directories(libcompiler PUBLIC ${Jdksmidi_INCLUDE_DIRS})
     target_link_libraries(libcompiler PRIVATE ${Jdksmidi_LIBRARIES})
+endif()
+
+find_package(Midifile REQUIRED)
+if(Midifile_FOUND)
+    message(STATUS "Include: " ${Midifile_INCLUDE_DIRS})
+    message(STATUS "Include: " ${Midifile_LIBRARIES})
+
+    target_include_directories(compiler PRIVATE ${Midifile_INCLUDE_DIRS})
+    target_link_libraries(compiler PRIVATE ${Midifile_LIBRARIES})
+
+    target_include_directories(libcompiler PUBLIC ${Midifile_INCLUDE_DIRS})
+    target_link_libraries(libcompiler PRIVATE ${Midifile_LIBRARIES})
 endif()
 
 # testing

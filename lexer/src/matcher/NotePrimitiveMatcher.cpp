@@ -38,7 +38,7 @@ namespace dem {
             if(!octaveToken.empty()) {
                 std::advance(begin, octaveToken.length());
                 advanced += octaveToken.length();
-                tokens.push_back(Token(TokenType::OCTAVE, octaveToken, tokenPosition));
+                tokens.push_back(Token(TokenType::NUMBER, octaveToken, tokenPosition));
                 tokenPosition.column += octaveToken.length();
             }
 

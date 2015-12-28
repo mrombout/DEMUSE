@@ -12,9 +12,9 @@
 
 namespace dem {
     namespace compiler {
-        class PlayEvaluator : public parser::Visitor {
+        class MusePlayEvaluator : public parser::Visitor {
         public:
-            PlayEvaluator();
+            MusePlayEvaluator();
 
             void play(parser::Play &play);
             void write();
@@ -23,6 +23,7 @@ namespace dem {
             virtual bool visitLeave(parser::Play &play) override;
 
             virtual bool visit(parser::Note &note) override;
+            virtual bool visitEnter(parser::Harmony &harmony) override;
 
             int toMidiNote(parser::Note &note) const;
 

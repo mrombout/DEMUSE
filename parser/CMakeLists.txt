@@ -179,6 +179,12 @@ set(Parser_SRCS
     inc/symbol/play/Play.h
     src/symbol/play/Play.cpp
 
+    inc/symbol/play/Harmony.h
+    src/symbol/play/Harmony.cpp
+
+    inc/symbol/play/Instrument.h
+    src/symbol/play/Instrument.cpp
+
     inc/symbol/play/Note.h
     src/symbol/play/Note.cpp
 
@@ -211,6 +217,9 @@ set(Parser_SRCS
 
     inc/factory/IfFactory.h
     src/factory/IfFactory.cpp
+
+    inc/factory/InstrumentFactory.h
+    src/factory/InstrumentFactory.cpp
 
     inc/factory/NewInstanceFactory.h
     src/factory/NewInstanceFactory.cpp
@@ -253,6 +262,9 @@ set(Parser_SRCS
 
     inc/factory/NoteFactory.h
     src/factory/NoteFactory.cpp
+
+    inc/factory/NewInstanceFactory.h
+    src/factory/NewInstanceFactory.cpp
 )
 
 set(TestParser_SRCS
@@ -270,9 +282,7 @@ set(TestParser_SRCS
     test/factory/StatementFactoryTest.cpp
     test/factory/VariableDefinitionTest.cpp
     test/factory/WhileFactoryTest.cpp
-    test/factory/PrimitiveFactoryTest.cpp
-    src/factory/NewInstanceFactory.cpp inc/factory/NewInstanceFactory.h
-)
+    test/factory/PrimitiveFactoryTest.cpp inc/symbol/play/Playable.h)
 
 add_library(libparser SHARED ${Parser_SRCS})
 add_library(dem::libparser ALIAS libparser)

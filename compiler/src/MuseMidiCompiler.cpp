@@ -11,6 +11,7 @@ namespace dem {
     namespace compiler {
         MidiCompiler::MidiCompiler() :
                 mEvaluator(*this),
+                mPlayEvaluator(mEvaluator),
                 mReturnValue(nullptr) {
 
         }
@@ -159,7 +160,7 @@ namespace dem {
         bool MidiCompiler::visitEnter(parser::Play &play) {
             std::cout << "ENTER - Play" << std::endl;
 
-            mPlayEvaluator.play(play);
+            mPlayEvaluator.play(play, mScopes.front());
 
             return false;
         }

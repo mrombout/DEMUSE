@@ -14,13 +14,17 @@ variable_def_stmt = "var" assignment_stmt terminator ;
 return_stmt       = "return" expression ;
 break_stmt        = "break" ;
 continue_stmt     = "continue" ;
-play_stmt         = "<<" { note } ">>" ;
 array_init        = "[" primitive "]" ;
 
 if_stmt           = "if(" conditional ")" block
                         [ "else" ( block | statement ) ] ;
 while_stmt        = "while(" conditional ")" block ;
 for_stmt          = "for(" ( terminator | variable_def_stmt | assignment_stmt ) ( terminator | conditional ) ( terminator | assignment_stmt ) ")" block ;
+
+(* play *)
+play_stmt         = "<<" { note | identifier } ">>" ;
+note              = ( ( "C" | "D" | "E" | "F" | "G" | "A" | "B" ) [ integer ] [ "#" | "b" | "n" ] | "R" ) [ "w" | "h" | "q" ] ;
+instrument        = "I[" ( number | identifier ) "]"
 
 (* expression *)
 expression        = array_init | conditional | assignment ;
@@ -82,7 +86,6 @@ number            = integer | double ;
 integer           = nonzero { digit } | zero ;
 double            = [ integer ] fraction ;
 fraction          = "," { digit } ;
-note              = ( ( "C" | "D" | "E" | "F" | "G" | "A" | "B" ) [ integer ] [ "#" | "b" | "n" ] | "R" ) [ "w" | "h" | "q" ] ;
 
 (* misc *)
 terminator        = ";" ;

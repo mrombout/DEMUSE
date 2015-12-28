@@ -2,6 +2,7 @@
 #define DEMUSE_IDENTIFIER_H
 
 #include <string>
+#include <symbol/play/Playable.h>
 #include "expression/Expression.h"
 
 namespace dem {

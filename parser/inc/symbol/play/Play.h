@@ -9,14 +9,14 @@ namespace dem {
     namespace parser {
         class Play : public Statement {
         public:
-            Play(std::vector<Note*> notes);
+            Play(std::vector<Expression*> playables);
 
-            const std::vector<Note*> notes() const;
+            const std::vector<Expression*> playables() const;
 
             virtual bool accept(Visitor &visitor);
 
         private:
-            std::vector<Note*> mNotes;
+            std::vector<Expression*> mPlayables;
         };
     }
 }

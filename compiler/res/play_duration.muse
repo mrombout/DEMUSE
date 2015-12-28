@@ -1,0 +1,3 @@
+track 1 {
+    <<Cq Cq Cq Cq | Ch Ch Ch Ch | C C C C>>;
+}

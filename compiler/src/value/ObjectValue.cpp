@@ -46,6 +46,10 @@ namespace dem {
             return "Object";
         }
 
+        parser::Note ObjectValue::asNote() const {
+            throw "Not implemented"; // TODO: Throw proper error
+        }
+
         bool ObjectValue::operator==(const Value &other) {
             throw "Not implemented";
         }

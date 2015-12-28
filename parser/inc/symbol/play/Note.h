@@ -3,6 +3,7 @@
 
 #include <string>
 #include "symbol/Primitive.h"
+#include "Playable.h"
 
 namespace dem {
     namespace parser {
@@ -11,7 +12,7 @@ namespace dem {
         typedef char Accidental;
         typedef char Duration;
 
-        class Note : public Primitive {
+        class Note : public Playable {
         public:
             Note(NoteT note, Octave octave, Accidental accidental = 'n', Duration duration = 'w');
 
@@ -19,6 +20,9 @@ namespace dem {
             Octave octave() const;
             Accidental accidental() const;
             Duration duration() const;
+
+            int midiNote() const;
+            int midiDuration() const;
 
             virtual bool accept(Visitor &visitor);
 

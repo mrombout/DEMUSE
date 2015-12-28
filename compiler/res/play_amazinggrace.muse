@@ -1,0 +1,3 @@
+track 1 {
+    <<Rq Rq G4q | C5h E5q C5q | G4h+E5h D5q | A4h+C4h A4q | G4h G4q | C5h E5q C5q | E5h G5q G5h | F5q E5q+A4q>>;
+}

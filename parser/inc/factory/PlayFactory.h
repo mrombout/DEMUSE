@@ -10,6 +10,7 @@ namespace dem {
         class PlayFactory : public SymbolFactory {
         public:
             static Play *produce(std::deque<lexer::Token> &tokens, ParseResults &results);
+            static Expression *parsePart(std::deque<lexer::Token> &tokens, ParseResults &results);
         };
     }
 }

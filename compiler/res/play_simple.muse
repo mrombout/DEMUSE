@@ -1,0 +1,4 @@
+track 1 {
+    tempo = 120;
+    <<C C C C | D D D D | E E F F>>;
+}

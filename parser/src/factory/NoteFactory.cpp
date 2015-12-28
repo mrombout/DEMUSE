@@ -13,7 +13,7 @@ namespace dem {
 
             // octave
             Octave octave = 5;
-            if(tokens.front().is(lexer::TokenType::OCTAVE)) {
+            if(tokens.front().is(lexer::TokenType::NUMBER)) {
                 octave = atoi(tokens.front().content().c_str());
                 tokens.pop_front();
             }

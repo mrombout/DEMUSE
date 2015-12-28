@@ -39,6 +39,10 @@ namespace dem {
             return "NULL";
         }
 
+        parser::Note NullValue::asNote() const {
+            throw "NullValue"; // TODO: Throw proper exception
+        }
+
         bool NullValue::operator==(const Value &other) {
             return typeid(dem::compiler::NullValue).name() == typeid(other).name(); // TODO: Does this work?
         }

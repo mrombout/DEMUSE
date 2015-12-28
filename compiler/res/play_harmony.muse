@@ -1,0 +1,3 @@
+track 1 {
+    <<C+D+E C+D+E E+F+G>>;
+}

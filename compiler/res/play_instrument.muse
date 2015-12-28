@@ -1,0 +1,3 @@
+track 1 {
+    <<I[3] Cq Dq Eq Fq | I[2] Cq Dq Eq Fq | I[3] Cq Dq Eq Fq>>;
+}

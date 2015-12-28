@@ -3,7 +3,7 @@
 namespace dem {
     namespace lexer {
         OctaveMatcher::OctaveMatcher() :
-                RegexMatcher("10|[0-9]") {
+                RegexMatcher("(10|[0-9])(?:^])") {
 
         }
     }

@@ -114,9 +114,6 @@ namespace dem {
                 case TokenType::ACCIDENTAL:
                     str = "ACCIDENTAL";
                     break;
-                case TokenType::OCTAVE:
-                    str = "OCTAVE";
-                    break;
                 case TokenType::CHORD:
                     str = "CHORD";
                     break;

@@ -10,7 +10,7 @@
 
 namespace dem {
     namespace compiler {
-        PlayEvaluator::PlayEvaluator() :
+        MusePlayEvaluator::MusePlayEvaluator() :
             mChan(0),
             mNote(0),
             mVelocity(0),
@@ -30,9 +30,7 @@ namespace dem {
             mMsg.SetTimeSig( 4, 2 );
             mTracks.GetTrack(mTrk)->PutEvent( mMsg );
 
-            //int tempo = 100000;
-
-            //mMsg.SetTempo( tempo );
+            mMsg.SetTempo( 1000000 * 60 / 120 );
             mTracks.GetTrack(mTrk)->PutEvent( mMsg );
 
             mTracks.GetTrack(mTrk)->PutTextEvent(mTime, jdksmidi::META_TRACK_NAME, "LibJDKSmidi create_midifile.cpp example by VRM");
@@ -60,11 +58,11 @@ namespace dem {
             mTracks.GetTrack(mTrk)->PutEvent( mMsg );
         }
 
-        void PlayEvaluator::play(parser::Play &play) {
+        void MusePlayEvaluator::play(parser::Play &play) {
             play.accept(*this);
         }
 
-        void PlayEvaluator::write() {
+        void MusePlayEvaluator::write() {
             const char *outfile_name = "output.mid";
             jdksmidi::MIDIFileWriteStreamFileName out_stream(outfile_name);
 
@@ -85,7 +83,7 @@ namespace dem {
             }
         }
 
-        bool PlayEvaluator::visitEnter(parser::Play &play) {
+        bool MusePlayEvaluator::visitEnter(parser::Play &play) {
             std::cout << "START - Play" << std::endl;
 
             mTrk = 1;
@@ -93,24 +91,33 @@ namespace dem {
             return true;
         }
 
-        bool PlayEvaluator::visitLeave(parser::Play &play) {
+        bool MusePlayEvaluator::visitLeave(parser::Play &play) {
             std::cout << "STOP - Play" << std::endl;
 
             return true;
         }
 
-        bool PlayEvaluator::visit(parser::Note &note) {
+        bool MusePlayEvaluator::visit(parser::Note &note) {
             std::cout << "START - Note" << std::endl;
 
-            mMsg.SetTime(mTime += mDelta);
             mMsg.SetNoteOn(mChan = 0, mNote = toMidiNote(note), mVelocity = 100);
             mTracks.GetTrack(mTrk)->PutEvent(mMsg);
 
-            int duration = mDelta * 4;
-            if(note.duration() == 'h') {
+            int duration = mDelta * 4; // default to whole
+            if(note.duration() == 'h') {        // half
                 duration = mDelta * 2;
-            } else if(note.duration() == 'q') {
+            } else if(note.duration() == 'q') { // quater
                 duration = mDelta;
+            } else if(note.duration() == 'i') { // eighth
+                duration = mDelta / 2;
+            } else if(note.duration() == 's') { // sixteenth
+                duration = mDelta / 2 / 2;
+            } else if(note.duration() == 't') {  // thirty-second
+                duration = mDelta / 2 / 2 / 2;
+            } else if(note.duration() == 'x') { // sixty-fourth
+                duration = mDelta / 2 / 2 / 2 / 2;
+            } else if(note.duration() == 'o') { // one-twenty-eighth
+                duration = mDelta / 2 / 2 / 2 / 2 / 2;
             }
 
             mMsg.SetTime(mTime += duration);
@@ -120,7 +127,13 @@ namespace dem {
             return true;
         }
 
-        int PlayEvaluator::toMidiNote(parser::Note &note) const {
+        bool MusePlayEvaluator::visitEnter(parser::Harmony &harmony) {
+            std::cout << "START - Harmony" << std::endl;
+
+            return false;
+        }
+
+        int MusePlayEvaluator::toMidiNote(parser::Note &note) const {
             int midiNote = 0;
 
             // note base values (octave 0)

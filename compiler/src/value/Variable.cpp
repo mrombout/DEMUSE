@@ -56,6 +56,10 @@ namespace dem {
             return mValue->asString();
         }
 
+        parser::Note Variable::asNote() const {
+            return mValue->asNote();
+        }
+
         bool Variable::operator==(const Value &other) {
             return *mValue == other;
         }

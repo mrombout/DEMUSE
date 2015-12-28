@@ -144,5 +144,11 @@ namespace dem {
 
         bool Visitor::visitEnter(parser::ExpressionStatement &statement) { return true; }
         bool Visitor::visitLeave(parser::ExpressionStatement &statement) { return true; }
+
+        bool Visitor::visitEnter(parser::Harmony &harmony) { return true; }
+        bool Visitor::visitLeave(parser::Harmony &harmony) { return true; }
+
+        bool Visitor::visitEnter(parser::Instrument &instrument) { return true; }
+        bool Visitor::visitLeave(parser::Instrument &instrument) { return true; }
     }
 }

@@ -7,6 +7,7 @@
 #include "Scope.h"
 #include "ExpressionEvaluator.h"
 #include "MusePlayEvaluator.h"
+#include "MuseMidiPlayEvaluator.h"
 
 namespace dem {
     namespace compiler {
@@ -55,7 +56,7 @@ namespace dem {
 
         private:
             ExpressionEvaluator mEvaluator;
-            PlayEvaluator mPlayEvaluator;
+            MuseMidiPlayEvaluator mPlayEvaluator;
             std::deque<Scope*> mScopes;
             Value *mReturnValue;
         };

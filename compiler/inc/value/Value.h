@@ -3,6 +3,7 @@
 
 #include <string>
 #include <typeinfo>
+#include "symbol/play/Note.h"
 #include "Scope.h"
 
 namespace dem {
@@ -21,6 +22,7 @@ namespace dem {
             virtual double asNumber() const = 0;
             virtual bool asBool() const = 0;
             virtual std::string asString() const = 0;
+            virtual parser::Note asNote() const = 0;
 
             virtual bool operator==(const Value &other) = 0;
             virtual bool operator!=(const Value &other) = 0;

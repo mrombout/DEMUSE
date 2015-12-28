@@ -55,6 +55,10 @@ namespace dem {
             return ss.str();
         }
 
+        parser::Note ArrayValue::asNote() const {
+            throw "Can't cast to note"; // TODO: Throw proper error
+        }
+
         bool ArrayValue::operator==(const Value &other) {
             return false;
         }

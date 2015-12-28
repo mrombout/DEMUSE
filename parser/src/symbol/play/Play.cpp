@@ -3,23 +3,23 @@
 
 namespace dem {
     namespace parser {
-        Play::Play(std::vector<Note*> notes) :
-                mNotes(notes) {
+        Play::Play(std::vector<Expression*> playables) :
+                mPlayables(playables) {
 
         }
 
         bool Play::accept(Visitor &visitor) {
             if(visitor.visitEnter(*this)) {
-                for(Note *note : mNotes) {
-                    note->accept(visitor);
+                for(Expression *playable : mPlayables) {
+                    playable->accept(visitor);
                 }
             }
 
             return visitor.visitLeave(*this);
         }
 
-        const std::vector<Note*> Play::notes() const {
-            return mNotes;
+        const std::vector<Expression*> Play::playables() const {
+            return mPlayables;
         }
     }
 }

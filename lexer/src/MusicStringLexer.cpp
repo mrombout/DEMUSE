@@ -10,7 +10,7 @@ namespace dem {
         MusicStringLexer::MusicStringLexer() :
             Lexer(new StringMatcher(">>")) {
             addDefinition(new TokenDefinition(TokenType::NOTE,          new NoteMatcher()));
-            addDefinition(new TokenDefinition(TokenType::OCTAVE,        new OctaveMatcher()));
+            addDefinition(new TokenDefinition(TokenType::NUMBER,        new RegexMatcher("\\d+(?:\\.\\d+)?")));
             addDefinition(new TokenDefinition(TokenType::ACCIDENTAL,    new AccidentalMatcher()));
             addDefinition(new TokenDefinition(TokenType::CHORD,         new RegexMatcher("maj|min")));
             addDefinition(new TokenDefinition(TokenType::DURATION,      new DurationMatcher()));
@@ -22,7 +22,7 @@ namespace dem {
             addDefinition(new TokenDefinition(TokenType::DECAY,         new RegexMatcher("d\\d*")));
             addDefinition(new TokenDefinition(TokenType::HARMONY,       new CharMatcher('+')));
             addDefinition(new TokenDefinition(TokenType::COMBINE,       new CharMatcher('_')));
-            addDefinition(new TokenDefinition(TokenType::MEASURE,       new CharMatcher('|')));
+            addDefinition(new TokenDefinition(TokenType::MEASURE,       new CharMatcher('|'), true));
             addDefinition(new TokenDefinition(TokenType::KEY,           new CharMatcher('K')));
             addDefinition(new TokenDefinition(TokenType::INSTRUMENT,    new CharMatcher('I')));
             addDefinition(new TokenDefinition(TokenType::VOICE,         new CharMatcher('V')));
@@ -33,6 +33,7 @@ namespace dem {
             addDefinition(new TokenDefinition(TokenType::TIME,          new CharMatcher('@')));
             addDefinition(new TokenDefinition(TokenType::BRACKET_OPEN,  new CharMatcher('[')));
             addDefinition(new TokenDefinition(TokenType::BRACKET_CLOSE, new CharMatcher(']')));
+            addDefinition(new TokenDefinition(TokenType::IDENTIFIER,    new RegexMatcher("\\w+")));
 
             // TODO: Percussion track syntax, V9 [Hi_Bongo]q
             // TODO: Allow not specifying attack/decay value for ATTACK and DECAY? (default to 0)
