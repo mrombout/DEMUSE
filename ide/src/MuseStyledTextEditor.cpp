@@ -116,32 +116,38 @@ namespace dem {
         void MuseStyledTextEditor::onStyleNeeded(wxStyledTextEvent &event) {
             std::cout << "style needed" << std::endl;
 
+            // start pos at the beginning of the end styled line
+            int startPos = PositionFromLine(LineFromPosition(GetEndStyled()));;
+
             // retrieve text
             std::string text{GetText().c_str()};
             auto textBegin = text.begin();
+            std::advance(textBegin, startPos);
             auto textEnd = text.end();
 
             // tokenize
             std::vector<lexer::Token> tokens = mLexer->lex(textBegin, textEnd);
 
             // prepare styling and indicators
-            int startPos = GetEndStyled();
             SetIndicatorCurrent(demSTC_INDIC_UNKNOWN);
             IndicatorClearRange(0, GetTextLength());
+            std::cout << "StartPos:" << startPos << std::endl;
 
             for(lexer::Token &token : tokens) {
+                int startIndex = startPos + token.startIndex();
+
                 // unknown tokens are not styled, but displayed using an indicator
                 if(token.type() == lexer::TokenType::UNKNOWN) {
-                    IndicatorFillRange(token.startIndex(), token.content().size());
+                    IndicatorFillRange(startIndex, token.content().size());
                 }
 
                 // style token
                 int style = mTokenTypeStyles[token.type()];
                 int length = token.content().length() + 1;
 
-                std::cout << "Styling " << token.type() << "(" << style << ") from " << token.startIndex() << " to " << token.startIndex() + length << std::endl;
+                std::cout << "Styling " << token.type() << "(" << style << ") from " << startIndex << " to " << startIndex + length << std::endl;
 
-                StartStyling(token.startIndex(), 0x1f);
+                StartStyling(startIndex, 0x1f);
                 SetStyling(length, style);
             }
         }
