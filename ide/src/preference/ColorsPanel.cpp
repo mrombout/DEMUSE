@@ -18,7 +18,6 @@ namespace dem {
                 {"Track",       {wxColour(102,   0, 102), *wxWHITE, false, false, false, demSTC_DEMUSE_TRACK}},
                 {"Note",        {wxColour(102,  14, 122), *wxWHITE, false, false, false, demSTC_DEMUSE_NOTE}},
                 {"Accidental",  {wxColour(102,  14, 122), *wxWHITE, false, false, false, demSTC_DEMUSE_ACCIDENTAL}},
-                {"Octave",      {wxColour(102,  14, 122), *wxWHITE, false, false, false, demSTC_DEMUSE_OCTAVE}},
                 {"Chord",       {wxColour(102,  14, 122), *wxWHITE, false, false, false, demSTC_DEMUSE_CHORD}},
                 {"Duration",    {wxColour(102,  14, 122), *wxWHITE, false, false, false, demSTC_DEMUSE_DURATION}},
                 {"Block",       {wxColour(  0,   0,   0), *wxWHITE, false, false, false, demSTC_DEMUSE_BLOCK}},

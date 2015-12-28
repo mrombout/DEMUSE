@@ -44,7 +44,6 @@ namespace dem {
             { lexer::TokenType::TRACK,      demSTC_DEMUSE_TRACK },
             { lexer::TokenType::NOTE,       demSTC_DEMUSE_NOTE },
             { lexer::TokenType::ACCIDENTAL, demSTC_DEMUSE_ACCIDENTAL },
-            { lexer::TokenType::OCTAVE,     demSTC_DEMUSE_OCTAVE },
             { lexer::TokenType::CHORD,      demSTC_DEMUSE_CHORD },
             { lexer::TokenType::DURATION,   0 },
             { lexer::TokenType::HARMONY,    0 },

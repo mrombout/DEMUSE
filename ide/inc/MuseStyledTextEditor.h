@@ -16,7 +16,6 @@
 #define demSTC_DEMUSE_TRACK 8
 #define demSTC_DEMUSE_NOTE 9
 #define demSTC_DEMUSE_ACCIDENTAL 10
-#define demSTC_DEMUSE_OCTAVE 11
 #define demSTC_DEMUSE_CHORD 11
 #define demSTC_DEMUSE_DURATION 11
 #define demSTC_DEMUSE_BLOCK 12
