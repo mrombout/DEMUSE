@@ -15,7 +15,7 @@ namespace dem {
         public:
             MidiCompiler();
 
-            virtual void compile(parser::Program *program);
+            virtual void compile(parser::Program *program, std::string fileName);
 
             virtual bool visitEnter(parser::Program &program) override;
             virtual bool visitLeave(parser::Program &program) override;
@@ -55,6 +55,8 @@ namespace dem {
             virtual std::deque<Scope*> &scopes();
 
         private:
+            std::string mFileName;
+
             ExpressionEvaluator mEvaluator;
             MuseMidiPlayEvaluator mPlayEvaluator;
             std::deque<Scope*> mScopes;

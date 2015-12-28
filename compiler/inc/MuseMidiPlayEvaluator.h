@@ -13,7 +13,7 @@ namespace dem {
             MuseMidiPlayEvaluator(ExpressionEvaluator &evaluator);
 
             void play(parser::Play &play, Scope *scope);
-            void write();
+            void write(const std::string &fileName);
 
             virtual bool visitEnter(parser::Play &play) override;
             virtual bool visitLeave(parser::Play &play) override;

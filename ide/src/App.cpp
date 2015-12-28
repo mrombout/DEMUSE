@@ -17,7 +17,7 @@ namespace dem {
 
             wxArtProvider::Push(new MuseArtProvider());
 
-            MainFrame *frame = new MainFrame(GetAppDisplayName(), wxPoint(50, 50), wxSize(450, 340));
+            MainFrame *frame = new MainFrame(GetAppDisplayName(), wxPoint(50, 50), wxSize(800, 600));
 #ifdef __WINDOWS__
             frame->SetIcon(wxICON(frame_icon));
 #endif

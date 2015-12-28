@@ -9,6 +9,13 @@ namespace dem {
             mTime(0) {
             mMidiFile.absoluteTicks();
             mMidiFile.addTrack(2);
+
+            // add silence
+            mMidiMessage.setCommand(0x90, 0, 0);
+            mMidiFile.addEvent(1, mTime, mMidiMessage);
+
+            mMidiMessage.setCommand(0x80, 0, 0);
+            mMidiFile.addEvent(1, mTime += mTPQ * 4, mMidiMessage);
         }
 
         void MuseMidiPlayEvaluator::play(parser::Play &play, Scope *scope) {
@@ -20,8 +27,8 @@ namespace dem {
             play.accept(*this);
         }
 
-        void MuseMidiPlayEvaluator::write() {
-            mMidiFile.write("test.mid");
+        void MuseMidiPlayEvaluator::write(const std::string &fileName) {
+            mMidiFile.write(fileName);
         }
 
         bool MuseMidiPlayEvaluator::visitEnter(parser::Play &play) {
@@ -35,7 +42,7 @@ namespace dem {
 
             // add silence
             mMidiMessage.setCommand(0x80, 0, 0);
-            mMidiFile.addEvent(1, mTPQ * 4, mMidiMessage);
+            mMidiFile.addEvent(1, mTime += mTPQ * 4, mMidiMessage);
 
             return true;
         }

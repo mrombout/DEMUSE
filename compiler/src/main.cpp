@@ -1,12 +1,6 @@
 #include <iostream>
 #include <fstream>
 #include <jdksmidi/world.h>
-#include <jdksmidi/track.h>
-#include <jdksmidi/multitrack.h>
-#include <jdksmidi/filereadmultitrack.h>
-#include <jdksmidi/fileread.h>
-#include <jdksmidi/fileshow.h>
-#include <jdksmidi/filewritemultitrack.h>
 #include "MuseLexer.h"
 #include "MuseParser.h"
 #include "MuseMidiCompiler.h"
@@ -35,7 +29,7 @@ int main(int argc, char* argv[]) {
     if(results.successful()) {
         // compile input
         dem::compiler::MidiCompiler midiCompiler;
-        midiCompiler.compile(static_cast<dem::parser::Program*>(results.astRoot));
+        midiCompiler.compile(static_cast<dem::parser::Program*>(results.astRoot), "test.mid");
     }
 
     return 0;

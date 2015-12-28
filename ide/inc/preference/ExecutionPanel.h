@@ -17,11 +17,9 @@ namespace dem {
             virtual bool TransferDataToWindow() override;
             virtual bool TransferDataFromWindow() override;
 
-            void changedCompilerPath(wxCommandEvent &e);
             void changedMediaPlayerPath(wxCommandEvent &e);
 
         private:
-            wxFilePickerCtrl *mCompilerPath;
             wxFilePickerCtrl *mMediaPlayerPath;
         };
     }

@@ -12,6 +12,7 @@
 #include <wx/process.h>
 #include <wx/stdstream.h>
 #include <wx/wfstream.h>
+#include <wx/mimetype.h>
 #include "MuseMidiCompiler.h"
 #include "App.h"
 #include "Compiler.h"
@@ -95,7 +96,7 @@ namespace dem {
             mFileMenu->Append(wxID_OPEN);
             mFileMenu->AppendSeparator();
             mFileMenu->Append(wxID_SAVE);
-            mFileMenu->Append(wxID_SAVEAS);
+            mFileMenu->Append(wxID_SAVEAS, "Save As...");
             mFileMenu->AppendSeparator();
             mFileMenu->Append(wxID_EXIT);
 
@@ -113,18 +114,23 @@ namespace dem {
             mEditMenu->Append(wxID_PREFERENCES);
 
             mRunMenu = new wxMenu;
-            mRunMenu->Append(ID_Run, "%Run", "Run the current DEMUSE file.");
-            mRunMenu->Append(ID_Stop, "&Stop", "Stop the currently running DEMUSE file.");
+            mRunMenu->Append(ID_Run, "&Run\tShift+F9", "Run the current DEMUSE file.");
+            mRunMenu->Append(ID_Stop, "&Stop\tCtrl+F2", "Stop the currently running DEMUSE file.");
 
+            mRunMenu->Enable(ID_Stop, false);
+
+            /*
             mHelpMenu = new wxMenu;
             mHelpMenu->Append(wxID_HELP);
             mHelpMenu->AppendSeparator();
             mHelpMenu->Append(wxID_ABOUT);
+            */
 
             wxMenuBar *menuBar = new wxMenuBar;
             menuBar->Append(mFileMenu, "&File");
             menuBar->Append(mEditMenu, "&Edit");
-            menuBar->Append(mHelpMenu, "&Help");
+            menuBar->Append(mRunMenu, "&Run");
+            //menuBar->Append(mHelpMenu, "&Help");
 
             SetMenuBar(menuBar);
         }
@@ -188,38 +194,38 @@ namespace dem {
             data.push_back(wxVariant("arithmetic.muse"));
             mErrorList->AppendItem(data);
 
-            mMgr.AddPane(mErrorList, wxAuiPaneInfo().Name("Errors").Bottom().MinimizeButton(true).PaneBorder(true));
+            mMgr.AddPane(mErrorList, wxAuiPaneInfo().Name("Errors").Bottom().MinimizeButton(true).PaneBorder(true).MinSize(-1, 200));
 
             // output window
             mOutput = new OutputTextCtrl(this, -1, _(""), wxDefaultPosition, wxSize(200, 150), wxNO_BORDER | wxTE_MULTILINE | wxTE_AUTO_URL | wxTE_RICH | wxTE_DONTWRAP);
-            mMgr.AddPane(mOutput, wxBOTTOM, wxT("Output"));
+            mMgr.AddPane(mOutput, wxAuiPaneInfo().Name("Output").Bottom().MinimizeButton(true).PaneBorder(true).MinSize(-1, 200));
         }
 
         void MainFrame::createToolBar() {
-            wxToolBar *toolbar = new wxToolBar(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTB_DEFAULT_STYLE);
-            toolbar->SetToolBitmapSize(wxSize(24, 24));
+            mToolbar = new wxToolBar(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTB_DEFAULT_STYLE);
+            mToolbar->SetToolBitmapSize(wxSize(24, 24));
 
-            toolbar->AddTool(ID_NewFile, wxT("&New File..."), wxArtProvider::GetBitmap(wxART_NEW));
-            toolbar->AddTool(wxID_OPEN, wxT("&Open..."), wxArtProvider::GetBitmap(wxART_FILE_OPEN));
-            toolbar->AddTool(wxID_SAVE, wxT("&Save"), wxArtProvider::GetBitmap(wxART_FILE_SAVE));
-            toolbar->AddTool(wxID_SAVEAS, wxT("&Save as..."), wxArtProvider::GetBitmap(wxART_FILE_SAVE_AS));
-            toolbar->AddSeparator();
-            toolbar->AddTool(wxID_CUT, wxT("Cut"), wxArtProvider::GetBitmap(wxART_CUT));
-            toolbar->AddTool(wxID_COPY, wxT("Copy"), wxArtProvider::GetBitmap(wxART_COPY));
-            toolbar->AddTool(wxID_PASTE, wxT("Paste"), wxArtProvider::GetBitmap(wxART_PASTE));
-            toolbar->AddSeparator();
-            toolbar->AddTool(wxID_UNDO, wxT("Undo"), wxArtProvider::GetBitmap(wxART_UNDO));
-            toolbar->AddTool(wxID_REDO, wxT("Redo"), wxArtProvider::GetBitmap(wxART_REDO));
-            toolbar->AddSeparator();
-            toolbar->AddTool(ID_Build, wxT("Build"), wxArtProvider::GetBitmap(wxART_EXECUTABLE_FILE));
-            toolbar->AddTool(ID_Run, wxT("Play"), wxArtProvider::GetBitmap(museART_RUN));
-            toolbar->AddTool(ID_Stop, wxT("Stop"), wxArtProvider::GetBitmap(museART_STOP));
+            mToolbar->AddTool(ID_NewFile, wxT("&New File..."), wxArtProvider::GetBitmap(wxART_NEW));
+            mToolbar->AddTool(wxID_OPEN, wxT("&Open..."), wxArtProvider::GetBitmap(wxART_FILE_OPEN));
+            mToolbar->AddTool(wxID_SAVE, wxT("&Save"), wxArtProvider::GetBitmap(wxART_FILE_SAVE));
+            mToolbar->AddTool(wxID_SAVEAS, wxT("&Save as..."), wxArtProvider::GetBitmap(wxART_FILE_SAVE_AS));
+            mToolbar->AddSeparator();
+            mToolbar->AddTool(wxID_CUT, wxT("Cut"), wxArtProvider::GetBitmap(wxART_CUT));
+            mToolbar->AddTool(wxID_COPY, wxT("Copy"), wxArtProvider::GetBitmap(wxART_COPY));
+            mToolbar->AddTool(wxID_PASTE, wxT("Paste"), wxArtProvider::GetBitmap(wxART_PASTE));
+            mToolbar->AddSeparator();
+            mToolbar->AddTool(wxID_UNDO, wxT("Undo"), wxArtProvider::GetBitmap(wxART_UNDO));
+            mToolbar->AddTool(wxID_REDO, wxT("Redo"), wxArtProvider::GetBitmap(wxART_REDO));
+            mToolbar->AddSeparator();
+            mToolbar->AddTool(ID_Build, wxT("Build"), wxArtProvider::GetBitmap(wxART_EXECUTABLE_FILE));
+            mToolbar->AddTool(ID_Run, wxT("Play"), wxArtProvider::GetBitmap(museART_RUN));
+            mToolbar->AddTool(ID_Stop, wxT("Stop"), wxArtProvider::GetBitmap(museART_STOP));
 
-            toolbar->Realize();
+            mToolbar->Realize();
 
-            toolbar->EnableTool(ID_Stop, false);
+            mToolbar->EnableTool(ID_Stop, false);
 
-            SetToolBar(toolbar);
+            SetToolBar(mToolbar);
         }
 
         MuseStyledTextEditor *MainFrame::activeEditor() {
@@ -354,6 +360,17 @@ namespace dem {
         }
 
         void MainFrame::onRunBuild(wxCommandEvent &event) {
+            if(!activeEditor())
+                return;
+            if(activeEditor()->filePath().empty()) {
+                wxMessageDialog dlg{this, "You must save your file before you can play it. Do you want to save your file now?", "Save before playing file", wxYES_NO};
+                if(dlg.ShowModal() == wxID_NO)
+                    return;
+
+                wxCommandEvent dummy;
+                onFileSave(dummy);
+            }
+
             mErrorList->DeleteAllItems();
             activeEditor()->MarkerDeleteAll(demSTC_MARK_ERROR);
 
@@ -425,34 +442,61 @@ namespace dem {
                 }
 
                 // compiling
-                mOutput->AppendText("== Compiling: file:\\\\\\" + activeEditor()->filePath() + "ms\n");
+                mOutput->AppendText("== Compiling: file:\\\\\\" + activeEditor()->filePath() + "\n");
 
                 sw.Start();
+                wxString outputFileName = getOutputFileName(activeEditor()->filePath());
+                std::cout << "Path: " << outputFileName << std::endl;
+
                 dem::compiler::MidiCompiler compiler;
-                compiler.compile(static_cast<dem::parser::Program*>(program));
+                compiler.compile(static_cast<dem::parser::Program*>(program), std::string(outputFileName.c_str()));
                 sw.Pause();
 
                 mOutput->AppendText("== Compiling finished in " + std::to_string(sw.Time()) + "ms\n");
 
                 mOutput->SetDefaultStyle(wxTextAttr(*wxBLUE));
                 mOutput->AppendText("= Build finished in " + std::to_string(totalStopWatch.Time()) + "ms\n");
+
+                mOutput->AppendText("Output file: " + outputFileName.c_str());
             } catch(...) {
 
             }
         }
 
         void MainFrame::onRunRun(wxCommandEvent &event) {
-            wxFileConfig &config = wxGetApp().config();
-            wxString compilerPath{config.Read("execution/compiler", "") + " " + activeEditor()->filePath()};
+            if(!activeEditor())
+                return;
 
-            if(!compilerPath.empty()) {
-                mActiveProcess = wxProcess::Open(compilerPath);
-            }
+            onRunBuild(event);
+
+            if(activeEditor()->filePath().empty())
+                return;
+
+            wxMimeTypesManager manager;
+            wxFileType *fileType = manager.GetFileTypeFromExtension("mid");
+            wxString command = fileType->GetOpenCommand(getOutputFileName(activeEditor()->filePath()));
+
+            mActiveProcess = wxProcess::Open(command);
+            mActiveProcess->Bind(wxEVT_END_PROCESS, &MainFrame::onEndProcess, this, wxID_ANY);
+
+            mToolbar->EnableTool(ID_Run, false);
+            mToolbar->EnableTool(ID_Stop, true);
+
+            mRunMenu->Enable(ID_Run, false);
+            mRunMenu->Enable(ID_Stop, true);
         }
 
         void MainFrame::onRunStop(wxCommandEvent &event) {
-            wxProcess::Kill(mActiveProcess->GetPid());
-            mActiveProcess = nullptr;
+            if(mActiveProcess) {
+                wxKill(mActiveProcess->GetPid(), wxSIGKILL);
+                mActiveProcess = nullptr;
+            }
+
+            mToolbar->EnableTool(ID_Run, true);
+            mToolbar->EnableTool(ID_Stop, false);
+
+            mRunMenu->Enable(ID_Run, true);
+            mRunMenu->Enable(ID_Stop, false);
         }
 
         void MainFrame::onErrorListItemActivated(wxDataViewEvent &event) {
@@ -467,6 +511,22 @@ namespace dem {
         void MainFrame::onNotebookPageClose(wxAuiNotebookEvent &event) {
             wxString filePath = static_cast<MuseStyledTextEditor*>(mNotebook->GetPage(event.GetSelection()))->filePath();
             mFileEditors.erase(filePath);
+        }
+
+        wxString MainFrame::getOutputFileName(const wxString &fileName) {
+            wxFileName file{fileName};
+
+            wxString outputFileName{file.GetPath()};
+            outputFileName += file.GetPathSeparator() + file.GetName() + ".mid";
+
+            return outputFileName;
+        }
+
+        void MainFrame::onEndProcess(wxProcessEvent &event) {
+            mActiveProcess = nullptr;
+
+            wxCommandEvent dummy;
+            onRunStop(dummy);
         }
     }
 }

@@ -9,6 +9,7 @@
 #include <wx/slider.h>
 #include <wx/stc/stc.h>
 #include <wx/dataview.h>
+#include <wx/process.h>
 #include "MuseStyledTextEditor.h"
 
 namespace dem {
@@ -31,6 +32,7 @@ namespace dem {
             void createCenterNotebook();
             void createEditor(const wxString &filePath = wxT(""));
             void createToolBar();
+            void createBottomTools();
 
             MuseStyledTextEditor *activeEditor();
 
@@ -56,8 +58,10 @@ namespace dem {
             void onRunStop(wxCommandEvent &event);
 
             void onErrorListItemActivated(wxDataViewEvent &event);
-
             void onNotebookPageClose(wxAuiNotebookEvent &event);
+            void onEndProcess(wxProcessEvent &event);
+
+            wxString getOutputFileName(const wxString &fileName);
 
             std::map<wxString, size_t> mFileEditors;
 
@@ -67,6 +71,8 @@ namespace dem {
             wxMenu *mRunMenu;
             wxMenu *mEditMenu;
             wxMenu *mHelpMenu;
+
+            wxToolBar *mToolbar;
 
             wxAuiNotebook *mNotebook;
 
@@ -78,8 +84,6 @@ namespace dem {
             wxTextCtrl *mOutput;
 
             wxDECLARE_EVENT_TABLE();
-
-            void createBottomTools();
         };
     }
 }

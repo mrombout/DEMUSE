@@ -11,7 +11,7 @@ namespace dem {
     namespace compiler {
         class Compiler : public parser::Visitor {
         public:
-            virtual void compile(parser::Program *program) = 0;
+            virtual void compile(parser::Program *program, std::string fileName) = 0;
 
             virtual Value *returnValue() = 0;
             virtual std::deque<Scope*> &scopes() = 0;

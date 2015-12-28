@@ -16,7 +16,8 @@ namespace dem {
 
         }
 
-        void MidiCompiler::compile(parser::Program *program) {
+        void MidiCompiler::compile(parser::Program *program, std::string fileName) {
+            mFileName = fileName;
             program->accept(*this);
         }
 
@@ -31,7 +32,7 @@ namespace dem {
         bool MidiCompiler::visitLeave(parser::Program &program) {
             std::cout << "LEAVE - Program" << std::endl;
 
-            mPlayEvaluator.write();
+            mPlayEvaluator.write(mFileName);
 
             return true;
         }
