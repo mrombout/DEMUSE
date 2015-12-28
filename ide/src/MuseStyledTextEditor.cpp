@@ -155,7 +155,6 @@ namespace dem {
         void MuseStyledTextEditor::onUpdateUI(wxStyledTextEvent &event) {
             int caretPos = GetCurrentPos();
             if(mLastCaretPos != caretPos) {
-                // auto-indent
                 mLastCaretPos = caretPos;
                 int bracePos1 = -1;
                 int bracePos2 = -1;
@@ -194,9 +193,9 @@ namespace dem {
                 int curLineLength = GetLineLength(curLine);
                 int prevIndentation = GetLineIndentation(curLine - 1);
 
-                if(curLine > 0 && curLineLength <= 2) {
+                if(curLine > 0 && curLineLength <= 2 && prevIndentation != 0) {
                     SetLineIndentation(curLine, prevIndentation);
-                    HomeDisplay();
+                    LineEndDisplay();
                 }
             }
         }
