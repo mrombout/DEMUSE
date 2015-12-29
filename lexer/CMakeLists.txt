@@ -25,14 +25,23 @@ set(Lexer_SRCS
 
     inc/matcher/Matcher.h
 
+    inc/matcher/NewLineMatcher.h
+    src/matcher/NewLineMatcher.cpp
+
     inc/matcher/CharMatcher.h
     src/matcher/CharMatcher.cpp
 
     inc/matcher/DurationMatcher.h
     src/matcher/DurationMatcher.cpp
 
+    inc/matcher/MultiCommentMatcher.h
+    src/matcher/MultiCommentMatcher.cpp
+
     inc/matcher/RegexMatcher.h
     src/matcher/RegexMatcher.cpp
+
+    inc/matcher/SingleCommentMatcher.h
+    src/matcher/SingleCommentMatcher.cpp
 
     inc/matcher/StringMatcher.h
     src/matcher/StringMatcher.cpp

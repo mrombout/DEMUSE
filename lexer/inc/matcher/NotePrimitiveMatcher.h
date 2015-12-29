@@ -8,6 +8,7 @@
 #include "OctaveMatcher.h"
 #include "AccidentalMatcher.h"
 #include "DurationMatcher.h"
+#include "CharMatcher.h"
 
 namespace dem {
     namespace lexer {
@@ -18,7 +19,7 @@ namespace dem {
             virtual std::string match(std::string::iterator &begin, std::string::iterator &end, std::vector<Token> &tokens, TokenPosition &tokenPosition) const;
 
         private:
-            RegexMatcher mNotePrimitiveMatcher;
+            CharMatcher mNotePrimitiveMatcher;
             NoteMatcher mNoteMatcher;
             OctaveMatcher mOctaveMatcher;
             AccidentalMatcher mAccidentalMatcher;

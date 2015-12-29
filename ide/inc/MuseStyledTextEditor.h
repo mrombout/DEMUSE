@@ -2,6 +2,7 @@
 #define DEMUSE_MUSESTYLEDTEXTEDITOR_H
 
 #include <map>
+#include <unordered_map>
 #include <wx/stc/stc.h>
 #include <wx/window.h>
 #include "MuseLexer.h"
@@ -62,15 +63,15 @@ namespace dem {
             void onCharAdded(wxStyledTextEvent &event);
 
             bool isBrace(int c);
+            const wxString opposite(int c);
 
             wxString mFilePath;
             lexer::MuseLexer *mLexer;
 
             static std::map<lexer::TokenType, int> mTokenTypeStyles;
+            std::unordered_multimap<int, std::string> mAutocompleteWords;
 
             int mLastCaretPos;
-
-            const wxString opposite(int c);
         };
     }
 }

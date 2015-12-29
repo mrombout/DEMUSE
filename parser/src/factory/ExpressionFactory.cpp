@@ -385,9 +385,7 @@ namespace dem {
         bool ExpressionFactory::isUnaryOperator(lexer::Token &token) {
             return token.is(lexer::TokenType::PLUS)
                 || token.is(lexer::TokenType::MINUS)
-                || token.is(lexer::TokenType::NOT)
-                || token.is(lexer::TokenType::POSITIVE)
-                || token.is(lexer::TokenType::NEGATIVE);
+                || token.is(lexer::TokenType::NOT);
         }
     }
 }

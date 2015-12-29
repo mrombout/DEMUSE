@@ -21,12 +21,6 @@ namespace dem {
                 case TokenType::PERIOD:
                     str = "PERIOD";
                     break;
-                case TokenType::POSITIVE:
-                    str = "POSITIVE";
-                    break;
-                case TokenType::NEGATIVE:
-                    str = "NEGATIVE";
-                    break;
                 case TokenType::PLUS:
                     str = "PLUS";
                     break;

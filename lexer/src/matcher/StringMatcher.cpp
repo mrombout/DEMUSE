@@ -9,12 +9,15 @@ namespace dem {
         }
 
         std::string StringMatcher::match(std::string::iterator &begin, std::string::iterator &end, std::vector<Token> &tokens, TokenPosition &tokenPosition) const {
-            std::string str{""};
-            str.append(begin, begin + mContent.length());
+            std::string::iterator newBegin = begin;
 
-            if(str == mContent)
-                return mContent;
-            return "";
+            for(char c : mContent) {
+                if(*newBegin != c)
+                    return "";
+                newBegin++;
+            }
+
+            return mContent;
         }
     }
 }

@@ -3,7 +3,7 @@
 namespace dem {
     namespace lexer {
         NotePrimitiveMatcher::NotePrimitiveMatcher() :
-            mNotePrimitiveMatcher(">") {
+            mNotePrimitiveMatcher('>') {
 
         }
 

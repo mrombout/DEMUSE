@@ -1,5 +1,5 @@
 #include <vector>
-#include <preference/ColorsPanel.h>
+#include "preference/ColorsPanel.h"
 #include "preference/EditorPanel.h"
 #include "App.h"
 #include "MuseStyledTextEditor.h"
@@ -13,8 +13,6 @@ namespace dem {
             { lexer::TokenType::NUMBER,     demSTC_DEMUSE_NUMBER },
             { lexer::TokenType::COMMA,      demSTC_DEMUSE_OPERATOR },
             { lexer::TokenType::PERIOD,     demSTC_DEMUSE_OPERATOR },
-            { lexer::TokenType::POSITIVE,   demSTC_DEMUSE_UNARY },
-            { lexer::TokenType::NEGATIVE,   demSTC_DEMUSE_UNARY },
             { lexer::TokenType::PLUS,       demSTC_DEMUSE_OPERATOR },
             { lexer::TokenType::MINUS,      demSTC_DEMUSE_OPERATOR },
             { lexer::TokenType::TIMES,      demSTC_DEMUSE_OPERATOR },
@@ -124,7 +122,10 @@ namespace dem {
             std::string text{GetText().c_str()};
             auto textBegin = text.begin();
             std::advance(textBegin, startPos);
-            auto textEnd = text.end();
+            auto textEnd = text.begin();
+            std::advance(textEnd, event.GetPosition());
+
+            std::cout << "Styling: " << std::string(textBegin, textEnd) << std::endl;
 
             // tokenize
             std::vector<lexer::Token> tokens = mLexer->lex(textBegin, textEnd, false);
@@ -132,8 +133,8 @@ namespace dem {
             // prepare styling and indicators
             SetIndicatorCurrent(demSTC_INDIC_UNKNOWN);
             IndicatorClearRange(0, GetTextLength());
-            std::cout << "StartPos:" << startPos << std::endl;
 
+            std::vector<lexer::Token> autocompleteTokens;
             for(lexer::Token &token : tokens) {
                 int startIndex = startPos + token.startIndex();
 
@@ -150,7 +151,24 @@ namespace dem {
 
                 StartStyling(startIndex, 0x1f);
                 SetStyling(length, style);
+
+                // collect tokens for autocomplete
+                //if(token.type() == lexer::TokenType::IDENTIFIER) {
+                //    autocompleteTokens.push_back(token);
+                //}
             }
+
+            // populate autocomplete
+            //int startLine = tokens.front().line();
+            //int endLine = tokens.back().line();
+
+            //auto rangeBegin = std::find(std::begin(mAutocompleteWords), std::end(mAutocompleteWords), startLine);
+            //auto rangeEnd = std::find(std::begin(mAutocompleteWords), std::end(mAutocompleteWords), endLine);
+
+            //mAutocompleteWords.erase(rangeBegin, rangeEnd);
+            //for(lexer::Token &token : autocompleteTokens) {
+            //    mAutocompleteWords.insert(std::make_pair(token.line(), token.content()));
+            //}
         }
 
         void MuseStyledTextEditor::onUpdateUI(wxStyledTextEvent &event) {
@@ -186,10 +204,12 @@ namespace dem {
             int c = GetCharAt(curPos - 1);
 
             if(c == '{'  || c == '[' || c == '(') {
+                // auto-match brace
                 AddText(opposite(c));
                 SetAnchor(curPos);
                 SetCurrentPos(curPos);
             } else if(c == '\r' || c == '\n') {
+                // auto-indentation
                 int curLine = GetCurrentLine();
                 int curLineLength = GetLineLength(curLine);
                 int prevIndentation = GetLineIndentation(curLine - 1);
@@ -198,6 +218,15 @@ namespace dem {
                     SetLineIndentation(curLine, prevIndentation);
                     LineEndDisplay();
                 }
+            }
+
+            // auto-completion
+            int currentPos = GetCurrentPos();
+            int wordStartPos = WordStartPosition(currentPos, true);
+
+            int lenEntered = currentPos - wordStartPos;
+            if(lenEntered > 0) {
+                AutoCompShow(lenEntered, "var");
             }
         }
 

@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include "matcher/NewLineMatcher.h"
 #include "matcher/RegexMatcher.h"
 #include "Token.h"
 #include "TokenDefinition.h"
@@ -28,7 +29,7 @@ namespace dem {
             std::vector<TokenDefinition*> mTokenDefinitions;
 
             Matcher *mStopMatcher;
-            RegexMatcher mNewLineMatcher;
+            NewLineMatcher mNewLineMatcher;
             RegexMatcher mSkipMatcher;
         };
     }

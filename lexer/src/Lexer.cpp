@@ -11,7 +11,6 @@ namespace dem {
         }
 
         Lexer::Lexer(Matcher *stopMatcher) :
-            mNewLineMatcher("\\r\\n?|\\n"),
             mSkipMatcher("\\s*"),
             mStopMatcher(stopMatcher) {
 
@@ -81,7 +80,7 @@ namespace dem {
 
         bool Lexer::match(std::vector<Token> &tokens, std::string::iterator &begin, std::string::iterator &end, bool ignore, TokenPosition &tokenPosition) const {
             for(TokenDefinition *tokenDefinition : mTokenDefinitions) {
-                if(!tokenDefinition)
+                if(!tokenDefinition || begin == end)
                     continue;
 
                 std::string matched = tokenDefinition->matcher().match(begin, end, tokens, tokenPosition);
