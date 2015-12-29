@@ -1,8 +1,8 @@
 // error 1 - "Expected 'OPEN', but found BOOL"
-//if true) { }
+if true) { }
 
 // error 2 - "Expected 'CLOSE', but found START"
-//if(true { }
+if(true { }
 
 // error 3 - "Expected expression, but found 'CLOSE'"
 if() { }

@@ -1,11 +1,11 @@
 // error 1 - "Expected 'OPEN', but found VAR"
-//for var i; i < 5; i++) { }
+for var i; i < 5; i++) { }
 
 // error 2 - "Expected expression, but found 'CLOSE'", "Expected 'TERMINATOR', but found CLOSE"
-//for(var i;) { }
+for(var i;) { }
 
 // error 3 - "Expected 'CLOSE', but found START"
-//for(var i; i < 5; i = i + 1 { }
+for(var i; i < 5; i = i + 1 { }
 
 // error 4 - "Expected 'OPEN', but found VAR", "Expected 'CLOSE', but found START"
 for var i; i < 5; i = i + 1 { }

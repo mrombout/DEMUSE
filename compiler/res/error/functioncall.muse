@@ -1,8 +1,8 @@
 // error 1
-//foo(
+foo(
 
 // error 2
-//foo)
+foo)
 
 // error 3
 foo(1, 2
