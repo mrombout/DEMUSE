@@ -427,7 +427,7 @@ namespace dem {
                         mErrorList->AppendItem(data);
 
                         // add marker to editor
-                        activeEditor()->MarkerAdd(error.token.line(), demSTC_MARK_ERROR);
+                        activeEditor()->MarkerAdd(error.token.line() - 1, demSTC_MARK_ERROR);
                         // TODO: Remove marker when line is edited
                     }
 
