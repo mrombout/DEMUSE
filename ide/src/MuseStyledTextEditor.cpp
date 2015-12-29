@@ -309,13 +309,19 @@ namespace dem {
 
                 // background color
                 wxColour backgroundColor;
-                backgroundColor.Set(config.Read(key + "/background"));
+                if(config.Exists(key + "/background"))
+                    backgroundColor.Set(config.Read(key + "/background"));
+                else
+                    backgroundColor = it->second.background;
 
                 StyleSetBackground(it->second.styleType, backgroundColor);
 
                 // foreground color
                 wxColour foregroundColor;
-                foregroundColor.Set(config.Read(key + "/foreground"));
+                if(config.Exists(key + "/foreground"))
+                    foregroundColor.Set(config.Read(key + "/foreground"));
+                else
+                    foregroundColor = it->second.foreground;
 
                 StyleSetForeground(it->second.styleType, foregroundColor);
 
