@@ -392,7 +392,7 @@ namespace dem {
             dem::lexer::MuseLexer museLexer;
             auto begin = content.begin();
             auto end = content.end();
-            std::vector<dem::lexer::Token> tokens = museLexer.lex(begin, end, false);
+            std::vector<dem::lexer::Token> tokens = museLexer.lex(begin, end);
             sw.Pause();
 
             mOutput->AppendText("== Lexing finished in " + std::to_string(sw.Time()) + "ms\n");
