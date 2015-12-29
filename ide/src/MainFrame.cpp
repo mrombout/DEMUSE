@@ -181,10 +181,10 @@ namespace dem {
             // error window
             mErrorList = new wxDataViewListCtrl(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxDV_ROW_LINES | wxDV_HORIZ_RULES | wxNO_BORDER);
             mErrorList->AppendIconTextColumn("");
-            mErrorList->AppendTextColumn("Line");
-            mErrorList->AppendTextColumn("Column");
-            mErrorList->AppendTextColumn("Description");
-            mErrorList->AppendTextColumn("File");
+            mErrorList->AppendTextColumn("Line",        wxDATAVIEW_CELL_INERT, 40);
+            mErrorList->AppendTextColumn("Column",      wxDATAVIEW_CELL_INERT, 40);
+            mErrorList->AppendTextColumn("Description", wxDATAVIEW_CELL_INERT, 400);
+            mErrorList->AppendTextColumn("File",        wxDATAVIEW_CELL_INERT, 300);
             mErrorList->Bind(wxEVT_DATAVIEW_ITEM_ACTIVATED, &MainFrame::onErrorListItemActivated, this, wxID_ANY);
 
             mMgr.AddPane(mErrorList, wxAuiPaneInfo().Name("Errors").Bottom().MinimizeButton(true).PaneBorder(true).MinSize(-1, 200));
