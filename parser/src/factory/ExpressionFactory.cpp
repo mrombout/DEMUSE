@@ -201,7 +201,8 @@ namespace dem {
          * codes (e.g. `"hello world", 'this is \nJSEP'`.
          */
         Expression *ExpressionFactory::gobbleStringLiteral(std::deque<lexer::Token> &deque) {
-            TextLiteral *textLiteral = new TextLiteral(deque.front().content());
+            std::string content = deque.front().content();
+            TextLiteral *textLiteral = new TextLiteral(content.substr(1, content.size() - 2));
             deque.pop_front();
 
             // TODO: Do we support \r, \n, \t, etc?

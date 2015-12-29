@@ -1,29 +1,39 @@
-var x = 4;               // should be 4
+var x = 4;
+print("x: " + x); // should print "x: 4"
 
 track 1 {
 	if(x == 4) {
-		var a = 1;      // should be 1
+		var a = 1;
+		print("a: " + a); // should print "a: 1"
 	}
 
 	if(x < 5) {
-		var B = 2;      // should be 2
+		var b = 2;
+		print("b: " + b); // should print "b: 2"
 	} else if(x > 9) {
-		var C = 3;      // should not be set
+		var c = 3;
+		print("this should not have been printed");
 	} else {
-		var D = 4;      // should not be set
+		var d = 4;
+		print("this should not have been printed");
 	}
 
 	if(x > 7) {
-		var E = true;   // should not be set
+		var e = true;
+		print("this should not have been printed");
 	} else if(x < 5) {
-		var F = true;   // should be true
+		var f = true;
+		print("f: " + f); // should print "f: true"
 	}
 
-	var y = "1";        // should be "1"
+	var y = "1";
+	print("y: " + y); // should print "y: 1"
 
 	if(y === 1) {
-		var G = true;   // should not be set
+		var g = true;
+		print("this should not have been printed");
 	} else {
-		var H = true;   // should be true
+		var h = true;
+		print("h: " + h); // should print "h: true"
 	}
 }

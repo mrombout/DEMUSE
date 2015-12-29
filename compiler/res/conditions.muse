@@ -1,8 +1,23 @@
 var A = 5 == 5;        // should be true
+print("A: " + A);
+
 var B = 5 != 5;        // should be false
+print("B: " + B);
+
 var C = 5 <= 5;        // should be true
+print("C: " + C);
+
 var D = 5 < 5;         // should be false
+print("D: " + D);
+
 var E = 5 >= 5;        // should be true
+print("E: " + E);
+
 var F = 5 > 5;         // should be false
+print("F: " + F);
+
 var G = true && false; // should be false
+print("G: " + G);
+
 var F = true || false; // should be true
+print("F: " + F);

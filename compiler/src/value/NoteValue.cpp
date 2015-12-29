@@ -40,7 +40,7 @@ namespace dem {
         }
 
         std::string dem::compiler::NoteValue::asString() const {
-            return std::to_string(mNote.note());
+            return mNote.toString();
         }
 
         parser::Note NoteValue::asNote() const {

@@ -1,2 +1,5 @@
-var X = true;  // should be true
-var Y = false; // should be false
+var X = true;
+print("X: " + X); // should print "true"
+
+var Y = false;
+print("Y: " + Y); // should print "false"

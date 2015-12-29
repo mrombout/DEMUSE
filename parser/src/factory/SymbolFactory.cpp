@@ -38,7 +38,7 @@ namespace dem {
         }
 
         void SymbolFactory::addError(ParseError::Type type, ParseResults &results, lexer::Token token, const std::string &description) {
-            std::cout << "ERROR: " << description << std::endl;
+            std::cout << "[" << token.line() << ":" << token.column() << "]" << "ERROR: " << description << std::endl;
             results.errors.push_back(ParseError(type, token, description));
         }
     }

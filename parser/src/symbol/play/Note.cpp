@@ -1,3 +1,4 @@
+#include <sstream>
 #include "symbol/play/Note.h"
 #include "Visitor.h"
 
@@ -84,6 +85,14 @@ namespace dem {
             }
 
             return noteDuration;
+        }
+
+        std::string Note::toString() const {
+            std::stringstream ss;
+
+            ss << mNote << mOctave << mAccidental << mDuration;
+
+            return ss.str();
         }
     }
 }

@@ -3,15 +3,18 @@ track 1 {
 
     // function declaration statement, no arguments
     function foo() {
-        var A = 1; // should be set to 1
+        var A = 1;
+        print("A: " + A); // should print "A: 1"
     }
 
     foo();
 
     // function declaration statement, with arguments
     function bar(foo1, foo2) {
-        var B = foo1; // should be set to 2
-        var C = foo2; // should be set to 3
+        var B = foo1;
+        print("B: " + B); // should print "B: 2"
+        var C = foo2;
+        print("C: " + C); // should print "C: 3"
     }
 
     bar(2, 3); // sets B and C to arguments
@@ -20,21 +23,25 @@ track 1 {
     function buzz() {
         return 1; // should return 1
     }
-    var D = buzz(); // should be set to 1
+    var D = buzz();
+    print("D: " + D); // should print "D: 1"
 
     // FUNCTION DECLARATION EXPRESSION
 
     // function declaration expression, no arguments
     var foo1 = function() {
-        var E = 1; // should be set to 1
+        var E = 1;
+        print("E: " + E); // should print "E: 1"
     };
 
     foo1();
 
     // function declaration expression, with arguments
     var bar1 = function(foo1, foo2) {
-        var F = foo1; // should be set to 2
-        var G = foo2; // should be set to 3
+        var F = foo1;
+        print("F: " + F); // should print "F: 2"
+        var G = foo2;
+        print("G: " + G); // should print "G: 3"
     };
 
     bar1(2, 3); // sets B and C to arguments
@@ -43,8 +50,9 @@ track 1 {
     var buzz1 = function() {
         return 1; // should return 1
     };
-    var H = buzz1(); // should be set to 1
+    var H = buzz1();
+    print("H: " + H); // should print "H: 1"
 
     // internal function
-    print("Lorum ipsum!");
+    print("Lorum ipsum!"); // should print "Lorum ipsum!"
 }

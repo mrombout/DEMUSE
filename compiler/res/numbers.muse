@@ -1,9 +1,20 @@
-var X = 1;     // should be 1
-var Y = 1.2;   // should be 1.2
-var Z = 0.0;   // should be 1
+var X = 1;
+print("X: " + X); // should print "X: 1"
 
-var A = +1;    // should be 1
-var B = -1;    // should be -1
-var C = +1;    // should be 1
-var D = +B;    // should be -1
-var E = !true; // should be false
+var Y = 1.2;
+print("Y: " + Y); // should print "Y: 1.2"
+
+var Z = 0.0;
+print("Z: " + Z); // should print "Z: 0"
+
+var A = +1;
+print("A: " + A); // should print "A: 1"
+
+var B = -1;
+print("B: " + B); // should print "B: -1"
+
+var D = +B;
+print("D: " + D); // should print "D: -1"
+
+var E = !true;
+print("E: " + E); // should print "E: false"

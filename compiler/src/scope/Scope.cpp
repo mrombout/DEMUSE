@@ -17,7 +17,7 @@ namespace dem {
         }
 
         void Scope::declareVariable(parser::Identifier *identifier, Value *value) {
-            std::cout << "DECLARE - Variable " << identifier->name() << " = " << value->asString() << std::endl;
+            std::clog << "DECLARE - Variable " << identifier->name() << " = " << value->asString() << std::endl;
 
             mVariables[identifier->name()] = new Variable(identifier, value);
         }

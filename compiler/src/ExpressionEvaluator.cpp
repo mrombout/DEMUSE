@@ -29,18 +29,18 @@ namespace dem {
             Value *result = mStack.top();
             mStack.pop();
 
-            std::cout << "Returning result " << result->asString() << std::endl;
+            std::clog << "Returning result " << result->asString() << std::endl;
             return result;
         }
 
         bool ExpressionEvaluator::visitEnter(parser::AssignmentExpression &assignmentExpression) {
-            std::cout << "ENTER - Evaluating AssignmentExpression" << std::endl;
+            std::clog << "ENTER - Evaluating AssignmentExpression" << std::endl;
 
             return true;
         }
 
         bool ExpressionEvaluator::visitLeave(parser::AssignmentExpression &assignmentExpression) {
-            std::cout << "LEAVE - Evaluating AssignmentExpression" << std::endl;
+            std::clog << "LEAVE - Evaluating AssignmentExpression" << std::endl;
 
             Value *b = mStack.top();
             mStack.pop();
@@ -53,7 +53,7 @@ namespace dem {
             }
 
             // assign b to a
-            std::cout << "ASSIGN - " << a->identifier()->name() << " = " << b->asString() << std::endl;
+            std::clog << "ASSIGN - " << a->identifier()->name() << " = " << b->asString() << std::endl;
             a->setValue(b);
 
             mStack.push(a);
@@ -62,13 +62,13 @@ namespace dem {
         }
 
         bool ExpressionEvaluator::visitEnter(parser::AdditionExpression &additionExpression) {
-            std::cout << "ENTER - Evaluating AdditionExpression" << std::endl;
+            std::clog << "ENTER - Evaluating AdditionExpression" << std::endl;
 
             return true;
         }
 
         bool ExpressionEvaluator::visitLeave(parser::AdditionExpression &additionExpression) {
-            std::cout << "LEAVE - Evaluating AdditionExpression" << std::endl;
+            std::clog << "LEAVE - Evaluating AdditionExpression" << std::endl;
 
             Value *b = mStack.top();
             mStack.pop();
@@ -77,19 +77,19 @@ namespace dem {
             mStack.pop();
 
             // add b to a
-            std::cout << "Executing " << a->asString() << " + " << b->asString() << std::endl;
+            std::clog << "Executing " << a->asString() << " + " << b->asString() << std::endl;
             Value *c = a->add(b);
             mStack.push(c);
         }
 
         bool ExpressionEvaluator::visitEnter(parser::SubtractionExpression &subtractionExpression) {
-            std::cout << "ENTER - Evaluating SubtractionExpression" << std::endl;
+            std::clog << "ENTER - Evaluating SubtractionExpression" << std::endl;
 
             return true;
         }
 
         bool ExpressionEvaluator::visitLeave(parser::SubtractionExpression &subtractionExpression) {
-            std::cout << "LEAVE - Evaluating SubtractionExpression" << std::endl;
+            std::clog << "LEAVE - Evaluating SubtractionExpression" << std::endl;
 
             Value *b = mStack.top();
             mStack.pop();
@@ -98,7 +98,7 @@ namespace dem {
             mStack.pop();
 
             // subtract b from a
-            std::cout << "Executing " << a->asString() << " - " << b->asString() << std::endl;
+            std::clog << "Executing " << a->asString() << " - " << b->asString() << std::endl;
             Value *c = a->subtract(b);
             mStack.push(c);
 
@@ -106,13 +106,13 @@ namespace dem {
         }
 
         bool ExpressionEvaluator::visitEnter(parser::MultiplicationExpression &multiplicationExpression) {
-            std::cout << "ENTER - Evaluating MultiplicationExpression" << std::endl;
+            std::clog << "ENTER - Evaluating MultiplicationExpression" << std::endl;
 
             return true;
         }
 
         bool ExpressionEvaluator::visitLeave(parser::MultiplicationExpression &multiplicationExpression) {
-            std::cout << "LEAVE - Evaluating MultiplicationExpression" << std::endl;
+            std::clog << "LEAVE - Evaluating MultiplicationExpression" << std::endl;
 
             Value *b = mStack.top();
             mStack.pop();
@@ -121,7 +121,7 @@ namespace dem {
             mStack.pop();
 
             // multiply b by a
-            std::cout << "Executing " << a->asString() << " * " << b->asString() << std::endl;
+            std::clog << "Executing " << a->asString() << " * " << b->asString() << std::endl;
             Value *c = a->multiply(b);
             mStack.push(c);
 
@@ -129,13 +129,13 @@ namespace dem {
         }
 
         bool ExpressionEvaluator::visitEnter(parser::DivisionExpression &divisionExpression) {
-            std::cout << "ENTER - Evaluating DivisionExpression" << std::endl;
+            std::clog << "ENTER - Evaluating DivisionExpression" << std::endl;
 
             return true;
         }
 
         bool ExpressionEvaluator::visitLeave(parser::DivisionExpression &divisionExpression) {
-            std::cout << "LEAVE - Evaluating DivisionExpression" << std::endl;
+            std::clog << "LEAVE - Evaluating DivisionExpression" << std::endl;
 
             Value *b = mStack.top();
             mStack.pop();
@@ -144,7 +144,7 @@ namespace dem {
             mStack.pop();
 
             // divide b by a
-            std::cout << "Executing " << a->asString() << " / " << b->asString() << std::endl;
+            std::clog << "Executing " << a->asString() << " / " << b->asString() << std::endl;
             Value *c = a->divide(b);
             mStack.push(c);
 
@@ -152,13 +152,13 @@ namespace dem {
         }
 
         bool ExpressionEvaluator::visitEnter(parser::ModuloExpression &moduloExpression) {
-            std::cout << "ENTER - Evaluating ModuloExpression" << std::endl;
+            std::clog << "ENTER - Evaluating ModuloExpression" << std::endl;
 
             return true;
         }
 
         bool ExpressionEvaluator::visitLeave(parser::ModuloExpression &moduloExpression) {
-            std::cout << "LEAVE - Evaluating ModuloExpression" << std::endl;
+            std::clog << "LEAVE - Evaluating ModuloExpression" << std::endl;
 
             Value *b = mStack.top();
             mStack.pop();
@@ -167,7 +167,7 @@ namespace dem {
             mStack.pop();
 
             // divide b by a
-            std::cout << "Executing " << a->asString() << " % " << b->asString() << std::endl;
+            std::clog << "Executing " << a->asString() << " % " << b->asString() << std::endl;
             Value *c = a->modulo(b);
             mStack.push(c);
 
@@ -175,13 +175,13 @@ namespace dem {
         }
 
         bool ExpressionEvaluator::visitEnter(parser::ExponentExpression &exponentExpression) {
-            std::cout << "ENTER - Evaluating ExponentExpression" << std::endl;
+            std::clog << "ENTER - Evaluating ExponentExpression" << std::endl;
 
             return true;
         }
 
         bool ExpressionEvaluator::visitLeave(parser::ExponentExpression &exponentExpression) {
-            std::cout << "LEAVE - Evaluating ExponentExpression" << std::endl;
+            std::clog << "LEAVE - Evaluating ExponentExpression" << std::endl;
 
             Value *b = mStack.top();
             mStack.pop();
@@ -190,7 +190,7 @@ namespace dem {
             mStack.pop();
 
             // divide b by a
-            std::cout << "Executing " << a->asString() << " ^ " << b->asString() << std::endl;
+            std::clog << "Executing " << a->asString() << " ^ " << b->asString() << std::endl;
             Value *c = a->exponent(b);
             mStack.push(c);
 
@@ -198,13 +198,13 @@ namespace dem {
         }
 
         bool ExpressionEvaluator::visitEnter(parser::EqualCondition &equalCondition) {
-            std::cout << "ENTER - Evaluating EqualCondition" << std::endl;
+            std::clog << "ENTER - Evaluating EqualCondition" << std::endl;
 
             return true;
         }
 
         bool ExpressionEvaluator::visitLeave(parser::EqualCondition &equalCondition) {
-            std::cout << "LEAVE - Evaluating EqualCondition" << std::endl;
+            std::clog << "LEAVE - Evaluating EqualCondition" << std::endl;
 
             Value *b = mStack.top();
             mStack.pop();
@@ -219,13 +219,13 @@ namespace dem {
         }
 
         bool ExpressionEvaluator::visitEnter(parser::NotEqualCondition &notEqualCondition) {
-            std::cout << "ENTER - Evaluating NotEqualCondition" << std::endl;
+            std::clog << "ENTER - Evaluating NotEqualCondition" << std::endl;
 
             return true;
         }
 
         bool ExpressionEvaluator::visitLeave(parser::NotEqualCondition &notEqualCondition) {
-            std::cout << "LEAVE - Evaluating NotEqualCondition" << std::endl;
+            std::clog << "LEAVE - Evaluating NotEqualCondition" << std::endl;
 
             Value *b = mStack.top();
             mStack.pop();
@@ -240,13 +240,13 @@ namespace dem {
         }
 
         bool ExpressionEvaluator::visitEnter(parser::SmallerThanCondition &smallerThanCondition) {
-            std::cout << "ENTER - Evaluating SmallerThanCondition" << std::endl;
+            std::clog << "ENTER - Evaluating SmallerThanCondition" << std::endl;
 
             return true;
         }
 
         bool ExpressionEvaluator::visitLeave(parser::SmallerThanCondition &smallerThanCondition) {
-            std::cout << "LEAVE - Evaluating SmallerThanCondition" << std::endl;
+            std::clog << "LEAVE - Evaluating SmallerThanCondition" << std::endl;
 
             Value *b = mStack.top();
             mStack.pop();
@@ -261,13 +261,13 @@ namespace dem {
         }
 
         bool ExpressionEvaluator::visitEnter(parser::SmallerThanOrEqualCondition &smallerThanOrEqualCondition) {
-            std::cout << "ENTER - Evaluating SmallerThanOrEqualCondition" << std::endl;
+            std::clog << "ENTER - Evaluating SmallerThanOrEqualCondition" << std::endl;
 
             return true;
         }
 
         bool ExpressionEvaluator::visitLeave(parser::SmallerThanOrEqualCondition &smallerThanOrEqualCondition) {
-            std::cout << "LEAVE - Evaluating SmallerThanOrEqualCondition" << std::endl;
+            std::clog << "LEAVE - Evaluating SmallerThanOrEqualCondition" << std::endl;
 
             Value *b = mStack.top();
             mStack.pop();
@@ -282,13 +282,13 @@ namespace dem {
         }
 
         bool ExpressionEvaluator::visitEnter(parser::LargerThanCondition &largerThanCondition) {
-            std::cout << "ENTER - Evaluating LargerThanCondition" << std::endl;
+            std::clog << "ENTER - Evaluating LargerThanCondition" << std::endl;
 
             return true;
         }
 
         bool ExpressionEvaluator::visitLeave(parser::LargerThanCondition &largerThanCondition) {
-            std::cout << "LEAVE - Evaluating LargerThanCondition" << std::endl;
+            std::clog << "LEAVE - Evaluating LargerThanCondition" << std::endl;
 
             Value *b = mStack.top();
             mStack.pop();
@@ -303,13 +303,13 @@ namespace dem {
         }
 
         bool ExpressionEvaluator::visitEnter(parser::LargerThanOrEqualCondition &largerThanOrEqualCondition) {
-            std::cout << "ENTER - Evaluating LargerThanOrEqualCondition" << std::endl;
+            std::clog << "ENTER - Evaluating LargerThanOrEqualCondition" << std::endl;
 
             return true;
         }
 
         bool ExpressionEvaluator::visitLeave(parser::LargerThanOrEqualCondition &largerThanOrEqualCondition) {
-            std::cout << "LEAVE - Evaluating LargerThanOrEqualCondition" << std::endl;
+            std::clog << "LEAVE - Evaluating LargerThanOrEqualCondition" << std::endl;
 
             Value *b = mStack.top();
             mStack.pop();
@@ -324,13 +324,13 @@ namespace dem {
         }
 
         bool ExpressionEvaluator::visitEnter(parser::StrictEqualCondition &strictEqualCondition) {
-            std::cout << "ENTER - Evaluating StrictEqualCondition" << std::endl;
+            std::clog << "ENTER - Evaluating StrictEqualCondition" << std::endl;
 
             return true;
         }
 
         bool ExpressionEvaluator::visitLeave(parser::StrictEqualCondition &strictEqualCondition) {
-            std::cout << "LEAVE - Evaluating StrictEqualCondition" << std::endl;
+            std::clog << "LEAVE - Evaluating StrictEqualCondition" << std::endl;
 
             Value *b = mStack.top();
             mStack.pop();
@@ -345,13 +345,13 @@ namespace dem {
         }
 
         bool ExpressionEvaluator::visitEnter(parser::StrictNotEqualCondition &strictNotEqualCondition) {
-            std::cout << "ENTER - Evaluating StrictEqualCondition" << std::endl;
+            std::clog << "ENTER - Evaluating StrictEqualCondition" << std::endl;
 
             return true;
         }
 
         bool ExpressionEvaluator::visitLeave(parser::StrictNotEqualCondition &strictNotEqualCondition) {
-            std::cout << "LEAVE - Evaluating StrictEqualCondition" << std::endl;
+            std::clog << "LEAVE - Evaluating StrictEqualCondition" << std::endl;
 
             Value *b = mStack.top();
             mStack.pop();
@@ -366,13 +366,13 @@ namespace dem {
         }
 
         bool ExpressionEvaluator::visitEnter(parser::AndCondition &andCondition) {
-            std::cout << "ENTER - Evaluating AndCondition" << std::endl;
+            std::clog << "ENTER - Evaluating AndCondition" << std::endl;
 
             return true;
         }
 
         bool ExpressionEvaluator::visitLeave(parser::AndCondition &andCondition) {
-            std::cout << "LEAVE - Evaluating AndCondition" << std::endl;
+            std::clog << "LEAVE - Evaluating AndCondition" << std::endl;
 
             Value *b = mStack.top();
             mStack.pop();
@@ -386,13 +386,13 @@ namespace dem {
         }
 
         bool ExpressionEvaluator::visitEnter(parser::OrCondition &orCondition) {
-            std::cout << "ENTER - Evaluating OrCondition" << std::endl;
+            std::clog << "ENTER - Evaluating OrCondition" << std::endl;
 
             return true;
         }
 
         bool ExpressionEvaluator::visitLeave(parser::OrCondition &orCondition) {
-            std::cout << "LEAVE - Evaluating OrCondition" << std::endl;
+            std::clog << "LEAVE - Evaluating OrCondition" << std::endl;
 
             Value *b = mStack.top();
             mStack.pop();
@@ -406,7 +406,7 @@ namespace dem {
         }
 
         bool ExpressionEvaluator::visitEnter(parser::ArrayLiteral &array) {
-            std::cout << "ENTER - Evaluating Array" << std::endl;
+            std::clog << "ENTER - Evaluating Array" << std::endl;
 
             std::vector<parser::Expression*> &expressions = array.expressions();
             std::vector<Value*> values;
@@ -426,11 +426,11 @@ namespace dem {
         }
 
         bool ExpressionEvaluator::visit(parser::Identifier &identifier) {
-            std::cout << "ENTER - Evaluating Identifier" << std::endl;
+            std::clog << "ENTER - Evaluating Identifier" << std::endl;
 
             Variable &variable = mScope->variable(&identifier);
 
-            std::cout << "(I)PUSH - " << variable.asString() << std::endl;
+            std::clog << "(I)PUSH - " << variable.asString() << std::endl;
             mStack.push(&variable);
 
             return true;
@@ -438,51 +438,51 @@ namespace dem {
 
 
         bool ExpressionEvaluator::visit(parser::NumberLiteral &number) {
-            std::cout << "ENTER - Evaluating Number" << std::endl;
+            std::clog << "ENTER - Evaluating Number" << std::endl;
 
             NumberValue *value = new NumberValue(number.value());
 
-            std::cout << "PUSH - " << value->asString() << std::endl;
+            std::clog << "PUSH - " << value->asString() << std::endl;
             mStack.push(value);
 
             return true;
         }
 
         bool ExpressionEvaluator::visit(parser::BoolLiteral &boolSymbol) {
-            std::cout << "ENTER - Evaluating Bool" << std::endl;
+            std::clog << "ENTER - Evaluating Bool" << std::endl;
 
             BooleanValue *value = new BooleanValue(boolSymbol.value());
 
-            std::cout << "PUSH - " << value->asString() << std::endl;
+            std::clog << "PUSH - " << value->asString() << std::endl;
             mStack.push(value);
 
             return true;
         }
 
         bool ExpressionEvaluator::visit(parser::TextLiteral &text) {
-            std::cout << "ENTER - Evaluating Text" << std::endl;
+            std::clog << "ENTER - Evaluating Text" << std::endl;
 
             TextValue *value = new TextValue(text.value());
 
-            std::cout << "PUSH - " << value->asString() << std::endl;
+            std::clog << "PUSH - " << value->asString() << std::endl;
             mStack.push(value);
 
             return true;
         }
         
         bool ExpressionEvaluator::visit(parser::Note& note) {
-            std::cout << "ENTER - Evaluating Note" << std::endl;
+            std::clog << "ENTER - Evaluating Note" << std::endl;
 
             NoteValue *value = new NoteValue(note);
 
-            std::cout << "PUSH - " << value->asString() << std::endl;
+            std::clog << "PUSH - " << value->asString() << std::endl;
             mStack.push(value);
 
             return true;
         }
         
         bool ExpressionEvaluator::visitEnter(parser::UnaryExpression &unaryExpression) {
-            std::cout << "ENTER - UnaryExpression" << std::endl;
+            std::clog << "ENTER - UnaryExpression" << std::endl;
 
             // evaluate argument
             unaryExpression.argument().accept(*this);
@@ -509,30 +509,30 @@ namespace dem {
         }
         
         bool ExpressionEvaluator::visitLeave(parser::UnaryExpression &unaryExpression) {
-            std::cout << "LEAVE - UnaryExpression" << std::endl;
+            std::clog << "LEAVE - UnaryExpression" << std::endl;
             
             return true;
         }
 
         bool ExpressionEvaluator::visitEnter(parser::FunctionDefinition &functionDefinition) {
-            std::cout << "ENTER - Evaluating FunctionDefinition" << std::endl;
+            std::clog << "ENTER - Evaluating FunctionDefinition" << std::endl;
 
             UserFunction *value = new UserFunction(mCompiler, functionDefinition.parameterList(), functionDefinition.block());
 
-            std::cout << "PUSH - " << value->asString() << std::endl;
+            std::clog << "PUSH - " << value->asString() << std::endl;
             mStack.push(value);
 
             return false;
         }
 
         bool ExpressionEvaluator::visitEnter(parser::ArrayAccessExpression &arrayAccessExpression) {
-            std::cout << "ENTER - Evaluating ArrayAccessExpression" << std::endl;
+            std::clog << "ENTER - Evaluating ArrayAccessExpression" << std::endl;
 
             return true;
         }
 
         bool ExpressionEvaluator::visitLeave(parser::ArrayAccessExpression &arrayAccessExpression) {
-            std::cout << "LEAVE - Evaluating ArrayAccessExpression" << std::endl;
+            std::clog << "LEAVE - Evaluating ArrayAccessExpression" << std::endl;
 
             // array index
             Value *b = mStack.top();
@@ -550,7 +550,7 @@ namespace dem {
         }
 
         bool ExpressionEvaluator::visitEnter(parser::CallExpression &callExpression) {
-            std::cout << "ENTER - CallExpression" << std::endl;
+            std::clog << "ENTER - CallExpression" << std::endl;
 
             parser::Expression &calleeExpr = callExpression.callee();
             const std::vector<parser::Expression*> arguments = callExpression.arguments();
@@ -586,20 +586,20 @@ namespace dem {
             mCompiler.scopes().pop_front();
 
             if(!dynamic_cast<NullValue*>(result))
-                std::cout << "PUSH - " << result->asString() << std::endl;
+                std::clog << "PUSH - " << result->asString() << std::endl;
             mStack.push(result);
 
             return false;
         }
 
         bool ExpressionEvaluator::visitLeave(parser::CallExpression &callExpression) {
-            std::cout << "LEAVE - CallExpression" << std::endl;
+            std::clog << "LEAVE - CallExpression" << std::endl;
 
             return true;
         }
 
         bool ExpressionEvaluator::visitEnter(parser::PropertyAccessExpression &propertyAccessExpression) {
-            std::cout << "ENTER - PropertyAccessExpression" << std::endl;
+            std::clog << "ENTER - PropertyAccessExpression" << std::endl;
 
             propertyAccessExpression.left().accept(*this);
 
@@ -617,7 +617,7 @@ namespace dem {
         }
 
         bool ExpressionEvaluator::visitLeave(parser::PropertyAccessExpression &propertyAccessExpression) {
-            std::cout << "LEAVE - PropertAccessExpression" << std::endl;
+            std::clog << "LEAVE - PropertAccessExpression" << std::endl;
 
             // TODO: only call when not identifier
             parser::Identifier *identifier = dynamic_cast<parser::Identifier*>(&propertyAccessExpression.right());
@@ -628,7 +628,7 @@ namespace dem {
         }
 
         bool ExpressionEvaluator::visitEnter(parser::MemberExpression &memberExpression) {
-            std::cout << "ENTER - MemberExpression" << std::endl;
+            std::clog << "ENTER - MemberExpression" << std::endl;
 
             // evaluate object
             memberExpression.object().accept(*this);
@@ -650,7 +650,7 @@ namespace dem {
         }
 
         bool ExpressionEvaluator::visitLeave(parser::MemberExpression &memberExpression) {
-            std::cout << "LEAVE - MemberExpression" << std::endl;
+            std::clog << "LEAVE - MemberExpression" << std::endl;
 
             return true;
         }

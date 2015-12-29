@@ -2,6 +2,13 @@ var A = [
 	[1, 2, 3],
 	[4, 5, 6]
 ];
-var B = A[0];    // should be [1, 2, 3]
-var C = B[2];    // should be 3
-var D = A[0][2]; // should be 3
+print("A: " + A); // should print "[[1, 2, 3], [4, 5, 6]]"
+
+var B = A[0];
+print("B: " + B); // should print "[1, 2, 3]"
+
+var C = B[2];
+print("C: " + C); // should print "3"
+
+var D = A[0][2];
+print("D: " + D); // should print "3"

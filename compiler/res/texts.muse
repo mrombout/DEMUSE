@@ -1,4 +1,11 @@
 var X = "String";
+print("X: " + X); // should print "X: String"
+
 var Y = "String with spaces";
+print("Y: " + Y); // should print "Y: String with spaces"
+
 var Z = "String with \" escape";
+print("Z: " + Z); // should print "Z: String with \" escape"
+
 var A = "foo" + "bar";
+print("A: " + A); // should print "A: foobar"

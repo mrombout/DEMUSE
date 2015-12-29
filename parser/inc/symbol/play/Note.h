@@ -24,6 +24,8 @@ namespace dem {
             int midiNote() const;
             int midiDuration() const;
 
+            std::string toString() const;
+
             virtual bool accept(Visitor &visitor);
 
         private:

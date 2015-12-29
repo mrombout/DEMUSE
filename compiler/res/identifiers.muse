@@ -1,5 +1,14 @@
-var X  = 1; // should be set to 1
+var X  = 1;
+print("X: " + X); // should print "X: 1"
+
 var _X = 2; // should be set to 2
+print("_X: " + _X); // should print "X: 2"
+
 var X  = 3; // should be set to 3
+print("X: " + X); // should print "X: 3"
+
 var X4 = 4; // should be set to 4
+print("X4: " + X4); // should print "X: 4"
+
 var X_ = 5; // should be set to 5
+print("X_: " + X_); // should print "X: 5"

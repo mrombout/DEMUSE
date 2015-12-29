@@ -1,4 +1,14 @@
 var X = >C;
+print("X: " + X); // should print "X: C5nw"
+
 var Y = >C#;
+print("Y: " + Y); // should print "Y: C5#w"
+
 var Z = >Cn;
+print("Z: " + Z); // should print "Z: C5nw"
+
 var A = >Cb;
+print("A: " + A); // should print "A: C5bw"
+
+var B = >Cq;
+print("B: " + B); // should print "B: C5nq"

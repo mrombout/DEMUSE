@@ -8,7 +8,7 @@ namespace dem {
     namespace lexer {
         MuseLexer::MuseLexer() {
             addDefinition(new TokenDefinition(TokenType::SINGLECOMMENT, new RegexMatcher("\\/\\/.*"),       true));
-            addDefinition(new TokenDefinition(TokenType::MULTICOMMENT,  new RegexMatcher("\\/\\*[\\S\\s]*\\*\\/"), true));
+            addDefinition(new TokenDefinition(TokenType::MULTICOMMENT,  new RegexMatcher("\\/\\*[\\S\\s]*?\\*\\/"), true));
             addDefinition(new TokenDefinition(TokenType::NOTE,          new NotePrimitiveMatcher(), true));
             addDefinition(new TokenDefinition(TokenType::BOOL,          new RegexMatcher("(true|false)")));
             addDefinition(new TokenDefinition(TokenType::TEXT,          new RegexMatcher("\\\"(?:[^\\\"\\\\]|\\\\.)*\\\"")));
