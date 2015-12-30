@@ -52,7 +52,6 @@ namespace dem {
             void onFileOpen(wxCommandEvent &event);
             void onFileSave(wxCommandEvent &event);
             void onFileSaveAs(wxCommandEvent &event);
-            void onFileClose(wxCommandEvent &event);
 
             void onEditUndo(wxCommandEvent &event);
             void onEditRedo(wxCommandEvent &event);
@@ -70,6 +69,7 @@ namespace dem {
             void onNotebookPageClose(wxAuiNotebookEvent &event);
             void onNotebookPageChanged(wxAuiNotebookEvent &event);
             void onEndProcess(wxProcessEvent &event);
+            void onEditorModified(wxStyledTextEvent &event);
 
             wxString getOutputFileName(const wxString &fileName);
 

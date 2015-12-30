@@ -41,7 +41,6 @@ namespace dem {
             EVT_MENU(wxID_OPEN, MainFrame::onFileOpen)
             EVT_MENU(wxID_SAVE, MainFrame::onFileSave)
             EVT_MENU(wxID_SAVEAS, MainFrame::onFileSaveAs)
-            EVT_MENU(wxID_CLOSE, MainFrame::onFileClose)
 
             // edit
             EVT_MENU(wxID_UNDO, MainFrame::onEditUndo)
@@ -97,6 +96,7 @@ namespace dem {
             mFileMenu->AppendSeparator();
             mFileMenu->Append(wxID_SAVE);
             mFileMenu->Append(wxID_SAVEAS, "Save As...");
+            mFileMenu->Append(wxID_CLOSE);
             mFileMenu->AppendSeparator();
             mFileMenu->Append(wxID_EXIT);
 
@@ -173,8 +173,10 @@ namespace dem {
                 mNotebook->InsertPage(pageId, editor, tabName, true);
                 mFileEditors[filePath] = {
                     pageId
-
                 };
+
+                // register events
+                editor->Bind(wxEVT_STC_MODIFIED, &MainFrame::onEditorModified, this, wxID_ANY);
             } else {
                 // select page with the loaded file
                 mNotebook->SetSelection(mFileEditors[filePath].editorId);
@@ -261,6 +263,10 @@ namespace dem {
             if(page->filePath().empty())
                 return onFileSaveAs(event);
             activeEditor()->saveFile();
+
+            wxString currentPageText = mNotebook->GetPageText(editorId);
+            currentPageText.Replace(wxT("*"), wxT(""));
+            mNotebook->SetPageText(editorId, currentPageText);
         }
 
         void MainFrame::onFileSaveAs(wxCommandEvent &event) {
@@ -287,24 +293,6 @@ namespace dem {
 
             // save file under new name
             activeEditor()->saveAsFile(filePath);
-        }
-
-        void MainFrame::onFileClose(wxCommandEvent &event) {
-            MuseStyledTextEditor *editor = activeEditor();
-            if(!editor)
-                return;
-
-            if(editor->IsModified()) {
-                if(wxMessageBox(_("Text is not saved, save before closing?"), _("Close"), wxYES_NO | wxICON_QUESTION) == wxYES) {
-                    editor->saveFile();
-                    if(editor->IsModified()) {
-                        wxMessageBox(_("Text could not be saved!"), _("Close abort"), wxOK | wxICON_EXCLAMATION);
-                        return;
-                    }
-                }
-            }
-
-            mNotebook->RemovePage(mFileEditors[activeEditor()->filePath()].editorId);
         }
 
         void MainFrame::onEditCut(wxCommandEvent &event) {
@@ -487,6 +475,18 @@ namespace dem {
         }
 
         void MainFrame::onNotebookPageClose(wxAuiNotebookEvent &event) {
+            MuseStyledTextEditor *editor = static_cast<MuseStyledTextEditor*>(mNotebook->GetPage(event.GetSelection()));
+            mNotebook->SetSelection(event.GetSelection());
+            if(editor->IsModified()) {
+                // ask user to save
+                wxMessageDialog dlg{this, "Save file \"" + editor->filePath() + "\"?", "Save", wxYES_NO | wxICON_QUESTION};
+                if(dlg.ShowModal() == wxID_YES) {
+                    wxCommandEvent dummy;
+                    onFileSave(dummy);
+                }
+            }
+
+            // erase editor from memory
             wxString filePath = static_cast<MuseStyledTextEditor*>(mNotebook->GetPage(event.GetSelection()))->filePath();
             mFileEditors.erase(filePath);
         }
@@ -509,6 +509,15 @@ namespace dem {
 
             wxCommandEvent dummy;
             onRunStop(dummy);
+        }
+
+        void MainFrame::onEditorModified(wxStyledTextEvent &event) {
+            if((event.GetModificationType() & wxSTC_MOD_INSERTTEXT)
+            || (event.GetModificationType() & wxSTC_MOD_DELETETEXT)) {
+                MuseStyledTextEditor *editor = static_cast<MuseStyledTextEditor*>(event.GetEventObject());
+                wxFileName fileName{editor->filePath()};
+                mNotebook->SetPageText(mFileEditors[editor->filePath()].editorId, fileName.GetFullName() + "*");
+            }
         }
 
         void MainFrame::updateErrors() {
