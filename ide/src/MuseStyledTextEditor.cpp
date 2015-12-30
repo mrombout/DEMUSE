@@ -109,11 +109,11 @@ namespace dem {
         }
 
         void MuseStyledTextEditor::onChange(wxStyledTextEvent &event) {
-            std::cout << "changed" << std::endl;
+            //std::cout << "changed" << std::endl;
         }
 
         void MuseStyledTextEditor::onStyleNeeded(wxStyledTextEvent &event) {
-            std::cout << "style needed" << std::endl;
+            //std::cout << "style needed" << std::endl;
 
             // start pos at the beginning of the end styled line
             int startPos = PositionFromLine(LineFromPosition(GetEndStyled()));;
@@ -125,7 +125,7 @@ namespace dem {
             auto textEnd = text.begin();
             std::advance(textEnd, event.GetPosition());
 
-            std::cout << "Styling: " << std::string(textBegin, textEnd) << std::endl;
+            //std::cout << "Styling: " << std::string(textBegin, textEnd) << std::endl;
 
             // tokenize
             std::vector<lexer::Token> tokens = mLexer->lex(textBegin, textEnd, false);
@@ -147,7 +147,7 @@ namespace dem {
                 int style = mTokenTypeStyles[token.type()];
                 int length = token.content().length() + 1;
 
-                std::cout << "Styling " << token.type() << "(" << style << ") from " << startIndex << " to " << startIndex + length << std::endl;
+                //std::cout << "Styling " << token.type() << "(" << style << ") from " << startIndex << " to " << startIndex + length << std::endl;
 
                 StartStyling(startIndex, 0x1f);
                 SetStyling(length, style);
