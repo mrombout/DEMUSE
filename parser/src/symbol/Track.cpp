@@ -4,6 +4,7 @@
 namespace dem {
     namespace parser {
         Track::Track(int channel, Block *block) :
+            Statement(block->token()),
             mChannel(channel),
             mBlock(block) {
 

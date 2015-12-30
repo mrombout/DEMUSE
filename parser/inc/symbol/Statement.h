@@ -7,6 +7,7 @@ namespace dem {
     namespace parser {
         class Statement : public Symbol {
         public:
+            Statement(const lexer::Token &token);
             virtual ~Statement() = 0;
         };
     }

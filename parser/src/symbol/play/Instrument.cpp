@@ -4,6 +4,7 @@
 namespace dem {
     namespace parser {
         Instrument::Instrument(Expression *instrumentExpression) :
+            Playable(instrumentExpression->token()),
             mInstrumentExpression(instrumentExpression) {
 
         }

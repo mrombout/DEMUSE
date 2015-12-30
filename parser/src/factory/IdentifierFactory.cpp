@@ -11,7 +11,7 @@ namespace dem {
             expect(tokens, lexer::TokenType::IDENTIFIER, results);
 
             std::cout << "[CREATE] Identifier" << std::endl;
-            return new Identifier(token.content());
+            return new Identifier(token, token.content());
         }
     }
 }

@@ -30,8 +30,11 @@ track 1 {
 	var I = 6 / 2 * 1 + 2;
 	print("I: " + I);  // should be 5
 
-    // TODO: Test function call and return value
-	//var J = test() + 5;    // should be 10
+	var J1 = test();
+	print("J1: " + J1); // should print "J1: 5"
+
+	var J2 = test() + 5;
+	print("J2: " + J2); // should print "J2: 10"
 
 	var K = 1 + 2 * 3 + 5;
 	print("K: " + K); // should be 12

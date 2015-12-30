@@ -6,6 +6,7 @@
 namespace dem {
     namespace parser {
         While::While(Expression *expression, Block *block) :
+            CompoundStatement(expression->token()),
             mExpression(expression),
             mBlock(block) {
 

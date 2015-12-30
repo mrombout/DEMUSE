@@ -4,7 +4,8 @@
 
 namespace dem {
     namespace parser {
-        Note::Note(NoteT note, Octave octave, Accidental accidental, Duration duration) :
+        Note::Note(const lexer::Token &token, NoteT note, Octave octave, Accidental accidental, Duration duration) :
+            Playable(token),
             mNote(note),
             mOctave(octave),
             mAccidental(accidental),

@@ -4,6 +4,7 @@
 namespace dem {
     namespace parser {
         CallExpression::CallExpression(Expression *callee, std::vector<Expression *> arguments) :
+            Expression(callee->token()),
             mCallee(callee),
             mArguments(arguments) {
 

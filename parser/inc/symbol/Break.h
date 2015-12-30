@@ -6,8 +6,9 @@
 namespace dem {
     namespace parser {
         class Break : public Statement {
-
         public:
+            Break(const lexer::Token &token);
+
             virtual bool accept(Visitor &visitor);
         };
     }

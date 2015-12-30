@@ -4,6 +4,7 @@
 namespace dem {
     namespace parser {
         VariableDeclaration::VariableDeclaration(AssignmentExpression *assignment) :
+            Statement(assignment->token()),
             mAssignment(assignment) {
 
         }

@@ -7,9 +7,10 @@ namespace dem {
             // break_stmt = "break" ;
 
             // "break"
+            lexer::Token token = tokens.front();
             expect(tokens, lexer::TokenType::BREAK, results);
 
-            return new Break();
+            return new Break(token);
         }
     }
 }

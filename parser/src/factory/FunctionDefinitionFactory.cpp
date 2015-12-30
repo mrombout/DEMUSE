@@ -24,10 +24,12 @@ namespace dem {
             expect(tokens, lexer::TokenType::OPEN, results);
 
             // [ parameter_list ]
-            ParameterList *parameterList = new ParameterList();
+            ParameterList *parameterList = nullptr;
             if(!tokens.front().is(lexer::TokenType::CLOSE)) {
                 delete parameterList;
                 parameterList = ParameterListFactory::produce(tokens, results);
+            } else {
+                parameterList = new ParameterList(tokens.front());
             }
 
             // ")"

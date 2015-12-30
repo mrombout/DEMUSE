@@ -3,7 +3,8 @@
 
 namespace dem {
     namespace parser {
-        ArrayLiteral::ArrayLiteral(std::vector<Expression *> values) :
+        ArrayLiteral::ArrayLiteral(std::vector<Expression*> values) :
+            Literal(values.front()->token()),
             mValues(values) {
 
         }

@@ -9,6 +9,7 @@ namespace dem {
         }
 
         FunctionDefinition::FunctionDefinition(Identifier *identifier, ParameterList *parameterList, Block *block) :
+            Expression(identifier->token()),
             mIdentifier(identifier),
             mParameterList(parameterList),
             mBlock(block) {

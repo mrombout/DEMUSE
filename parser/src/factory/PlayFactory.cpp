@@ -24,7 +24,7 @@ namespace dem {
 
                 // is it a harmony?
                 if(tokens.front().is(lexer::TokenType::HARMONY)) {
-                    Harmony *harmony = new Harmony();
+                    Harmony *harmony = new Harmony(playable->token());
                     harmony->addNote(playable);
                     do {
                         expect(tokens, lexer::TokenType::HARMONY, results);

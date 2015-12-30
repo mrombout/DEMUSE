@@ -4,6 +4,7 @@
 namespace dem {
     namespace parser {
         For::For(Statement *initialization, Expression *condition, AssignmentExpression *afterThought, Block *block) :
+            CompoundStatement(initialization->token()),
             mInitialization(initialization),
             mCondition(condition),
             mAfterThought(afterThought),

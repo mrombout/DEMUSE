@@ -5,7 +5,7 @@ namespace dem {
     namespace compiler {
         Variable *ObjectValue::operator[](const std::string &index) {
             if(mProperties.count(index) == 0) {
-                mProperties[index] = new Variable(new parser::Identifier(index), new NullValue());
+                mProperties[index] = new Variable(new parser::Identifier(lexer::Token(lexer::TokenType::IDENTIFIER, index, lexer::TokenPosition()), index), new NullValue());
             }
             return mProperties.at(index);
         }

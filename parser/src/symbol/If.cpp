@@ -9,9 +9,10 @@ namespace dem {
         }
 
         If::If(Expression *expression, Block *block, Block *elseBlock) :
-                mExpression(expression),
-                mBlock(block),
-                mElseBlock(elseBlock) {
+            CompoundStatement(expression->token()),
+            mExpression(expression),
+            mBlock(block),
+            mElseBlock(elseBlock) {
 
         }
 

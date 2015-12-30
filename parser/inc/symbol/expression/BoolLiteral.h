@@ -8,7 +8,7 @@ namespace dem {
     namespace parser {
         class BoolLiteral : public Literal {
         public:
-            BoolLiteral(bool value);
+            BoolLiteral(const lexer::Token &token, bool value);
 
             virtual bool accept(Visitor &visitor);
 

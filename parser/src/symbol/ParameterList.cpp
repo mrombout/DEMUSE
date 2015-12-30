@@ -3,11 +3,13 @@
 
 namespace dem {
     namespace parser {
-        ParameterList::ParameterList() {
+        ParameterList::ParameterList(const lexer::Token &token) :
+            Symbol(token) {
 
         }
 
         ParameterList::ParameterList(std::vector<Identifier*> identifiers) :
+            Symbol(identifiers.front()->token()),
             mIdentifiers(identifiers) {
 
         }

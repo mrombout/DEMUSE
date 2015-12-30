@@ -4,6 +4,7 @@
 namespace dem {
     namespace parser {
         MemberExpression::MemberExpression(Expression *object, Expression *property, bool computed) :
+            Expression(object->token()),
             mObject(object),
             mProperty(property),
             mComputed(computed) {

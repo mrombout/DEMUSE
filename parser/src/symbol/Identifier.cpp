@@ -3,7 +3,8 @@
 
 namespace dem {
     namespace parser {
-        Identifier::Identifier(std::string name) :
+        Identifier::Identifier(const lexer::Token &token, std::string name) :
+            Expression(token),
             mName(name) {
 
         }

@@ -14,7 +14,7 @@ namespace dem {
 
         class Note : public Playable {
         public:
-            Note(NoteT note, Octave octave, Accidental accidental = 'n', Duration duration = 'w');
+            Note(const lexer::Token &token, NoteT note, Octave octave, Accidental accidental = 'n', Duration duration = 'w');
 
             NoteT note() const;
             Octave octave() const;

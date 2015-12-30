@@ -9,6 +9,7 @@ namespace dem {
         class BinaryExpression : public Expression {
         public:
             BinaryExpression(TLeft *left, TRight *right) :
+                Expression(left->token()),
                 mLeft(left),
                 mRight(right) {
 

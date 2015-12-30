@@ -6,7 +6,8 @@
 namespace dem {
     namespace parser {
         class CompoundStatement : public Statement {
-
+        public:
+            CompoundStatement(const lexer::Token &token);
         };
     }
 }

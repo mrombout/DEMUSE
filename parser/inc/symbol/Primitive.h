@@ -6,7 +6,11 @@
 namespace dem {
     namespace parser {
         class Primitive : public Expression {
+        public:
+            Primitive(const lexer::Token &token) :
+                    Expression(token) {
 
+            }
         };
     }
 }

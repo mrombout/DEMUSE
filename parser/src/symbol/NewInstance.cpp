@@ -4,6 +4,7 @@
 namespace dem {
     namespace parser {
         NewInstance::NewInstance(Identifier *identifier, ArgumentList *argumentList) :
+            Expression(identifier->token()),
             mIdentifier(identifier),
             mArgumentList(argumentList) {
 

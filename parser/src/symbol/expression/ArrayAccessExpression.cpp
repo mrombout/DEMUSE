@@ -4,6 +4,7 @@
 namespace dem {
     namespace parser {
         ArrayAccessExpression::ArrayAccessExpression(Expression *object, Expression *index, bool computed) :
+            Expression(object->token()),
             mObject(object),
             mIndex(index),
             mComputed(computed) {

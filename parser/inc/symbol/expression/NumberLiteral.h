@@ -8,7 +8,7 @@ namespace dem {
     namespace parser {
         class NumberLiteral : public Literal {
         public:
-            NumberLiteral(double value);
+            NumberLiteral(lexer::Token &token, double value);
 
             virtual bool accept(Visitor &visitor);
 

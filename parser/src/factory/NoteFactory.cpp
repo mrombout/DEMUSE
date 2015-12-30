@@ -6,6 +6,8 @@ namespace dem {
         Note *NoteFactory::produce(std::deque<lexer::Token> &tokens, ParseResults &results) {
             // note = ( ( "C" | "D" | "E" | "F" | "G" | "A" | "B" ) [ integer ] [ "#" | "b" | "n" ] | "R" ) [ "w" | "h" | "q" ] ;
 
+            lexer::Token token = tokens.front();
+
             // note
             expect(tokens, lexer::TokenType::NOTE, results, false);
             NoteT note = tokens.front().content().at(0);
@@ -32,7 +34,7 @@ namespace dem {
                 tokens.pop_front();
             }
 
-            return new Note(note, octave, accidental, duration);
+            return new Note(token, octave, accidental, duration);
         }
     }
 }

@@ -6,8 +6,9 @@
 namespace dem {
     namespace parser {
         class Continue : public Statement {
-
         public:
+            Continue(const lexer::Token &token);
+
             virtual bool accept(Visitor &visitor);
         };
     }

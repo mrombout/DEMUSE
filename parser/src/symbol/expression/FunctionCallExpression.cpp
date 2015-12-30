@@ -5,6 +5,7 @@
 namespace dem {
     namespace parser {
         FunctionCallExpression::FunctionCallExpression(ArgumentList *argumentList, Expression *expression) :
+            Expression(expression->token()),
             mExpression(expression),
             mArgumentList(argumentList) {
 

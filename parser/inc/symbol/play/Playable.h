@@ -7,6 +7,10 @@ namespace dem {
     namespace parser {
         class Playable : public Primitive {
         public:
+            Playable(const lexer::Token &token) :
+                    Primitive(token) {
+
+            }
             virtual bool accept(Visitor &visitor) = 0;
         };
     }

@@ -6,7 +6,8 @@ namespace dem {
         void InternalFunction::mapScope(Scope &scope, std::vector<Value*> &arguments) {
             int curIndex = 0;
             for(Value *value : arguments) {
-                scope.declareVariable(new parser::Identifier(std::to_string(++curIndex)), value);
+                std::string name = std::to_string(++curIndex);
+                scope.declareVariable(new parser::Identifier(lexer::Token(lexer::TokenType::IDENTIFIER, name, lexer::TokenPosition()), name), value);
             }
         }
     }

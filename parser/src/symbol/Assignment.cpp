@@ -4,6 +4,7 @@
 namespace dem {
     namespace parser {
         Assignment::Assignment(Identifier *identifier, Expression *expression) :
+            Statement(identifier->token()),
             mIdentifier(identifier),
             mExpression(expression) {
 

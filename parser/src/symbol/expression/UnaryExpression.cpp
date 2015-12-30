@@ -4,6 +4,7 @@
 namespace dem {
     namespace parser {
         UnaryExpression::UnaryExpression(std::string op, Expression *argument) :
+            Expression(argument->token()),
             mOperator(op),
             mArgument(argument) {
 

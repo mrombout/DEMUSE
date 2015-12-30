@@ -6,7 +6,8 @@
 namespace dem {
     namespace parser {
         class Literal : public Expression {
-
+        public:
+            Literal(const lexer::Token &token);
         };
     }
 }

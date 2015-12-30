@@ -8,7 +8,7 @@ namespace dem {
     namespace parser {
         class TextLiteral : public Literal {
         public:
-            TextLiteral(std::string value);
+            TextLiteral(const lexer::Token &token, std::string value);
 
             std::string value() const;
 

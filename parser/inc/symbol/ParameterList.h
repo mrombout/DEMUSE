@@ -15,7 +15,7 @@ namespace dem {
     namespace parser {
         class ParameterList : public Symbol {
         public:
-            ParameterList();
+            ParameterList(const lexer::Token &token);
             ParameterList(std::vector<Identifier*> identifiers);
 
             virtual bool accept(Visitor &visitor);

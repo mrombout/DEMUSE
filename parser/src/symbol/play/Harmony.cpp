@@ -3,6 +3,11 @@
 
 namespace dem {
     namespace parser {
+        Harmony::Harmony(const lexer::Token &token) :
+                Playable(token) {
+
+        }
+
         void Harmony::addNote(Expression *note) {
             mNotes.push_back(note);
         }

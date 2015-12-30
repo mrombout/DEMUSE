@@ -6,10 +6,12 @@ namespace dem {
         Continue *ContinueFactory::produce(std::deque<lexer::Token> &tokens, ParseResults &results) {
             // continue_stmt = "continue" ;
 
+            lexer::Token token = tokens.front();
+
             // "continue"
             expect(tokens, lexer::TokenType::CONTINUE, results);
 
-            return new Continue();
+            return new Continue(token);
         }
     }
 }

@@ -4,6 +4,7 @@
 namespace dem {
     namespace parser {
         Return::Return(Expression *expression) :
+            Statement(expression->token()),
             mExpression(expression) {
 
         }

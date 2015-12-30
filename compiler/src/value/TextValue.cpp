@@ -7,7 +7,7 @@ namespace dem {
     namespace compiler {
         TextValue::TextValue(std::string value) :
             mValue(value) {
-            mProperties["length"] = new Variable(new parser::Identifier("length"), new NumberValue(value.length()));
+            mProperties["length"] = new Variable(new parser::Identifier(lexer::Token(lexer::TokenType::IDENTIFIER, "length", lexer::TokenPosition()), "length"), new NumberValue(value.length()));
         }
 
         Value *TextValue::add(Value *b) {

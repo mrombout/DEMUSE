@@ -3,7 +3,8 @@
 
 namespace dem {
     namespace parser {
-        TextLiteral::TextLiteral(std::string value) :
+        TextLiteral::TextLiteral(const lexer::Token &token, std::string value) :
+            Literal(token),
             mValue(value) {
 
         }

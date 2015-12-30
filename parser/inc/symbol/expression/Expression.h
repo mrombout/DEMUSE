@@ -8,6 +8,7 @@ namespace dem {
     namespace parser {
         class Expression : public CompoundStatement {
         public:
+            Expression(const lexer::Token &token);
             virtual ~Expression() { }
         };
     }

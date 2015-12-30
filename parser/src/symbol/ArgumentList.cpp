@@ -4,7 +4,8 @@
 namespace dem {
     namespace parser {
         ArgumentList::ArgumentList(std::vector<Expression*> arguments) :
-                mArguments(arguments) {
+            Symbol(arguments.front()->token()),
+            mArguments(arguments) {
 
         }
 

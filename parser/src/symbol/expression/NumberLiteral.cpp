@@ -3,7 +3,8 @@
 
 namespace dem {
     namespace parser {
-        NumberLiteral::NumberLiteral(double value) :
+        NumberLiteral::NumberLiteral(lexer::Token &token, double value) :
+            Literal(token),
             mValue(value) {
 
         }

@@ -21,7 +21,7 @@ namespace dem {
         void MuseMidiPlayEvaluator::play(parser::Play &play, Scope *scope) {
             mScope = scope;
 
-            mTPQ = scope->variable(new parser::Identifier("tempo")).asNumber();
+            mTPQ = scope->variable(new parser::Identifier(lexer::Token(lexer::TokenType::IDENTIFIER, "tempo", lexer::TokenPosition()), "tempo")).asNumber();
             mMidiFile.setTicksPerQuarterNote(mTPQ);
 
             play.accept(*this);

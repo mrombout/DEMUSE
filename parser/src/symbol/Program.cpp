@@ -4,6 +4,7 @@
 namespace dem {
     namespace parser {
         Program::Program(std::vector<Statement*> statements) :
+            Symbol(statements.front()->token()),
             mStatements(statements) {
 
         }

@@ -2,6 +2,9 @@
 
 namespace dem {
     namespace parser {
+        Expression::Expression(const lexer::Token &token) :
+                CompoundStatement(token) {
 
+        }
     }
 }

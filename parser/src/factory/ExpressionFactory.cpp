@@ -190,7 +190,7 @@ namespace dem {
          * the numeric literal and then calling `parseFloat` on that string.
          */
         NumberLiteral * ExpressionFactory::gobbleNumericLiteral(std::deque<lexer::Token> &deque) {
-            NumberLiteral *numberLiteral = new NumberLiteral(std::stod(deque.front().content()));
+            NumberLiteral *numberLiteral = new NumberLiteral(deque.front(), std::stod(deque.front().content()));
             deque.pop_front();
 
             return numberLiteral;
@@ -202,7 +202,7 @@ namespace dem {
          */
         Expression *ExpressionFactory::gobbleStringLiteral(std::deque<lexer::Token> &deque) {
             std::string content = deque.front().content();
-            TextLiteral *textLiteral = new TextLiteral(content.substr(1, content.size() - 2));
+            TextLiteral *textLiteral = new TextLiteral(deque.front(), content.substr(1, content.size() - 2));
             deque.pop_front();
 
             // TODO: Do we support \r, \n, \t, etc?
@@ -211,7 +211,7 @@ namespace dem {
         }
 
         Expression *ExpressionFactory::gobbleBoolLiteral(std::deque<lexer::Token> &deque) {
-            BoolLiteral *boolLiteral = new BoolLiteral(deque.front().content() == "true");
+            BoolLiteral *boolLiteral = new BoolLiteral(deque.front(), deque.front().content() == "true");
             deque.pop_front();
 
             return boolLiteral;
@@ -273,12 +273,12 @@ namespace dem {
          */
         Expression *ExpressionFactory::gobbleIdentifier(std::deque<lexer::Token> &deque) {
             if(deque.front().is(lexer::TokenType::IDENTIFIER)) {
-                Identifier *identifier = new Identifier(deque.front().content());
+                Identifier *identifier = new Identifier(deque.front(), deque.front().content());
                 deque.pop_front();
 
                 return identifier;
             } else if(deque.front().is(lexer::TokenType::BOOL)) {
-                BoolLiteral *boolLiteral = new BoolLiteral(deque.front().content() == "true");
+                BoolLiteral *boolLiteral = new BoolLiteral(deque.front(), deque.front().content() == "true");
                 deque.pop_front();
                 // TODO: How about the gobbleBool method? This else if can be removed
 

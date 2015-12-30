@@ -4,7 +4,8 @@
 namespace dem {
     namespace parser {
         Play::Play(std::vector<Expression*> playables) :
-                mPlayables(playables) {
+            Statement(playables.front()->token()),
+            mPlayables(playables) {
 
         }
 

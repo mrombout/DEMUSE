@@ -3,7 +3,8 @@
 
 namespace dem {
     namespace parser {
-        BoolLiteral::BoolLiteral(bool value) :
+        BoolLiteral::BoolLiteral(const lexer::Token &token, bool value) :
+            Literal(token),
             mValue(value) {
 
         }
