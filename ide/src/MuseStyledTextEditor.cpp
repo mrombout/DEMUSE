@@ -267,7 +267,6 @@ namespace dem {
             SetViewEOL(false);
             SetCaretLineVisible(config.ReadBool(KEY_EDITOR_HIGHLIGHT_CURRENT_LINE, false));
             SetCaretLineBackground(wxColour(255, 250, 227)); // Make caret line colour configurable
-            // TODO: Show annotations for compiler errors
             SetIndent(config.ReadLong(KEY_EDITOR_TAB_WIDTH, 4));
             SetTabWidth(config.ReadLong(KEY_EDITOR_TAB_WIDTH, 4));
             SetUseTabs(config.ReadBool(KEY_EDITOR_USE_TABS, false));
@@ -280,8 +279,6 @@ namespace dem {
             SetWrapMode(config.ReadBool(KEY_EDITOR_WRAP, false) ? wxSTC_WRAP_WORD : wxSTC_WRAP_NONE);
             // TODO: Autocompletion (read from AST)
             // TODO: Implement find functionality
-            // TODO: Show error marker on tokenization errors, compilation errors and vm errors
-            // TODO: Support zooming in/out
 
             // TODO: Call-tips
             // TODO: Folding (update lexer with levels for this)
