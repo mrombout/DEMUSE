@@ -5,7 +5,6 @@
 #include "symbol/If.h"
 #include "factory/IfFactory.h"
 #include "exception/ParsingException.h"
-#include "TokenPosition.h"
 
 class IfFactoryTest : public ::testing::Test {
 protected:
@@ -14,6 +13,8 @@ protected:
     }
 
     dem::lexer::TokenPosition tokenPosition;
+
+    dem::parser::ParseResults parseResults;
 };
 
 TEST_F(IfFactoryTest, IfNoBlock) {
@@ -28,7 +29,7 @@ TEST_F(IfFactoryTest, IfNoBlock) {
     };
 
     // act
-    dem::parser::If *ifStatement = dem::parser::IfFactory::produce(tokens);
+    dem::parser::If *ifStatement = dem::parser::IfFactory::produce(tokens, parseResults);
 
     // assert
     ASSERT_TRUE(dynamic_cast<dem::parser::Expression*>(&ifStatement->expression()) != nullptr);
@@ -47,7 +48,7 @@ TEST_F(IfFactoryTest, IfOnly) {
     };
 
     // act
-    dem::parser::If *ifStatement = dem::parser::IfFactory::produce(tokens);
+    dem::parser::If *ifStatement = dem::parser::IfFactory::produce(tokens, parseResults);
 
     // assert
     ASSERT_TRUE(dynamic_cast<dem::parser::Expression*>(&ifStatement->expression()) != nullptr);
@@ -70,7 +71,7 @@ TEST_F(IfFactoryTest, IfElse) {
     };
 
     // act
-    dem::parser::If *ifStatement = dem::parser::IfFactory::produce(tokens);
+    dem::parser::If *ifStatement = dem::parser::IfFactory::produce(tokens, parseResults);
 
     // assert
     ASSERT_TRUE(dynamic_cast<dem::parser::Expression*>(&ifStatement->expression()) != nullptr);
@@ -93,7 +94,7 @@ TEST_F(IfFactoryTest, IfElseNoBlock) {
     };
 
     // act
-    dem::parser::If *ifStatement = dem::parser::IfFactory::produce(tokens);
+    dem::parser::If *ifStatement = dem::parser::IfFactory::produce(tokens, parseResults);
 
     // assert
     ASSERT_TRUE(dynamic_cast<dem::parser::Expression*>(&ifStatement->expression()) != nullptr);
@@ -120,7 +121,7 @@ TEST_F(IfFactoryTest, IfBlockElseNoBlock) {
     };
 
     // act
-    dem::parser::If *ifStatement = dem::parser::IfFactory::produce(tokens);
+    dem::parser::If *ifStatement = dem::parser::IfFactory::produce(tokens, parseResults);
 
     // assert
     ASSERT_TRUE(dynamic_cast<dem::parser::Expression*>(&ifStatement->expression()) != nullptr);
@@ -146,7 +147,7 @@ TEST_F(IfFactoryTest, IfNoBlockElseBlock) {
     };
 
     // act
-    dem::parser::If *ifStatement = dem::parser::IfFactory::produce(tokens);
+    dem::parser::If *ifStatement = dem::parser::IfFactory::produce(tokens, parseResults);
 
     // assert
     ASSERT_TRUE(dynamic_cast<dem::parser::Expression*>(&ifStatement->expression()) != nullptr);
@@ -167,7 +168,7 @@ TEST_F(IfFactoryTest, Error_ForgetOpen) {
 
     // act / assert
     EXPECT_THROW({
-         dem::parser::If *ifStatement = dem::parser::IfFactory::produce(tokens);
+         dem::parser::If *ifStatement = dem::parser::IfFactory::produce(tokens, parseResults);
     }, dem::parser::ParsingException);
 }
 
@@ -183,7 +184,7 @@ TEST_F(IfFactoryTest, Error_ForgetClose) {
 
     // act / assert
     EXPECT_THROW({
-        dem::parser::If *ifStatement = dem::parser::IfFactory::produce(tokens);
+        dem::parser::If *ifStatement = dem::parser::IfFactory::produce(tokens, parseResults);
     }, dem::parser::ParsingException);
 }
 
@@ -199,7 +200,7 @@ TEST_F(IfFactoryTest, Error_ForgetExpression) {
 
     // act / assert
     EXPECT_THROW({
-         dem::parser::If *ifStatement = dem::parser::IfFactory::produce(tokens);
+         dem::parser::If *ifStatement = dem::parser::IfFactory::produce(tokens, parseResults);
     }, dem::parser::ParsingException);
 }
 
@@ -214,7 +215,7 @@ TEST_F(IfFactoryTest, Error_ForgetBlockOrStatement) {
 
     // act / assert
     EXPECT_THROW({
-        dem::parser::If *ifStatement = dem::parser::IfFactory::produce(tokens);
+        dem::parser::If *ifStatement = dem::parser::IfFactory::produce(tokens, parseResults);
         std::cout << "Everything is just fine" << std::endl;
     }, dem::parser::ParsingException);
 }
@@ -233,7 +234,7 @@ TEST_F(IfFactoryTest, Error_ForgetElseBlockOrStatement) {
 
     // act / assert
     EXPECT_THROW({
-        dem::parser::If *ifStatement = dem::parser::IfFactory::produce(tokens);
+        dem::parser::If *ifStatement = dem::parser::IfFactory::produce(tokens, parseResults);
     }, dem::parser::ParsingException);
 }
 
@@ -249,7 +250,7 @@ TEST_F(IfFactoryTest, Error_NotAStatement) {
 
     // act / assert
     EXPECT_THROW({
-        dem::parser::If *ifStatement = dem::parser::IfFactory::produce(tokens);
+        dem::parser::If *ifStatement = dem::parser::IfFactory::produce(tokens, parseResults);
     }, dem::parser::ParsingException);
 }
 

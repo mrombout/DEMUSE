@@ -288,6 +288,7 @@ namespace dem {
             }
 
             // TODO: Throw exception?
+            return nullptr;
         }
 
         /**
@@ -320,6 +321,8 @@ namespace dem {
             } while(accept(deque, lexer::TokenType::COMMA));
 
             expect(deque, termination, results);
+
+            return expressions;
         }
 
         /**

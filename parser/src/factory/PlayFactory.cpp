@@ -4,7 +4,6 @@
 #include "factory/PlayFactory.h"
 #include "factory/NoteFactory.h"
 #include "symbol/play/Harmony.h"
-#include "symbol/play/Note.h"
 #include "symbol/Identifier.h"
 
 namespace dem {

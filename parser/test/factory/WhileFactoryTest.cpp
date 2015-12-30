@@ -12,6 +12,8 @@ protected:
     }
 
     dem::lexer::TokenPosition tokenPosition;
+
+    dem::parser::ParseResults parseResults;
 };
 
 TEST_F(WhileFactoryTest, SimpleWhile) {
@@ -26,7 +28,7 @@ TEST_F(WhileFactoryTest, SimpleWhile) {
     };
 
     // act
-    dem::parser::While *whileStatement = dem::parser::WhileFactory::produce(tokens);
+    dem::parser::While *whileStatement = dem::parser::WhileFactory::produce(tokens, parseResults);
 
     // assert
     ASSERT_TRUE(dynamic_cast<dem::parser::Expression*>(&whileStatement->expression()) != nullptr);
@@ -45,7 +47,7 @@ TEST_F(WhileFactoryTest, Error_ForgetWhile) {
     };
 
     // act / assert
-    EXPECT_THROW({ dem::parser::WhileFactory::produce(tokens); }, dem::parser::ParsingException);
+    EXPECT_THROW({ dem::parser::WhileFactory::produce(tokens, parseResults); }, dem::parser::ParsingException);
 }
 
 TEST_F(WhileFactoryTest, Error_ForgetOpen) {
@@ -60,7 +62,7 @@ TEST_F(WhileFactoryTest, Error_ForgetOpen) {
     };
 
     // act / assert
-    EXPECT_THROW({ dem::parser::WhileFactory::produce(tokens); }, dem::parser::ParsingException);
+    EXPECT_THROW({ dem::parser::WhileFactory::produce(tokens, parseResults); }, dem::parser::ParsingException);
 }
 
 
@@ -76,7 +78,7 @@ TEST_F(WhileFactoryTest, Error_ForgetCondition) {
     };
 
     // act / assert
-    EXPECT_THROW({ dem::parser::WhileFactory::produce(tokens); }, dem::parser::ParsingException);
+    EXPECT_THROW({ dem::parser::WhileFactory::produce(tokens, parseResults); }, dem::parser::ParsingException);
 }
 
 TEST_F(WhileFactoryTest, Error_ForgetClose) {
@@ -91,7 +93,7 @@ TEST_F(WhileFactoryTest, Error_ForgetClose) {
     };
 
     // act / assert
-    EXPECT_THROW({ dem::parser::WhileFactory::produce(tokens); }, dem::parser::ParsingException);
+    EXPECT_THROW({ dem::parser::WhileFactory::produce(tokens, parseResults); }, dem::parser::ParsingException);
 }
 
 TEST_F(WhileFactoryTest, Error_ForgetBlock) {
@@ -106,7 +108,7 @@ TEST_F(WhileFactoryTest, Error_ForgetBlock) {
     };
 
     // act / assert
-    EXPECT_THROW({ dem::parser::WhileFactory::produce(tokens); }, dem::parser::ParsingException);
+    EXPECT_THROW({ dem::parser::WhileFactory::produce(tokens, parseResults); }, dem::parser::ParsingException);
 }
 
 TEST_F(WhileFactoryTest, Error_ForgetStart) {
@@ -121,7 +123,7 @@ TEST_F(WhileFactoryTest, Error_ForgetStart) {
     };
 
     // act / assert
-    EXPECT_THROW({ dem::parser::WhileFactory::produce(tokens); }, dem::parser::ParsingException);
+    EXPECT_THROW({ dem::parser::WhileFactory::produce(tokens, parseResults); }, dem::parser::ParsingException);
 }
 
 TEST_F(WhileFactoryTest, Error_ForgetEnd) {
@@ -136,5 +138,5 @@ TEST_F(WhileFactoryTest, Error_ForgetEnd) {
     };
 
     // act / assert
-    EXPECT_THROW({ dem::parser::WhileFactory::produce(tokens); }, dem::parser::ParsingException);
+    EXPECT_THROW({ dem::parser::WhileFactory::produce(tokens, parseResults); }, dem::parser::ParsingException);
 }

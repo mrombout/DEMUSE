@@ -19,7 +19,6 @@
 #include "symbol/For.h"
 #include "symbol/expression/ExpressionStatement.h"
 #include "symbol/expression/FunctionDefinition.h"
-#include "symbol/CompoundStatement.h"
 
 namespace dem {
     namespace parser {

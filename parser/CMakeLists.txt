@@ -257,9 +257,6 @@ set(Parser_SRCS
     inc/factory/PlayFactory.h
     src/factory/PlayFactory.cpp
 
-    inc/factory/FunctionCallExpressionFactory.h
-    src/factory/FunctionCallExpressionFactory.cpp
-
     inc/factory/NoteFactory.h
     src/factory/NoteFactory.cpp
 
@@ -306,7 +303,7 @@ target_include_directories(testparser PRIVATE inc ${Lexer_INCLUDE_DIRS})
 
 find_package(GTest REQUIRED)
 if(GTEST_FOUND)
-    target_include_directories(testparser PRIVATE E:/Libraries/googletest-release-1.7.0/include)
+    target_include_directories(testparser PRIVATE P:/Libraries/googletest-release-1.7.0/include)
     target_link_libraries(testparser ${GTEST_BOTH_LIBRARIES})
 endif()
 

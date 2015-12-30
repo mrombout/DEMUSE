@@ -1,6 +1,5 @@
 #include <wx/splash.h>
 #include <wx/artprov.h>
-#include <memory>
 #include "App.h"
 #include "MainFrame.h"
 #include "MuseArtProvider.h"

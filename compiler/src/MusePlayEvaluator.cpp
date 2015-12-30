@@ -1,12 +1,5 @@
 #include <iostream>
 #include "MusePlayEvaluator.h"
-#include "jdksmidi/world.h"
-#include "jdksmidi/track.h"
-#include "jdksmidi/multitrack.h"
-#include "jdksmidi/filereadmultitrack.h"
-#include "jdksmidi/fileread.h"
-#include "jdksmidi/fileshow.h"
-#include "jdksmidi/filewritemultitrack.h"
 
 namespace dem {
     namespace compiler {
@@ -103,7 +96,7 @@ namespace dem {
             mMsg.SetNoteOn(mChan = 0, mNote = toMidiNote(note), mVelocity = 100);
             mTracks.GetTrack(mTrk)->PutEvent(mMsg);
 
-            int duration = mDelta * 4; // default to whole
+            jdksmidi::MIDIClockTime duration = mDelta * 4; // default to whole
             if(note.duration() == 'h') {        // half
                 duration = mDelta * 2;
             } else if(note.duration() == 'q') { // quater

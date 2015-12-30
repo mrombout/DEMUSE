@@ -1,7 +1,6 @@
 #include <iostream>
 #include "exception/RuntimeException.h"
 #include "MuseMidiCompiler.h"
-#include "symbol/VariableDeclaration.h"
 #include "GlobalScope.h"
 #include "value/NullValue.h"
 #include "value/function/FunctionValue.h"

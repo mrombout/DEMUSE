@@ -9,6 +9,8 @@ protected:
 
     dem::lexer::TokenPosition tokenPosition;
     dem::parser::BreakFactory factory;
+
+    dem::parser::ParseResults parseResults;
 };
 
 TEST_F(BreakFactoryTest, SingleBreak) {
@@ -19,6 +21,6 @@ TEST_F(BreakFactoryTest, SingleBreak) {
 
     // act / assert
     EXPECT_NO_THROW({
-        dem::parser::Break *breakSymbol = factory.produce(tokens);
+        dem::parser::Break *breakSymbol = factory.produce(tokens, parseResults);
     });
 }

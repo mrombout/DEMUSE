@@ -15,8 +15,6 @@ namespace dem {
             void addNote(Expression* note);
             const std::vector<Expression*> &notes() const;
 
-            int duration() const;
-
             virtual bool accept(Visitor &visitor);
 
         private:

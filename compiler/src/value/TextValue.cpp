@@ -2,7 +2,6 @@
 #include "value/Value.h"
 #include "value/TextValue.h"
 #include "value/NumberValue.h"
-#include "value/Variable.h"
 
 namespace dem {
     namespace compiler {

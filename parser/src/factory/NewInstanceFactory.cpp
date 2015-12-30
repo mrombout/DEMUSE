@@ -1,5 +1,4 @@
 #include "symbol/ArgumentList.h"
-#include "symbol/ArgumentList.h"
 #include "factory/ArgumentListFactory.h"
 #include "factory/IdentifierFactory.h"
 #include "factory/NewInstanceFactory.h"

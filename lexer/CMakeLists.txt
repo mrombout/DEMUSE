@@ -102,7 +102,7 @@ target_include_directories(testlexer PRIVATE inc)
 
 find_package(GTest REQUIRED)
 if(GTEST_FOUND)
-    target_include_directories(testlexer PRIVATE E:/Libraries/googletest-release-1.7.0/include)
+    target_include_directories(testlexer PRIVATE P:/Libraries/googletest-release-1.7.0/include)
     target_link_libraries(testlexer ${GTEST_BOTH_LIBRARIES})
 endif()
 

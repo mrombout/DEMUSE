@@ -9,7 +9,7 @@ namespace dem {
         }
 
         bool Break::accept(Visitor &visitor) {
-            visitor.visit(*this);
+            return visitor.visit(*this);
         }
     }
 }

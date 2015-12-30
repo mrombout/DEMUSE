@@ -5,12 +5,10 @@
 #include "value/NumberValue.h"
 #include "value/BooleanValue.h"
 #include "value/TextValue.h"
-#include "value/NullValue.h"
 #include "value/ArrayValue.h"
 #include "value/NoteValue.h"
 #include "value/function/FunctionValue.h"
 #include "value/function/UserFunction.h"
-#include "value/Variable.h"
 
 namespace dem {
     namespace compiler {
@@ -80,6 +78,8 @@ namespace dem {
             std::clog << "Executing " << a->asString() << " + " << b->asString() << std::endl;
             Value *c = a->add(b);
             mStack.push(c);
+
+            return false;
         }
 
         bool ExpressionEvaluator::visitEnter(parser::SubtractionExpression &subtractionExpression) {
@@ -585,8 +585,6 @@ namespace dem {
             Value *result = (*callee)(functionScope);
             mCompiler.scopes().pop_front();
 
-            if(!dynamic_cast<NullValue*>(result))
-                std::clog << "PUSH - " << result->asString() << std::endl;
             mStack.push(result);
 
             return false;
@@ -617,7 +615,7 @@ namespace dem {
         }
 
         bool ExpressionEvaluator::visitLeave(parser::PropertyAccessExpression &propertyAccessExpression) {
-            std::clog << "LEAVE - PropertAccessExpression" << std::endl;
+            std::clog << "LEAVE - PropertyAccessExpression" << std::endl;
 
             // TODO: only call when not identifier
             parser::Identifier *identifier = dynamic_cast<parser::Identifier*>(&propertyAccessExpression.right());

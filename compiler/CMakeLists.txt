@@ -122,7 +122,7 @@ target_include_directories(testcompiler PRIVATE inc ${Lexer_INCLUDE_DIRS})
 
 find_package(GTest REQUIRED)
 if(GTEST_FOUND)
-    target_include_directories(testcompiler PRIVATE E:/Libraries/googletest-release-1.7.0/include)
+    target_include_directories(testcompiler PRIVATE P:/Libraries/googletest-release-1.7.0/include)
     target_link_libraries(testcompiler ${GTEST_BOTH_LIBRARIES})
 endif()
 

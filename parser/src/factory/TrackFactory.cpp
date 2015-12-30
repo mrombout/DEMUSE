@@ -1,7 +1,6 @@
 #include <regex>
 #include "factory/TrackFactory.h"
 #include "factory/BlockFactory.h"
-#include "exception/ParsingException.h"
 
 namespace dem {
     namespace parser {

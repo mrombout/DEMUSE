@@ -34,14 +34,6 @@ namespace dem {
 
         private:
             wxPropertyGrid *mPg;
-
-            wxCheckBox *mShowWhitespace;
-            wxCheckBox *mHighlightCurrentLine;
-            wxCheckBox *mUseTabs;
-            wxCheckBox *mShowMaxColumnLine;
-            wxTextCtrl *mTabWidth;
-            wxTextCtrl *mMaxColumn;
-            wxCheckBox *mWrap;
         };
     }
 }

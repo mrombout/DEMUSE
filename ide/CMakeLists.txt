@@ -11,9 +11,6 @@ set(IDE_SRCS
     inc/MainFrame.h
     src/MainFrame.cpp
 
-    inc/MuseAuiTabArt.h
-    src/MuseAuiTabArt.cpp
-
     inc/MuseArtProvider.h
     src/MuseArtProvider.cpp
 

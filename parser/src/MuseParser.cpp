@@ -1,7 +1,6 @@
 #include <vector>
 #include <deque>
 #include "MuseParser.h"
-#include "symbol/Symbol.h"
 #include "symbol/Program.h"
 #include "factory/ProgramFactory.h"
 

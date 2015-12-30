@@ -14,7 +14,7 @@ namespace dem {
         }
 
         bool NumberLiteral::accept(Visitor &visitor) {
-            visitor.visit(*this);
+            return visitor.visit(*this);
         }
     }
 }

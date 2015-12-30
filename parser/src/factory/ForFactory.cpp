@@ -4,7 +4,6 @@
 #include "factory/ExpressionFactory.h"
 #include "factory/BlockFactory.h"
 #include "symbol/For.h"
-#include "symbol/Block.h"
 
 namespace dem {
     namespace parser {

@@ -1,6 +1,5 @@
 #include <sstream>
 #include "factory/SymbolFactory.h"
-#include "exception/ParsingException.h"
 
 namespace dem {
     namespace parser {

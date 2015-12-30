@@ -68,7 +68,7 @@ TEST_F(BooleanValueTest, AsNumber_ReturnsOneWhenTrue) {
     double result = a.asNumber();
 
     // assert
-    ASSERT_EQ(1.0d, result);
+    ASSERT_EQ(1.0, result);
 }
 
 TEST_F(BooleanValueTest, AsNumber_ReturnsZeroWhenFalse) {
@@ -79,7 +79,7 @@ TEST_F(BooleanValueTest, AsNumber_ReturnsZeroWhenFalse) {
     double result = a.asNumber();
 
     // assert
-    ASSERT_EQ(0.0d, result);
+    ASSERT_EQ(0.0, result);
 }
 
 TEST_F(BooleanValueTest, AsBool_ReturnsTrueWhenTrue) {

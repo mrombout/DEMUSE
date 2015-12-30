@@ -73,7 +73,7 @@ TEST_F(NumberValueTest, AsNumber_PositiveInteger) {
     double result = a.asNumber();
 
     // assert
-    ASSERT_EQ(1.0d, result);
+    ASSERT_EQ(1.0, result);
 }
 
 TEST_F(NumberValueTest, AsNumber_NegativeInteger) {
@@ -84,29 +84,29 @@ TEST_F(NumberValueTest, AsNumber_NegativeInteger) {
     double result = a.asNumber();
 
     // assert
-    ASSERT_EQ(-1.0d, result);
+    ASSERT_EQ(-1.0, result);
 }
 
 TEST_F(NumberValueTest, AsNumber_PositiveDouble) {
     // arrange
-    dem::compiler::NumberValue a{1.5d};
+    dem::compiler::NumberValue a{1.5};
 
     // act
     double result = a.asNumber();
 
     // assert
-    ASSERT_EQ(1.5d, result);
+    ASSERT_EQ(1.5, result);
 }
 
 TEST_F(NumberValueTest, AsNumber_NegativeDouble) {
     // arrange
-    dem::compiler::NumberValue a{-1.5d};
+    dem::compiler::NumberValue a{-1.5};
 
     // act
     double result = a.asNumber();
 
     // assert
-    ASSERT_EQ(-1.5d, result);
+    ASSERT_EQ(-1.5, result);
 }
 
 TEST_F(NumberValueTest, AsBool_PositiveInteger_ReturnsTrue) {

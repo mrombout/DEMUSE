@@ -11,6 +11,8 @@ protected:
 
     dem::parser::PrintVisitor printer;
     dem::lexer::TokenPosition tokenPosition;
+
+    dem::parser::ParseResults parseResults;
 };
 
 TEST_F(ExpressionFactoryTest, ExpressionIdentifier) {
@@ -20,7 +22,7 @@ TEST_F(ExpressionFactoryTest, ExpressionIdentifier) {
     };
 
     // act
-    dem::parser::Identifier *identifier = dynamic_cast<dem::parser::Identifier*>(dem::parser::ExpressionFactory::produce(tokens));
+    dem::parser::Identifier *identifier = dynamic_cast<dem::parser::Identifier*>(dem::parser::ExpressionFactory::produce(tokens, parseResults));
 
     // assert
     printer.print(identifier);
@@ -34,7 +36,7 @@ TEST_F(ExpressionFactoryTest, ExpressionLiteralNumber) {
     };
 
     // act
-    dem::parser::NumberLiteral *number = dynamic_cast<dem::parser::NumberLiteral*>(dem::parser::ExpressionFactory::produce(tokens));
+    dem::parser::NumberLiteral *number = dynamic_cast<dem::parser::NumberLiteral*>(dem::parser::ExpressionFactory::produce(tokens, parseResults));
 
     // assert
     printer.print(number);
@@ -49,7 +51,7 @@ TEST_F(ExpressionFactoryTest, ExpressionLiteralText) {
     };
 
     // act
-    dem::parser::TextLiteral *text = dynamic_cast<dem::parser::TextLiteral*>(dem::parser::ExpressionFactory::produce(tokens));
+    dem::parser::TextLiteral *text = dynamic_cast<dem::parser::TextLiteral*>(dem::parser::ExpressionFactory::produce(tokens, parseResults));
 
     // assert
     printer.print(text);
@@ -64,7 +66,7 @@ TEST_F(ExpressionFactoryTest, ExpressionLiteralBool) {
     };
 
     // act
-    dem::parser::BoolLiteral *boolean = dynamic_cast<dem::parser::BoolLiteral*>(dem::parser::ExpressionFactory::produce(tokens));
+    dem::parser::BoolLiteral *boolean = dynamic_cast<dem::parser::BoolLiteral*>(dem::parser::ExpressionFactory::produce(tokens, parseResults));
 
     // assert
     printer.print(boolean);
@@ -84,7 +86,7 @@ TEST_F(ExpressionFactoryTest, ExpressionLiteralArray) {
     };
 
     // act
-    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens);
+    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens, parseResults);
     dem::parser::ArrayLiteral *arrayLiteral = dynamic_cast<dem::parser::ArrayLiteral*>(expression);
 
     // assert
@@ -113,7 +115,7 @@ TEST_F(ExpressionFactoryTest, ExpressionLiteralArrayNested) {
     };
 
     // act
-    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens);
+    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens, parseResults);
     dem::parser::ArrayLiteral *arrayLiteral = dynamic_cast<dem::parser::ArrayLiteral*>(expression);
 
     // assert
@@ -137,7 +139,7 @@ TEST_F(ExpressionFactoryTest, AssignmentSingle) {
     };
 
     // act
-    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens);
+    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens, parseResults);
     dem::parser::AssignmentExpression *assignmentExpression = dynamic_cast<dem::parser::AssignmentExpression*>(expression);
 
     // assert
@@ -160,7 +162,7 @@ TEST_F(ExpressionFactoryTest, AssignmentMultiple) {
     };
 
     // act
-    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens);
+    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens, parseResults);
     dem::parser::AssignmentExpression *assignmentExpression = dynamic_cast<dem::parser::AssignmentExpression*>(expression);
 
     // assert
@@ -179,7 +181,7 @@ TEST_F(ExpressionFactoryTest, AdditionSingle) {
     };
 
     // act
-    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens);
+    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens, parseResults);
     dem::parser::AdditionExpression *addExpression = dynamic_cast<dem::parser::AdditionExpression *>(expression);
 
     // assert
@@ -200,7 +202,7 @@ TEST_F(ExpressionFactoryTest, AdditionMultiple) {
     };
 
     // act
-    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens);
+    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens, parseResults);
     dem::parser::AdditionExpression *addExpression = dynamic_cast<dem::parser::AdditionExpression *>(expression);
 
     // assert
@@ -221,7 +223,7 @@ TEST_F(ExpressionFactoryTest, SubtractionSingle) {
     };
 
     // act
-    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens);
+    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens, parseResults);
     dem::parser::SubtractionExpression *subtractionExpression = dynamic_cast<dem::parser::SubtractionExpression*>(expression);
 
     // assert
@@ -242,7 +244,7 @@ TEST_F(ExpressionFactoryTest, SubtractionMultiple) {
     };
 
     // act
-    dem::parser::SubtractionExpression *subtractionExpression = dynamic_cast<dem::parser::SubtractionExpression*>(dem::parser::ExpressionFactory::produce(tokens));
+    dem::parser::SubtractionExpression *subtractionExpression = dynamic_cast<dem::parser::SubtractionExpression*>(dem::parser::ExpressionFactory::produce(tokens, parseResults));
 
     // assert
     printer.print(subtractionExpression);
@@ -261,7 +263,7 @@ TEST_F(ExpressionFactoryTest, MultiplicationSingle) {
     };
 
     // act
-    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens);
+    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens, parseResults);
     dem::parser::MultiplicationExpression *multiplicationExpression = dynamic_cast<dem::parser::MultiplicationExpression*>(expression);
 
     // assert
@@ -282,7 +284,7 @@ TEST_F(ExpressionFactoryTest, MultiplicationMultiple) {
     };
 
     // act
-    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens);
+    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens, parseResults);
     dem::parser::MultiplicationExpression *multiplicationExpression = dynamic_cast<dem::parser::MultiplicationExpression*>(expression);
 
     // assert
@@ -303,7 +305,7 @@ TEST_F(ExpressionFactoryTest, DivisionSingle) {
     };
 
     // act
-    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens);
+    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens, parseResults);
     dem::parser::DivisionExpression *divisionExpression = dynamic_cast<dem::parser::DivisionExpression*>(expression);
 
     // assert
@@ -324,7 +326,7 @@ TEST_F(ExpressionFactoryTest, DivisionMultiple) {
     };
 
     // act
-    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens);
+    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens, parseResults);
     dem::parser::DivisionExpression *divisionExpression = dynamic_cast<dem::parser::DivisionExpression*>(expression);
 
     // assert
@@ -345,7 +347,7 @@ TEST_F(ExpressionFactoryTest, ModuloSingle) {
     };
 
     // act
-    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens);
+    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens, parseResults);
     dem::parser::ModuloExpression *moduloExpression = dynamic_cast<dem::parser::ModuloExpression*>(expression);
 
     // assert
@@ -364,7 +366,7 @@ TEST_F(ExpressionFactoryTest, ExponentSingle) {
     };
 
     // act
-    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens);
+    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens, parseResults);
     dem::parser::ExponentExpression *exponentExpression = dynamic_cast<dem::parser::ExponentExpression*>(expression);
 
     // assert
@@ -385,7 +387,7 @@ TEST_F(ExpressionFactoryTest, ModuloMultiple) {
     };
 
     // act
-    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens);
+    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens, parseResults);
     dem::parser::ModuloExpression *moduloExpression = dynamic_cast<dem::parser::ModuloExpression*>(expression);
 
     // assert
@@ -408,7 +410,7 @@ TEST_F(ExpressionFactoryTest, ParenthesisSingle) {
     };
 
     // act
-    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens);
+    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens, parseResults);
 
     // assert
     printer.print(expression);
@@ -424,7 +426,7 @@ TEST_F(ExpressionFactoryTest, ConditionAnd) {
     };
 
     // act
-    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens);
+    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens, parseResults);
     dem::parser::AndCondition *andCondition = dynamic_cast<dem::parser::AndCondition*>(expression);
 
     // assert
@@ -443,7 +445,7 @@ TEST_F(ExpressionFactoryTest, ConditionEqual) {
     };
 
     // act
-    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens);
+    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens, parseResults);
     dem::parser::EqualCondition *equalCondition = dynamic_cast<dem::parser::EqualCondition*>(expression);
 
     // assert
@@ -462,7 +464,7 @@ TEST_F(ExpressionFactoryTest, ConditionLargerThan) {
     };
 
     // act
-    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens);
+    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens, parseResults);
     dem::parser::LargerThanCondition *largerThanCondition = dynamic_cast<dem::parser::LargerThanCondition*>(expression);
 
     // assert
@@ -481,7 +483,7 @@ TEST_F(ExpressionFactoryTest, ConditionLargerThanOrEqual) {
     };
 
     // act
-    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens);
+    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens, parseResults);
     dem::parser::LargerThanOrEqualCondition *lreqCondition = dynamic_cast<dem::parser::LargerThanOrEqualCondition*>(expression);
 
     // assert
@@ -499,7 +501,7 @@ TEST_F(ExpressionFactoryTest, ConditionNotEqual) {
     };
 
     // act
-    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens);
+    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens, parseResults);
     dem::parser::NotEqualCondition *notEqualCondition = dynamic_cast<dem::parser::NotEqualCondition*>(expression);
 
     // assert
@@ -517,7 +519,7 @@ TEST_F(ExpressionFactoryTest, ConditionOr) {
     };
 
     // act
-    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens);
+    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens, parseResults);
     dem::parser::OrCondition *orCondition = dynamic_cast<dem::parser::OrCondition*>(expression);
 
     // assert
@@ -535,7 +537,7 @@ TEST_F(ExpressionFactoryTest, ConditionSmallerThan) {
     };
 
     // act
-    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens);
+    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens, parseResults);
     dem::parser::SmallerThanCondition *smallerThanCondition = dynamic_cast<dem::parser::SmallerThanCondition*>(expression);
 
     // assert
@@ -553,7 +555,7 @@ TEST_F(ExpressionFactoryTest, ConditionSmallerThanOrEqual) {
     };
 
     // act
-    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens);
+    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens, parseResults);
     dem::parser::SmallerThanOrEqualCondition *smallerThanOrEqualCondition = dynamic_cast<dem::parser::SmallerThanOrEqualCondition*>(expression);
 
     // assert
@@ -571,7 +573,7 @@ TEST_F(ExpressionFactoryTest, ConditionStrictEqual) {
     };
 
     // act
-    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens);
+    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens, parseResults);
     dem::parser::StrictEqualCondition *strictEqualCondition = dynamic_cast<dem::parser::StrictEqualCondition*>(expression);
 
     // assert
@@ -590,7 +592,7 @@ TEST_F(ExpressionFactoryTest, ConditionStrictNotEqual) {
     };
 
     // act
-    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens);
+    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens, parseResults);
     dem::parser::StrictNotEqualCondition *strictNotEqualCondition = dynamic_cast<dem::parser::StrictNotEqualCondition*>(expression);
 
     // assert
@@ -608,7 +610,7 @@ TEST_F(ExpressionFactoryTest, ExpressionCallNoArguments) {
     };
 
     // act
-    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens);
+    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens, parseResults);
     dem::parser::CallExpression *callExpression = dynamic_cast<dem::parser::CallExpression*>(expression);
 
     // assert
@@ -632,7 +634,7 @@ TEST_F(ExpressionFactoryTest, ExpressionCallSingleArgument) {
     };
 
     // act
-    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens);
+    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens, parseResults);
     dem::parser::CallExpression *callExpression = dynamic_cast<dem::parser::CallExpression*>(expression);
 
     // assert
@@ -658,7 +660,7 @@ TEST_F(ExpressionFactoryTest, ExpressionCallTwoArgument) {
     };
 
     // act
-    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens);
+    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens, parseResults);
     dem::parser::CallExpression *callExpression = dynamic_cast<dem::parser::CallExpression*>(expression);
 
     // assert
@@ -686,7 +688,7 @@ TEST_F(ExpressionFactoryTest, ExpressionMemberCallTwoArgument) {
     };
 
     // act
-    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens);
+    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens, parseResults);
     dem::parser::CallExpression *callExpression = dynamic_cast<dem::parser::CallExpression*>(expression);
 
     // assert
@@ -717,7 +719,7 @@ TEST_F(ExpressionFactoryTest, ExpressionArrayAccess) {
     };
 
     // act
-    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens);
+    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens, parseResults);
     dem::parser::MemberExpression *memberExpression = dynamic_cast<dem::parser::MemberExpression*>(expression);
 
     // assert
@@ -740,7 +742,7 @@ TEST_F(ExpressionFactoryTest, ExpressionArrayAccessMulti) {
     };
 
     // act
-    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens);
+    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens, parseResults);
     dem::parser::MemberExpression *memberExpression = dynamic_cast<dem::parser::MemberExpression*>(expression);
 
     // assert
@@ -758,7 +760,7 @@ TEST_F(ExpressionFactoryTest, UnaryNegativeLiteralSingle) {
     };
 
     // act
-    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens);
+    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens, parseResults);
     dem::parser::UnaryExpression *unaryExpression = dynamic_cast<dem::parser::UnaryExpression*>(expression);
 
     // assert
@@ -780,7 +782,7 @@ TEST_F(ExpressionFactoryTest, UnaryNegativeExpressionSingle) {
     };
 
     // act
-    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens);
+    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens, parseResults);
     dem::parser::AdditionExpression *additionExpression = dynamic_cast<dem::parser::AdditionExpression*>(expression);
 
     // assert
@@ -804,7 +806,7 @@ TEST_F(ExpressionFactoryTest, PrecedenceMultiplyAddition) {
     };
 
     // act
-    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens);
+    dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens, parseResults);
 
     // assert
     printer.print(expression);

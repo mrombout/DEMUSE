@@ -9,7 +9,7 @@ namespace dem {
         }
 
         bool Continue::accept(Visitor &visitor) {
-            visitor.visit(*this);
+            return visitor.visit(*this);
         }
     }
 }

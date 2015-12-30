@@ -2,7 +2,6 @@
 #include "factory/ForFactory.h"
 #include "symbol/VariableDeclaration.h"
 #include "symbol/expression/SmallerThanCondition.h"
-#include "symbol/expression/Expression.h"
 #include "symbol/For.h"
 #include "exception/ParsingException.h"
 
@@ -14,6 +13,8 @@ protected:
 
     dem::lexer::TokenPosition tokenPosition;
     dem::parser::ForFactory factory;
+
+    dem::parser::ParseResults parseResults;
 };
 
 TEST_F(ForFactoryTest, EmptyFor) {
@@ -29,7 +30,7 @@ TEST_F(ForFactoryTest, EmptyFor) {
     };
 
     // act
-    dem::parser::For *forStatement = factory.produce(tokens);
+    dem::parser::For *forStatement = factory.produce(tokens, parseResults);
 
     // assert
     ASSERT_TRUE(forStatement->initialization() == nullptr);
@@ -54,7 +55,7 @@ TEST_F(ForFactoryTest, VariableDefInitialization) {
     };
 
     // act
-    dem::parser::For *forStatement = factory.produce(tokens);
+    dem::parser::For *forStatement = factory.produce(tokens, parseResults);
 
     // assert
     ASSERT_TRUE(dynamic_cast<dem::parser::VariableDeclaration*>(forStatement->initialization()) != nullptr);
@@ -78,7 +79,7 @@ TEST_F(ForFactoryTest, AssignmentInitialization) {
     };
 
     // act
-    dem::parser::For *forStatement = factory.produce(tokens);
+    dem::parser::For *forStatement = factory.produce(tokens, parseResults);
 
     // assert
     ASSERT_TRUE(dynamic_cast<dem::parser::AssignmentExpression*>(forStatement->initialization()) != nullptr);
@@ -111,7 +112,7 @@ TEST_F(ForFactoryTest, ProperInitializationConditonalAndAfterThought) {
     };
 
     // act
-    dem::parser::For *forStatement = factory.produce(tokens);
+    dem::parser::For *forStatement = factory.produce(tokens, parseResults);
 
     // assert
     ASSERT_TRUE(dynamic_cast<dem::parser::VariableDeclaration*>(forStatement->initialization()) != nullptr);
@@ -131,7 +132,7 @@ TEST_F(ForFactoryTest, Error_ForgetOpen) {
     };
 
     // act / assert
-    EXPECT_THROW({ factory.produce(tokens); }, dem::parser::ParsingException);
+    EXPECT_THROW({ factory.produce(tokens, parseResults); }, dem::parser::ParsingException);
 }
 
 TEST_F(ForFactoryTest, Error_ForgetClose) {
@@ -146,7 +147,7 @@ TEST_F(ForFactoryTest, Error_ForgetClose) {
     };
 
     // act / assert
-    EXPECT_THROW({ factory.produce(tokens); }, dem::parser::ParsingException);
+    EXPECT_THROW({ factory.produce(tokens, parseResults); }, dem::parser::ParsingException);
 }
 
 TEST_F(ForFactoryTest, Error_ForgetStart) {
@@ -161,7 +162,7 @@ TEST_F(ForFactoryTest, Error_ForgetStart) {
     };
 
     // act / assert
-    EXPECT_THROW({ factory.produce(tokens); }, dem::parser::ParsingException);
+    EXPECT_THROW({ factory.produce(tokens, parseResults); }, dem::parser::ParsingException);
 }
 
 TEST_F(ForFactoryTest, Error_ForgetEnd) {
@@ -176,7 +177,7 @@ TEST_F(ForFactoryTest, Error_ForgetEnd) {
     };
 
     // act / assert
-    EXPECT_THROW({ factory.produce(tokens); }, dem::parser::ParsingException);
+    EXPECT_THROW({ factory.produce(tokens, parseResults); }, dem::parser::ParsingException);
 }
 
 TEST_F(ForFactoryTest, Error_ForgetBlock) {
@@ -190,5 +191,5 @@ TEST_F(ForFactoryTest, Error_ForgetBlock) {
     };
 
     // act / assert
-    EXPECT_THROW({ factory.produce(tokens); }, dem::parser::ParsingException);
+    EXPECT_THROW({ factory.produce(tokens, parseResults); }, dem::parser::ParsingException);
 }

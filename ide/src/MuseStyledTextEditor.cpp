@@ -135,7 +135,6 @@ namespace dem {
             SetIndicatorCurrent(demSTC_INDIC_UNKNOWN);
             IndicatorClearRange(0, GetTextLength());
 
-            std::vector<lexer::Token> autocompleteTokens;
             for(lexer::Token &token : tokens) {
                 int startIndex = startPos + token.startIndex();
 

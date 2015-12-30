@@ -22,6 +22,6 @@ int main(int argc, char* argv[]) {
 
     // parse
     dem::parser::MuseParser museParser;
-    dem::parser::Symbol *program = museParser.parse(tokens);
+    dem::parser::ParseResults parseResults = museParser.parse(tokens);
     std::cout << "Done!" << std::endl;
 }

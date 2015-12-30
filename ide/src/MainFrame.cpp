@@ -10,8 +10,6 @@
 #include <wx/filename.h>
 #include <wx/preferences.h>
 #include <wx/process.h>
-#include <wx/stdstream.h>
-#include <wx/wfstream.h>
 #include <wx/mimetype.h>
 #include "MuseMidiCompiler.h"
 #include "App.h"
@@ -25,7 +23,6 @@
 #include "preference/ColorsPage.h"
 #include "preference/ExecutionPage.h"
 #include "MainFrame.h"
-#include "MuseAuiTabArt.h"
 #include "MuseArtProvider.h"
 #include "MuseLexer.h"
 #include "OutputTextCtrl.h"
@@ -228,7 +225,7 @@ namespace dem {
         }
 
         MuseStyledTextEditor *MainFrame::activeEditor() {
-            size_t editorId = mNotebook->GetSelection();
+            int editorId = mNotebook->GetSelection();
             if(editorId == wxNOT_FOUND)
                 return nullptr;
             return static_cast<MuseStyledTextEditor*>(mNotebook->GetPage(editorId));

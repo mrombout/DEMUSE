@@ -1,9 +1,4 @@
 #include <gtest/gtest.h>
-#include "symbol/expression/BoolLiteral.h"
-#include "symbol/expression/NumberLiteral.h"
-#include "symbol/expression/TextLiteral.h"
-#include "factory/PrimitiveFactory.h"
-#include "Token.h"
 
 /*
 class PrimitiveFactoryTest : public ::testing::Test {

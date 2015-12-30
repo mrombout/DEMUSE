@@ -1,6 +1,5 @@
 #include <iostream>
 #include "value/function/PrintFunction.h"
-#include "value/Variable.h"
 
 namespace dem {
     namespace compiler {

@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include "MusicStringLexer.h"
 #include "Token.h"
+#include "TokenType.h"
 
 class MusicStringLexerTest : public ::testing::Test {
 protected:
@@ -38,46 +39,7 @@ TEST_F(MusicStringLexerTest, Note_Identifier) {
     ASSERT_EQ(dem::lexer::TokenType::UNKNOWN, tokens[0].type());
 }
 
-TEST_F(MusicStringLexerTest, Octave_SingleTenOctave) {
-    // arrange
-    std::string str{"10"};
-    auto begin = str.begin();
-    auto end = str.end();
-
-    // act
-    std::vector<dem::lexer::Token> tokens = lexer.lex(begin, end);
-
-    // assert
-    ASSERT_EQ(dem::lexer::TokenType::OCTAVE, tokens[0].type());
-}
-
-TEST_F(MusicStringLexerTest, Octave_SingleNineOctave) {
-    // arrange
-    std::string str{"9"};
-    auto begin = str.begin();
-    auto end = str.end();
-
-    // act
-    std::vector<dem::lexer::Token> tokens = lexer.lex(begin, end);
-
-    // assert
-    ASSERT_EQ(dem::lexer::TokenType::OCTAVE, tokens[0].type());
-}
-
-TEST_F(MusicStringLexerTest, Octave_SingleThreeOctave) {
-    // arrange
-    std::string str{"3"};
-    auto begin = str.begin();
-    auto end = str.end();
-
-    // act
-    std::vector<dem::lexer::Token> tokens = lexer.lex(begin, end);
-
-    // assert
-    ASSERT_EQ(dem::lexer::TokenType::OCTAVE, tokens[0].type());
-}
-
-TEST_F(MusicStringLexerTest, Octave_SingleSharp) {
+TEST_F(MusicStringLexerTest, Accidental_SingleSharp) {
     // arrange
     std::string str{"#"};
     auto begin = str.begin();
@@ -90,7 +52,7 @@ TEST_F(MusicStringLexerTest, Octave_SingleSharp) {
     ASSERT_EQ(dem::lexer::TokenType::ACCIDENTAL, tokens[0].type());
 }
 
-TEST_F(MusicStringLexerTest, Octave_SingleFlat) {
+TEST_F(MusicStringLexerTest, Accidental_SingleFlat) {
     // arrange
     std::string str{"b"};
     auto begin = str.begin();
@@ -103,7 +65,7 @@ TEST_F(MusicStringLexerTest, Octave_SingleFlat) {
     ASSERT_EQ(dem::lexer::TokenType::ACCIDENTAL, tokens[0].type());
 }
 
-TEST_F(MusicStringLexerTest, Octave_SingleNatural) {
+TEST_F(MusicStringLexerTest, Accidental_SingleNatural) {
     // arrange
     std::string str{"n"};
     auto begin = str.begin();

@@ -69,7 +69,7 @@ TEST_F(TextValueTest, AsNumber_ValidNumber_ReturnsNumberAsString) {
     double result = a.asNumber();
 
     // assert
-    ASSERT_EQ(3.0d, result);
+    ASSERT_EQ(3.0, result);
 }
 
 TEST_F(TextValueTest, AsNumber_InvalidNumber_ThrowsException) {

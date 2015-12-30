@@ -1,7 +1,4 @@
 #include "Visitor.h"
-#include "symbol/expression/Expression.h"
-#include "symbol/Block.h"
-#include "symbol/While.h"
 
 namespace dem {
     namespace parser {

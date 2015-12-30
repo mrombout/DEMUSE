@@ -1,13 +1,8 @@
 #include <vector>
 #include "factory/StatementFactory.h"
-#include "exception/ParsingException.h"
-#include "factory/VariableDeclarationFactory.h"
-#include "factory/FunctionDefinitionFactory.h"
 #include "factory/ProgramFactory.h"
 #include "factory/TrackFactory.h"
 #include "symbol/Program.h"
-#include "symbol/expression/FunctionDefinition.h"
-#include "symbol/VariableDeclaration.h"
 
 namespace dem {
     namespace parser {

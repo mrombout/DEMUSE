@@ -10,6 +10,8 @@ protected:
 
     dem::lexer::TokenPosition tokenPosition;
     dem::parser::BlockFactory factory;
+
+    dem::parser::ParseResults parseResults;
 };
 
 TEST_F(BlockFactoryTest, NoStatements) {
@@ -21,7 +23,7 @@ TEST_F(BlockFactoryTest, NoStatements) {
 
     // act / assert
     ASSERT_NO_THROW({
-        dem::parser::Block *block = factory.produce(tokens);
+        dem::parser::Block *block = factory.produce(tokens, parseResults);
 
         // assert
         ASSERT_EQ(0, tokens.size());
@@ -39,7 +41,7 @@ TEST_F(BlockFactoryTest, OneStatement) {
 
     // act / assert
     ASSERT_NO_THROW({
-        dem::parser::Block *block = factory.produce(tokens);
+        dem::parser::Block *block = factory.produce(tokens, parseResults);
 
         // assert
         ASSERT_EQ(0, tokens.size());
@@ -62,7 +64,7 @@ TEST_F(BlockFactoryTest, ThreeStatements) {
 
     // act / assert
     ASSERT_NO_THROW({
-        dem::parser::Block *block = factory.produce(tokens);
+        dem::parser::Block *block = factory.produce(tokens, parseResults);
 
         // assert
         ASSERT_EQ(0, tokens.size());

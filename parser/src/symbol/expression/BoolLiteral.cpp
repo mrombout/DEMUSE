@@ -14,7 +14,7 @@ namespace dem {
         }
 
         bool BoolLiteral::accept(Visitor &visitor) {
-            visitor.visit(*this);
+            return visitor.visit(*this);
         }
     }
 }
