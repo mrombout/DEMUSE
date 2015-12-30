@@ -52,6 +52,10 @@ namespace dem {
             virtual bool visitEnter(parser::FunctionCallExpression &expression) override;
             virtual bool visitLeave(parser::FunctionCallExpression &expression) override;
 
+            virtual bool visit(parser::Break &breakSymbol) override;
+
+            virtual bool visit(parser::Continue &continueSymbol) override;
+
             virtual std::deque<Scope*> &scopes();
 
         private:
@@ -61,6 +65,9 @@ namespace dem {
             MuseMidiPlayEvaluator mPlayEvaluator;
             std::deque<Scope*> mScopes;
             Value *mReturnValue;
+
+            bool mBreak;
+            bool mContinue;
         };
     }
 }

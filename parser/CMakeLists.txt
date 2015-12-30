@@ -251,9 +251,6 @@ set(Parser_SRCS
     inc/factory/ParameterListFactory.h
     src/factory/ParameterListFactory.cpp
 
-    inc/factory/PrimitiveFactory.h
-    src/factory/PrimitiveFactory.cpp
-
     inc/factory/PlayFactory.h
     src/factory/PlayFactory.cpp
 

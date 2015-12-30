@@ -9,6 +9,8 @@
 namespace dem {
     namespace compiler {
         MidiCompiler::MidiCompiler() :
+                mBreak(false),
+                mContinue(false),
                 mEvaluator(*this),
                 mPlayEvaluator(mEvaluator),
                 mReturnValue(nullptr) {
@@ -122,6 +124,14 @@ namespace dem {
 
             Value *result = nullptr;
             do {
+                if(mBreak) {
+                    mBreak = false;
+                    break;
+                }
+                if(mContinue) {
+                    mContinue = false;
+                    continue;
+                }
                 result = mEvaluator.evaluate(mScopes.front(), expression);
                 if(result->asBool())
                     block.accept(*this);
@@ -207,6 +217,22 @@ namespace dem {
             std::clog << "ENTER - ExpressionStatement" << std::endl;
 
             mEvaluator.evaluate(mScopes.front(), statement.expression());
+
+            return false;
+        }
+
+        bool MidiCompiler::visit(parser::Break &breakSymbol) {
+            std::clog << "ENTER - Break" << std::endl;
+
+            mBreak = true;
+
+            return false;
+        }
+
+        bool MidiCompiler::visit(parser::Continue &continueSymbol) {
+            std::clog << "ENTER - Continue" << std::endl;
+
+            mContinue = true;
 
             return false;
         }

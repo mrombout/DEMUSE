@@ -16,7 +16,8 @@ namespace dem {
         bool Block::accept(Visitor &visitor) {
             if(visitor.visitEnter(*this)) {
                 for(Statement *statement : mStatements) {
-                    statement->accept(visitor);
+                    if(!statement->accept(visitor))
+                        break;
                 }
             }
 
