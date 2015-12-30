@@ -10,44 +10,45 @@ namespace dem {
         }
 
         Value *dem::compiler::ArrayValue::add(Value *b) {
-            return nullptr;
+            throw RuntimeException("Arrays do not support addition operations.");
         }
 
         Value *dem::compiler::ArrayValue::subtract(Value *b) {
-            return nullptr;
+            throw RuntimeException("Arrays do not support subtraction operations.");
         }
 
         Value *dem::compiler::ArrayValue::multiply(Value *b) {
-            return nullptr;
+            throw RuntimeException("Arrays do not support multiplication operations.");
         }
 
         Value *dem::compiler::ArrayValue::divide(Value *b) {
-            return nullptr;
+            throw RuntimeException("Arrays do not support division operations.");
         }
 
         Value *dem::compiler::ArrayValue::modulo(Value *b) {
-            return nullptr;
+            throw RuntimeException("Arrays do not support modulo operations.");
         }
 
         Value *dem::compiler::ArrayValue::exponent(Value *b) {
-            return nullptr;
+            throw RuntimeException("Arrays do not support exponent operations.");
         }
 
         double ArrayValue::asNumber() const {
-            return 0;
+            throw RuntimeException("Value of type 'Array' can not implicitly be converted to value of type 'Number'.");
         }
 
         bool ArrayValue::asBool() const {
-            return false;
+            throw RuntimeException("Value of type 'Array' can not implicitly be converted to value of type 'Bool'.");
         }
 
         std::string ArrayValue::asString() const {
             std::stringstream ss;
             ss << "[";
 
+            const char *separator = "";
             for(Value *value : mValues) {
-                ss << value->asString() << ", ";
-                // TODO: Remove last comma in array string
+                ss << separator << value->asString();
+                separator = ",";
             }
 
             ss << "]";
@@ -56,31 +57,31 @@ namespace dem {
         }
 
         parser::Note ArrayValue::asNote() const {
-            throw "Can't cast to note"; // TODO: Throw proper error
+            throw RuntimeException("Value of type 'Array' can not implicitly be converted to value of type 'Note'.");
         }
 
         bool ArrayValue::operator==(const Value &other) {
-            return false;
+            throw RuntimeException("Arrays do not support '==' operations.");
         }
 
         bool ArrayValue::operator!=(const Value &other) {
-            return false;
+            throw RuntimeException("Arrays do not support '!=' operations.");
         }
 
         bool ArrayValue::operator<(const Value &other) {
-            return false;
+            throw RuntimeException("Arrays do not support '<' operations.");
         }
 
         bool ArrayValue::operator<=(const Value &other) {
-            return false;
+            throw RuntimeException("Arrays do not support '<=' operations.");
         }
 
         bool ArrayValue::operator>(const Value &other) {
-            return false;
+            throw RuntimeException("Arrays do not support '>' operations.");
         }
 
         bool ArrayValue::operator>=(const Value &other) {
-            return false;
+            throw RuntimeException("Arrays do not support '>=' operations.");
         }
 
         Value *ArrayValue::operator[](const int index) {
@@ -88,11 +89,11 @@ namespace dem {
         }
 
         Variable *ArrayValue::operator[](const std::string &index) {
-            throw "Index must be Number."; // TODO: Throw proper error
+            throw RuntimeException("Arrays do not support '.' operations.");
         }
 
         Value *ArrayValue::operator()(Scope &scope) {
-            throw "Can not call array.";
+            throw RuntimeException("Arrays do not support '()' operations.");
         }
     }
 }

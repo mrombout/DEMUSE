@@ -33,6 +33,8 @@ namespace dem {
 
         private:
             std::string mValue;
+        public:
+            virtual parser::Note asNote() const;
         };
     }
 }

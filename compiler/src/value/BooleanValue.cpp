@@ -1,3 +1,4 @@
+#include "exception/RuntimeException.h"
 #include "value/BooleanValue.h"
 
 namespace dem {
@@ -8,27 +9,27 @@ namespace dem {
         }
 
         Value *BooleanValue::add(Value *b) {
-            throw "Can not add booleans"; // TODO: Throw proper error
+            throw RuntimeException("Booleans do not support addition operations.");
         }
 
         Value *BooleanValue::subtract(Value *b) {
-            throw "Can not subtract booleans"; // TODO: Throw proper error
+            throw RuntimeException("Booleans do not support subtraction operations.");
         }
 
         Value *BooleanValue::multiply(Value *b) {
-            throw "Can not subtract booleans"; // TODO: Throw proper error
+            throw RuntimeException("Booleans do not support multiplication operations.");
         }
 
         Value *BooleanValue::divide(Value *b) {
-            throw "Can not subtract booleans"; // TODO: Throw proper error
+            throw RuntimeException("Booleans do not support divisions operations.");
         }
 
         Value *BooleanValue::modulo(Value *b) {
-            throw "Can not subtract booleans"; // TODO: Throw proper error
+            throw RuntimeException("Booleans do not support modulo operations.");
         }
 
         Value *BooleanValue::exponent(Value *b) {
-            throw "Can not subtract booleans"; // TODO: Throw proper error
+            throw RuntimeException("Booleans do not support exponent operations.");
         }
 
         double BooleanValue::asNumber() const {
@@ -44,43 +45,43 @@ namespace dem {
         }
 
         parser::Note BooleanValue::asNote() const {
-            throw "Can't cast to note"; // TODO: Throw proper error
+            throw RuntimeException("Value of type 'Boolean' can not implicitly be converted to value of type 'Note'.");
         }
 
         bool BooleanValue::operator==(const Value &other) {
-            return mValue == other.asBool();
+            throw RuntimeException("Booleans do not support '==' operations.");
         }
 
         bool BooleanValue::operator!=(const Value &other) {
-            return mValue != other.asBool();
+            throw RuntimeException("Booleans do not support '!=' operations.");
         }
 
         bool BooleanValue::operator<(const Value &other) {
-            return mValue < other.asBool();
+            throw RuntimeException("Booleans do not support '<' operations.");
         }
 
         bool BooleanValue::operator<=(const Value &other) {
-            return mValue <= other.asBool();
+            throw RuntimeException("Booleans do not support '<=' operations.");
         }
 
         bool BooleanValue::operator>(const Value &other) {
-            return mValue > other.asBool();
+            throw RuntimeException("Booleans do not support '>' operations.");
         }
 
         bool BooleanValue::operator>=(const Value &other) {
-            return mValue >= other.asBool();
+            throw RuntimeException("Booleans do not support '>=' operations.");
         }
 
         Value *BooleanValue::operator[](const int index) {
-            throw "Can not access boolean that way"; // TODO: Throw proper error
+            throw RuntimeException("Booleans do not support '[]' operations.");
         }
 
         Variable *BooleanValue::operator[](const std::string &index) {
-            throw "Can not access boolean that way"; // TODO: Throw proper error
+            throw RuntimeException("Booleans do not support '.' operations.");
         }
 
         Value *BooleanValue::operator()(Scope &scope) {
-            throw "Can not call boolean";
+            throw RuntimeException("Booleans do not support '()' operations.");
         }
     }
 }

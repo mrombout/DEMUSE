@@ -75,7 +75,7 @@ namespace dem {
                 mScopes.front()->declareVariable(&identifier);
             } else if(dynamic_cast<parser::ArrayAccessExpression*>(&left)) {
                 // TODO: Array assignment
-                throw RuntimeException(variableDefinition, "Array index assignment not implemented yet.");
+                throw RuntimeException("Array index assignment not implemented yet.");
             }
 
             return true;

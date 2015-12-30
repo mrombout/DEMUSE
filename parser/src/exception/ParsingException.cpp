@@ -2,7 +2,7 @@
 
 namespace dem {
     namespace parser {
-        ParsingException::ParsingException(lexer::Token &token, const std::string msg) :
+        ParsingException::ParsingException(const lexer::Token &token, const std::string msg) :
             mToken(token),
             mMsg(msg) {
 

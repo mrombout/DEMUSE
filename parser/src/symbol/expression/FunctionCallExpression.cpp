@@ -1,4 +1,5 @@
 #include <iostream>
+#include "exception/ParsingException.h"
 #include "symbol/expression/FunctionCallExpression.h"
 #include "Visitor.h"
 
@@ -32,7 +33,7 @@ namespace dem {
         const std::string &FunctionCallExpression::name() const {
             if(Identifier *identifier = dynamic_cast<Identifier*>(mExpression))
                 return identifier->name();
-            throw "Can't identify from expression."; // TODO: Throw proper exception
+            throw ParsingException(mExpression->token(), "Can't identify from expression.");
         }
     }
 }

@@ -49,7 +49,7 @@ namespace dem {
             mStack.pop();
 
             if(!a) {
-                throw "Lefthand value must be lvalue."; // TODO: Throw proper error
+                throw RuntimeException("Lefthand value must be lvalue.");
             }
 
             // assign b to a
@@ -608,7 +608,7 @@ namespace dem {
 
             parser::Identifiable *identifiable = dynamic_cast<parser::Identifiable*>(&propertyAccessExpression.right());
             if(!identifiable)
-                throw "Can not access property."; // TODO: Throw proper error
+                throw RuntimeException("Can not access property of object \"" + a->asString() + "\".");
 
             Value *value = (*a)[identifiable->name()];
             mStack.push(value);
@@ -640,7 +640,7 @@ namespace dem {
             // TODO: Why must we cast? Can't we change MemberExpression to accept an Identifier
             dem::parser::Identifier *identifier = dynamic_cast<dem::parser::Identifier*>(&memberExpression.property());
             if(!identifier)
-                throw RuntimeException(memberExpression, "Some error"); // TODO: Some error
+                throw RuntimeException("Can't access property of object \"" + object->asString() + "\".");
 
             // fetch property
             Variable *var = (*object)[identifier->name()];

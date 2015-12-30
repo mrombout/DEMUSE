@@ -58,7 +58,7 @@ namespace dem {
         }
 
         parser::Note NumberValue::asNote() const {
-            throw "NullValue"; // TODO: Throw proper exception
+            throw RuntimeException("Value of type 'Number' can not implicitly be converted to value of type 'Note'.");
         }
 
         bool NumberValue::operator==(const Value &other) {
@@ -86,15 +86,15 @@ namespace dem {
         }
 
         Value *NumberValue::operator[](const int index) {
-            throw "Can not access that way"; // TODO: Throw proper error
+            throw RuntimeException("Numbers do not support '[]' operations.");
         }
 
         Variable *NumberValue::operator[](const std::string &index) {
-            throw "Can not access that way"; // TODO: Throw proper error
+            throw RuntimeException("Numbers do not support '.' operations.");
         }
 
         Value *NumberValue::operator()(Scope &scope) {
-            throw "Can not call number";
+            throw RuntimeException("Numbers do not support '()' operations.");
         }
     }
 }

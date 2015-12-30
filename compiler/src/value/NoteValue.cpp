@@ -1,3 +1,4 @@
+#include "exception/RuntimeException.h"
 #include "value/NoteValue.h"
 
 namespace dem {
@@ -8,27 +9,27 @@ namespace dem {
         }
 
         Value *NoteValue::add(Value *b) {
-            throw "Can't add to note"; // TODO: Throw proper error
+            throw RuntimeException("Notes do not support addition operations.");
         }
 
         Value *dem::compiler::NoteValue::subtract(Value *b) {
-            throw "Can't subtract from note"; // TODO: Throw proper error
+            throw RuntimeException("Notes do not support subtraction operations.");
         }
 
         Value *NoteValue::multiply(Value *b) {
-            throw "Can't multiply note"; // TODO: Throw proper error
+            throw RuntimeException("Notes do not support multiplication operations.");
         }
 
         Value *NoteValue::divide(Value *b) {
-            throw "Can't divide by note"; // TODO: Throw proper error
+            throw RuntimeException("Notes do not support division operations.");
         }
 
         Value *NoteValue::modulo(Value *b) {
-            throw "Can't modulo note"; // TODO: Throw proper error
+            throw RuntimeException("Notes do not support modulo operations.");
         }
 
         Value *NoteValue::exponent(Value *b) {
-            throw "Can't exponent note"; // TODO: Throw proper error
+            throw RuntimeException("Notes do not support exponent operations.");
         }
 
         double dem::compiler::NoteValue::asNumber() const {
@@ -48,35 +49,35 @@ namespace dem {
         }
 
         bool NoteValue::operator==(const Value &other) {
-            throw "Can't compare yet"; // TODO: Throw proper error
+            throw RuntimeException("Booleans do not support '==' operations.");
         }
 
         bool NoteValue::operator!=(const Value &other) {
-            throw "Can't compare yet"; // TODO: Throw proper error
+            throw RuntimeException("Booleans do not support '!=' operations.");
         }
 
         bool NoteValue::operator<(const Value &other) {
-            throw "Can't compare yet"; // TODO: Throw proper error
+            throw RuntimeException("Booleans do not support '<' operations.");
         }
 
         bool NoteValue::operator<=(const Value &other) {
-            throw "Can't compare yet"; // TODO: Throw proper error
+            throw RuntimeException("Booleans do not support '<=' operations.");
         }
 
         bool NoteValue::operator>(const Value &other) {
-            throw "Can't compare yet"; // TODO: Throw proper error
+            throw RuntimeException("Booleans do not support '>' operations.");
         }
 
         bool NoteValue::operator>=(const Value &other) {
-            throw "Can't compare yet"; // TODO: Throw proper error
+            throw RuntimeException("Booleans do not support '>=' operations.");
         }
 
         Value *NoteValue::operator[](const int index) {
-            throw "Can't access note as array"; // TODO: Throw proper error
+            throw RuntimeException("Booleans do not support '[]' operations.");
         }
 
         Variable *NoteValue::operator[](const std::string &index) {
-            throw "Can't access note as object"; // TODO: Throw proper error
+            throw RuntimeException("Booleans do not support '.' operations.");
         }
     }
 }

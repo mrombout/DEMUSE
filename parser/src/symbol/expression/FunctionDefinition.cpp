@@ -18,7 +18,9 @@ namespace dem {
 
         bool FunctionDefinition::accept(Visitor &visitor) {
             if(visitor.visitEnter(*this)) {
-                // TODO: visit children
+                mIdentifier->accept(visitor);
+                mParameterList->accept(visitor);
+                mBlock->accept(visitor);
             }
 
             return visitor.visitLeave(*this);

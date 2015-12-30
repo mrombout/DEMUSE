@@ -379,7 +379,7 @@ namespace dem {
                 return new ExponentExpression(left, right);
             }
 
-            throw "Can not make binary for that op"; // TODO: Throw proper error
+            throw ParsingException(left->token(), "Operator not supported.");
         }
 
         bool ExpressionFactory::isUnaryOperator(lexer::Token &token) {

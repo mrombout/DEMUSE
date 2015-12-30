@@ -299,7 +299,6 @@ namespace dem {
             SetEdgeColumn(config.ReadLong(KEY_EDITOR_MAX_COLUMN, 120));
             // TODO: Check if edge column is at correct column (is seems off)
             SetWrapMode(config.ReadBool(KEY_EDITOR_WRAP, false) ? wxSTC_WRAP_WORD : wxSTC_WRAP_NONE);
-            // TODO: Autocompletion (read from AST)
             // TODO: Implement find functionality
 
             // TODO: Call-tips

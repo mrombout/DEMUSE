@@ -9,14 +9,11 @@ namespace dem {
     namespace compiler {
         class RuntimeException : public std::exception {
         public:
-            RuntimeException(parser::Symbol &symbol, const std::string &msg);
-
-            const parser::Symbol &symbol() const;
+            RuntimeException(const std::string &msg);
 
             virtual const char *what() const noexcept override;
 
         private:
-            parser::Symbol &mSymbol;
             const std::string mMsg;
         };
     }

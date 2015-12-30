@@ -22,14 +22,81 @@ namespace dem {
 
             int numParameters = mParameterList.numParameters();
             if(numParameters != arguments.size()) {
-                // TODO: We could be more forgiving like JS. Default value for missing arguments, ignore extras
-                throw RuntimeException(mParameterList, "Wrong number of arguments. Expected '" + std::to_string(numParameters) + "', but got '" + std::to_string(arguments.size()) + "'");
+                throw RuntimeException("Wrong number of arguments. Expected '" + std::to_string(numParameters) + "', but got '" + std::to_string(arguments.size()) + "'");
             }
 
             unsigned int i = 0;
             for(parser::Identifier *identifier : mParameterList.parameters()) {
                 scope.declareVariable(identifier, arguments.at(i++));
             }
+        }
+
+        Value *UserFunction::add(Value *b) {
+            throw RuntimeException("Functions do not support addition operations.");
+        }
+
+        Value *UserFunction::subtract(Value *b) {
+            throw RuntimeException("Functions do not support subtraction operations.");
+        }
+
+        Value *UserFunction::multiply(Value *b) {
+            throw RuntimeException("Functions do not support multiplication operations.");
+        }
+
+        Value *UserFunction::divide(Value *b) {
+            throw RuntimeException("Functions do not support division operations.");
+        }
+
+        Value *UserFunction::modulo(Value *b) {
+            throw RuntimeException("Functions do not support division modulo operations.");
+        }
+
+        Value *UserFunction::exponent(Value *b) {
+            throw RuntimeException("Functions do not support division exponent operations.");
+        }
+
+        double UserFunction::asNumber() const {
+            throw RuntimeException("Value of type 'Function' can not implicitly be converted to value of type 'Number'.");
+        }
+
+        bool UserFunction::asBool() const {
+            throw RuntimeException("Value of type 'Function' can not implicitly be converted to value of type 'Bool'.");
+        }
+
+        parser::Note UserFunction::asNote() const {
+            throw RuntimeException("Value of type 'Function' can not implicitly be converted to value of type 'Note'.");
+        }
+
+        bool UserFunction::operator==(const Value &other) {
+            throw RuntimeException("Functions do not support '==' operations.");
+        }
+
+        bool UserFunction::operator!=(const Value &other) {
+            throw RuntimeException("Functions do not support '!=' operations.");
+        }
+
+        bool UserFunction::operator<(const Value &other) {
+            throw RuntimeException("Functions do not support '<' operations.");
+        }
+
+        bool UserFunction::operator<=(const Value &other) {
+            throw RuntimeException("Functions do not support '<=' operations.");
+        }
+
+        bool UserFunction::operator>(const Value &other) {
+            throw RuntimeException("Functions do not support '>' operations.");
+        }
+
+        bool UserFunction::operator>=(const Value &other) {
+            throw RuntimeException("Functions do not support '>=' operations.");
+        }
+
+        Value *UserFunction::operator[](const int index) {
+            throw RuntimeException("Functions do not support '[]' operations.");
+        }
+
+        Variable *UserFunction::operator[](const std::string &index) {
+            throw RuntimeException("Functions do not support '.' operations.");
         }
     }
 }

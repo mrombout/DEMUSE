@@ -1,38 +1,39 @@
 #include <typeinfo>
+#include "exception/RuntimeException.h"
 #include "value/NullValue.h"
 
 namespace dem {
     namespace compiler {
         Value *NullValue::add(Value *b) {
-            throw "NullValue"; // TODO: Throw proper exception
+            throw RuntimeException("Null does not support addition operations.");
         }
 
         Value *NullValue::subtract(Value *b) {
-            throw "NullValue"; // TODO: Throw proper exception
+            throw RuntimeException("Null does not support subtraction operations.");
         }
 
         Value *NullValue::multiply(Value *b) {
-            throw "NullValue"; // TODO: Throw proper exception
+            throw RuntimeException("Null does not support multiplication operations.");
         }
 
         Value *NullValue::divide(Value *b) {
-            throw "NullValue"; // TODO: Throw proper exception
+            throw RuntimeException("Null does not support division operations.");
         }
 
         Value *NullValue::modulo(Value *b) {
-            throw "NullValue"; // TODO: Throw proper exception
+            throw RuntimeException("Null does not support modulo operations.");
         }
 
         Value *NullValue::exponent(Value *b) {
-            throw "NullValue"; // TODO: Throw proper exception
+            throw RuntimeException("Null does not support exponent operations.");
         }
 
         double NullValue::asNumber() const {
-            throw "NullValue"; // TODO: Throw proper exception
+            throw RuntimeException("Value of type 'Null' can not implicitly be converted to value of type 'Number'.");
         }
 
         bool NullValue::asBool() const {
-            throw "NullValue"; // TODO: Throw proper exception
+            throw RuntimeException("Value of type 'Null' can not implicitly be converted to value of type 'Boolean'.");
         }
 
         std::string NullValue::asString() const {
@@ -40,43 +41,43 @@ namespace dem {
         }
 
         parser::Note NullValue::asNote() const {
-            throw "NullValue"; // TODO: Throw proper exception
+            throw RuntimeException("Value of type 'Null' can not implicitly be converted to value of type 'Note'.");
         }
 
         bool NullValue::operator==(const Value &other) {
-            return typeid(dem::compiler::NullValue).name() == typeid(other).name(); // TODO: Does this work?
+            throw RuntimeException("Null does not support '==' operations.");
         }
 
         bool NullValue::operator!=(const Value &other) {
-            return typeid(dem::compiler::NullValue).name() != typeid(other).name(); // TODO: Does this work?
+            throw RuntimeException("Null does not support '!=' operations.");
         }
 
         bool NullValue::operator<(const Value &other) {
-            throw "NullValue"; // TODO: Throw proper exception, and can we actually throw responsibly in an operator?
+            throw RuntimeException("Null does not support '<' operations.");
         }
 
         bool NullValue::operator<=(const Value &other) {
-            throw "NullValue"; // TODO: Throw proper exception, and can we actually throw responsibly in an operator?
+            throw RuntimeException("Null does not support '<=' operations.");
         }
 
         bool NullValue::operator>(const Value &other) {
-            throw "NullValue"; // TODO: Throw proper exception, and can we actually throw responsibly in an operator?
+            throw RuntimeException("Null does not support '>' operations.");
         }
 
         bool NullValue::operator>=(const Value &other) {
-            throw "NullValue"; // TODO: Throw proper exception, and can we actually throw responsibly in an operator?
+            throw RuntimeException("Null does not support '>=' operations.");
         }
 
         Value *NullValue::operator[](const int index) {
-            throw "NullValue"; // TODO: Throw proper exception, and can we actually throw responsibly in an operator?
+            throw RuntimeException("Null does not support '[]' operations.");
         }
 
         Variable *NullValue::operator[](const std::string &index) {
-            throw "NullValue"; // TODO: Throw proper exception, and can we actually throw responsibly in an operator?
+            throw RuntimeException("Null does not support '.' operations.");
         }
 
         Value *NullValue::operator()(Scope &scope) {
-            throw "NullValue";
+            throw RuntimeException("Null does not support '()' operations.");
         }
     }
 }

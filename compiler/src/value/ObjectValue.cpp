@@ -1,4 +1,5 @@
-#include <value/NullValue.h>
+#include "exception/RuntimeException.h"
+#include "value/NullValue.h"
 #include "value/ObjectValue.h"
 
 namespace dem {
@@ -10,72 +11,72 @@ namespace dem {
             return mProperties.at(index);
         }
 
-        Value *ObjectValue::add(Value *b) {
-            throw "Not implemented";
-        }
-
-        Value *ObjectValue::subtract(Value *b) {
-            throw "Not implemented";
-        }
-
-        Value *ObjectValue::multiply(Value *b) {
-            throw "Not implemented";
-        }
-
-        Value *ObjectValue::divide(Value *b) {
-            throw "Not implemented";
-        }
-
-        Value *ObjectValue::modulo(Value *b) {
-            throw "Not implemented";
-        }
-
-        Value *ObjectValue::exponent(Value *b) {
-            throw "Not implemented";
-        }
-
-        double ObjectValue::asNumber() const {
-            throw "Not implemented";
-        }
-
-        bool ObjectValue::asBool() const {
-            throw "Not implemented";
-        }
-
         std::string ObjectValue::asString() const {
             return "Object";
         }
 
+        Value *ObjectValue::add(Value *b) {
+            throw RuntimeException("Objects do not support addition operations.");
+        }
+
+        Value *ObjectValue::subtract(Value *b) {
+            throw RuntimeException("Objects do not support subtraction operations.");
+        }
+
+        Value *ObjectValue::multiply(Value *b) {
+            throw RuntimeException("Objects do not support multiplication operations.");
+        }
+
+        Value *ObjectValue::divide(Value *b) {
+            throw RuntimeException("Objects do not support division operations.");
+        }
+
+        Value *ObjectValue::modulo(Value *b) {
+            throw RuntimeException("Objects do not support modulo operations.");
+        }
+
+        Value *ObjectValue::exponent(Value *b) {
+            throw RuntimeException("Objects do not support exponent operations.");
+        }
+
+        double ObjectValue::asNumber() const {
+            throw RuntimeException("Value of type 'Object' can not implicitly be converted to value of type 'Number'.");
+        }
+
+        bool ObjectValue::asBool() const {
+            throw RuntimeException("Value of type 'Object' can not implicitly be converted to value of type 'Boolean'.");
+        }
+
         parser::Note ObjectValue::asNote() const {
-            throw "Not implemented"; // TODO: Throw proper error
+            throw RuntimeException("Value of type 'Object' can not implicitly be converted to value of type 'Note'.");
         }
 
         bool ObjectValue::operator==(const Value &other) {
-            throw "Not implemented";
+            throw RuntimeException("Objects do not support '==' operations.");
         }
 
         bool ObjectValue::operator!=(const Value &other) {
-            throw "Not implemented";
+            throw RuntimeException("Objects do not support '!=' operations.");
         }
 
         bool ObjectValue::operator<(const Value &other) {
-            throw "Not implemented";
+            throw RuntimeException("Objects do not support '<' operations.");
         }
 
         bool ObjectValue::operator<=(const Value &other) {
-            throw "Not implemented";
+            throw RuntimeException("Objects do not support '<=' operations.");
         }
 
         bool ObjectValue::operator>(const Value &other) {
-            throw "Not implemented";
+            throw RuntimeException("Objects do not support '>' operations.");
         }
 
         bool ObjectValue::operator>=(const Value &other) {
-            throw "Not implemented";
+            throw RuntimeException("Objects do not support '>=' operations.");
         }
 
         Value *ObjectValue::operator[](const int index) {
-            throw "Not implemented";
+            throw RuntimeException("Objects do not support '[]' operations.");
         }
     }
 }

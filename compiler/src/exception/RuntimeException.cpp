@@ -2,14 +2,9 @@
 
 namespace dem {
     namespace compiler {
-        RuntimeException::RuntimeException(parser::Symbol &symbol, const std::string &msg) :
-            mSymbol(symbol),
+        RuntimeException::RuntimeException(const std::string &msg) :
             mMsg(msg) {
 
-        }
-
-        const parser::Symbol &RuntimeException::symbol() const {
-            return mSymbol;
         }
 
         const char *RuntimeException::what() const noexcept {

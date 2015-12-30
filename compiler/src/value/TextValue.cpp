@@ -1,3 +1,4 @@
+#include "exception/RuntimeException.h"
 #include "value/Value.h"
 #include "value/TextValue.h"
 #include "value/NumberValue.h"
@@ -17,23 +18,23 @@ namespace dem {
         }
 
         Value *TextValue::subtract(Value *b) {
-            throw "Can't subtract from text"; // TODO: Throw proper error
+            throw RuntimeException("Strings do not support subtraction operations.");
         }
 
         Value *TextValue::multiply(Value *b) {
-            throw "Can't multiply text"; // TODO: Throw proper error
+            throw RuntimeException("Strings do not support multiplication operations.");
         }
 
         Value *TextValue::divide(Value *b) {
-            throw "Can't divide text"; // TODO: Throw proper error
+            throw RuntimeException("Strings do not support division operations.");
         }
 
         Value *TextValue::modulo(Value *b) {
-            throw "Can't modulo tex"; // TODO: Throw proper error
+            throw RuntimeException("Strings do not support modulo operations.");
         }
 
         Value *TextValue::exponent(Value *b) {
-            throw "Can't modulo tex"; // TODO: Throw proper error
+            throw RuntimeException("Strings do not support exponent operations.");
         }
 
         double TextValue::asNumber() const {
@@ -46,6 +47,10 @@ namespace dem {
 
         std::string TextValue::asString() const {
             return mValue;
+        }
+
+        parser::Note TextValue::asNote() const {
+            throw RuntimeException("Value of type 'Text' can not implicitly be converted to value of type 'Note'.");
         }
 
         bool TextValue::operator==(const Value &other) {
@@ -77,7 +82,7 @@ namespace dem {
         }
 
         Value *TextValue::operator()(Scope &scope) {
-            throw "Can not call text.";
+            throw RuntimeException("Strings do not support '()' operations.");
         }
     }
 }
