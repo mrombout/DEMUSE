@@ -148,6 +148,7 @@ namespace dem {
                                                     wxAUI_NB_TAB_MOVE | wxAUI_NB_CLOSE_ON_ALL_TABS |
                                                     wxAUI_NB_MIDDLE_CLICK_CLOSE | wxNO_BORDER);
             mNotebook->Bind(wxEVT_AUINOTEBOOK_PAGE_CLOSE, &MainFrame::onNotebookPageClose, this, wxID_ANY);
+            mNotebook->Bind(wxEVT_AUINOTEBOOK_PAGE_CHANGED, &MainFrame::onNotebookPageChanged, this, wxID_ANY);
 
             mMgr.AddPane(mNotebook, wxCENTER);
             //mNotebook->SetArtProvider(new MuseAuiTabArt);
@@ -170,10 +171,13 @@ namespace dem {
 
                 size_t pageId = mNotebook->GetPageCount();
                 mNotebook->InsertPage(pageId, editor, tabName, true);
-                mFileEditors[filePath] = pageId;
+                mFileEditors[filePath] = {
+                    pageId
+
+                };
             } else {
                 // select page with the loaded file
-                mNotebook->SetSelection(mFileEditors[filePath]);
+                mNotebook->SetSelection(mFileEditors[filePath].editorId);
             }
         }
 
@@ -277,7 +281,9 @@ namespace dem {
             mNotebook->SetPageText(editorId, fileName.GetFullName());
 
             mFileEditors.erase(page->filePath());
-            mFileEditors[filePath] = editorId;
+            mFileEditors[filePath] = {
+                editorId
+            };
 
             // save file under new name
             activeEditor()->saveAsFile(filePath);
@@ -298,7 +304,7 @@ namespace dem {
                 }
             }
 
-            mNotebook->RemovePage(mFileEditors[activeEditor()->filePath()]);
+            mNotebook->RemovePage(mFileEditors[activeEditor()->filePath()].editorId);
         }
 
         void MainFrame::onEditCut(wxCommandEvent &event) {
@@ -347,7 +353,7 @@ namespace dem {
 
             // re-initialize editors with new settings
             for(auto pair : mFileEditors) {
-                MuseStyledTextEditor *editor = dynamic_cast<MuseStyledTextEditor*>(mNotebook->GetPage(pair.second));
+                MuseStyledTextEditor *editor = dynamic_cast<MuseStyledTextEditor*>(mNotebook->GetPage(pair.second.editorId));
                 editor->initialize();
             }
         }
@@ -409,30 +415,9 @@ namespace dem {
 
                 mOutput->AppendText("== Parsing finished in " + std::to_string(sw.Time()) + "ms\n");
 
-                if(!results.successful()) {
-                    for(const parser::ParseError &error : results.errors) {
-                        // add error to list
-                        wxVector<wxVariant> data;
-
-                        if(error.type == parser::ParseError::Type::T_WARNING) {
-                            data.push_back(wxVariant(wxDataViewIconText("Warning", wxArtProvider::GetIcon(wxART_WARNING, wxART_OTHER, wxSize(16, 16)))));
-                        } else {
-                            data.push_back(wxVariant(wxDataViewIconText("Error", wxArtProvider::GetIcon(wxART_ERROR, wxART_OTHER, wxSize(16, 16)))));
-                        }
-
-                        data.push_back(wxVariant(error.token.line()));
-                        data.push_back(wxVariant(error.token.column()));
-                        data.push_back(wxVariant(error.description));
-                        data.push_back(wxVariant(activeEditor()->filePath()));
-                        mErrorList->AppendItem(data);
-
-                        // add marker to editor
-                        activeEditor()->MarkerAdd(error.token.line() - 1, demSTC_MARK_ERROR);
-                        // TODO: Remove marker when line is edited
-                    }
-
-                    return;
-                }
+                mFileEditors[activeEditor()->filePath()].parseResults = results;
+                updateAutocomplete(mFileEditors[activeEditor()->filePath()]);
+                updateErrors();
 
                 // compiling
                 mOutput->AppendText("== Compiling: file:\\\\\\" + activeEditor()->filePath() + "\n");
@@ -506,6 +491,10 @@ namespace dem {
             mFileEditors.erase(filePath);
         }
 
+        void MainFrame::onNotebookPageChanged(wxAuiNotebookEvent &event) {
+
+        }
+
         wxString MainFrame::getOutputFileName(const wxString &fileName) {
             wxFileName file{fileName};
 
@@ -520,6 +509,41 @@ namespace dem {
 
             wxCommandEvent dummy;
             onRunStop(dummy);
+        }
+
+        void MainFrame::updateErrors() {
+            parser::ParseResults results = mFileEditors[activeEditor()->filePath()].parseResults;
+            if(!results.successful()) {
+                for(const parser::ParseError &error : results.errors) {
+                    // add error to list
+                    wxVector<wxVariant> data;
+
+                    if(error.type == parser::ParseError::Type::T_WARNING) {
+                        data.push_back(wxVariant(wxDataViewIconText("Warning", wxArtProvider::GetIcon(wxART_WARNING, wxART_OTHER, wxSize(16, 16)))));
+                    } else {
+                        data.push_back(wxVariant(wxDataViewIconText("Error", wxArtProvider::GetIcon(wxART_ERROR, wxART_OTHER, wxSize(16, 16)))));
+                    }
+
+                    data.push_back(wxVariant(error.token.line()));
+                    data.push_back(wxVariant(error.token.column()));
+                    data.push_back(wxVariant(error.description));
+                    data.push_back(wxVariant(activeEditor()->filePath()));
+                    mErrorList->AppendItem(data);
+
+                    // add marker to editor
+                    activeEditor()->MarkerAdd(error.token.line() - 1, demSTC_MARK_ERROR);
+                    // TODO: Remove marker when line is edited
+                }
+
+                return;
+            }
+        }
+
+        void MainFrame::updateAutocomplete(EditorInfo &info) {
+            info.autoCompleteWords = mAutocompleteVisitor.search(*info.parseResults.astRoot);
+
+            MuseStyledTextEditor *editor = static_cast<MuseStyledTextEditor*>(mNotebook->GetPage(info.editorId));
+            editor->setAutocompleteWords(info.autoCompleteWords);
         }
     }
 }

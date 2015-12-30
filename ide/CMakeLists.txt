@@ -5,6 +5,9 @@ set(IDE_SRCS
     inc/App.h
     src/App.cpp
 
+    inc/AutocompleteVisitor.h
+    src/AutocompleteVisitor.cpp
+
     inc/MainFrame.h
     src/MainFrame.cpp
 

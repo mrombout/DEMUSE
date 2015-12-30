@@ -1,9 +1,10 @@
 #include <vector>
 #include "preference/ColorsPanel.h"
 #include "preference/EditorPanel.h"
-#include "App.h"
 #include "MuseStyledTextEditor.h"
+#include "MuseArtProvider.h"
 #include "Token.h"
+#include "App.h"
 
 namespace dem {
     namespace ide {
@@ -202,6 +203,27 @@ namespace dem {
                     LineEndDisplay();
                 }
             }
+
+            // auto-completion
+            auto currentPos = GetCurrentPos();
+            auto wordStartPos = WordStartPosition(currentPos, true);
+
+            auto lenEntered = currentPos - wordStartPos;
+            if(lenEntered > 0) {
+                wxString enteredText = GetRange(wordStartPos, currentPos);
+
+                // find possible solutions
+                std::string autocompleteWords;
+                for(std::string word : mAutocompleteWords) {
+                    wxString currentWord(word.c_str());
+                    if(currentWord.StartsWith(enteredText)) {
+                        autocompleteWords += currentWord + " ";
+                    }
+                }
+
+                // show autocomplete
+                AutoCompShow(lenEntered, autocompleteWords);
+            }
         }
 
         bool MuseStyledTextEditor::saveFile() {
@@ -345,6 +367,19 @@ namespace dem {
 
             // markers
             MarkerDefine(demSTC_MARK_ERROR, wxSTC_MARK_LEFTRECT, wxNullColour, *wxRED);
+
+            // icons
+            ClearRegisteredImages();
+            RegisterImage(0, wxArtProvider::GetBitmap(wxART_EXECUTABLE_FILE, wxART_OTHER, wxSize(16, 16)));
+            RegisterImage(1, wxArtProvider::GetBitmap(wxART_REPORT_VIEW, wxART_OTHER, wxSize(16, 16)));
+        }
+
+        void MuseStyledTextEditor::setAutocompleteWords(std::unordered_set<std::string> autocompleteWords) {
+            mAutocompleteWords = autocompleteWords;
+        }
+
+        const std::unordered_set<std::string> &MuseStyledTextEditor::autocompleteWords() const {
+            return mAutocompleteWords;
         }
     }
 }

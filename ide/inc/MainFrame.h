@@ -1,6 +1,7 @@
 #ifndef DEMUSE_MAINFRAME_H
 #define DEMUSE_MAINFRAME_H
 
+#include <unordered_set>
 #include <map>
 #include <wx/frame.h>
 #include <wx/event.h>
@@ -10,7 +11,9 @@
 #include <wx/stc/stc.h>
 #include <wx/dataview.h>
 #include <wx/process.h>
+#include "AutocompleteVisitor.h"
 #include "MuseStyledTextEditor.h"
+#include "Parser.h"
 
 namespace dem {
     namespace ide {
@@ -19,6 +22,12 @@ namespace dem {
             ID_Build,
             ID_Run,
             ID_Stop
+        };
+
+        struct EditorInfo {
+            size_t editorId;
+            parser::ParseResults parseResults;
+            std::unordered_set<std::string> autoCompleteWords;
         };
 
         class MainFrame : public wxFrame {
@@ -59,11 +68,16 @@ namespace dem {
 
             void onErrorListItemActivated(wxDataViewEvent &event);
             void onNotebookPageClose(wxAuiNotebookEvent &event);
+            void onNotebookPageChanged(wxAuiNotebookEvent &event);
             void onEndProcess(wxProcessEvent &event);
 
             wxString getOutputFileName(const wxString &fileName);
 
-            std::map<wxString, size_t> mFileEditors;
+            void updateErrors();
+            void updateAutocomplete(EditorInfo &info);
+
+            std::map<wxString, EditorInfo> mFileEditors;
+            AutocompleteVisitor mAutocompleteVisitor;
 
             wxAuiManager mMgr;
 
@@ -73,15 +87,11 @@ namespace dem {
             wxMenu *mHelpMenu;
 
             wxToolBar *mToolbar;
-
             wxAuiNotebook *mNotebook;
-
-            wxSlider *mZoomSlider;
-
-            wxProcess *mActiveProcess;
-
             wxDataViewListCtrl *mErrorList;
             wxTextCtrl *mOutput;
+
+            wxProcess *mActiveProcess;
 
             wxDECLARE_EVENT_TABLE();
         };

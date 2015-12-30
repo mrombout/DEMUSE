@@ -36,6 +36,11 @@ namespace dem {
             Symbol *astRoot;
             std::vector<ParseError> errors;
 
+            ParseResults() :
+                    astRoot(nullptr) {
+
+            }
+
             bool successful() {
                 return errors.empty();
             }

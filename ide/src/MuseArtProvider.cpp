@@ -16,6 +16,10 @@ namespace dem {
 #else
                 return wxBitmap(wxT("res/icon/media-playback-stop.png"), wxBITMAP_TYPE_PNG);
 #endif
+            } else if(id == museART_FUNCTION) {
+                return wxBitmap(wxT("res/icon/autocomplete_function.xpm"), wxBITMAP_TYPE_XPM);
+            } else if(id == museART_VARIABLE) {
+                return wxBitmap(wxT("res/icon/autocomplete_variable.xpm"), wxBITMAP_TYPE_XPM);
             }
 
             return wxArtProvider::CreateBitmap(id, client, size);

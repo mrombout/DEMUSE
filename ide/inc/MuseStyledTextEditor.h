@@ -3,6 +3,7 @@
 
 #include <map>
 #include <unordered_map>
+#include <unordered_set>
 #include <wx/stc/stc.h>
 #include <wx/window.h>
 #include "MuseLexer.h"
@@ -55,6 +56,9 @@ namespace dem {
 
             wxString filePath() const;
 
+            void setAutocompleteWords(std::unordered_set<std::string> autocompleteWords);
+            const std::unordered_set<std::string> &autocompleteWords() const;
+
         private:
             void onMarginClick(wxStyledTextEvent &event);
             void onChange(wxStyledTextEvent &event);
@@ -69,9 +73,10 @@ namespace dem {
             lexer::MuseLexer *mLexer;
 
             static std::map<lexer::TokenType, int> mTokenTypeStyles;
-            std::unordered_multimap<int, std::string> mAutocompleteWords;
 
             int mLastCaretPos;
+
+            std::unordered_set<std::string> mAutocompleteWords;
         };
     }
 }
