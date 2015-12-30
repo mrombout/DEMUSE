@@ -151,24 +151,7 @@ namespace dem {
 
                 StartStyling(startIndex, 0x1f);
                 SetStyling(length, style);
-
-                // collect tokens for autocomplete
-                //if(token.type() == lexer::TokenType::IDENTIFIER) {
-                //    autocompleteTokens.push_back(token);
-                //}
             }
-
-            // populate autocomplete
-            //int startLine = tokens.front().line();
-            //int endLine = tokens.back().line();
-
-            //auto rangeBegin = std::find(std::begin(mAutocompleteWords), std::end(mAutocompleteWords), startLine);
-            //auto rangeEnd = std::find(std::begin(mAutocompleteWords), std::end(mAutocompleteWords), endLine);
-
-            //mAutocompleteWords.erase(rangeBegin, rangeEnd);
-            //for(lexer::Token &token : autocompleteTokens) {
-            //    mAutocompleteWords.insert(std::make_pair(token.line(), token.content()));
-            //}
         }
 
         void MuseStyledTextEditor::onUpdateUI(wxStyledTextEvent &event) {
@@ -218,15 +201,6 @@ namespace dem {
                     SetLineIndentation(curLine, prevIndentation);
                     LineEndDisplay();
                 }
-            }
-
-            // auto-completion
-            int currentPos = GetCurrentPos();
-            int wordStartPos = WordStartPosition(currentPos, true);
-
-            int lenEntered = currentPos - wordStartPos;
-            if(lenEntered > 0) {
-                AutoCompShow(lenEntered, "var");
             }
         }
 
