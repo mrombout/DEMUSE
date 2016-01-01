@@ -356,6 +356,7 @@ namespace dem {
                 onFileSave(dummy);
             }
 
+            mOutput->Clear();
             mErrorList->DeleteAllItems();
             activeEditor()->MarkerDeleteAll(demSTC_MARK_ERROR);
 
