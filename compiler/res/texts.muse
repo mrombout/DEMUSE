@@ -9,3 +9,6 @@ print("Z: " + Z); // should print "Z: String with \" escape"
 
 var A = "foo" + "bar";
 print("A: " + A); // should print "A: foobar"
+
+var B = "String with \n newline";
+print("B: " + B);

@@ -202,6 +202,24 @@ namespace dem {
          */
         Expression *ExpressionFactory::gobbleStringLiteral(std::deque<lexer::Token> &deque) {
             std::string content = deque.front().content();
+
+            // replace escaped characters
+            replaceAll(content, "\\'",  "\'");
+            replaceAll(content, "\\\"",   "\"");
+            replaceAll(content, "\\?",  "\?");
+            replaceAll(content, "\\\\", "\\");
+            replaceAll(content, "\\a",  "\a");
+            replaceAll(content, "\\b",  "\b");
+            replaceAll(content, "\\f",  "\f");
+            replaceAll(content, "\\n",  "\n");
+            replaceAll(content, "\\r",  "\r");
+            replaceAll(content, "\\t",  "\t");
+            replaceAll(content, "\\v",  "\v");
+            // TODO: Support for \nnn (arbitrary octal value)
+            // TODO: Support for \Xnn (arbitrary hexadecimal value)
+            // TODO: Support for \Unnnn (universal character name)
+            // TODO: Support for \Unnnnnnnn (universal character name)
+
             TextLiteral *textLiteral = new TextLiteral(deque.front(), content.substr(1, content.size() - 2));
             deque.pop_front();
 
@@ -389,6 +407,14 @@ namespace dem {
             return token.is(lexer::TokenType::PLUS)
                 || token.is(lexer::TokenType::MINUS)
                 || token.is(lexer::TokenType::NOT);
+        }
+
+        void ExpressionFactory::replaceAll(std::string &subject, const std::string &search, const std::string &replace) {
+            size_t pos = 0;
+            while((pos = subject.find(search, pos)) != std::string::npos) {
+                subject.replace(pos, search.length(), replace);
+                pos += replace.length();
+            }
         }
     }
 }

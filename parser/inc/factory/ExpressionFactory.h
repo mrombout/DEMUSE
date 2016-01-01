@@ -75,6 +75,8 @@ namespace dem {
 
         private:
             static const std::map<lexer::TokenType, OperatorInfo> BINARY_OPS;
+
+            static void replaceAll(std::string &subject, const std::string &search, const std::string &replace);
         };
     }
 }

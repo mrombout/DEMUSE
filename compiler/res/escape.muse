@@ -1,0 +1,32 @@
+// test 1 - single quote
+print("Single Quote: \'");
+
+// test 2 - double quote
+print("Double Quote: \"");
+
+// test 3 - question mark
+print("Question Mark: \?");
+
+// test 4 - backslash
+print("Single Backslash: \\");
+
+// test 5 - audible bell
+print("Single Audible Bell: \a");
+
+// test 6 - backspace
+print("Single Backspace: \b");
+
+// test 7 - form feed - new page
+print("Form Feed: \f");
+
+// test 8 - line feed - new line
+print("Line Feed: \n");
+
+// test 9 - carriage return
+print("Carriage Return: \r");
+
+// test 10 - horizontal tab
+print("Horizontal Tab: \t");
+
+// test 11 - vertical tab
+print("Vertical Tab: \v");
