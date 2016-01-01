@@ -23,7 +23,7 @@ namespace dem {
             {"Block",       {wxColour(  0,   0,   0), *wxWHITE, false, false, false, demSTC_DEMUSE_BLOCK}},
             {"Parenthesis", {wxColour(  0,   0,   0), *wxWHITE, false, false, false, demSTC_DEMUSE_PARENTHESIS}},
             {"Brackets",    {wxColour(  0,   0,   0), *wxWHITE, false, false, false, demSTC_DEMUSE_BRACKET}},
-            {"Play",        {wxColour(255,   0,   0), *wxWHITE, false, false, false, demSTC_DEMUSE_PLAY}},
+            {"Play",        {wxColour(  0, 128, 128), *wxWHITE, true,  false, false, demSTC_DEMUSE_PLAY}},
             {"Function",    {wxColour(  0,   0, 128), *wxWHITE, true,  false, false, demSTC_DEMUSE_FUNCTION}},
             {"Var",         {wxColour(  0,   0, 128), *wxWHITE, true,  false, false, demSTC_DEMUSE_VAR}},
             {"Terminator",  {wxColour(  0,   0,   0), *wxWHITE, true,  false, false, demSTC_DEMUSE_TERMINATOR}},
