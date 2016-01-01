@@ -1,22 +1,26 @@
 track 1 {
     // FUNCTION DECLARATION STATEMENT
 
-    // function declaration statement, no arguments
+    //// function declaration statement, no arguments
     function foo() {
         var A = 1;
         print("A: " + A); // should print "A: 1"
     }
-
     foo();
 
-    // function declaration statement, with arguments
+    //// function declaration statement, with single argument
+    function bar(foo1) {
+        print("B1: " + foo1); // should print "B1: 2"
+    }
+    bar(2);
+
+    //// function declaration statement, with arguments
     function bar(foo1, foo2) {
         var B = foo1;
         print("B: " + B); // should print "B: 2"
         var C = foo2;
         print("C: " + C); // should print "C: 3"
     }
-
     bar(2, 3); // sets B and C to arguments
 
     // function declaration statement, with return
@@ -33,7 +37,6 @@ track 1 {
         var E = 1;
         print("E: " + E); // should print "E: 1"
     };
-
     foo1();
 
     // function declaration expression, with arguments
@@ -43,7 +46,6 @@ track 1 {
         var G = foo2;
         print("G: " + G); // should print "G: 3"
     };
-
     bar1(2, 3); // sets B and C to arguments
 
     // function declaration expression, with return

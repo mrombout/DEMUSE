@@ -80,7 +80,7 @@ namespace dem {
             return new TextValue(std::to_string(mValue.at(index)));
         }
 
-        Value *TextValue::operator()(Scope &scope) {
+        Value *TextValue::operator()() {
             throw RuntimeException("Strings do not support '()' operations.");
         }
     }

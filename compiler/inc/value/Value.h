@@ -4,7 +4,12 @@
 #include <string>
 #include <typeinfo>
 #include "symbol/play/Note.h"
-#include "Scope.h"
+
+namespace dem {
+    namespace compiler {
+        class Variable;
+    }
+}
 
 namespace dem {
     namespace compiler {
@@ -33,7 +38,7 @@ namespace dem {
             virtual Value *operator[](const int index) = 0;
             virtual Variable *operator[](const std::string &index) = 0;
 
-            virtual Value * operator()(Scope &scope);
+            virtual Value * operator()();
 
             virtual bool strictEqual(const Value &other) {
                 if(typeid(*this).name() != typeid(other).name())

@@ -1,10 +1,10 @@
-#include "GlobalScope.h"
 #include "value/function/PrintFunction.h"
 #include "value/NumberValue.h"
+#include "value/SongValue.h"
 
 namespace dem {
     namespace compiler {
-        GlobalScope::GlobalScope() : Scope(nullptr) {
+        SongValue::SongValue() {
             lexer::Token token{lexer::TokenType::IDENTIFIER, "N/A", lexer::TokenPosition()};
 
             // standard library

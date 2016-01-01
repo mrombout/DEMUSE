@@ -4,11 +4,11 @@
 
 namespace dem {
     namespace compiler {
-        void InternalFunction::mapScope(Scope &scope, std::vector<Value*> &arguments) {
+        void InternalFunction::mapScope(std::vector<Value*> &arguments) {
             int curIndex = 0;
             for(Value *value : arguments) {
                 std::string name = std::to_string(++curIndex);
-                scope.declareVariable(new parser::Identifier(lexer::Token(lexer::TokenType::IDENTIFIER, name, lexer::TokenPosition()), name), value);
+                declareVariable(new parser::Identifier(lexer::Token(lexer::TokenType::IDENTIFIER, name, lexer::TokenPosition()), name), value);
             }
         }
 

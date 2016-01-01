@@ -4,6 +4,16 @@
 
 namespace dem {
     namespace compiler {
+        ObjectValue::ObjectValue() :
+            ObjectValue(nullptr) {
+
+        }
+
+        ObjectValue::ObjectValue(ObjectValue* parent) :
+            mParent(parent) {
+
+        }
+
         Variable *ObjectValue::operator[](const std::string &index) {
             if(mProperties.count(index) == 0) {
                 mProperties[index] = new Variable(new parser::Identifier(lexer::Token(lexer::TokenType::IDENTIFIER, index, lexer::TokenPosition()), index), new NullValue());
@@ -77,6 +87,28 @@ namespace dem {
 
         Value *ObjectValue::operator[](const int index) {
             throw RuntimeException("Objects do not support '[]' operations.");
+        }
+
+        void ObjectValue::declareVariable(parser::Identifier *identifier) {
+            declareVariable(identifier, new NullValue());
+        }
+
+        void ObjectValue::declareVariable(parser::Identifier *identifier, Value *value) {
+            std::clog << "DECLARE - Variable " << identifier->name() << " = " << value->asString() << std::endl;
+
+            mProperties[identifier->name()] = new Variable(identifier, value);
+        }
+
+        Variable &ObjectValue::variable(parser::Identifier *identifier) const {
+            try {
+                Variable *variable = mProperties.at(identifier->name());
+
+                return *variable;
+            } catch(std::out_of_range &e) {
+                if(mParent)
+                    return mParent->variable(identifier);
+                throw RuntimeException(identifier->token(), "Variable '" + identifier->name() + "' does not exist.");
+            }
         }
     }
 }

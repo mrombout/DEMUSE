@@ -8,9 +8,10 @@ namespace dem {
     namespace compiler {
         class ObjectValue : public Value {
         public:
-            virtual std::string asString() const;
+            ObjectValue();
+            ObjectValue(ObjectValue* parent);
 
-            virtual Variable *operator[](const std::string &index);
+            virtual std::string asString() const;
 
             virtual Value *add(Value *b);
             virtual Value *subtract(Value *b);
@@ -29,9 +30,17 @@ namespace dem {
             virtual bool operator<=(const Value &other);
             virtual bool operator>(const Value &other);
             virtual bool operator>=(const Value &other);
+
             virtual Value *operator[](const int index);
+            virtual Variable *operator[](const std::string &index);
+
+            void declareVariable(parser::Identifier *identifier);
+            void declareVariable(parser::Identifier *identifier, Value *value);
+
+            Variable &variable(parser::Identifier *identifier) const;
 
         protected:
+            ObjectValue *mParent;
             std::map<std::string, Variable*> mProperties;
         };
     }

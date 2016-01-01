@@ -3,7 +3,6 @@
 
 #include "MidiFile.h"
 #include "Visitor.h"
-#include "Scope.h"
 #include "ExpressionEvaluator.h"
 
 namespace dem {
@@ -12,7 +11,7 @@ namespace dem {
         public:
             MuseMidiPlayEvaluator(ExpressionEvaluator &evaluator);
 
-            void play(parser::Play &play, Scope *scope);
+            void play(parser::Play &play, ObjectValue *objectScope);
             void write(const std::string &fileName);
 
             void setTrack(const parser::Track &track);
@@ -32,7 +31,7 @@ namespace dem {
         private:
             ExpressionEvaluator &mEvaluator;
 
-            Scope *mScope;
+            ObjectValue *mObjectScope;
 
             MidiFile mMidiFile;
             MidiMessage mMidiMessage;

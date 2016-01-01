@@ -1,8 +1,8 @@
 #include <iostream>
 #include "exception/RuntimeException.h"
 #include "MuseMidiCompiler.h"
-#include "GlobalScope.h"
 #include "value/NullValue.h"
+#include "value/SongValue.h"
 #include "value/function/FunctionValue.h"
 #include "value/function/UserFunction.h"
 
@@ -25,7 +25,7 @@ namespace dem {
         bool MidiCompiler::visitEnter(parser::Program &program) {
             std::clog << "ENTER - Program" << std::endl;
             
-            mScopes.push_front(new GlobalScope());
+            mObjectScopes.push_front(new SongValue());
 
             return true;
         }
@@ -55,15 +55,11 @@ namespace dem {
         bool MidiCompiler::visitEnter(parser::Block &block) {
             std::clog << "ENTER - Block" << std::endl;
 
-            mScopes.push_front(new Scope(mScopes.front()));
-
             return true;
         }
 
         bool MidiCompiler::visitLeave(parser::Block &block) {
             std::clog << "LEAVE - Block" << std::endl;
-
-            mScopes.pop_front();
 
             return true;
         }
@@ -75,7 +71,7 @@ namespace dem {
             parser::Expression &left = variableDefinition.assignment().left();
             if(dynamic_cast<parser::Identifier*>(&left)) {
                 parser::Identifier &identifier = static_cast<parser::Identifier&>(left);
-                mScopes.front()->declareVariable(&identifier);
+                mObjectScopes.front()->declareVariable(&identifier);
             } else if(dynamic_cast<parser::ArrayAccessExpression*>(&left)) {
                 // TODO: Array assignment
                 throw RuntimeException("Array index assignment not implemented yet.");
@@ -88,15 +84,15 @@ namespace dem {
         bool MidiCompiler::visitEnter(parser::FunctionDefinition &functionDefinition) {
             std::clog << "ENTER - Function Definition" << std::endl;
 
-            mScopes.front()->declareVariable(functionDefinition.identifier(), new UserFunction(*this, functionDefinition.parameterList(), functionDefinition.block()));
+            mObjectScopes.front()->declareVariable(functionDefinition.identifier(), new UserFunction(*this, mObjectScopes.front(), functionDefinition.parameterList(), functionDefinition.block()));
 
-            return true;
+            return false;
         }
 
         bool MidiCompiler::visitEnter(parser::AssignmentExpression &assignmentExpression) {
             std::clog << "ENTER - AssignmentExpression" << std::endl;
 
-            mEvaluator.evaluate(mScopes.front(), assignmentExpression);
+            mEvaluator.evaluate(mObjectScopes.front(), assignmentExpression);
 
             return false;
         }
@@ -108,7 +104,7 @@ namespace dem {
             parser::Block &block = ifSymbol.block();
             parser::Block *elseBlock = ifSymbol.elseBlock();
 
-            Value *result = mEvaluator.evaluate(mScopes.front(), expression);
+            Value *result = mEvaluator.evaluate(mObjectScopes.front(), expression);
             if(result->asBool()) {
                 block.accept(*this);
             } else if(elseBlock) {
@@ -134,7 +130,7 @@ namespace dem {
                     mContinue = false;
                     continue;
                 }
-                result = mEvaluator.evaluate(mScopes.front(), expression);
+                result = mEvaluator.evaluate(mObjectScopes.front(), expression);
                 if(result->asBool())
                     block.accept(*this);
             } while(result->asBool());
@@ -151,7 +147,7 @@ namespace dem {
             parser::Block &block = forSymbol.block();
             Value *result = nullptr;
             do {
-                result = mEvaluator.evaluate(mScopes.front(), *condition);
+                result = mEvaluator.evaluate(mObjectScopes.front(), *condition);
                 if(result->asBool()) {
                     block.accept(*this);
                     afterThought->accept(*this);
@@ -164,7 +160,7 @@ namespace dem {
         bool MidiCompiler::visitEnter(parser::PropertyAccessExpression &propertyAccessExpression) {
             std::clog << "ENTER - PropertyAccessExpression" << std::endl;
 
-            mEvaluator.evaluate(mScopes.front(), propertyAccessExpression);
+            mEvaluator.evaluate(mObjectScopes.front(), propertyAccessExpression);
 
             return false;
         }
@@ -172,7 +168,7 @@ namespace dem {
         bool MidiCompiler::visitEnter(parser::Play &play) {
             std::clog << "ENTER - Play" << std::endl;
 
-            mPlayEvaluator.play(play, mScopes.front());
+            mPlayEvaluator.play(play, mObjectScopes.front());
 
             return false;
         }
@@ -186,7 +182,7 @@ namespace dem {
         bool MidiCompiler::visitEnter(parser::Return &returnSymbol) {
             std::clog << "ENTER - Return" << std::endl;
 
-            mReturnValue = mEvaluator.evaluate(mScopes.front(), *returnSymbol.expression());
+            mReturnValue = mEvaluator.evaluate(mObjectScopes.front(), *returnSymbol.expression());
 
             return false;
         }
@@ -197,14 +193,14 @@ namespace dem {
             return mReturnValue;
         }
 
-        std::deque<Scope*> &MidiCompiler::scopes() {
-            return mScopes;
+        std::deque<ObjectValue*> &MidiCompiler::scopes() {
+            return mObjectScopes;
         }
 
         bool MidiCompiler::visitEnter(parser::FunctionCallExpression &functionCallExpression) {
             std::clog << "ENTER - FunctionCallExpression" << std::endl;
 
-            mEvaluator.evaluate(mScopes.front(), functionCallExpression);
+            mEvaluator.evaluate(mObjectScopes.front(), functionCallExpression);
 
             return true;
         }
@@ -218,7 +214,7 @@ namespace dem {
         bool MidiCompiler::visitEnter(parser::ExpressionStatement &statement) {
             std::clog << "ENTER - ExpressionStatement" << std::endl;
 
-            mEvaluator.evaluate(mScopes.front(), statement.expression());
+            mEvaluator.evaluate(mObjectScopes.front(), statement.expression());
 
             return false;
         }

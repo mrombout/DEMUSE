@@ -2,9 +2,9 @@
 #define DEMUSE_MIDICOMPILER_H
 
 #include <deque>
+#include "value/ObjectValue.h"
 #include "Compiler.h"
 #include "Visitor.h"
-#include "Scope.h"
 #include "ExpressionEvaluator.h"
 #include "MusePlayEvaluator.h"
 #include "MuseMidiPlayEvaluator.h"
@@ -56,14 +56,16 @@ namespace dem {
 
             virtual bool visit(parser::Continue &continueSymbol) override;
 
-            virtual std::deque<Scope*> &scopes();
+            virtual std::deque<ObjectValue*> &scopes();
 
         private:
             std::string mFileName;
 
             ExpressionEvaluator mEvaluator;
             MuseMidiPlayEvaluator mPlayEvaluator;
-            std::deque<Scope*> mScopes;
+
+            std::deque<ObjectValue*> mObjectScopes;
+
             Value *mReturnValue;
 
             bool mBreak;

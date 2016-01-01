@@ -5,12 +5,6 @@ set(Compiler_SRCS
     inc/exception/RuntimeException.h
     src/exception/RuntimeException.cpp
 
-    inc/Scope.h
-    src/scope/Scope.cpp
-
-    inc/GlobalScope.h
-    src/scope/GlobalScope.cpp
-
     inc/value/Variable.h
     src/value/Variable.cpp
 
@@ -34,6 +28,9 @@ set(Compiler_SRCS
 
     inc/value/ObjectValue.h
     src/value/ObjectValue.cpp
+
+    inc/value/SongValue.h
+    src/value/SongValue.cpp
 
     inc/value/BooleanValue.h
     src/value/BooleanValue.cpp

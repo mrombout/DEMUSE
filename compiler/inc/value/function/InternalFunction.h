@@ -2,7 +2,6 @@
 #define DEMUSE_INTERNALFUNCTION_H
 
 #include "value/function/FunctionValue.h"
-#include "Scope.h"
 #include "value/Value.h"
 
 namespace dem {
@@ -28,7 +27,7 @@ namespace dem {
             virtual bool operator>=(const Value &other);
             virtual Value *operator[](const int index);
 
-            virtual void mapScope(Scope &scope, std::vector<Value*> &arguments);
+            virtual void mapScope(std::vector<Value*> &arguments);
         };
     }
 }

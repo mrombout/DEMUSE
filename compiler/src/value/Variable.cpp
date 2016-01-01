@@ -92,8 +92,8 @@ namespace dem {
             return (*mValue)[index];
         }
 
-        Value *Variable::operator()(Scope &scope) {
-            return (*mValue)(scope);
+        Value *Variable::operator()() {
+            return (*mValue)();
         }
     }
 }

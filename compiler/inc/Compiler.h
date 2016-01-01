@@ -5,7 +5,7 @@
 #include "symbol/Program.h"
 #include "Visitor.h"
 #include "value/Value.h"
-#include "Scope.h"
+#include "value/ObjectValue.h"
 
 namespace dem {
     namespace compiler {
@@ -14,7 +14,7 @@ namespace dem {
             virtual void compile(parser::Program *program, std::string fileName) = 0;
 
             virtual Value *returnValue() = 0;
-            virtual std::deque<Scope*> &scopes() = 0;
+            virtual std::deque<ObjectValue*> &scopes() = 0;
         };
     }
 }

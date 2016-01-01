@@ -10,7 +10,10 @@ namespace dem {
     namespace compiler {
         class FunctionValue : public ObjectValue {
         public:
-            virtual void mapScope(Scope &scope, std::vector<Value*> &arguments) = 0;
+            FunctionValue();
+            FunctionValue(ObjectValue *parent);
+
+            virtual void mapScope(std::vector<Value*> &arguments) = 0;
         };
     }
 }

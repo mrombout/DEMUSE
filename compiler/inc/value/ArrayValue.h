@@ -3,10 +3,11 @@
 
 #include <vector>
 #include "value/Value.h"
+#include "ObjectValue.h"
 
 namespace dem {
     namespace compiler {
-        class ArrayValue : public Value {
+        class ArrayValue : public ObjectValue {
         public:
             ArrayValue(std::vector<Value*> values);
 
@@ -32,7 +33,7 @@ namespace dem {
             virtual bool operator>=(const Value &other);
             virtual Value *operator[](const int index);
             virtual Variable *operator[](const std::string &index);
-            virtual Value *operator()(Scope &scope);
+            virtual Value *operator()();
 
         private:
             std::vector<Value*> mValues;

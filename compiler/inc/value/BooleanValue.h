@@ -3,10 +3,11 @@
 
 #include <string>
 #include "Value.h"
+#include "ObjectValue.h"
 
 namespace dem {
     namespace compiler {
-        class BooleanValue : public Value {
+        class BooleanValue : public ObjectValue {
         public:
             BooleanValue(bool value);
 
@@ -32,7 +33,7 @@ namespace dem {
             virtual bool operator>=(const Value &other);
             virtual Value *operator[](const int index);
             virtual Variable *operator[](const std::string &index);
-            virtual Value *operator()(Scope &scope);
+            virtual Value *operator()();
 
         private:
             bool mValue;

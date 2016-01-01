@@ -92,7 +92,7 @@ namespace dem {
             throw RuntimeException("Arrays do not support '.' operations.");
         }
 
-        Value *ArrayValue::operator()(Scope &scope) {
+        Value *ArrayValue::operator()() {
             throw RuntimeException("Arrays do not support '()' operations.");
         }
     }

@@ -80,7 +80,7 @@ namespace dem {
             throw RuntimeException("Booleans do not support '.' operations.");
         }
 
-        Value *BooleanValue::operator()(Scope &scope) {
+        Value *BooleanValue::operator()() {
             throw RuntimeException("Booleans do not support '()' operations.");
         }
     }

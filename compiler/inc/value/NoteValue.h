@@ -3,10 +3,11 @@
 
 #include "symbol/play/Note.h"
 #include "Value.h"
+#include "ObjectValue.h"
 
 namespace dem {
     namespace compiler {
-        class NoteValue : public Value {
+        class NoteValue : public ObjectValue {
         public:
             NoteValue(parser::Note note);
 

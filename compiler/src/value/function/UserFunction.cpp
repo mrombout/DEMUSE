@@ -4,19 +4,25 @@
 namespace dem {
     namespace compiler {
         UserFunction::UserFunction(Compiler &compiler, parser::ParameterList &parameterList, parser::Block &block) :
+            UserFunction(compiler, nullptr, parameterList, block) {
+
+        }
+
+        UserFunction::UserFunction(Compiler &compiler, ObjectValue *parent, parser::ParameterList &parameterList, parser::Block &block) :
+                FunctionValue(parent),
                 mCompiler(compiler),
                 mParameterList(parameterList),
                 mBlock(block) {
 
         }
 
-        Value *UserFunction::operator()(Scope &scope) {
+        Value *UserFunction::operator()() {
             mBlock.accept(mCompiler);
 
             return mCompiler.returnValue();
         }
 
-        void UserFunction::mapScope(Scope &scope, std::vector<Value*> &arguments) {
+        void UserFunction::mapScope(std::vector<Value*> &arguments) {
             if(mParameterList.numParameters() == 0)
                 return;
 
@@ -27,7 +33,7 @@ namespace dem {
 
             unsigned int i = 0;
             for(parser::Identifier *identifier : mParameterList.parameters()) {
-                scope.declareVariable(identifier, arguments.at(i++));
+                declareVariable(identifier, arguments.at(i++));
             }
         }
 

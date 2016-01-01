@@ -2,10 +2,11 @@
 #define DEMUSE_NUMBERVALUE_H
 
 #include "Value.h"
+#include "ObjectValue.h"
 
 namespace dem {
     namespace compiler {
-        class NumberValue : public Value {
+        class NumberValue : public ObjectValue {
         public:
             NumberValue(double value);
 
@@ -20,7 +21,6 @@ namespace dem {
             virtual bool asBool() const;
             virtual std::string asString() const;
 
-
             virtual parser::Note asNote() const;
 
             virtual bool operator==(const Value &other);
@@ -31,7 +31,7 @@ namespace dem {
             virtual bool operator>=(const Value &other);
             virtual Value *operator[](const int index) override;
             virtual Variable *operator[](const std::string &index);
-            virtual Value *operator()(Scope &scope);
+            virtual Value *operator()();
 
         private:
             double mValue;

@@ -17,8 +17,8 @@ namespace dem {
 
         }
 
-        Value *ExpressionEvaluator::evaluate(Scope *scope, parser::Expression &expression) {
-            mScope = scope;
+        Value *ExpressionEvaluator::evaluate(ObjectValue *objectScope, parser::Expression &expression) {
+            mObjectScope = objectScope;
 
             // evaluate
             expression.accept(*this);
@@ -492,7 +492,7 @@ namespace dem {
         bool ExpressionEvaluator::visit(parser::Identifier &identifier) {
             std::clog << "ENTER - Evaluating Identifier" << std::endl;
 
-            Variable &variable = mScope->variable(&identifier);
+            Variable &variable = mObjectScope->variable(&identifier);
 
             std::clog << "(I)PUSH - " << variable.asString() << std::endl;
             mStack.push(&variable);
@@ -585,7 +585,7 @@ namespace dem {
         bool ExpressionEvaluator::visitEnter(parser::FunctionDefinition &functionDefinition) {
             std::clog << "ENTER - Evaluating FunctionDefinition" << std::endl;
 
-            UserFunction *value = new UserFunction(mCompiler, functionDefinition.parameterList(), functionDefinition.block());
+            UserFunction *value = new UserFunction(mCompiler, mObjectScope, functionDefinition.parameterList(), functionDefinition.block());
 
             std::clog << "PUSH - " << value->asString() << std::endl;
             mStack.push(value);
@@ -636,12 +636,11 @@ namespace dem {
                 // evaluate arguments
                 std::vector<Value*> argumentValues;
                 for(parser::Expression *expr : arguments) {
-                    Value *result = this->evaluate(mScope, *expr);
+                    Value *result = this->evaluate(mObjectScope, *expr);
                     argumentValues.push_back(result);
                 }
 
                 // map to function scope
-                Scope functionScope(mScope);
                 // TODO: Find a way to get rid of these casts
                 FunctionValue *functionValue = dynamic_cast<FunctionValue*>(callee);
                 if(!functionValue) {
@@ -650,12 +649,12 @@ namespace dem {
                         functionValue = dynamic_cast<FunctionValue*>(variable->value());
                 }
                 if(functionValue) {
-                    functionValue->mapScope(functionScope, argumentValues);
+                    functionValue->mapScope(argumentValues);
                 }
-                mCompiler.scopes().push_front(&functionScope);
 
                 // call function
-                Value *result = (*callee)(functionScope);
+                mCompiler.scopes().push_front(functionValue);
+                Value *result = (*callee)();
                 mCompiler.scopes().pop_front();
 
                 mStack.push(result);

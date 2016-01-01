@@ -11,10 +11,10 @@ namespace dem {
             mMidiFile.addTrack(2);
         }
 
-        void MuseMidiPlayEvaluator::play(parser::Play &play, Scope *scope) {
-            mScope = scope;
+        void MuseMidiPlayEvaluator::play(parser::Play &play, ObjectValue *objectScope) {
+            mObjectScope = objectScope;
 
-            mTPQ = scope->variable(new parser::Identifier(lexer::Token(lexer::TokenType::IDENTIFIER, "tempo", lexer::TokenPosition()), "tempo")).asNumber();
+            mTPQ = mObjectScope->variable(new parser::Identifier(lexer::Token(lexer::TokenType::IDENTIFIER, "tempo", lexer::TokenPosition()), "tempo")).asNumber();
             mMidiFile.setTicksPerQuarterNote(mTPQ);
 
             play.accept(*this);
@@ -58,7 +58,7 @@ namespace dem {
         bool MuseMidiPlayEvaluator::visit(parser::Identifier &identifier) {
             std::cout << "START - Identifer" << std::endl;
 
-            Variable &variable = mScope->variable(&identifier);
+            Variable &variable = mObjectScope->variable(&identifier);
             variable.asNote().accept(*this);
 
             return false;
@@ -91,7 +91,7 @@ namespace dem {
         bool MuseMidiPlayEvaluator::visitEnter(parser::Instrument &instrument) {
             std::cout << "ENTER - Instrument" << std::endl;
 
-            Value *value = mEvaluator.evaluate(mScope, *instrument.instrumentExpression());
+            Value *value = mEvaluator.evaluate(mObjectScope, *instrument.instrumentExpression());
             mMidiMessage.setCommand(0xC0 + mTrack->channel(), value->asNumber());
             mMidiFile.addEvent(1, mTime, mMidiMessage);
 

@@ -5,7 +5,6 @@
 #include "Visitor.h"
 #include "Compiler.h"
 #include "value/Value.h"
-#include "Scope.h"
 
 namespace dem {
     namespace compiler {
@@ -13,7 +12,7 @@ namespace dem {
         public:
             ExpressionEvaluator(Compiler &compiler);
 
-            Value *evaluate(Scope *scope, parser::Expression &expression);
+            Value *evaluate(ObjectValue *scope, parser::Expression &expression);
 
             virtual bool visitEnter(parser::AssignmentExpression &assignmentExpression) override;
             virtual bool visitLeave(parser::AssignmentExpression &assignmentExpression) override;
@@ -92,7 +91,7 @@ namespace dem {
             Compiler &mCompiler;
 
             std::stack<Value*> mStack;
-            Scope *mScope;
+            ObjectValue *mObjectScope;
         };
     }
 }

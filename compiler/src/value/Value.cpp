@@ -2,7 +2,7 @@
 
 namespace dem {
     namespace compiler {
-        Value *Value::operator()(Scope &scope) {
+        Value *Value::operator()() {
             return new NullValue();
         }
     }
