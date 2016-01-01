@@ -1,0 +1,21 @@
+// error
+//var f1 = function() { };
+//var f2 = function() { };
+
+//f1 + f2;
+
+// error
+//var n1 = >C;
+//var n2 = >D;
+
+//n1 - n2;
+
+// error
+//var b1 = true;
+//var b2 = false;
+
+//b1 * b2;
+
+// error
+var n3 = new Object();
+var n4 = -n3;

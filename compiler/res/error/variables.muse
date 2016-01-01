@@ -1,0 +1,8 @@
+// error "Variable "X" does not exist"
+//X = 1;
+
+// error "Variable "X" does not exist" 
+//var Y = X + Z;
+
+// error "Variable "X" does not exist"
+//while(X) { }
