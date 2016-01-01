@@ -1,2 +1,5 @@
 // error 1
 <<C;
+
+// error 2
+<<C
