@@ -530,8 +530,15 @@ namespace dem {
             if((event.GetModificationType() & wxSTC_MOD_INSERTTEXT)
             || (event.GetModificationType() & wxSTC_MOD_DELETETEXT)) {
                 MuseStyledTextEditor *editor = static_cast<MuseStyledTextEditor*>(event.GetEventObject());
+
+                // mark as modified
                 wxFileName fileName{editor->filePath()};
                 mNotebook->SetPageText(mFileEditors[editor->filePath()].editorId, fileName.GetFullName() + "*");
+
+                // remove any error markers from modified line
+                int currentLine = editor->GetCurrentLine();
+                if(currentLine > 0)
+                    editor->MarkerDelete(currentLine, demSTC_MARK_ERROR);
             }
         }
 
@@ -556,7 +563,6 @@ namespace dem {
 
                     // add marker to editor
                     activeEditor()->MarkerAdd(error.token.line() - 1, demSTC_MARK_ERROR);
-                    // TODO: Remove marker when line is edited
                 }
 
                 return;
