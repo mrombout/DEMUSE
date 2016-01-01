@@ -4,7 +4,7 @@
 namespace dem {
     namespace parser {
         Program::Program(std::vector<Statement*> statements) :
-            Symbol(statements.front()->token()),
+            Symbol(lexer::Token(lexer::TokenType::UNKNOWN, "", lexer::TokenPosition(0, 0, 0))),
             mStatements(statements) {
 
         }
