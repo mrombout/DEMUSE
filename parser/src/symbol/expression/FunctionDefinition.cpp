@@ -3,13 +3,13 @@
 
 namespace dem {
     namespace parser {
-        FunctionDefinition::FunctionDefinition(ParameterList *parameterList, Block *block) :
-            FunctionDefinition(nullptr, parameterList, block) {
+        FunctionDefinition::FunctionDefinition(const lexer::Token &token, ParameterList *parameterList, Block *block) :
+            FunctionDefinition(token, nullptr, parameterList, block) {
 
         }
 
-        FunctionDefinition::FunctionDefinition(Identifier *identifier, ParameterList *parameterList, Block *block) :
-            Expression(identifier->token()),
+        FunctionDefinition::FunctionDefinition(const lexer::Token &token, Identifier *identifier, ParameterList *parameterList, Block *block) :
+            Expression(token),
             mIdentifier(identifier),
             mParameterList(parameterList),
             mBlock(block) {
@@ -18,7 +18,8 @@ namespace dem {
 
         bool FunctionDefinition::accept(Visitor &visitor) {
             if(visitor.visitEnter(*this)) {
-                mIdentifier->accept(visitor);
+                if(mIdentifier)
+                    mIdentifier->accept(visitor);
                 mParameterList->accept(visitor);
                 mBlock->accept(visitor);
             }

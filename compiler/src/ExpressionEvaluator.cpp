@@ -75,9 +75,13 @@ namespace dem {
             mStack.pop();
 
             // add b to a
-            std::clog << "Executing " << a->asString() << " + " << b->asString() << std::endl;
-            Value *c = a->add(b);
-            mStack.push(c);
+            try {
+                std::clog << "Executing " << a->asString() << " + " << b->asString() << std::endl;
+                Value *c = a->add(b);
+                mStack.push(c);
+            } catch(const RuntimeException &e) {
+                throw RuntimeException(additionExpression.token(), e.what());
+            }
 
             return false;
         }
@@ -98,9 +102,13 @@ namespace dem {
             mStack.pop();
 
             // subtract b from a
-            std::clog << "Executing " << a->asString() << " - " << b->asString() << std::endl;
-            Value *c = a->subtract(b);
-            mStack.push(c);
+            try {
+                std::clog << "Executing " << a->asString() << " - " << b->asString() << std::endl;
+                Value *c = a->subtract(b);
+                mStack.push(c);
+            } catch(const RuntimeException &e) {
+                throw RuntimeException(subtractionExpression.token(), e.what());
+            }
 
             return true;
         }
@@ -121,9 +129,13 @@ namespace dem {
             mStack.pop();
 
             // multiply b by a
-            std::clog << "Executing " << a->asString() << " * " << b->asString() << std::endl;
-            Value *c = a->multiply(b);
-            mStack.push(c);
+            try {
+                std::clog << "Executing " << a->asString() << " * " << b->asString() << std::endl;
+                Value *c = a->multiply(b);
+                mStack.push(c);
+            } catch(const RuntimeException &e) {
+                throw RuntimeException(multiplicationExpression.token(), e.what());
+            }
 
             return true;
         }
@@ -144,9 +156,13 @@ namespace dem {
             mStack.pop();
 
             // divide b by a
-            std::clog << "Executing " << a->asString() << " / " << b->asString() << std::endl;
-            Value *c = a->divide(b);
-            mStack.push(c);
+            try {
+                std::clog << "Executing " << a->asString() << " / " << b->asString() << std::endl;
+                Value *c = a->divide(b);
+                mStack.push(c);
+            } catch(const RuntimeException &e) {
+                throw RuntimeException(divisionExpression.token(), e.what());
+            }
 
             return true;
         }
@@ -167,9 +183,13 @@ namespace dem {
             mStack.pop();
 
             // divide b by a
-            std::clog << "Executing " << a->asString() << " % " << b->asString() << std::endl;
-            Value *c = a->modulo(b);
-            mStack.push(c);
+            try {
+                std::clog << "Executing " << a->asString() << " % " << b->asString() << std::endl;
+                Value *c = a->modulo(b);
+                mStack.push(c);
+            } catch(const RuntimeException &e) {
+                throw RuntimeException(moduloExpression.token(), e.what());
+            }
 
             return true;
         }
@@ -190,9 +210,13 @@ namespace dem {
             mStack.pop();
 
             // divide b by a
-            std::clog << "Executing " << a->asString() << " ^ " << b->asString() << std::endl;
-            Value *c = a->exponent(b);
-            mStack.push(c);
+            try {
+                std::clog << "Executing " << a->asString() << " ^ " << b->asString() << std::endl;
+                Value *c = a->exponent(b);
+                mStack.push(c);
+            } catch(const RuntimeException &e) {
+                throw RuntimeException(exponentExpression.token(), e.what());
+            }
 
             return true;
         }
@@ -213,7 +237,11 @@ namespace dem {
             mStack.pop();
 
             // compare equality
-            mStack.push(new BooleanValue(*a == *b));
+            try {
+                mStack.push(new BooleanValue(*a == *b));
+            } catch(const RuntimeException &e) {
+                throw RuntimeException(equalCondition.token(), e.what());
+            }
 
             return true;
         }
@@ -234,7 +262,11 @@ namespace dem {
             mStack.pop();
 
             // compare not equal
-            mStack.push(new BooleanValue(*a != *b));
+            try {
+                mStack.push(new BooleanValue(*a != *b));
+            } catch(const RuntimeException &e) {
+                throw RuntimeException(notEqualCondition.token(), e.what());
+            }
 
             return true;
         }
@@ -255,7 +287,11 @@ namespace dem {
             mStack.pop();
 
             // compare smaller than
-            mStack.push(new BooleanValue(*a < *b));
+            try {
+                mStack.push(new BooleanValue(*a < *b));
+            } catch(const RuntimeException &e) {
+                throw RuntimeException(smallerThanCondition.token(), e.what());
+            }
 
             return true;
         }
@@ -276,7 +312,11 @@ namespace dem {
             mStack.pop();
 
             // compare smaller or equal than
-            mStack.push(new BooleanValue(*a <= *b));
+            try {
+                mStack.push(new BooleanValue(*a <= *b));
+            } catch(const RuntimeException &e) {
+                throw RuntimeException(smallerThanOrEqualCondition.token(), e.what());
+            }
 
             return true;
         }
@@ -297,7 +337,11 @@ namespace dem {
             mStack.pop();
 
             // compare larger than
-            mStack.push(new BooleanValue(*a > *b));
+            try {
+                mStack.push(new BooleanValue(*a > *b));
+            } catch(const RuntimeException &e) {
+                throw RuntimeException(largerThanCondition.token(), e.what());
+            }
 
             return true;
         }
@@ -318,7 +362,11 @@ namespace dem {
             mStack.pop();
 
             // compare larger than or equal
-            mStack.push(new BooleanValue(*a >= *b));
+            try {
+                mStack.push(new BooleanValue(*a >= *b));
+            } catch(const RuntimeException &e) {
+                throw RuntimeException(largerThanOrEqualCondition.token(), e.what());
+            }
 
             return true;
         }
@@ -339,7 +387,11 @@ namespace dem {
             mStack.pop();
 
             // compare larger than or equal
-            mStack.push(new BooleanValue(a->strictEqual(*b)));
+            try {
+                mStack.push(new BooleanValue(a->strictEqual(*b)));
+            } catch(const RuntimeException &e) {
+                throw RuntimeException(strictEqualCondition.token(), e.what());
+            }
 
             return true;
         }
@@ -360,7 +412,11 @@ namespace dem {
             mStack.pop();
 
             // compare larger than or equal
-            mStack.push(new BooleanValue(a->strictNotEqual(*b)));
+            try {
+                mStack.push(new BooleanValue(a->strictNotEqual(*b)));
+            } catch(const RuntimeException &e) {
+                throw RuntimeException(strictNotEqualCondition.token(), e.what());
+            }
 
             return true;
         }
@@ -380,7 +436,11 @@ namespace dem {
             Value *a = mStack.top();
             mStack.pop();
 
-            mStack.push(new BooleanValue(a->asBool() && b->asBool()));
+            try {
+                mStack.push(new BooleanValue(a->asBool() && b->asBool()));
+            } catch(const RuntimeException &e) {
+                throw RuntimeException(andCondition.token(), e.what());
+            }
 
             return true;
         }
@@ -400,7 +460,11 @@ namespace dem {
             Value *a = mStack.top();
             mStack.pop();
 
-            mStack.push(new BooleanValue(a->asBool() || b->asBool()));
+            try {
+                mStack.push(new BooleanValue(a->asBool() || b->asBool()));
+            } catch(const RuntimeException &e) {
+                throw RuntimeException(orCondition.token(), e.what());
+            }
 
             return true;
         }
@@ -492,18 +556,22 @@ namespace dem {
             mStack.pop();
 
             // apply unary expression
-            Value *newValue = nullptr;
-            if(unaryExpression.op() == "+") {
-                newValue = new NumberValue(+(value->asNumber()));
-            } else if(unaryExpression.op() == "-") {
-                newValue = new NumberValue(-(value->asNumber()));
-            } else if(unaryExpression.op() == "!") {
-                newValue = new BooleanValue(!(value->asBool()));
-            } else {
-                newValue = value;
-            }
+            try {
+                Value *newValue = nullptr;
+                if(unaryExpression.op() == "+") {
+                    newValue = new NumberValue(+(value->asNumber()));
+                } else if(unaryExpression.op() == "-") {
+                    newValue = new NumberValue(-(value->asNumber()));
+                } else if(unaryExpression.op() == "!") {
+                    newValue = new BooleanValue(!(value->asBool()));
+                } else {
+                    newValue = value;
+                }
 
-            mStack.push(newValue);
+                mStack.push(newValue);
+            } catch(const RuntimeException &e) {
+                throw RuntimeException(unaryExpression.token(), e.what());
+            }
             
             return false;
         }
@@ -542,9 +610,13 @@ namespace dem {
             Value *a = mStack.top();
             mStack.pop();
 
-            static_cast<int>(b->asNumber());
-            Value *value = (*a)[b->asNumber()];
-            mStack.push(value);
+            try {
+                static_cast<int>(b->asNumber());
+                Value *value = (*a)[b->asNumber()];
+                mStack.push(value);
+            } catch(const RuntimeException &e) {
+                throw RuntimeException(arrayAccessExpression.token(), e.what());
+            }
 
             return true;
         }
@@ -555,37 +627,41 @@ namespace dem {
             parser::Expression &calleeExpr = callExpression.callee();
             const std::vector<parser::Expression*> arguments = callExpression.arguments();
 
-            // evaluate callee
-            calleeExpr.accept(*this);
-            Value *callee = mStack.top();
-            mStack.pop();
+            try {
+                // evaluate callee
+                calleeExpr.accept(*this);
+                Value *callee = mStack.top();
+                mStack.pop();
 
-            // evaluate arguments
-            std::vector<Value*> argumentValues;
-            for(parser::Expression *expr : arguments) {
-                Value *result = this->evaluate(mScope, *expr);
-                argumentValues.push_back(result);
+                // evaluate arguments
+                std::vector<Value*> argumentValues;
+                for(parser::Expression *expr : arguments) {
+                    Value *result = this->evaluate(mScope, *expr);
+                    argumentValues.push_back(result);
+                }
+
+                // map to function scope
+                Scope functionScope(mScope);
+                // TODO: Find a way to get rid of these casts
+                FunctionValue *functionValue = dynamic_cast<FunctionValue*>(callee);
+                if(!functionValue) {
+                    Variable *variable = dynamic_cast<Variable*>(callee);
+                    if(variable)
+                        functionValue = dynamic_cast<FunctionValue*>(variable->value());
+                }
+                if(functionValue) {
+                    functionValue->mapScope(functionScope, argumentValues);
+                }
+                mCompiler.scopes().push_front(&functionScope);
+
+                // call function
+                Value *result = (*callee)(functionScope);
+                mCompiler.scopes().pop_front();
+
+                mStack.push(result);
+            } catch(const RuntimeException &e) {
+                throw RuntimeException(callExpression.token(), e.what());
             }
-
-            // map to function scope
-            Scope functionScope(mScope);
-            // TODO: Find a way to get rid of these casts
-            FunctionValue *functionValue = dynamic_cast<FunctionValue*>(callee);
-            if(!functionValue) {
-                Variable *variable = dynamic_cast<Variable*>(callee);
-                if(variable)
-                    functionValue = dynamic_cast<FunctionValue*>(variable->value());
-            }
-            if(functionValue) {
-                functionValue->mapScope(functionScope, argumentValues);
-            }
-            mCompiler.scopes().push_front(&functionScope);
-
-            // call function
-            Value *result = (*callee)(functionScope);
-            mCompiler.scopes().pop_front();
-
-            mStack.push(result);
 
             return false;
         }
@@ -608,8 +684,12 @@ namespace dem {
             if(!identifiable)
                 throw RuntimeException("Can not access property of object \"" + a->asString() + "\".");
 
-            Value *value = (*a)[identifiable->name()];
-            mStack.push(value);
+            try {
+                Value *value = (*a)[identifiable->name()];
+                mStack.push(value);
+            } catch(const RuntimeException &e) {
+                throw RuntimeException(propertyAccessExpression.token(), e.what());
+            }
 
             return false;
         }
@@ -641,8 +721,12 @@ namespace dem {
                 throw RuntimeException("Can't access property of object \"" + object->asString() + "\".");
 
             // fetch property
-            Variable *var = (*object)[identifier->name()];
-            mStack.push(var);
+            try {
+                Variable *var = (*object)[identifier->name()];
+                mStack.push(var);
+            } catch(const RuntimeException &e) {
+                throw RuntimeException(memberExpression.token(), e.what());
+            }
 
             return false;
         }

@@ -9,7 +9,7 @@ namespace dem {
     namespace parser {
         class Block : public Symbol {
         public:
-            Block(std::vector<Statement*> statements);
+            Block(const lexer::Token &token, std::vector<Statement*> statements);
 
             virtual bool accept(Visitor &visitor);
 

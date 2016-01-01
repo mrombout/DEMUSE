@@ -30,7 +30,7 @@ namespace dem {
             } catch(std::out_of_range &e) {
                 if(mParent)
                     return mParent->variable(identifier);
-                throw RuntimeException("Variable '" + identifier->name() + "' does not exist.");
+                throw RuntimeException(identifier->token(), "Variable '" + identifier->name() + "' does not exist.");
             }
         }
     }

@@ -15,6 +15,8 @@ namespace dem {
             void play(parser::Play &play, Scope *scope);
             void write(const std::string &fileName);
 
+            void setTrack(const parser::Track &track);
+
             virtual bool visitEnter(parser::Play &play) override;
             virtual bool visitLeave(parser::Play &play) override;
 
@@ -37,6 +39,8 @@ namespace dem {
 
             int mTime;
             int mTPQ;
+
+            const parser::Track *mTrack;
         };
     }
 }

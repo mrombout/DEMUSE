@@ -13,6 +13,7 @@ namespace dem {
             // function_def = "function" identifier "(" [ parameter_list ] ")" block ;
 
             // "function"
+            lexer::Token token = tokens.front();
             expect(tokens, lexer::TokenType::FUNCTION, results);
 
             // identifier
@@ -38,7 +39,7 @@ namespace dem {
             // block
             Block *block = BlockFactory::produce(tokens, results);
 
-            return new FunctionDefinition(identifier, parameterList, block);
+            return new FunctionDefinition(token, identifier, parameterList, block);
         }
     }
 }

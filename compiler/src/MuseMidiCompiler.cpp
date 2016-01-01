@@ -41,6 +41,8 @@ namespace dem {
         bool MidiCompiler::visitEnter(parser::Track &track) {
             std::clog << "ENTER - Track" << std::endl;
 
+            mPlayEvaluator.setTrack(track);
+
             return true;
         }
 

@@ -33,7 +33,7 @@ namespace dem {
                 tokens.pop_front();
             }
 
-            return new Note(token, octave, accidental, duration);
+            return new Note(token, note, octave, accidental, duration);
         }
     }
 }

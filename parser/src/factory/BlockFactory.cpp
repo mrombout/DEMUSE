@@ -11,6 +11,7 @@ namespace dem {
             std::vector<Statement*> statements;
 
             // "{"
+            lexer::Token token = tokens.front();
             expect(tokens, lexer::TokenType::START, results);
 
             while(!tokens.front().is(lexer::TokenType::END) && !tokens.front().isEOF()) {
@@ -21,7 +22,7 @@ namespace dem {
             // "}"
             expect(tokens, lexer::TokenType::END, results);
 
-            return new Block(statements);
+            return new Block(token, statements);
         }
     }
 }

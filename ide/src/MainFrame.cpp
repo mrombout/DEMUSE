@@ -11,6 +11,7 @@
 #include <wx/preferences.h>
 #include <wx/process.h>
 #include <wx/mimetype.h>
+#include "exception/RuntimeException.h"
 #include "MuseMidiCompiler.h"
 #include "App.h"
 #include "Compiler.h"
@@ -407,22 +408,38 @@ namespace dem {
                 // compiling
                 mOutput->AppendText("== Compiling: file:\\\\\\" + activeEditor()->filePath() + "\n");
 
-                sw.Start();
-                wxString outputFileName = getOutputFileName(activeEditor()->filePath());
-                std::cout << "Path: " << outputFileName << std::endl;
+                try {
+                    sw.Start();
+                    wxString outputFileName = getOutputFileName(activeEditor()->filePath());
+                    std::cout << "Path: " << outputFileName << std::endl;
 
-                dem::compiler::MidiCompiler compiler;
-                compiler.compile(static_cast<dem::parser::Program*>(program), std::string(outputFileName.c_str()));
-                sw.Pause();
+                    dem::compiler::MidiCompiler compiler;
+                    compiler.compile(static_cast<dem::parser::Program*>(program), std::string(outputFileName.c_str()));
+                    sw.Pause();
 
-                mOutput->AppendText("== Compiling finished in " + std::to_string(sw.Time()) + "ms\n");
+                    mOutput->AppendText("== Compiling finished in " + std::to_string(sw.Time()) + "ms\n");
 
-                mOutput->SetDefaultStyle(wxTextAttr(*wxBLUE));
-                mOutput->AppendText("= Build finished in " + std::to_string(totalStopWatch.Time()) + "ms\n");
+                    mOutput->SetDefaultStyle(wxTextAttr(*wxBLUE));
+                    mOutput->AppendText("= Build finished in " + std::to_string(totalStopWatch.Time()) + "ms\n");
 
-                mOutput->AppendText("Output file: " + outputFileName.c_str());
+                    mOutput->AppendText("Output file: " + outputFileName.c_str());
+                } catch(const dem::compiler::RuntimeException &e) {
+                    wxVector<wxVariant> data;
+                    data.push_back(wxVariant(wxDataViewIconText("Error", wxArtProvider::GetIcon(wxART_ERROR, wxART_OTHER, wxSize(16, 16)))));
+                    data.push_back(wxVariant(e.token().line()));
+                    data.push_back(wxVariant(e.token().column()));
+                    data.push_back(wxVariant(e.what()));
+                    data.push_back(wxVariant(activeEditor()->filePath()));
+                    mErrorList->AppendItem(data);
+                }
             } catch(...) {
-
+                wxVector<wxVariant> data;
+                data.push_back(wxVariant(wxDataViewIconText("Error", wxArtProvider::GetIcon(wxART_ERROR, wxART_OTHER, wxSize(16, 16)))));
+                data.push_back(wxVariant(1));
+                data.push_back(wxVariant(1));
+                data.push_back(wxVariant("Unknown error"));
+                data.push_back(wxVariant(activeEditor()->filePath()));
+                mErrorList->AppendItem(data);
             }
         }
 

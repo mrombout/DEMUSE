@@ -32,7 +32,7 @@ namespace dem {
                 Statement *statement = StatementFactory::produce(tokens, results);
                 std::vector<Statement*> statements{statement};
 
-                block = new Block(statements);
+                block = new Block(expression->token(), statements);
             }
 
             // [ "else" ( block | statement ) ]
@@ -46,7 +46,7 @@ namespace dem {
                     Statement *statement = StatementFactory::produce(tokens, results);
                     std::vector<Statement*> statements{statement};
 
-                    elseBlock = new Block(statements);
+                    elseBlock = new Block(statement->token(), statements);
                 }
 
                 return new If(expression, block, elseBlock);

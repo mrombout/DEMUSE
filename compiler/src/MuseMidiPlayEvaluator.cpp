@@ -9,13 +9,6 @@ namespace dem {
             mTime(0) {
             mMidiFile.absoluteTicks();
             mMidiFile.addTrack(2);
-
-            // add silence
-            mMidiMessage.setCommand(0x90, 0, 0);
-            mMidiFile.addEvent(1, mTime, mMidiMessage);
-
-            mMidiMessage.setCommand(0x80, 0, 0);
-            mMidiFile.addEvent(1, mTime += mTPQ * 4, mMidiMessage);
         }
 
         void MuseMidiPlayEvaluator::play(parser::Play &play, Scope *scope) {
@@ -28,6 +21,11 @@ namespace dem {
         }
 
         void MuseMidiPlayEvaluator::write(const std::string &fileName) {
+            // add silence
+            mMidiMessage.setCommand(0x80, 0, 0);
+            mMidiFile.addEvent(1, mTime += mTPQ * 4, mMidiMessage);
+
+            // write
             mMidiFile.write(fileName);
         }
 
@@ -39,10 +37,6 @@ namespace dem {
 
         bool MuseMidiPlayEvaluator::visitLeave(parser::Play &play) {
             std::cout << "LEAVE - Play" << std::endl;
-
-            // add silence
-            mMidiMessage.setCommand(0x80, 0, 0);
-            mMidiFile.addEvent(1, mTime += mTPQ * 4, mMidiMessage);
 
             return true;
         }
@@ -108,6 +102,11 @@ namespace dem {
             std::cout << "LEAVE - Instrument" << std::endl;
 
             return true;
+        }
+
+        void MuseMidiPlayEvaluator::setTrack(const parser::Track &track) {
+            mTime = 0;
+            mTrack = &track;
         }
     }
 }

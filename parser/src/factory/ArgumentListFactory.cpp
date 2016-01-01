@@ -20,7 +20,7 @@ namespace dem {
                 expressions.push_back(ExpressionFactory::produce(tokens, results));
             }
 
-            return new ArgumentList(expressions);
+            return new ArgumentList(expressions.front()->token(), expressions);
         }
     }
 }

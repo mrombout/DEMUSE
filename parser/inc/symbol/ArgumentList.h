@@ -9,7 +9,7 @@ namespace dem {
     namespace parser {
         class ArgumentList : public Symbol {
         public:
-            ArgumentList(std::vector<Expression*> arguments);
+            ArgumentList(const lexer::Token &token, std::vector<Expression*> arguments);
 
             std::vector<Expression*> &arguments();
             int numArguments();

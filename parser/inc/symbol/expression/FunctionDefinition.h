@@ -9,8 +9,8 @@ namespace dem {
     namespace parser {
         class FunctionDefinition : public Expression {
         public:
-            FunctionDefinition(ParameterList *parameterList, Block *block);
-            FunctionDefinition(Identifier *identifier, ParameterList *parameterList, Block *block);
+            FunctionDefinition(const lexer::Token &token, ParameterList *parameterList, Block *block);
+            FunctionDefinition(const lexer::Token &token, Identifier *identifier, ParameterList *parameterList, Block *block);
 
             virtual bool accept(Visitor &visitor);
 

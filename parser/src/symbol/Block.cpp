@@ -3,8 +3,8 @@
 
 namespace dem {
     namespace parser {
-        Block::Block(std::vector<Statement*> statements) :
-            Symbol(statements.front()->token()),
+        Block::Block(const lexer::Token &token, std::vector<Statement*> statements) :
+            Symbol(token),
             mStatements(statements) {
 
         }

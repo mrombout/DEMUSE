@@ -3,8 +3,8 @@
 
 namespace dem {
     namespace parser {
-        ArgumentList::ArgumentList(std::vector<Expression*> arguments) :
-            Symbol(arguments.front()->token()),
+        ArgumentList::ArgumentList(const lexer::Token &token, std::vector<Expression*> arguments) :
+            Symbol(token),
             mArguments(arguments) {
 
         }

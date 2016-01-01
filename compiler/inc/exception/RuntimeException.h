@@ -10,11 +10,15 @@ namespace dem {
         class RuntimeException : public std::exception {
         public:
             RuntimeException(const std::string &msg);
+            RuntimeException(const lexer::Token token, const std::string &msg);
 
             virtual const char *what() const noexcept override;
 
+            const lexer::Token token() const;
+
         private:
             const std::string mMsg;
+            const lexer::Token mToken;
         };
     }
 }

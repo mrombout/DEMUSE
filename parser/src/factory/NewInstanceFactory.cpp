@@ -1,3 +1,4 @@
+#include <vector>
 #include "symbol/ArgumentList.h"
 #include "factory/ArgumentListFactory.h"
 #include "factory/IdentifierFactory.h"
@@ -15,12 +16,15 @@ namespace dem {
             Identifier *identifier = IdentifierFactory::produce(tokens, results);
 
             // "("
+            lexer::Token token = tokens.front();
             expect(tokens, lexer::TokenType::OPEN, results);
 
             // argument_list
-            ArgumentList *argumentList = new ArgumentList(std::vector<Expression*>());
+            ArgumentList *argumentList = nullptr;
             if(!tokens.front().is(lexer::TokenType::CLOSE)) {
                 argumentList = ArgumentListFactory::produce(tokens, results);
+            } else {
+                argumentList = new ArgumentList(token, std::vector<Expression*>());
             }
 
             // ")"
