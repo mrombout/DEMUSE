@@ -50,7 +50,8 @@ namespace dem {
                     tokenPosition.line += 1;
                     tokenPosition.index += newLine.size();
                     tokenPosition.column = 1;
-                    std::advance(begin, newLine.length());
+                    if(begin != end)
+                        std::advance(begin, newLine.length());
                     continue;
                 }
 
@@ -58,7 +59,8 @@ namespace dem {
                 int skippedWhitespace = mSkipMatcher.match(begin, end, tokens, tokenPosition).length();
                 tokenPosition.index += skippedWhitespace;
                 tokenPosition.column += skippedWhitespace;
-                std::advance(begin, skippedWhitespace);
+                if(begin != end)
+                    std::advance(begin, skippedWhitespace);
 
                 // collect unmatched character
                 if(!matched && skippedWhitespace == 0) {
