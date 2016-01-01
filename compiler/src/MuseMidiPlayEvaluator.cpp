@@ -45,11 +45,11 @@ namespace dem {
             std::cout << "START - Note(" << mTime << ")" << std::endl;
 
             // note on
-            mMidiMessage.setCommand(0x90, note.midiNote(), note.note() == 'R' ? 0 : 127);
+            mMidiMessage.setCommand(0x90 + mTrack->channel(), note.midiNote(), note.note() == 'R' ? 0 : 127);
             mMidiFile.addEvent(1, mTime, mMidiMessage);
 
             // note off
-            mMidiMessage[0] = 0x80;
+            mMidiMessage[0] = 0x80 + mTrack->channel();
             mMidiFile.addEvent(1, mTime += mTPQ * note.midiDuration(), mMidiMessage);
 
             return true;
@@ -92,7 +92,7 @@ namespace dem {
             std::cout << "ENTER - Instrument" << std::endl;
 
             Value *value = mEvaluator.evaluate(mScope, *instrument.instrumentExpression());
-            mMidiMessage.setCommand(0xC0, value->asNumber());
+            mMidiMessage.setCommand(0xC0 + mTrack->channel(), value->asNumber());
             mMidiFile.addEvent(1, mTime, mMidiMessage);
 
             return true;
