@@ -1,3 +1,4 @@
+#include <value/function/InternalLambdaFunction.h>
 #include "exception/RuntimeException.h"
 #include "value/Value.h"
 #include "value/TextValue.h"
@@ -7,7 +8,13 @@ namespace dem {
     namespace compiler {
         TextValue::TextValue(std::string value) :
             mValue(value) {
-            mProperties["length"] = new Variable(new parser::Identifier(lexer::Token(lexer::TokenType::IDENTIFIER, "length", lexer::TokenPosition()), "length"), new NumberValue(value.length()));
+            mProperties["length"] = new Variable(new parser::Identifier("length"), new NumberValue(value.length()));
+            mProperties["charAt"] = new Variable(new parser::Identifier("charAt"), new InternalLambdaFunction(this, [this](InternalLambdaFunction &function) -> Value* {
+                return new TextValue(std::string(1, mValue.at(function.variable(new parser::Identifier("1")).asNumber())));
+            }));
+            mProperties["charCodeAt"] = new Variable(new parser::Identifier("charCodeAt"), new InternalLambdaFunction(this, [this](InternalLambdaFunction &function) -> Value* {
+                return new NumberValue(mValue.at(function.variable(new parser::Identifier("1")).asNumber()));
+            }));
         }
 
         Value *TextValue::add(Value *b) {

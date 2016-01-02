@@ -9,6 +9,7 @@ namespace dem {
     namespace parser {
         class Identifier : public Expression {
         public:
+            Identifier(const std::string &name);
             Identifier(const lexer::Token &token, std::string name);
 
             virtual bool accept(Visitor &visitor);

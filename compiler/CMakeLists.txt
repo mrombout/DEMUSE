@@ -44,6 +44,9 @@ set(Compiler_SRCS
     inc/value/function/InternalFunction.h
     src/value/function/InternalFunction.cpp
 
+    inc/value/function/InternalLambdaFunction.h
+    src/value/function/InternalLambdaFunction.cpp
+
     inc/value/TextValue.h
     src/value/TextValue.cpp
 

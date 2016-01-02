@@ -9,7 +9,7 @@ namespace dem {
         }
 
         Value *PrintFunction::operator()() {
-            std::cout << variable(new parser::Identifier(lexer::Token(lexer::TokenType::IDENTIFIER, "1", lexer::TokenPosition()), "1")).asString() << std::endl;
+            std::cout << variable(new parser::Identifier("1")).asString() << std::endl;
 
             return Value::operator()();
         }
