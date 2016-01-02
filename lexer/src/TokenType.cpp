@@ -216,6 +216,9 @@ namespace dem {
                 case TokenType::MULTICOMMENT:
                     str = "MULTICOMMENT";
                     break;
+                case TokenType::THIS:
+                    str = "THIS";
+                    break;
             }
 
             return output << str;

@@ -50,6 +50,7 @@
 #include "symbol/expression/PropertyAccessExpression.h"
 #include "symbol/expression/FunctionCallExpression.h"
 #include "symbol/expression/AssignmentExpression.h"
+#include "symbol/expression/ThisExpression.h"
 #include "symbol/play/Play.h"
 #include "symbol/play/Note.h"
 #include "symbol/play/Harmony.h"
@@ -212,6 +213,8 @@ namespace dem {
 
             virtual bool visitEnter(parser::NewInstance &newInstance);
             virtual bool visitLeave(parser::NewInstance &newInstance);
+
+            virtual bool visit(parser::ThisExpression &thisExpression);
         };
     }
 }

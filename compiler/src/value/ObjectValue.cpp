@@ -112,8 +112,8 @@ namespace dem {
             }
         }
 
-        const ObjectValue &ObjectValue::parent() const {
-            return *mParent;
+        ObjectValue *ObjectValue::parent() const {
+            return mParent;
         }
 
         void ObjectValue::setParent(ObjectValue *parent) {

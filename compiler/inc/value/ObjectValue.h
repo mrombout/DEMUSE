@@ -38,7 +38,7 @@ namespace dem {
 
             Variable &variable(parser::Identifier *identifier) const;
 
-            const ObjectValue &parent() const;
+            ObjectValue *parent() const;
             void setParent(ObjectValue *parent);
 
         protected:

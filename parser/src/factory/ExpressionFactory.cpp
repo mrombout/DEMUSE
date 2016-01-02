@@ -1,11 +1,12 @@
 #include <sstream>
 #include <stack>
-#include <factory/NewInstanceFactory.h>
 #include "exception/ParsingException.h"
+#include "factory/NewInstanceFactory.h"
 #include "factory/IdentifierFactory.h"
 #include "factory/ExpressionFactory.h"
 #include "factory/FunctionDefinitionFactory.h"
 #include "factory/NoteFactory.h"
+#include "symbol/expression/ThisExpression.h"
 #include "symbol/expression/AdditionExpression.h"
 #include "symbol/expression/SubtractionExpression.h"
 #include "symbol/expression/MultiplicationExpression.h"
@@ -144,7 +145,7 @@ namespace dem {
                 return gobbleStringLiteral(deque);
             } else if(deque.front().is(lexer::TokenType::BOOL)) {
                 return gobbleBoolLiteral(deque);
-            } else if(deque.front().is(lexer::TokenType::IDENTIFIER) || deque.front().is(lexer::TokenType::OPEN)) {
+            } else if(deque.front().is(lexer::TokenType::IDENTIFIER) || deque.front().is(lexer::TokenType::OPEN) || deque.front().is(lexer::TokenType::THIS)) {
                 // `foo`, `bar.baz`
                 return gobbleVariable(deque, results);
             } else if(deque.front().is(lexer::TokenType::BRACKET_OPEN)) {
@@ -303,6 +304,11 @@ namespace dem {
                 return boolLiteral;
                 // TODO: Null literal
                 // TODO: This literal
+            } else if(deque.front().is(lexer::TokenType::THIS)) {
+                ThisExpression *thisExpression = new ThisExpression(deque.front());
+                deque.pop_front();
+
+                return thisExpression;
             }
 
             // TODO: Throw exception?

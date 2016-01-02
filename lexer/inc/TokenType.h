@@ -10,6 +10,7 @@ namespace dem {
             BOOL = 1,
             TEXT,
             NUMBER,
+            THIS,
             COMMA,
             PERIOD,
             POSITIVE,

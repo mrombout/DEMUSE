@@ -544,7 +544,15 @@ namespace dem {
 
             return true;
         }
-        
+
+        bool ExpressionEvaluator::visit(parser::ThisExpression &thisExpression) {
+            std::clog << "ENTER - ThisExpression" << std::endl;
+
+            mStack.push(mObjectScope->parent());
+
+            return true;
+        }
+
         bool ExpressionEvaluator::visitEnter(parser::UnaryExpression &unaryExpression) {
             std::clog << "ENTER - UnaryExpression" << std::endl;
 
@@ -722,6 +730,7 @@ namespace dem {
             // fetch property
             try {
                 Variable *var = (*object)[identifier->name()];
+                std::clog << "PUSH - " << identifier->name() << ": " << var->asString() << std::endl;
                 mStack.push(var);
             } catch(const RuntimeException &e) {
                 throw RuntimeException(memberExpression.token(), e.what());

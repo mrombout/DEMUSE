@@ -87,6 +87,9 @@ set(Parser_SRCS
     inc/symbol/expression/TextLiteral.h
     src/symbol/expression/TextLiteral.cpp
 
+    inc/symbol/expression/ThisExpression.h
+    src/symbol/expression/ThisExpression.cpp
+
     inc/symbol/Track.h
     src/symbol/Track.cpp
 
