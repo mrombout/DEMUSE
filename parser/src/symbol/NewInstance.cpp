@@ -18,5 +18,13 @@ namespace dem {
 
             return visitor.visitLeave(*this);
         }
+
+        const Identifier &NewInstance::identifier() const {
+            return *mIdentifier;
+        }
+
+        const ArgumentList &NewInstance::argumentList() const {
+            return *mArgumentList;
+        }
     }
 }

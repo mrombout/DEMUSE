@@ -95,5 +95,15 @@ namespace dem {
         Value *Variable::operator()() {
             return (*mValue)();
         }
+
+        Value *Variable::realValue() const {
+            Value *realValue = mValue;
+            if(dynamic_cast<Variable*>(realValue)) {
+                Variable *variable = dynamic_cast<Variable*>(realValue);
+                return variable->realValue();
+            }
+
+            return realValue;
+        }
     }
 }

@@ -3,12 +3,17 @@ track 1 {
 
 	//// properties
 	Test.bar = 5;
-	print("Test.bar: " + Test.bar);
+	//print("Test.bar: " + Test.bar);
 
 	//// functions
-	Test.foo = function() {  // should add function to object
-		var X = 1;
-		print("X: " + X); // should print "X: 1"
-	};
-	Test.foo();
+	//Test.foo = function() {  // should add function to object
+		//var X = 1;
+		//print("X: " + X); // should print "X: 1"
+	//};
+	//Test.foo();
+
+    Test.widget = function() {
+        print("Test.widget: " + bar);
+    };
+    Test.widget();
 }

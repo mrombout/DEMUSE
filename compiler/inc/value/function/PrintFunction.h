@@ -7,6 +7,8 @@ namespace dem {
     namespace compiler {
         class PrintFunction : public InternalFunction {
         public:
+            PrintFunction(ObjectValue *parent);
+
             virtual Value *operator()();
         };
     }

@@ -735,5 +735,30 @@ namespace dem {
 
             return true;
         }
+
+        bool ExpressionEvaluator::visitEnter(parser::NewInstance &newInstance) {
+            std::clog << "ENTER - NewInstance" << std::endl;
+
+            return true;
+        }
+
+        bool ExpressionEvaluator::visitLeave(parser::NewInstance &newInstance) {
+            std::clog << "LEAVE - NewInstance" << std::endl;
+
+            Value *value = mStack.top();
+            mStack.pop();
+
+            ObjectValue *parentObject = dynamic_cast<ObjectValue*>(value);
+            if(dynamic_cast<Variable*>(value)) {
+                Variable *variable = dynamic_cast<Variable*>(value);
+                parentObject = dynamic_cast<ObjectValue*>(variable->realValue());
+            }
+            if(parentObject == nullptr)
+                throw RuntimeException(newInstance.token(), "Can't create a new instance, \"" + newInstance.identifier().name() + "\" is not an object.");
+
+            mStack.push(new ObjectValue(parentObject));
+
+            return false;
+        }
     }
 }

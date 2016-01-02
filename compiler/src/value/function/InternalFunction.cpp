@@ -4,6 +4,11 @@
 
 namespace dem {
     namespace compiler {
+        InternalFunction::InternalFunction(ObjectValue *parent) :
+            FunctionValue(parent) {
+
+        }
+
         void InternalFunction::mapScope(std::vector<Value*> &arguments) {
             int curIndex = 0;
             for(Value *value : arguments) {

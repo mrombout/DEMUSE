@@ -1,6 +1,7 @@
 #include "exception/RuntimeException.h"
 #include "value/NullValue.h"
 #include "value/ObjectValue.h"
+#include "value/Property.h"
 
 namespace dem {
     namespace compiler {
@@ -16,7 +17,7 @@ namespace dem {
 
         Variable *ObjectValue::operator[](const std::string &index) {
             if(mProperties.count(index) == 0) {
-                mProperties[index] = new Variable(new parser::Identifier(lexer::Token(lexer::TokenType::IDENTIFIER, index, lexer::TokenPosition()), index), new NullValue());
+                mProperties[index] = new Property(this, new parser::Identifier(lexer::Token(lexer::TokenType::IDENTIFIER, index, lexer::TokenPosition()), index), new NullValue());
             }
             return mProperties.at(index);
         }
@@ -109,6 +110,14 @@ namespace dem {
                     return mParent->variable(identifier);
                 throw RuntimeException(identifier->token(), "Variable '" + identifier->name() + "' does not exist.");
             }
+        }
+
+        const ObjectValue &ObjectValue::parent() const {
+            return *mParent;
+        }
+
+        void ObjectValue::setParent(ObjectValue *parent) {
+            mParent = parent;
         }
     }
 }

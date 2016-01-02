@@ -1,6 +1,7 @@
 #ifndef DEMUSE_DEMUSEVISITOR_H
 #define DEMUSE_DEMUSEVISITOR_H
 
+#include "symbol/NewInstance.h"
 #include "symbol/ArgumentList.h"
 #include "symbol/Assignment.h"
 #include "symbol/Block.h"
@@ -208,6 +209,9 @@ namespace dem {
 
             virtual bool visitEnter(parser::Instrument &instrument);
             virtual bool visitLeave(parser::Instrument &instrument);
+
+            virtual bool visitEnter(parser::NewInstance &newInstance);
+            virtual bool visitLeave(parser::NewInstance &newInstance);
         };
     }
 }

@@ -8,6 +8,9 @@ set(Compiler_SRCS
     inc/value/Variable.h
     src/value/Variable.cpp
 
+    inc/value/Property.h
+    src/value/Property.cpp
+
     inc/value/Value.h
     src/value/Value.cpp
 

@@ -8,8 +8,8 @@ namespace dem {
             lexer::Token token{lexer::TokenType::IDENTIFIER, "N/A", lexer::TokenPosition()};
 
             // standard library
-            declareVariable(new parser::Identifier(token, "print"),  new PrintFunction());
-            declareVariable(new parser::Identifier(token, "Object"), new ObjectValue());
+            declareVariable(new parser::Identifier(token, "print"),  new PrintFunction(this));
+            declareVariable(new parser::Identifier(token, "Object"), new ObjectValue(this));
 
             // standard play library
             declareVariable(new parser::Identifier(token, "tempo"),  new NumberValue(120));

@@ -87,6 +87,9 @@ namespace dem {
             virtual bool visitEnter(parser::MemberExpression &memberExpression) override;
             virtual bool visitLeave(parser::MemberExpression &memberExpression) override;
 
+            virtual bool visitEnter(parser::NewInstance &newInstance) override;
+            virtual bool visitLeave(parser::NewInstance &newInstance) override;
+
         private:
             Compiler &mCompiler;
 

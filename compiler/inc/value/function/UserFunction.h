@@ -21,6 +21,7 @@ namespace dem {
             virtual double asNumber() const;
             virtual bool asBool() const;
             virtual parser::Note asNote() const;
+            virtual std::string asString() const override;
 
             virtual bool operator==(const Value &other);
             virtual bool operator!=(const Value &other);

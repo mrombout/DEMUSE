@@ -11,6 +11,9 @@ namespace dem {
         public:
             NewInstance(Identifier *identifier, ArgumentList *argumentList);
 
+            const Identifier &identifier() const;
+            const ArgumentList &argumentList() const;
+
             virtual bool accept(Visitor &visitor);
 
         private:

@@ -8,6 +8,8 @@ namespace dem {
     namespace compiler {
         class InternalFunction : public FunctionValue {
         public:
+            InternalFunction(ObjectValue *parent);
+
             virtual Value *add(Value *b);
             virtual Value *subtract(Value *b);
             virtual Value *multiply(Value *b);

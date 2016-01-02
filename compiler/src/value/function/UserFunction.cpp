@@ -73,6 +73,10 @@ namespace dem {
             throw RuntimeException("Value of type 'Function' can not implicitly be converted to value of type 'Note'.");
         }
 
+        std::string UserFunction::asString() const {
+            return "Function";
+        }
+
         bool UserFunction::operator==(const Value &other) {
             throw RuntimeException("Functions do not support '==' operations.");
         }

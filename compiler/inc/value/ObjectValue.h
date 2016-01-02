@@ -11,8 +11,6 @@ namespace dem {
             ObjectValue();
             ObjectValue(ObjectValue* parent);
 
-            virtual std::string asString() const;
-
             virtual Value *add(Value *b);
             virtual Value *subtract(Value *b);
             virtual Value *multiply(Value *b);
@@ -23,6 +21,7 @@ namespace dem {
             virtual double asNumber() const;
             virtual bool asBool() const;
             virtual parser::Note asNote() const;
+            virtual std::string asString() const;
 
             virtual bool operator==(const Value &other);
             virtual bool operator!=(const Value &other);
@@ -38,6 +37,9 @@ namespace dem {
             void declareVariable(parser::Identifier *identifier, Value *value);
 
             Variable &variable(parser::Identifier *identifier) const;
+
+            const ObjectValue &parent() const;
+            void setParent(ObjectValue *parent);
 
         protected:
             ObjectValue *mParent;

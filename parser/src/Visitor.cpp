@@ -150,5 +150,8 @@ namespace dem {
 
         bool Visitor::visitEnter(parser::Instrument &instrument) { return true; }
         bool Visitor::visitLeave(parser::Instrument &instrument) { return true; }
+
+        bool Visitor::visitEnter(parser::NewInstance &newInstance) { return true; }
+        bool Visitor::visitLeave(parser::NewInstance &newInstance) { return true; }
     }
 }
