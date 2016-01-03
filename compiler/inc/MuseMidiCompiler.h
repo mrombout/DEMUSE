@@ -6,7 +6,6 @@
 #include "Compiler.h"
 #include "Visitor.h"
 #include "ExpressionEvaluator.h"
-#include "MusePlayEvaluator.h"
 #include "MuseMidiPlayEvaluator.h"
 
 namespace dem {

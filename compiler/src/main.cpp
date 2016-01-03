@@ -1,6 +1,5 @@
 #include <iostream>
 #include <fstream>
-#include <jdksmidi/world.h>
 #include "MuseLexer.h"
 #include "MuseParser.h"
 #include "MuseMidiCompiler.h"

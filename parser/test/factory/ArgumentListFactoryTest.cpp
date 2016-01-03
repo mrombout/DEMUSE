@@ -10,6 +10,7 @@ protected:
 
     dem::lexer::TokenPosition tokenPosition;
     dem::parser::ArgumentListFactory factory;
+    dem::parser::ParseResults parseResults;
 };
 
 // TODO: Most tests rely on the ExpressionFactory working, should refactor to remove static calls
@@ -21,7 +22,7 @@ TEST_F(ArgumentListFactoryTest, SingleIdentifierArgument) {
     };
 
     // act
-    dem::parser::ArgumentList *result = factory.produce(tokens);
+    dem::parser::ArgumentList *result = dem::parser::ArgumentListFactory::produce(tokens, parseResults);
 
     // assert
     ASSERT_EQ(1, result->numArguments());
@@ -34,7 +35,7 @@ TEST_F(ArgumentListFactoryTest, SinglePrimitiveArgument) {
     };
 
     // act
-    dem::parser::ArgumentList *result = factory.produce(tokens);
+    dem::parser::ArgumentList *result = dem::parser::ArgumentListFactory::produce(tokens, parseResults);
 
     // assert
     ASSERT_EQ(1, result->numArguments());
@@ -51,7 +52,7 @@ TEST_F(ArgumentListFactoryTest, ThreeArguments) {
     };
 
     // act
-    dem::parser::ArgumentList *result = factory.produce(tokens);
+    dem::parser::ArgumentList *result = dem::parser::ArgumentListFactory::produce(tokens, parseResults);
 
     // assert
     ASSERT_EQ(3, result->numArguments());
@@ -68,7 +69,7 @@ TEST_F(ArgumentListFactoryTest, ThreeMixedPrimitiveAndIdentifierArguments) {
     };
 
     // act
-    dem::parser::ArgumentList *result = factory.produce(tokens);
+    dem::parser::ArgumentList *result = dem::parser::ArgumentListFactory::produce(tokens, parseResults);
 
     // assert
     ASSERT_EQ(3, result->numArguments());

@@ -11,10 +11,10 @@ namespace dem {
             virtual bool OnInit() override;
             virtual int OnExit() override;
 
-            wxFileConfig &config();
+            //wxFileConfig &config();
 
-        private:
-            wxFileConfig *mConfig;
+        //private:
+            //wxFileConfig *mConfig;
         };
     }
 }

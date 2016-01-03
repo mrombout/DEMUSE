@@ -13,7 +13,7 @@ protected:
 
     }
 
-    dem::compiler::Scope scope;
+    dem::compiler::ObjectValue scope;
     dem::compiler::MidiCompiler compiler; // TODO: replace with mock
     dem::compiler::ExpressionEvaluator evaluator;
 
