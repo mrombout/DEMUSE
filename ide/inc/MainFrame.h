@@ -4,11 +4,7 @@
 #include <unordered_set>
 #include <map>
 #include <wx/frame.h>
-#include <wx/event.h>
 #include <wx/aui/aui.h>
-#include <wx/dirctrl.h>
-#include <wx/slider.h>
-#include <wx/stc/stc.h>
 #include <wx/dataview.h>
 #include <wx/process.h>
 #include "AutocompleteVisitor.h"
@@ -35,6 +31,7 @@ namespace dem {
             MainFrame(const wxString &title, const wxPoint &pos, const wxSize &size);
             ~MainFrame();
 
+            wxAuiNotebook *mNotebook;
         private:
             void createMenu();
             void createStatusBar();
@@ -86,7 +83,6 @@ namespace dem {
             wxMenu *mEditMenu;
 
             wxToolBar *mToolbar;
-            wxAuiNotebook *mNotebook;
             wxDataViewListCtrl *mErrorList;
             wxTextCtrl *mOutput;
 

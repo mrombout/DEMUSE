@@ -221,7 +221,8 @@ namespace dem {
                 }
 
                 // show autocomplete
-                AutoCompShow(lenEntered, autocompleteWords);
+                if(!autocompleteWords.empty())
+                    AutoCompShow(lenEntered, autocompleteWords);
             }
         }
 

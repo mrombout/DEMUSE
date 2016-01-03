@@ -1,32 +1,23 @@
 #include <fstream>
 #include <wx/menu.h>
-#include <wx/log.h>
-#include <wx/msgdlg.h>
-#include <wx/textctrl.h>
-#include <wx/stc/stc.h>
 #include <wx/toolbar.h>
 #include <wx/artprov.h>
-#include <wx/filedlg.h>
 #include <wx/filename.h>
+#include "MainFrame.h"
+#include <wx/msgdlg.h>
+#include <wx/filedlg.h>
 #include <wx/preferences.h>
-#include <wx/process.h>
 #include <wx/mimetype.h>
 #include "exception/RuntimeException.h"
-#include "MuseMidiCompiler.h"
 #include "App.h"
-#include "Compiler.h"
-#include "Parser.h"
 #include "MuseParser.h"
-#include "symbol/Program.h"
-#include "symbol/Symbol.h"
+#include "MuseArtProvider.h"
+#include "OutputTextCtrl.h"
+#include "MuseMidiCompiler.h"
 #include "preference/GeneralPage.h"
 #include "preference/EditorPage.h"
 #include "preference/ColorsPage.h"
 #include "preference/ExecutionPage.h"
-#include "MainFrame.h"
-#include "MuseArtProvider.h"
-#include "MuseLexer.h"
-#include "OutputTextCtrl.h"
 
 namespace dem {
     namespace ide {
@@ -63,8 +54,8 @@ namespace dem {
 
         MainFrame::MainFrame(const wxString &title, const wxPoint &pos, const wxSize &size) :
             wxFrame(nullptr, wxID_ANY, title, pos, size) {
+
             mMgr.SetManagedWindow(this);
-            
 #ifdef __WINDOWS__
             auto tset = wxICON(icon);
             SetIcon(tset);
@@ -117,12 +108,10 @@ namespace dem {
 
             mRunMenu->Enable(ID_Stop, false);
 
-            /*
-            mHelpMenu = new wxMenu;
-            mHelpMenu->Append(wxID_HELP);
-            mHelpMenu->AppendSeparator();
-            mHelpMenu->Append(wxID_ABOUT);
-            */
+            //mHelpMenu = new wxMenu;
+            //mHelpMenu->Append(wxID_HELP);
+            //mHelpMenu->AppendSeparator();
+            //mHelpMenu->Append(wxID_ABOUT);
 
             wxMenuBar *menuBar = new wxMenuBar;
             menuBar->Append(mFileMenu, "&File");
@@ -145,15 +134,14 @@ namespace dem {
                                                     wxAUI_NB_TAB_SPLIT |
                                                     wxAUI_NB_TAB_MOVE | wxAUI_NB_CLOSE_ON_ALL_TABS |
                                                     wxAUI_NB_MIDDLE_CLICK_CLOSE | wxNO_BORDER);
-            mNotebook->Bind(wxEVT_AUINOTEBOOK_PAGE_CLOSE, &MainFrame::onNotebookPageClose, this, wxID_ANY);
-            mNotebook->Bind(wxEVT_AUINOTEBOOK_PAGE_CHANGED, &MainFrame::onNotebookPageChanged, this, wxID_ANY);
+            mNotebook->Bind(wxEVT_AUINOTEBOOK_PAGE_CLOSE, &MainFrame::onNotebookPageClose, this);
+            mNotebook->Bind(wxEVT_AUINOTEBOOK_PAGE_CHANGED, &MainFrame::onNotebookPageChanged, this);
 
             mMgr.AddPane(mNotebook, wxCENTER);
-            //mNotebook->SetArtProvider(new MuseAuiTabArt);
             mMgr.GetArtProvider()->SetMetric(wxAUI_DOCKART_PANE_BORDER_SIZE, 0);
         }
 
-        void MainFrame::createEditor(const wxString &filePath /*= wxT("") */) {
+        void MainFrame::createEditor(const wxString &filePath) {
             if(!mFileEditors.count(filePath)) {
                 // create and new editor and load file if available
                 MuseStyledTextEditor *editor = new MuseStyledTextEditor(this, new lexer::MuseLexer());
@@ -174,7 +162,7 @@ namespace dem {
                 };
 
                 // register events
-                editor->Bind(wxEVT_STC_MODIFIED, &MainFrame::onEditorModified, this, wxID_ANY);
+                editor->Bind(wxEVT_STC_MODIFIED, &MainFrame::onEditorModified, this);
             } else {
                 // select page with the loaded file
                 mNotebook->SetSelection(mFileEditors[filePath].editorId);
@@ -186,16 +174,19 @@ namespace dem {
             mErrorList = new wxDataViewListCtrl(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxDV_ROW_LINES | wxDV_HORIZ_RULES | wxNO_BORDER);
             mErrorList->AppendIconTextColumn("");
             mErrorList->AppendTextColumn("Line",        wxDATAVIEW_CELL_INERT, 40);
-            mErrorList->AppendTextColumn("Column",      wxDATAVIEW_CELL_INERT, 40);
+            mErrorList->AppendTextColumn("Column",      wxDATAVIEW_CELL_INERT, 64);
             mErrorList->AppendTextColumn("Description", wxDATAVIEW_CELL_INERT, 400);
             mErrorList->AppendTextColumn("File",        wxDATAVIEW_CELL_INERT, 300);
-            mErrorList->Bind(wxEVT_DATAVIEW_ITEM_ACTIVATED, &MainFrame::onErrorListItemActivated, this, wxID_ANY);
+            mErrorList->Bind(wxEVT_DATAVIEW_ITEM_ACTIVATED, &MainFrame::onErrorListItemActivated, this);
 
             mMgr.AddPane(mErrorList, wxAuiPaneInfo().Name("Errors").Bottom().MinimizeButton(true).PaneBorder(true).MinSize(-1, 200));
 
             // output window
             mOutput = new OutputTextCtrl(this, -1, _(""), wxDefaultPosition, wxSize(200, 150), wxNO_BORDER | wxTE_MULTILINE | wxTE_AUTO_URL | wxTE_RICH | wxTE_DONTWRAP);
             mMgr.AddPane(mOutput, wxAuiPaneInfo().Name("Output").Bottom().MinimizeButton(true).PaneBorder(true).MinSize(-1, 200));
+
+            std::streambuf *sbOld = std::cout.rdbuf(); //where is rdbuff declared/?!
+            std::cout.rdbuf(mOutput);
         }
 
         void MainFrame::createToolBar() {
@@ -272,9 +263,9 @@ namespace dem {
             if(editorId == wxNOT_FOUND)
                 return;
 
-            // open dialogsize_t editorId = mNotebook->GetSelection();
+            // open dialog
             wxString filePath = wxEmptyString;
-            wxFileDialog dlg(this, wxT("Save file..."), wxEmptyString, wxEmptyString, wxT("Any file (*)|*"), wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
+            wxFileDialog dlg(this, wxT("Save file..."), wxEmptyString, wxEmptyString, wxT("Any file (*.*)|*|Muse File (*.muse)|*.muse"), wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
             if(dlg.ShowModal() != wxID_OK) return;
             filePath = dlg.GetPath();
 
@@ -365,11 +356,11 @@ namespace dem {
             sw.Pause();
 
             mOutput->SetDefaultStyle(wxTextAttr(*wxBLUE));
-            mOutput->AppendText("= Building: file:\\\\\\" + activeEditor()->filePath() + "\n");
+            mOutput->AppendText("= Building: file:///" + activeEditor()->filePath() + "\n");
 
             // read file
             mOutput->SetDefaultStyle(wxTextAttr(wxColour(255, 0, 255)));
-            mOutput->AppendText("== Reading: file:\\\\\\" + activeEditor()->filePath() + "\n");
+            mOutput->AppendText("== Reading: file:///" + activeEditor()->filePath() + "\n");
 
             sw.Start();
             std::ifstream is(activeEditor()->filePath().c_str());
@@ -379,7 +370,7 @@ namespace dem {
             mOutput->AppendText("== Reading finished in " + std::to_string(sw.Time()) + "ms\n");
 
             // lexing
-            mOutput->AppendText("== Lexing: file:\\\\\\" + activeEditor()->filePath() + "\n");
+            mOutput->AppendText("== Lexing: file:///" + activeEditor()->filePath() + "\n");
 
             sw.Start();
             dem::lexer::MuseLexer museLexer;
@@ -392,7 +383,7 @@ namespace dem {
 
             try {
                 // parsing
-                mOutput->AppendText("== Parsing: file:\\\\\\" + activeEditor()->filePath() + "\n");
+                mOutput->AppendText("== Parsing: file:///" + activeEditor()->filePath() + "\n");
 
                 sw.Start();
                 dem::parser::MuseParser parser;
@@ -407,17 +398,19 @@ namespace dem {
                 updateErrors();
 
                 // compiling
-                mOutput->AppendText("== Compiling: file:\\\\\\" + activeEditor()->filePath() + "\n");
+                mOutput->AppendText("== Compiling: file:///" + activeEditor()->filePath() + "\n");
 
                 try {
-                    sw.Start();
                     wxString outputFileName = getOutputFileName(activeEditor()->filePath());
                     std::cout << "Path: " << outputFileName << std::endl;
 
+                    sw.Start();
+                    mOutput->SetDefaultStyle(wxTextAttr(*wxBLACK));
                     dem::compiler::MidiCompiler compiler;
                     compiler.compile(static_cast<dem::parser::Program*>(program), std::string(outputFileName.c_str()));
                     sw.Pause();
 
+                    mOutput->SetDefaultStyle(wxTextAttr(wxColour(255, 0, 255)));
                     mOutput->AppendText("== Compiling finished in " + std::to_string(sw.Time()) + "ms\n");
 
                     mOutput->SetDefaultStyle(wxTextAttr(*wxBLUE));
@@ -456,9 +449,13 @@ namespace dem {
             wxMimeTypesManager manager;
             wxFileType *fileType = manager.GetFileTypeFromExtension("mid");
             wxString command = fileType->GetOpenCommand(getOutputFileName(activeEditor()->filePath()));
+            if(command.empty()) {
+                wxMessageBox(wxT("No default MIDI player detected."), wxT("No MIDI Player"), wxICON_ERROR);
+                return;
+            }
 
             mActiveProcess = wxProcess::Open(command);
-            mActiveProcess->Bind(wxEVT_END_PROCESS, &MainFrame::onEndProcess, this, wxID_ANY);
+            mActiveProcess->Bind(wxEVT_END_PROCESS, &MainFrame::onEndProcess, this);
 
             mToolbar->EnableTool(ID_Run, false);
             mToolbar->EnableTool(ID_Stop, true);
