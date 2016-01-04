@@ -49,35 +49,39 @@ namespace dem {
         }
 
         bool NoteValue::operator==(const Value &other) {
-            throw RuntimeException("Booleans do not support '==' operations.");
+            throw RuntimeException("Notes do not support '==' operations.");
         }
 
         bool NoteValue::operator!=(const Value &other) {
-            throw RuntimeException("Booleans do not support '!=' operations.");
+            throw RuntimeException("Notes do not support '!=' operations.");
         }
 
         bool NoteValue::operator<(const Value &other) {
-            throw RuntimeException("Booleans do not support '<' operations.");
+            throw RuntimeException("Notes do not support '<' operations.");
         }
 
         bool NoteValue::operator<=(const Value &other) {
-            throw RuntimeException("Booleans do not support '<=' operations.");
+            throw RuntimeException("Notes do not support '<=' operations.");
         }
 
         bool NoteValue::operator>(const Value &other) {
-            throw RuntimeException("Booleans do not support '>' operations.");
+            throw RuntimeException("Notes do not support '>' operations.");
         }
 
         bool NoteValue::operator>=(const Value &other) {
-            throw RuntimeException("Booleans do not support '>=' operations.");
+            throw RuntimeException("Notes do not support '>=' operations.");
         }
 
         Value *NoteValue::operator[](const int index) {
-            throw RuntimeException("Booleans do not support '[]' operations.");
+            throw RuntimeException("Notes do not support '[]' operations.");
         }
 
         Variable *NoteValue::operator[](const std::string &index) {
-            throw RuntimeException("Booleans do not support '.' operations.");
+            throw RuntimeException("Notes do not support '.' operations.");
+        }
+
+        Value *NoteValue::operator()() {
+            throw RuntimeException("Notes do not support '()' operations.");
         }
     }
 }

@@ -23,9 +23,7 @@ TEST_F(TextValueTest, Subtract_ThrowsException) {
     dem::compiler::TextValue b{"Right"};
 
     // act / assert
-    ASSERT_ANY_THROW({
-        a.subtract(&b);
-    });
+    ASSERT_ANY_THROW({ a.subtract(&b); });
 }
 
 TEST_F(TextValueTest, Multiply_ThrowsException) {
@@ -34,9 +32,7 @@ TEST_F(TextValueTest, Multiply_ThrowsException) {
     dem::compiler::TextValue b{"Right"};
 
     // act / assert
-    ASSERT_ANY_THROW({
-        a.multiply(&b);
-    });
+    ASSERT_ANY_THROW({ a.multiply(&b); });
 }
 
 TEST_F(TextValueTest, Divide_ThrowsException) {
@@ -45,9 +41,7 @@ TEST_F(TextValueTest, Divide_ThrowsException) {
     dem::compiler::TextValue b{"Right"};
 
     // act / assert
-    ASSERT_ANY_THROW({
-        a.divide(&b);
-    });
+    ASSERT_ANY_THROW({ a.divide(&b); });
 }
 
 TEST_F(TextValueTest, Modulo_ThrowsException) {
@@ -56,9 +50,7 @@ TEST_F(TextValueTest, Modulo_ThrowsException) {
     dem::compiler::TextValue b{"Right"};
 
     // assert / act
-    ASSERT_ANY_THROW({
-        a.modulo(&b);
-    });
+    ASSERT_ANY_THROW({ a.modulo(&b); });
 }
 
 TEST_F(TextValueTest, AsNumber_ValidNumber_ReturnsNumberAsString) {
@@ -306,4 +298,45 @@ TEST_F(TextValueTest, LargerThanOrEqual_IsLarger_ReturnsTrue) {
 
     // assert
     ASSERT_TRUE(result);
+}
+
+
+TEST_F(TextValueTest, ArrayAccess_NegativeIndex_ThrowsException) {
+    // arrange
+    dem::compiler::TextValue a{"Lorum Ipsum"};
+
+    // assert / act
+    ASSERT_ANY_THROW({ a[-1]; });
+}
+
+TEST_F(TextValueTest, ArrayAccess_IndexNotExist_ThrowsException) {
+    // arrange
+    dem::compiler::TextValue a{"Lorum Ipsum"};
+
+    // assert / act
+    ASSERT_ANY_THROW({ a[8]; });
+}
+
+TEST_F(TextValueTest, ArrayAccess_IndexExist_ThrowsException) {
+    // arrange
+    dem::compiler::TextValue a{"Lorum Ipsum"};
+
+    // assert / act
+    ASSERT_ANY_THROW({ a[0]; });
+}
+
+TEST_F(TextValueTest, PropertyAccess_ReturnsProperty) {
+    // arrange
+    dem::compiler::TextValue a{"Lorum Ipsum"};
+
+    // assert / act
+    ASSERT_ANY_THROW({ a[0]; });
+}
+
+TEST_F(TextValueTest, Call_ThrowsException) {
+    // arrange
+    dem::compiler::TextValue a{"Lorum Ipsum"};
+
+    // assert / act
+    ASSERT_ANY_THROW({ a(); });
 }

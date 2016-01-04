@@ -71,8 +71,13 @@ set(TestLexer_SRCS
     test/LexerTest.cpp
     test/MuseLexerTest.cpp
     test/MusicStringLexerTest.cpp
+
+    test/matcher/AccidentalMatcherTest.cpp
     test/matcher/NullMatcherTest.cpp
     test/matcher/CharMatcherTest.cpp
+    test/matcher/DurationMatcherTest.cpp
+    test/matcher/MultiCommentMatcherTest.cpp
+    test/matcher/NewLineMatcherTest.cpp
     test/matcher/StringMatcherTest.cpp
     test/matcher/RegexMatcherTest.cpp
 )

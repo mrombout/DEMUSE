@@ -318,3 +318,27 @@ TEST_F(BooleanValueTest, LargerThanOrEqual_IsLarger_ReturnsTrue) {
     // assert
     ASSERT_TRUE(result);
 }
+
+TEST_F(BooleanValueTest, ArrayAccess_ThrowsException) {
+    // arrange
+    dem::compiler::BooleanValue a{true};
+
+    // assert / act
+    ASSERT_ANY_THROW({ a[-1]; });
+}
+
+TEST_F(BooleanValueTest, PropertyAccess_ThrowsException) {
+    // arrange
+    dem::compiler::BooleanValue a{true};
+
+    // assert / act
+    ASSERT_ANY_THROW({ a["propertyName"]; });
+}
+
+TEST_F(BooleanValueTest, Call_ThrowsException) {
+    // arrange
+    dem::compiler::BooleanValue a{true};
+
+    // assert / act
+    ASSERT_ANY_THROW({ a(); });
+}

@@ -7,5 +7,5 @@ var B = "ABCDEF";
 print("CharAt(1): " + B.charAt(1)); // should print "CharAt(1): B"
 
 // test 2 - charCodeAt
-var B = "ABCDEF";
-print("CharCodeAt(1): " + B.charCodeAt(1)); // should print "CharCodeAt(1): B"
+var C = "ABCDEF";
+print("CharCodeAt(1): " + C.charCodeAt(1)); // should print "CharCodeAt(1): C"

@@ -49,27 +49,27 @@ namespace dem {
         }
 
         bool BooleanValue::operator==(const Value &other) {
-            throw RuntimeException("Booleans do not support '==' operations.");
+            return mValue == other.asBool();
         }
 
         bool BooleanValue::operator!=(const Value &other) {
-            throw RuntimeException("Booleans do not support '!=' operations.");
+            return mValue != other.asBool();
         }
 
         bool BooleanValue::operator<(const Value &other) {
-            throw RuntimeException("Booleans do not support '<' operations.");
+            return mValue < other.asBool();
         }
 
         bool BooleanValue::operator<=(const Value &other) {
-            throw RuntimeException("Booleans do not support '<=' operations.");
+            return mValue <= other.asBool();
         }
 
         bool BooleanValue::operator>(const Value &other) {
-            throw RuntimeException("Booleans do not support '>' operations.");
+            return mValue > other.asBool();
         }
 
         bool BooleanValue::operator>=(const Value &other) {
-            throw RuntimeException("Booleans do not support '>=' operations.");
+            return mValue >= other.asBool();
         }
 
         Value *BooleanValue::operator[](const int index) {

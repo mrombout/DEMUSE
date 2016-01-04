@@ -19,10 +19,12 @@ namespace dem {
             }
 
             // "*/"
-            if(matchClose(newBegin, newEnd))
+            if(matchClose(newBegin, newEnd)) {
                 matchResult += "*/";
+                return matchResult;
+            }
 
-            return matchResult;
+            return "";
         }
 
         bool MultiCommentMatcher::matchOpen(std::string::iterator &begin, std::string::iterator &end) const {

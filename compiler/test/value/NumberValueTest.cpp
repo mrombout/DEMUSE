@@ -356,3 +356,43 @@ TEST_F(NumberValueTest, LargerThanOrEqual_IsLarger_ReturnsTrue) {
     // assert
     ASSERT_TRUE(result);
 }
+
+TEST_F(NumberValueTest, ArrayAccess_NegativeIndex_ThrowsException) {
+    // arrange
+    dem::compiler::NumberValue a{2};
+
+    // assert / act
+    ASSERT_ANY_THROW({ a[-1]; });
+}
+
+TEST_F(NumberValueTest, ArrayAccess_IndexNotExist_ThrowsException) {
+    // arrange
+    dem::compiler::NumberValue a{2};
+
+    // assert / act
+    ASSERT_ANY_THROW({ a[8]; });
+}
+
+TEST_F(NumberValueTest, ArrayAccess_IndexExist_ReturnsValue) {
+    // arrange
+    dem::compiler::NumberValue a{2};
+
+    // assert / act
+    ASSERT_ANY_THROW({ a[0]; });
+}
+
+TEST_F(NumberValueTest, PropertyAccess_ThrowsException) {
+    // arrange
+    dem::compiler::NumberValue a{2};
+
+    // assert / act
+    ASSERT_ANY_THROW({ a["propertyName"]; });
+}
+
+TEST_F(NumberValueTest, Call_ThrowsException) {
+    // arrange
+    dem::compiler::NumberValue a{2};
+
+    // assert / act
+    ASSERT_ANY_THROW({ a(); });
+}

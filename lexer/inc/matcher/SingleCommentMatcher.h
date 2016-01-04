@@ -2,7 +2,7 @@
 #define DEMUSE_SINGLECOMMENTMATCHER_H
 
 #include "Matcher.h"
-#include "NewLineMatcher.h"
+#include "matcher/NewLineMatcher.h"
 
 namespace dem {
     namespace lexer {

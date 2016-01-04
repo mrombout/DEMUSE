@@ -37,7 +37,7 @@ namespace dem {
         }
 
         std::string NullValue::asString() const {
-            return "NULL";
+            throw RuntimeException("Value of type 'Null' can not implicitly be converted to value of type 'String'.");
         }
 
         parser::Note NullValue::asNote() const {

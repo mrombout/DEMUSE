@@ -15,17 +15,6 @@ namespace dem {
 
         }
 
-        Variable *ObjectValue::operator[](const std::string &index) {
-            if(mProperties.count(index) == 0) {
-                mProperties[index] = new Property(this, new parser::Identifier(lexer::Token(lexer::TokenType::IDENTIFIER, index, lexer::TokenPosition()), index), new NullValue());
-            }
-            return mProperties.at(index);
-        }
-
-        std::string ObjectValue::asString() const {
-            return "Object";
-        }
-
         Value *ObjectValue::add(Value *b) {
             throw RuntimeException("Objects do not support addition operations.");
         }
@@ -58,6 +47,10 @@ namespace dem {
             throw RuntimeException("Value of type 'Object' can not implicitly be converted to value of type 'Boolean'.");
         }
 
+        std::string ObjectValue::asString() const {
+            return "Object";
+        }
+
         parser::Note ObjectValue::asNote() const {
             throw RuntimeException("Value of type 'Object' can not implicitly be converted to value of type 'Note'.");
         }
@@ -88,6 +81,17 @@ namespace dem {
 
         Value *ObjectValue::operator[](const int index) {
             throw RuntimeException("Objects do not support '[]' operations.");
+        }
+
+        Variable *ObjectValue::operator[](const std::string &index) {
+            if(mProperties.count(index) == 0) {
+                mProperties[index] = new Property(this, new parser::Identifier(lexer::Token(lexer::TokenType::IDENTIFIER, index, lexer::TokenPosition()), index), new NullValue());
+            }
+            return mProperties.at(index);
+        }
+
+        Value *ObjectValue::operator()() {
+            throw RuntimeException("Objects do not support '()' operations.");
         }
 
         void ObjectValue::declareVariable(parser::Identifier *identifier) {

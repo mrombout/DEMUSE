@@ -32,6 +32,7 @@ namespace dem {
 
             virtual Value *operator[](const int index);
             virtual Variable *operator[](const std::string &index);
+            virtual Value *operator()();
 
             void declareVariable(parser::Identifier *identifier);
             void declareVariable(parser::Identifier *identifier, Value *value);

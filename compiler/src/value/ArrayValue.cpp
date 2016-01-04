@@ -4,7 +4,7 @@
 
 namespace dem {
     namespace compiler {
-        ArrayValue::ArrayValue(std::vector<Value *> values) :
+        ArrayValue::ArrayValue(std::vector<Value*> values) :
             mValues(values) {
 
         }
@@ -48,7 +48,7 @@ namespace dem {
             const char *separator = "";
             for(Value *value : mValues) {
                 ss << separator << value->asString();
-                separator = ",";
+                separator = ", ";
             }
 
             ss << "]";

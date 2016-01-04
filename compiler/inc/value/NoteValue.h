@@ -34,8 +34,7 @@ namespace dem {
 
             virtual Value *operator[](const int index);
             virtual Variable *operator[](const std::string &index);
-
-
+            virtual Value *operator()();
 
         private:
             parser::Note mNote;
