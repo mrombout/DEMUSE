@@ -14,8 +14,13 @@ namespace dem {
         void MuseMidiPlayEvaluator::play(parser::Play &play, ObjectValue *objectScope) {
             mObjectScope = objectScope;
 
-            mTPQ = mObjectScope->variable(new parser::Identifier(lexer::Token(lexer::TokenType::IDENTIFIER, "tempo", lexer::TokenPosition()), "tempo")).asNumber();
-            mMidiFile.setTicksPerQuarterNote(mTPQ);
+            Variable &tempoVariable = mObjectScope->variable(new parser::Identifier("tempo"));
+
+            int msPerMin = 60000;
+            int msPerQt  = (1 / tempoVariable.asNumber()) * msPerMin;
+
+            mTPQ = msPerQt;
+            mMidiFile.setTicksPerQuarterNote(1000);
 
             play.accept(*this);
         }
