@@ -473,14 +473,14 @@ namespace dem {
             std::clog << "ENTER - Evaluating Array" << std::endl;
 
             std::vector<parser::Expression*> &expressions = array.expressions();
-            std::vector<Value*> values;
+            std::vector<Variable*> values;
 
             for(auto it = expressions.begin(); it != expressions.end(); ++it) {
                 // evaluate, new value should be on the stack
                 (*it)->accept(*this);
 
                 // add to values
-                values.push_back(mStack.top());
+                values.push_back(new Variable(new parser::Identifier(std::to_string(std::distance(expressions.begin(), it))), mStack.top()));
                 mStack.pop();
             }
 

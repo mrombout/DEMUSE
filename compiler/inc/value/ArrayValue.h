@@ -9,7 +9,7 @@ namespace dem {
     namespace compiler {
         class ArrayValue : public ObjectValue {
         public:
-            ArrayValue(std::vector<Value*> values);
+            ArrayValue(std::vector<Variable*> values);
 
             virtual Value *add(Value *b);
             virtual Value *subtract(Value *b);
@@ -21,7 +21,6 @@ namespace dem {
             virtual double asNumber() const;
             virtual bool asBool() const;
             virtual std::string asString() const;
-
 
             virtual parser::Note asNote() const;
 
@@ -36,7 +35,7 @@ namespace dem {
             virtual Value *operator()();
 
         private:
-            std::vector<Value*> mValues;
+            std::vector<Variable*> mValues;
         };
     }
 }

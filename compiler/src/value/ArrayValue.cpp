@@ -4,7 +4,7 @@
 
 namespace dem {
     namespace compiler {
-        ArrayValue::ArrayValue(std::vector<Value*> values) :
+        ArrayValue::ArrayValue(std::vector<Variable*> values) :
             mValues(values) {
 
         }
