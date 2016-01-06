@@ -1,6 +1,15 @@
 var A = 5 == 5;        // should be true
 print("A: " + A);
 
+var A2 = 5 === 5;      // should be true
+print("A2: " + A2);
+
+var A3 = 5 === "5";    // should be false
+print("A3: " + A3);
+
+var A4 = 5 == "5";     // should be true
+print("A4: " + A4);
+
 var B = 5 != 5;        // should be false
 print("B: " + B);
 

@@ -124,9 +124,5 @@ if(Midifile_FOUND)
 endif()
 
 # install
-install(TARGETS compiler DESTINATION bin)
-include(InstallRequiredSystemLibraries)
-set(CPACK_PACKAGE_VERSION_MAJOR "1")
-set(CPACK_PACKAGE_VERSION_MINOR "0")
-set(CPACK_PACKAGE_EXECUTABLES compiler, "compiler")
-include(CPack)
+install(TARGETS compiler DESTINATION / COMPONENT compiler)
+install(TARGETS libcompiler DESTINATION / COMPONENT libcompiler)

@@ -75,9 +75,5 @@ if(wxWidgets_FOUND)
 endif()
 
 # install
-install(TARGETS ide DESTINATION bin)
-include(InstallRequiredSystemLibraries)
-set(CPACK_PACKAGE_VERSION_MAJOR "1")
-set(CPACK_PACKAGE_VERSION_MINOR "0")
-set(CPACK_PACKAGE_EXECUTABLES ide, "IDE")
-include(CPack)
+install(TARGETS ide DESTINATION / COMPONENT ide)
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/res DESTINATION / COMPONENT ide)

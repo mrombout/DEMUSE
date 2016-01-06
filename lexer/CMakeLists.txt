@@ -112,3 +112,6 @@ if(GTEST_FOUND)
 endif()
 
 add_test(AllLexerTests testlexer)
+
+# install
+install(TARGETS liblexer DESTINATION / COMPONENT liblexer)

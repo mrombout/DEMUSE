@@ -36,4 +36,11 @@ track 1 {
 		var h = true;
 		print("h: " + h); // should print "h: true"
 	}
+    
+    var z = 1;
+    if(z === 1) {
+        print("this should be printed");
+    } else {
+        print("this should not have been printed");
+    }
 }

@@ -12,3 +12,6 @@ print("C: " + C); // should print "3"
 
 var D = A[0][2];
 print("D: " + D); // should print "3"
+
+A[0][2] = 6;
+print("E: " + A[0][2]); // should print "6"
