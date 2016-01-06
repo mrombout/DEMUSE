@@ -1,3 +1,5 @@
+tempo = 220;
+
 track 4 {
     // 01-05
     <<B4q B4q Rq A4q | Rq G4#w | Rq Rq B3h | C4#q D4q E4q | F4#h Rq B3h | Rq F4#q Rq | E4q A4w>>;
