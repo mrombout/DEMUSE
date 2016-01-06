@@ -105,5 +105,17 @@ namespace dem {
 
             return realValue;
         }
+
+        bool Variable::strictEqual(const Value &other) {
+            if(typeid(*this->realValue()).name() != typeid(other).name())
+                return false;
+            return *this == other;
+        }
+
+        bool Variable::strictNotEqual(const Value &other) {
+            if(typeid(*this->realValue()).name() != typeid(other).name())
+                return true;
+            return *this != other;
+        }
     }
 }

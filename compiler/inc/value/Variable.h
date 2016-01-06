@@ -40,6 +40,9 @@ namespace dem {
             virtual Variable *operator[](const std::string &index);
             virtual Value *operator()();
 
+            virtual bool strictEqual(const Value &other) override;
+            virtual bool strictNotEqual(const Value &other) override;
+
         private:
             parser::Identifier *mIdentifier;
             Value *mValue;
