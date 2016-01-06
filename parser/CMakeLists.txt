@@ -283,7 +283,7 @@ set(TestParser_SRCS
 
 add_library(libparser SHARED ${Parser_SRCS})
 add_library(dem::libparser ALIAS libparser)
-set_target_properties(liblexer PROPERTIES OUTPUT_NAME "parser")
+set_target_properties(libparser PROPERTIES OUTPUT_NAME "parser")
 
 add_executable(parser ${Parser_SRCS} src/main.cpp)
 
