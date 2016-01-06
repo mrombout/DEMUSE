@@ -34,7 +34,7 @@ namespace dem {
             addDefinition(new TokenDefinition(TokenType::LREQ,          new StringMatcher(">=")));
             addDefinition(new TokenDefinition(TokenType::AND,           new StringMatcher("&&")));
             addDefinition(new TokenDefinition(TokenType::OR,            new StringMatcher("||")));
-            addDefinition(new TokenDefinition(TokenType::THIS,          new StringMatcher("this")));
+            addDefinition(new TokenDefinition(TokenType::THIS_T, new StringMatcher("this")));
             addDefinition(new TokenDefinition(TokenType::FOR,           new StringMatcher("for")));
             addDefinition(new TokenDefinition(TokenType::IN_ARRAY,      new StringMatcher("in")));
             addDefinition(new TokenDefinition(TokenType::ELSE,          new StringMatcher("else")));

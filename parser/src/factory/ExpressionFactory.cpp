@@ -145,7 +145,7 @@ namespace dem {
                 return gobbleStringLiteral(deque);
             } else if(deque.front().is(lexer::TokenType::BOOL)) {
                 return gobbleBoolLiteral(deque);
-            } else if(deque.front().is(lexer::TokenType::IDENTIFIER) || deque.front().is(lexer::TokenType::OPEN) || deque.front().is(lexer::TokenType::THIS)) {
+            } else if(deque.front().is(lexer::TokenType::IDENTIFIER) || deque.front().is(lexer::TokenType::OPEN) || deque.front().is(lexer::TokenType::THIS_T)) {
                 // `foo`, `bar.baz`
                 return gobbleVariable(deque, results);
             } else if(deque.front().is(lexer::TokenType::BRACKET_OPEN)) {
@@ -304,7 +304,7 @@ namespace dem {
                 return boolLiteral;
                 // TODO: Null literal
                 // TODO: This literal
-            } else if(deque.front().is(lexer::TokenType::THIS)) {
+            } else if(deque.front().is(lexer::TokenType::THIS_T)) {
                 ThisExpression *thisExpression = new ThisExpression(deque.front());
                 deque.pop_front();
 
