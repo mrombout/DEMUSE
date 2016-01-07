@@ -4,7 +4,9 @@ project(DEMUSE VERSION 0.1 LANGUAGES CXX)
 # configuration
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
-set(CMAKE_EXE_LINKER_FLAGS "-static-libgcc -static-libstdc++ -static -lstdc++ -lpthread -dynamic")
+if(MINGW)
+	set(CMAKE_EXE_LINKER_FLAGS "-static-libgcc -static-libstdc++ -static -lstdc++ -lpthread -dynamic")
+endif()
 
 # subdirectories
 add_subdirectory(lexer)
