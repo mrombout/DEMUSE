@@ -28,7 +28,7 @@ int main(int argc, char* argv[]) {
     if(results.successful()) {
         // compile input
         dem::compiler::MidiCompiler midiCompiler;
-        midiCompiler.compile(static_cast<dem::parser::Program*>(results.astRoot), "test.mid");
+        midiCompiler.compile(static_cast<dem::parser::Program*>(results.astRoot()), "test.mid");
     }
 
     return 0;
