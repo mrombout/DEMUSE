@@ -6,49 +6,58 @@
 class LexerTest : public ::testing::Test {
 protected:
     LexerTest() {
-        lexer.addDefinition(new dem::lexer::TokenDefinition(dem::lexer::TokenType::AND, new dem::lexer::StringMatcher("AND")));
-        lexer.addDefinition(new dem::lexer::TokenDefinition(dem::lexer::TokenType::OR, new dem::lexer::StringMatcher("OR")));
+        lexer.addDefinition(std::move(std::unique_ptr<dem::lexer::TokenDefinition>(new dem::lexer::TokenDefinition(dem::lexer::TokenType::AND, std::move(std::unique_ptr<dem::lexer::Matcher>(new dem::lexer::StringMatcher("AND")))))));
+        lexer.addDefinition(std::move(std::unique_ptr<dem::lexer::TokenDefinition>(new dem::lexer::TokenDefinition(dem::lexer::TokenType::OR, std::move(std::unique_ptr<dem::lexer::Matcher>(new dem::lexer::StringMatcher("OR")))))));
     }
 
     dem::lexer::Lexer lexer;
 };
 
-TEST_F(LexerTest, ReturnsTokenListWhenMatchNoWhitespaceSeperation) {
+TEST_F(LexerTest, Lex_MatchNoWhitespaceSeperation_ReturnsTokenList) {
+    // arrange
     std::string str{"ANDOR"};
     auto begin = str.begin();
     auto end = str.end();
 
+    // act
     std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
-    ASSERT_EQ(2, result.size());
+    // assert
+    ASSERT_EQ(3, result.size());
     EXPECT_EQ(dem::lexer::TokenType::AND, result[0].type());
     EXPECT_EQ("AND", result[0].content());
     EXPECT_EQ(dem::lexer::TokenType::OR, result[1].type());
     EXPECT_EQ("OR", result[1].content());
 }
 
-TEST_F(LexerTest, ReturnsTokenListWhenMatchWithWhitespaceSeperation) {
+TEST_F(LexerTest, Lex_MatchWithWhitespaceSeperation_ReturnsTokenList) {
+    // arrange
     std::string str{"AND OR"};
     auto begin = str.begin();
     auto end = str.end();
 
+    // act
     std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
-    ASSERT_EQ(2, result.size());
+    // assert
+    ASSERT_EQ(3, result.size());
     EXPECT_EQ(dem::lexer::TokenType::AND, result[0].type());
     EXPECT_EQ("AND", result[0].content());
     EXPECT_EQ(dem::lexer::TokenType::OR, result[1].type());
     EXPECT_EQ("OR", result[1].content());
 }
 
-TEST_F(LexerTest, ReturnsTokenListWhenMatchWithUnknown) {
+TEST_F(LexerTest, Lex_MatchWithUnknown_ReturnsTokenList) {
+    // arrange
     std::string str{"AND unknown OR"};
     auto begin = str.begin();
     auto end = str.end();
 
+    // act
     std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
-    ASSERT_EQ(9, result.size());
+    // assert
+    ASSERT_EQ(10, result.size());
     EXPECT_EQ(dem::lexer::TokenType::AND, result[0].type());
     for(int i = 1; i < 8; ++i) {
         EXPECT_EQ(dem::lexer::TokenType::UNKNOWN, result[i].type());
@@ -56,90 +65,112 @@ TEST_F(LexerTest, ReturnsTokenListWhenMatchWithUnknown) {
     EXPECT_EQ(dem::lexer::TokenType::OR, result[8].type());
 }
 
-TEST_F(LexerTest, ReturnsTokenListWhenTabbed) {
+TEST_F(LexerTest, Lex_Tabbed_ReturnsTokenList) {
+    // arrange
     std::string str{"AND\tOR"};
     auto begin = str.begin();
     auto end = str.end();
 
+    // act
     std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
-    ASSERT_EQ(2, result.size());
+    // assert
+    ASSERT_EQ(3, result.size());
     EXPECT_EQ(dem::lexer::TokenType::AND, result[0].type());
     EXPECT_EQ(dem::lexer::TokenType::OR, result[1].type());
 }
 
-TEST_F(LexerTest, ReturnsTokenListWithWindowsNewlines) {
+TEST_F(LexerTest, Lex_WindowsNewlines_ReturnsTokenList) {
+    // arrange
     std::string str{"AND\r\nOR"};
     auto begin = str.begin();
     auto end = str.end();
 
+    // act
     std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
-    ASSERT_EQ(2, result.size());
+    // assert
+    ASSERT_EQ(3, result.size());
     EXPECT_EQ(dem::lexer::TokenType::AND, result[0].type());
     EXPECT_EQ(dem::lexer::TokenType::OR, result[1].type());
 }
 
-TEST_F(LexerTest, ReturnsTokenListWithUnixNewlines) {
+TEST_F(LexerTest, Lex_UnixNewlines_ReturnsTokenList) {
+    // arrange
     std::string str{"AND\nOR"};
     auto begin = str.begin();
     auto end = str.end();
 
+    // act
     std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
-    ASSERT_EQ(2, result.size());
+    // assert
+    ASSERT_EQ(3, result.size());
     EXPECT_EQ(dem::lexer::TokenType::AND, result[0].type());
     EXPECT_EQ(dem::lexer::TokenType::OR, result[1].type());
 }
 
-TEST_F(LexerTest, ReturnsTokenListWithMacNewlines) {
+TEST_F(LexerTest, Lex_MacNewlines_ReturnsTokenList) {
+    // arrange
     std::string str{"AND\rOR"};
     auto begin = str.begin();
     auto end = str.end();
 
+    // act
     std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
-    ASSERT_EQ(2, result.size());
+    // assert
+    ASSERT_EQ(3, result.size());
     EXPECT_EQ(dem::lexer::TokenType::AND, result[0].type());
     EXPECT_EQ(dem::lexer::TokenType::OR, result[1].type());
 }
 
-TEST_F(LexerTest, ReturnsTokenListWhenNullTokenDefinition) {
+TEST_F(LexerTest, Lex_NullTokenDefinition_ReturnsTokenList) {
+    // arrange
     std::string str{"abcdef AND"};
     auto begin = str.begin();
     auto end = str.end();
 
+    // act
     dem::lexer::Lexer lexer;
     std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
-    ASSERT_EQ(9, result.size());
+    // assert
+    ASSERT_EQ(10, result.size());
     for(int i = 0; i < 9; i++) {
         EXPECT_EQ(dem::lexer::TokenType::UNKNOWN, result[i].type());
     }
 }
 
-TEST_F(LexerTest, ReturnsEmptyListWithEndIterator) {
+TEST_F(LexerTest, Lex_EndIterator_ReturnsEmptyList) {
+    // arrange
     std::string str{"abcdef"};
     auto end = str.end();
 
+    // act
     std::vector<dem::lexer::Token> result = lexer.lex(end, end);
 
-    ASSERT_EQ(0, result.size());
+    // assert
+    ASSERT_EQ(1, result.size());
+    EXPECT_EQ(dem::lexer::TokenType::ENDOFFILE, result[0].type());
 }
 
 TEST_F(LexerTest, ReturnsListWithSingleUnknownWhenNoMatch) {
 
 }
 
-TEST_F(LexerTest, ReturnsUnknownWhenNoTokenDefinitions) {
+TEST_F(LexerTest, Lex_NoTokenDefinitions_ReturnsUnknown) {
+    // arrange
     std::string str{"abcdef"};
     auto begin = str.begin();
     auto end = str.end();
 
+    // act
     dem::lexer::Lexer lexer;
     std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
-    ASSERT_EQ(6, result.size());
+    // assert
+    ASSERT_EQ(7, result.size());
     for(int i = 0; i < 6; ++i) {
         ASSERT_EQ(std::string(1, str.at(i)), result[i].content());
         ASSERT_EQ(dem::lexer::TokenType::UNKNOWN, result[i].type());
