@@ -82,7 +82,7 @@ namespace dem {
             ENDOFFILE
         };
 
-        std::ostream & operator<<(std::ostream &output, const TokenType &tokenType);
+        std::ostream &operator<<(std::ostream &output, const TokenType &tokenType);
     }
 }
 
