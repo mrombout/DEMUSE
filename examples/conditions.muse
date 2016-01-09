@@ -30,3 +30,15 @@ print("G: " + G);
 
 var F = true || false; // should be true
 print("F: " + F);
+
+// short-circuit
+function test1() {
+    print("running test1");
+    return false;
+}
+function test2() {
+    print("running test2");
+    return true;
+}
+var H = test1() && test2();
+var I = test2() || test1();

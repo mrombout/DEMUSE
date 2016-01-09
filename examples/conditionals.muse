@@ -6,6 +6,14 @@ track 1 {
 		var a = 1;
 		print("a: " + a); // should print "a: 1"
 	}
+    
+    if(x > 7) {
+		var e = true;
+		print("this should not have been printed");
+	} else if(x < 5) {
+		var f = true;
+		print("f: " + f); // should print "f: true"
+	}
 
 	if(x < 5) {
 		var b = 2;
@@ -16,14 +24,6 @@ track 1 {
 	} else {
 		var d = 4;
 		print("this should not have been printed");
-	}
-
-	if(x > 7) {
-		var e = true;
-		print("this should not have been printed");
-	} else if(x < 5) {
-		var f = true;
-		print("f: " + f); // should print "f: true"
 	}
 
 	var y = "1";
