@@ -329,7 +329,7 @@ namespace dem {
             wxGetApp().config().Flush();
 
             // re-initialize editors with new settings
-            for(auto pair : mFileEditors) {
+            for(auto &pair : mFileEditors) {
                 MuseStyledTextEditor *editor = dynamic_cast<MuseStyledTextEditor*>(mNotebook->GetPage(pair.second.editorId));
                 editor->initialize();
             }
@@ -388,7 +388,7 @@ namespace dem {
                 sw.Start();
                 dem::parser::MuseParser parser;
                 dem::parser::ParseResults results = parser.parse(tokens);
-                dem::parser::Symbol *program{results.astRoot};
+                std::shared_ptr<dem::parser::Symbol> program{results.astRoot()};
                 sw.Pause();
 
                 mOutput->AppendText("== Parsing finished in " + std::to_string(sw.Time()) + "ms\n");
@@ -407,7 +407,7 @@ namespace dem {
                     sw.Start();
                     mOutput->SetDefaultStyle(wxTextAttr(*wxBLACK));
                     dem::compiler::MidiCompiler compiler;
-                    compiler.compile(static_cast<dem::parser::Program*>(program), std::string(outputFileName.c_str()));
+                    compiler.compile(static_cast<dem::parser::Program*>(program.get()), std::string(outputFileName.c_str()));
                     sw.Pause();
 
                     mOutput->SetDefaultStyle(wxTextAttr(wxColour(255, 0, 255)));
@@ -542,7 +542,7 @@ namespace dem {
         void MainFrame::updateErrors() {
             parser::ParseResults results = mFileEditors[activeEditor()->filePath()].parseResults;
             if(!results.successful()) {
-                for(const parser::ParseError &error : results.errors) {
+                for(const parser::ParseError &error : results.errors()) {
                     // add error to list
                     wxVector<wxVariant> data;
 
@@ -567,7 +567,7 @@ namespace dem {
         }
 
         void MainFrame::updateAutocomplete(EditorInfo &info) {
-            info.autoCompleteWords = mAutocompleteVisitor.search(*info.parseResults.astRoot);
+            info.autoCompleteWords = mAutocompleteVisitor.search(*info.parseResults.astRoot());
 
             MuseStyledTextEditor *editor = static_cast<MuseStyledTextEditor*>(mNotebook->GetPage(info.editorId));
             editor->setAutocompleteWords(info.autoCompleteWords);

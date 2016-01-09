@@ -1,6 +1,7 @@
 #ifndef DEMUSE_PARSER_H
 #define DEMUSE_PARSER_H
 
+#include <memory>
 #include <vector>
 #include "symbol/Symbol.h"
 #include "Parser.h"
@@ -33,17 +34,35 @@ namespace dem {
         };
 
         struct ParseResults {
-            Symbol *astRoot;
-            std::vector<ParseError> errors;
-
+        public:
             ParseResults() :
-                    astRoot(nullptr) {
+                    mAstRoot(nullptr) {
 
+            }
+
+            void setAstRoot(std::shared_ptr<Symbol> symbol) {
+                mAstRoot.swap(symbol);
+            }
+
+            const std::shared_ptr<Symbol> astRoot() const {
+                return mAstRoot;
+            }
+
+            const std::vector<ParseError> &errors() const {
+                return mErrors;
+            }
+
+            void addError(const ParseError &parseError) {
+                mErrors.push_back(parseError);
             }
 
             bool successful() {
-                return errors.empty();
+                return mErrors.empty();
             }
+
+        private:
+            std::shared_ptr<Symbol> mAstRoot;
+            std::vector<ParseError> mErrors;
         };
 
         class Parser {

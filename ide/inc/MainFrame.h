@@ -1,6 +1,7 @@
 #ifndef DEMUSE_MAINFRAME_H
 #define DEMUSE_MAINFRAME_H
 
+#include <memory>
 #include <unordered_set>
 #include <map>
 #include <wx/frame.h>

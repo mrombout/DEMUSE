@@ -10,8 +10,8 @@ namespace dem {
             std::deque<lexer::Token> tokensDeque{tokens.begin(), tokens.end()};
             ParseResults parseResults;
 
-            Program *program = ProgramFactory::produce(tokensDeque, parseResults);
-            parseResults.astRoot = program;
+            std::shared_ptr<Program> program{std::move(ProgramFactory::produce(tokensDeque, parseResults))};
+            parseResults.setAstRoot(program);
 
             return parseResults;
         }

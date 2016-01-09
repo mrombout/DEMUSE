@@ -6,7 +6,7 @@
 
 namespace dem {
     namespace parser {
-        Program *ProgramFactory::produce(std::deque<lexer::Token> &tokens, ParseResults &results) {
+        std::unique_ptr<Program> ProgramFactory::produce(std::deque<lexer::Token> &tokens, ParseResults &results) {
             // program = { function_def | variable_def_stmt | track } ;
 
             std::vector<Statement*> statements;
@@ -31,7 +31,7 @@ namespace dem {
                 addError(results, tokens.front(), ss.str());
             }
 
-            return new Program(statements);
+            return std::move(std::unique_ptr<Program>(new Program(statements)));
         }
     }
 }
