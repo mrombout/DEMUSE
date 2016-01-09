@@ -8,32 +8,32 @@
 namespace dem {
     namespace lexer {
         MusicStringLexer::MusicStringLexer() :
-            Lexer(new StringMatcher(">>")) {
-            addDefinition(new TokenDefinition(TokenType::NOTE,          new NoteMatcher()));
-            addDefinition(new TokenDefinition(TokenType::NUMBER,        new RegexMatcher("\\d+(?:\\.\\d+)?")));
-            addDefinition(new TokenDefinition(TokenType::ACCIDENTAL,    new AccidentalMatcher()));
-            addDefinition(new TokenDefinition(TokenType::CHORD,         new RegexMatcher("maj|min")));
-            addDefinition(new TokenDefinition(TokenType::DURATION,      new DurationMatcher()));
-            addDefinition(new TokenDefinition(TokenType::PRESSURE,      new RegexMatcher("\\+(?=\\d)")));
-            addDefinition(new TokenDefinition(TokenType::POLY_PRESSURE, new RegexMatcher("\\*(?=\\d+,\\d+)")));
-            addDefinition(new TokenDefinition(TokenType::TUPLET,        new CharMatcher('*')));
-            addDefinition(new TokenDefinition(TokenType::TIE,           new CharMatcher('-')));
-            addDefinition(new TokenDefinition(TokenType::ATTACK,        new RegexMatcher("a\\d*")));
-            addDefinition(new TokenDefinition(TokenType::DECAY,         new RegexMatcher("d\\d*")));
-            addDefinition(new TokenDefinition(TokenType::HARMONY,       new CharMatcher('+')));
-            addDefinition(new TokenDefinition(TokenType::COMBINE,       new CharMatcher('_')));
-            addDefinition(new TokenDefinition(TokenType::MEASURE,       new CharMatcher('|'), true));
-            addDefinition(new TokenDefinition(TokenType::KEY,           new CharMatcher('K')));
-            addDefinition(new TokenDefinition(TokenType::INSTRUMENT,    new CharMatcher('I')));
-            addDefinition(new TokenDefinition(TokenType::VOICE,         new CharMatcher('V')));
-            addDefinition(new TokenDefinition(TokenType::LAYER,         new CharMatcher('L')));
-            addDefinition(new TokenDefinition(TokenType::TEMPO,         new CharMatcher('T')));
-            addDefinition(new TokenDefinition(TokenType::PITCH,         new RegexMatcher("&(?=\\d)")));
-            addDefinition(new TokenDefinition(TokenType::CONTROLLER,    new CharMatcher('X')));
-            addDefinition(new TokenDefinition(TokenType::TIME,          new CharMatcher('@')));
-            addDefinition(new TokenDefinition(TokenType::BRACKET_OPEN,  new CharMatcher('[')));
-            addDefinition(new TokenDefinition(TokenType::BRACKET_CLOSE, new CharMatcher(']')));
-            addDefinition(new TokenDefinition(TokenType::IDENTIFIER,    new RegexMatcher("\\w+")));
+            Lexer(std::move(std::unique_ptr<Matcher>(new StringMatcher(">>")))) {
+            addDefinition(std::move(std::unique_ptr<TokenDefinition>(new TokenDefinition(TokenType::NOTE,          std::move(std::unique_ptr<Matcher>(new NoteMatcher()))))));
+            addDefinition(std::move(std::unique_ptr<TokenDefinition>(new TokenDefinition(TokenType::NUMBER,        std::move(std::unique_ptr<Matcher>(new RegexMatcher("\\d+(?:\\.\\d+)?")))))));
+            addDefinition(std::move(std::unique_ptr<TokenDefinition>(new TokenDefinition(TokenType::ACCIDENTAL,    std::move(std::unique_ptr<Matcher>(new AccidentalMatcher()))))));
+            addDefinition(std::move(std::unique_ptr<TokenDefinition>(new TokenDefinition(TokenType::CHORD,         std::move(std::unique_ptr<Matcher>(new RegexMatcher("maj|min")))))));
+            addDefinition(std::move(std::unique_ptr<TokenDefinition>(new TokenDefinition(TokenType::DURATION,      std::move(std::unique_ptr<Matcher>(new DurationMatcher()))))));
+            addDefinition(std::move(std::unique_ptr<TokenDefinition>(new TokenDefinition(TokenType::PRESSURE,      std::move(std::unique_ptr<Matcher>(new RegexMatcher("\\+(?=\\d)")))))));
+            addDefinition(std::move(std::unique_ptr<TokenDefinition>(new TokenDefinition(TokenType::POLY_PRESSURE, std::move(std::unique_ptr<Matcher>(new RegexMatcher("\\*(?=\\d+,\\d+)")))))));
+            addDefinition(std::move(std::unique_ptr<TokenDefinition>(new TokenDefinition(TokenType::TUPLET,        std::move(std::unique_ptr<Matcher>(new CharMatcher('*')))))));
+            addDefinition(std::move(std::unique_ptr<TokenDefinition>(new TokenDefinition(TokenType::TIE,           std::move(std::unique_ptr<Matcher>(new CharMatcher('-')))))));
+            addDefinition(std::move(std::unique_ptr<TokenDefinition>(new TokenDefinition(TokenType::ATTACK,        std::move(std::unique_ptr<Matcher>(new RegexMatcher("a\\d*")))))));
+            addDefinition(std::move(std::unique_ptr<TokenDefinition>(new TokenDefinition(TokenType::DECAY,         std::move(std::unique_ptr<Matcher>(new RegexMatcher("d\\d*")))))));
+            addDefinition(std::move(std::unique_ptr<TokenDefinition>(new TokenDefinition(TokenType::HARMONY,       std::move(std::unique_ptr<Matcher>(new CharMatcher('+')))))));
+            addDefinition(std::move(std::unique_ptr<TokenDefinition>(new TokenDefinition(TokenType::COMBINE,       std::move(std::unique_ptr<Matcher>(new CharMatcher('_')))))));
+            addDefinition(std::move(std::unique_ptr<TokenDefinition>(new TokenDefinition(TokenType::MEASURE,       std::move(std::unique_ptr<Matcher>(new CharMatcher('|'))), true))));
+            addDefinition(std::move(std::unique_ptr<TokenDefinition>(new TokenDefinition(TokenType::KEY,           std::move(std::unique_ptr<Matcher>(new CharMatcher('K')))))));
+            addDefinition(std::move(std::unique_ptr<TokenDefinition>(new TokenDefinition(TokenType::INSTRUMENT,    std::move(std::unique_ptr<Matcher>(new CharMatcher('I')))))));
+            addDefinition(std::move(std::unique_ptr<TokenDefinition>(new TokenDefinition(TokenType::VOICE,         std::move(std::unique_ptr<Matcher>(new CharMatcher('V')))))));
+            addDefinition(std::move(std::unique_ptr<TokenDefinition>(new TokenDefinition(TokenType::LAYER,         std::move(std::unique_ptr<Matcher>(new CharMatcher('L')))))));
+            addDefinition(std::move(std::unique_ptr<TokenDefinition>(new TokenDefinition(TokenType::TEMPO,         std::move(std::unique_ptr<Matcher>(new CharMatcher('T')))))));
+            addDefinition(std::move(std::unique_ptr<TokenDefinition>(new TokenDefinition(TokenType::PITCH,         std::move(std::unique_ptr<Matcher>(new RegexMatcher("&(?=\\d)")))))));
+            addDefinition(std::move(std::unique_ptr<TokenDefinition>(new TokenDefinition(TokenType::CONTROLLER,    std::move(std::unique_ptr<Matcher>(new CharMatcher('X')))))));
+            addDefinition(std::move(std::unique_ptr<TokenDefinition>(new TokenDefinition(TokenType::TIME,          std::move(std::unique_ptr<Matcher>(new CharMatcher('@')))))));
+            addDefinition(std::move(std::unique_ptr<TokenDefinition>(new TokenDefinition(TokenType::BRACKET_OPEN,  std::move(std::unique_ptr<Matcher>(new CharMatcher('[')))))));
+            addDefinition(std::move(std::unique_ptr<TokenDefinition>(new TokenDefinition(TokenType::BRACKET_CLOSE, std::move(std::unique_ptr<Matcher>(new CharMatcher(']')))))));
+            addDefinition(std::move(std::unique_ptr<TokenDefinition>(new TokenDefinition(TokenType::IDENTIFIER,    std::move(std::unique_ptr<Matcher>(new RegexMatcher("\\w+")))))));
 
             // TODO: Percussion track syntax, V9 [Hi_Bongo]q
             // TODO: Allow not specifying attack/decay value for ATTACK and DECAY? (default to 0)
