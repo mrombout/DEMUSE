@@ -10,20 +10,14 @@ namespace dem {
 
         }
 
-        Lexer::Lexer(Matcher *stopMatcher) :
+        Lexer::Lexer(std::unique_ptr<Matcher> stopMatcher) :
             mSkipMatcher("\\s*"),
-            mStopMatcher(stopMatcher) {
+            mStopMatcher(std::move(stopMatcher)) {
 
         }
 
-        Lexer::~Lexer() {
-            for(auto *tokenDefinition : mTokenDefinitions) {
-                delete tokenDefinition;
-            }
-        }
-
-        void Lexer::addDefinition(TokenDefinition *tokenDefinition) {
-            mTokenDefinitions.push_back(tokenDefinition);
+        void Lexer::addDefinition(std::unique_ptr<TokenDefinition> tokenDefinition) {
+            mTokenDefinitions.push_back(std::move(tokenDefinition));
         }
 
         std::vector<Token> Lexer::lex(std::string::iterator &begin, std::string::iterator &end, bool ignore) const {
@@ -81,7 +75,7 @@ namespace dem {
         }
 
         bool Lexer::match(std::vector<Token> &tokens, std::string::iterator &begin, std::string::iterator &end, bool ignore, TokenPosition &tokenPosition) const {
-            for(TokenDefinition *tokenDefinition : mTokenDefinitions) {
+            for(const std::unique_ptr<TokenDefinition> &tokenDefinition : mTokenDefinitions) {
                 if(!tokenDefinition || begin == end)
                     continue;
 

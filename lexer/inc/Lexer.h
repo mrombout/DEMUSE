@@ -14,10 +14,9 @@ namespace dem {
         class Lexer {
         public:
             Lexer();
-            Lexer(Matcher *stopMatcher);
-            ~Lexer();
+            Lexer(std::unique_ptr<Matcher> stopMatcher);
 
-            void addDefinition(TokenDefinition *tokenDefinition);
+            void addDefinition(std::unique_ptr<TokenDefinition> tokenDefinition);
 
             std::vector<Token> lex(std::string::iterator &begin, std::string::iterator &end, bool ignore = true) const;
             std::vector<Token> lex(std::string::iterator &begin, std::string::iterator &end, bool ignore, TokenPosition &tokenPosition) const;
@@ -26,9 +25,9 @@ namespace dem {
             bool match(std::vector<Token> &tokens, std::string::iterator &begin, std::string::iterator &end, bool ignore, TokenPosition &tokenPosition) const;
 
         private:
-            std::vector<TokenDefinition*> mTokenDefinitions;
+            std::vector<std::unique_ptr<TokenDefinition>> mTokenDefinitions;
 
-            Matcher *mStopMatcher;
+            std::unique_ptr<Matcher> mStopMatcher;
             NewLineMatcher mNewLineMatcher;
             RegexMatcher mSkipMatcher;
         };
