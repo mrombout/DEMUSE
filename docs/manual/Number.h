@@ -1,0 +1,3 @@
+class Number : public Object {
+    
+};

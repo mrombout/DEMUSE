@@ -1,0 +1,3 @@
+class Array : public Object {
+    
+};
