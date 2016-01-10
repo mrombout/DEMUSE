@@ -5,6 +5,9 @@
 
 namespace dem {
     namespace parser {
+        /**
+         * \brief Represents a unary expression (e.g. !true)
+         */
         class UnaryExpression : public Expression {
         public:
             UnaryExpression(std::string op, Expression *argument);

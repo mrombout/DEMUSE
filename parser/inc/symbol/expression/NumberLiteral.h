@@ -6,6 +6,9 @@
 
 namespace dem {
     namespace parser {
+        /**
+         * \brief Represents a number literal (e.g. 1 or 1.4, etc)
+         */
         class NumberLiteral : public Literal {
         public:
             NumberLiteral(lexer::Token &token, double value);

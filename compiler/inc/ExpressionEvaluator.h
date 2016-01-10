@@ -8,6 +8,9 @@
 
 namespace dem {
     namespace compiler {
+        /**
+         * \brief Evaluates an expression and returns its value
+         */
         class ExpressionEvaluator : public parser::Visitor {
         public:
             ExpressionEvaluator(Compiler &compiler);

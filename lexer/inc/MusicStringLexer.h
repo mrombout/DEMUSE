@@ -7,6 +7,9 @@
 
 namespace dem {
     namespace lexer {
+        /**
+         * \brief Lexes a DEMUSE sequence.
+         */
         class MusicStringLexer : public Lexer {
         public:
             MusicStringLexer();

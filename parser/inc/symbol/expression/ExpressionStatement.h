@@ -6,6 +6,12 @@
 
 namespace dem {
     namespace parser {
+        /**
+         * \brief Represents an expression statement (e.g. foo(), 1 + 1, a = 1 + 2, etc)
+         *
+         * An ExpressionStatement is simply an expression that is executed on its own. This is mainly useful for
+         * expression that may have side effects such as calling of function or assigning a variable.
+         */
         class ExpressionStatement : public Statement {
         public:
             ExpressionStatement(Expression *expression);

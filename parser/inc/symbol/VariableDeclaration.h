@@ -13,6 +13,9 @@ namespace dem {
 
 namespace dem {
     namespace parser {
+        /**
+         * \brief Represents a variable declaration (e.g. var A = 4;
+         */
         class VariableDeclaration : public Statement {
         public:
             VariableDeclaration(AssignmentExpression *assignment);

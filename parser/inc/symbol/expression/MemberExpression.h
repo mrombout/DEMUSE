@@ -5,6 +5,9 @@
 
 namespace dem {
     namespace parser {
+        /**
+         * \brief Represents the access of a member property (e.g. foo.bar)
+         */
         class MemberExpression : public Expression {
         public:
             MemberExpression(Expression *object, Expression *property, bool computed);

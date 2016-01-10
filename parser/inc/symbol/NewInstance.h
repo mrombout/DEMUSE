@@ -7,6 +7,9 @@
 
 namespace dem {
     namespace parser {
+        /**
+         * \brief Represents a new instance (e.g. new foo())
+         */
         class NewInstance : public Expression {
         public:
             NewInstance(Identifier *identifier, ArgumentList *argumentList);

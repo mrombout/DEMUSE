@@ -5,6 +5,10 @@
 
 namespace dem {
     namespace parser {
+        /**
+         * \brief Represents a single playable entity
+         * NOTE: Is this still useful?
+         */
         class Playable : public Primitive {
         public:
             Playable(const lexer::Token &token) :

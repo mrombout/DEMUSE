@@ -13,6 +13,11 @@ namespace dem {
 
 namespace dem {
     namespace parser {
+        /**
+         * \brief Produces a for statement.
+         *
+         * \ebnf for_stmt = "for(" ( terminator | variable_def_stmt | assignment_stmt ) ( terminator | conditional ) ( terminator | assignment_stmt ) ")" block ;
+         */
         class ForFactory : public SymbolFactory {
         public:
             static For *produce(std::deque<lexer::Token> &tokens, ParseResults &results);

@@ -7,6 +7,9 @@
 
 namespace dem {
     namespace compiler {
+        /**
+         * \brief Represents a boolean value
+         */
         class BooleanValue : public ObjectValue {
         public:
             BooleanValue(bool value);

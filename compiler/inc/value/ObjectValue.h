@@ -6,6 +6,9 @@
 
 namespace dem {
     namespace compiler {
+        /**
+         * \brief Represents an object value
+         */
         class ObjectValue : public Value {
         public:
             ObjectValue();

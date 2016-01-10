@@ -5,6 +5,9 @@
 
 namespace dem {
     namespace lexer {
+        /**
+         * \brief Never matches anything.
+         */
         class NullMatcher : public Matcher {
         public:
             NullMatcher();

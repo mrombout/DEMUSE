@@ -6,6 +6,11 @@
 
 namespace dem {
     namespace compiler {
+        /**
+         * \brief Represents a variable
+         *
+         * TODO: Does is make sense to have nested variable?
+         */
         class Variable : public Value {
         public:
             Variable(parser::Identifier *identifier, Value *value);

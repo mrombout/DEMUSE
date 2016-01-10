@@ -5,6 +5,9 @@
 
 namespace dem {
     namespace parser {
+        /**
+         * \brief Represents a break statement (e.g. break)
+         */
         class Break : public Statement {
         public:
             Break(const lexer::Token &token);

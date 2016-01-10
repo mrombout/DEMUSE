@@ -5,6 +5,9 @@
 
 namespace dem {
     namespace parser {
+        /**
+         * \brief Represents a subtraction expression (e.g. 10 - 5)
+         */
         class SubtractionExpression : public BinaryExpression<Expression, Expression> {
         public:
             SubtractionExpression(Expression *left, Expression *right);

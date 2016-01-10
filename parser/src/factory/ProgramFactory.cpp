@@ -7,7 +7,7 @@
 namespace dem {
     namespace parser {
         std::unique_ptr<Program> ProgramFactory::produce(std::deque<lexer::Token> &tokens, ParseResults &results) {
-            // program = { function_def | variable_def_stmt | track } ;
+            // program = { statement | track } ;
 
             std::vector<Statement*> statements;
 

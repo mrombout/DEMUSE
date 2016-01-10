@@ -6,6 +6,9 @@
 
 namespace dem {
     namespace lexer {
+        /**
+         * \brief Matches accidentals, see demuse.bnf for more information.
+         */
         class AccidentalMatcher : public RegexMatcher {
         public:
             AccidentalMatcher();

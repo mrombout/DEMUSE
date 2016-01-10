@@ -5,6 +5,9 @@
 
 namespace dem {
     namespace parser {
+        /**
+         * \brief Represents an or condition (e.g. true || false)
+         */
         class OrCondition : public Condition {
         public:
             OrCondition(Expression *left, Expression *right);

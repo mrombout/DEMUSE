@@ -6,6 +6,9 @@
 
 namespace dem {
     namespace lexer {
+        /**
+         * \brief Matches a single character.
+         */
         class CharMatcher : public Matcher {
         public:
             CharMatcher(char c);

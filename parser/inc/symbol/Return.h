@@ -12,6 +12,9 @@ namespace dem {
 
 namespace dem {
     namespace parser {
+        /**
+         * \brief Represents a return statement (e.g. return "foo")
+         */
         class Return : public Statement {
         public:
             Return(Expression *expression);

@@ -13,6 +13,11 @@ namespace dem {
 
 namespace dem {
     namespace parser {
+        /**
+         * \brief Produces a while statement.
+         *
+         * \ebnf while_stmt = "while(" conditional ")" block ;
+         */
         class WhileFactory : public SymbolFactory {
         public:
             static While *produce(std::deque<lexer::Token> &tokens, ParseResults &results);

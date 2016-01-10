@@ -3,9 +3,9 @@
 
 namespace dem {
     namespace parser {
-        ArrayAccessExpression::ArrayAccessExpression(Expression *object, Expression *index, bool computed) :
-            Expression(object->token()),
-            mObject(object),
+        ArrayAccessExpression::ArrayAccessExpression(Expression *array, Expression *index, bool computed) :
+            Expression(array->token()),
+            mObject(array),
             mIndex(index),
             mComputed(computed) {
 

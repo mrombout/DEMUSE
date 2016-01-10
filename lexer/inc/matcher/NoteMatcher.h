@@ -11,6 +11,9 @@ namespace dem {
 
 namespace dem {
     namespace lexer {
+        /**
+         * \brief Matches a single note(A to G) or rest (R) note.
+         */
         class NoteMatcher : public RegexMatcher {
         public:
             NoteMatcher();

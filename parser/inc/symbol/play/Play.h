@@ -7,6 +7,9 @@
 
 namespace dem {
     namespace parser {
+        /**
+         * \brief Represents a single DEMUSE sequence
+         */
         class Play : public Statement {
         public:
             Play(std::vector<Expression*> playables);

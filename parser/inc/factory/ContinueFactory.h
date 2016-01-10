@@ -13,6 +13,11 @@ namespace dem {
 
 namespace dem {
     namespace parser {
+        /**
+         * \brief Represents a continue statement.
+         *
+         * \ebnf continue_stmt = "continue" ;
+         */
         class ContinueFactory : public SymbolFactory {
         public:
             static Continue *produce(std::deque<lexer::Token> &tokens, ParseResults &results);

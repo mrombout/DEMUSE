@@ -7,6 +7,9 @@
 
 namespace dem {
     namespace parser {
+        /**
+         * \brief Represents an identifier (e.g. foo)
+         */
         class Identifier : public Expression {
         public:
             Identifier(const std::string &name);

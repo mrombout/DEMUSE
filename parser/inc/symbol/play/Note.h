@@ -12,6 +12,9 @@ namespace dem {
         typedef char Accidental;
         typedef char Duration;
 
+        /**
+         * \brief Represents a single note (e.g. C#q)
+         */
         class Note : public Playable {
         public:
             Note(const lexer::Token &token, NoteT note, Octave octave, Accidental accidental = 'n', Duration duration = 'w');

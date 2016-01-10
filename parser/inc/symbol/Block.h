@@ -7,6 +7,9 @@
 
 namespace dem {
     namespace parser {
+        /**
+         * \brief Represents a block (e.g. { ... })
+         */
         class Block : public Symbol {
         public:
             Block(const lexer::Token &token, std::vector<Statement*> statements);

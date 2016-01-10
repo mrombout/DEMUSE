@@ -8,6 +8,9 @@
 
 namespace dem {
     namespace parser {
+        /**
+         * \brief Represents a harmony (several notes played together) (e.g. C+E)
+         */
         class Harmony : public Playable {
         public:
             Harmony(const lexer::Token &token);

@@ -13,6 +13,11 @@ namespace dem {
 
 namespace dem {
     namespace parser {
+        /**
+         * \brief Produces an identifier
+         *
+         * \ebnf identifier = letter { letter | number }
+         */
         class IdentifierFactory : public SymbolFactory {
         public:
             static Identifier *produce(std::deque<lexer::Token> &tokens, ParseResults &results);

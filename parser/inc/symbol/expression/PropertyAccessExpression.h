@@ -5,6 +5,10 @@
 
 namespace dem {
     namespace parser {
+        /**
+         * \brief Represents the access of a property (e.g. foo.bar)
+         * \deprecated I believe this symbol of no longer in use due to MemberExpression
+         */
         class PropertyAccessExpression : public BinaryExpression<Expression, Expression> {
         public:
             PropertyAccessExpression(Expression *left, Expression *right);

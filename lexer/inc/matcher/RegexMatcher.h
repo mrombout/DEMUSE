@@ -6,6 +6,11 @@
 
 namespace dem {
     namespace lexer {
+        /**
+         * \brief Matches a string according to a regular expression.
+         *
+         * \note RegexMatcher should be used sparingly, as it can be slow.
+         */
         class RegexMatcher : public Matcher {
         public:
             RegexMatcher(std::string regex);

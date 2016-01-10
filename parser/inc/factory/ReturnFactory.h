@@ -13,6 +13,11 @@ namespace dem {
 
 namespace dem {
     namespace parser {
+        /**
+         * \brief Produces a return statement
+         *
+         * \ebnf return_stmt = "return" expression ;
+         */
         class ReturnFactory : public SymbolFactory {
         public:
             static Return *produce(std::deque<lexer::Token> &tokens, ParseResults &results);

@@ -7,6 +7,9 @@
 
 namespace dem {
     namespace parser {
+        /**
+         * \brief Represents an assignment (e.g. a = 4)
+         */
         class Assignment : public Statement {
         public:
             Assignment(Identifier *identifier, Expression *expression);

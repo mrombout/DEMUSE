@@ -7,6 +7,9 @@
 
 namespace dem {
     namespace compiler {
+        /**
+         * \brief Compiles a DEMUSE sequence to a MIDI file
+         */
         class MuseMidiPlayEvaluator : public parser::Visitor {
         public:
             MuseMidiPlayEvaluator(ExpressionEvaluator &evaluator);

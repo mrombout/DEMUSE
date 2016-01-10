@@ -6,6 +6,9 @@
 
 namespace dem {
     namespace compiler {
+        /**
+         * \brief Represents a function declared in DEMUSE script (e.g. a function defined by the user)
+         */
         class UserFunction : public FunctionValue {
         public:
             UserFunction(Compiler &compiler, parser::ParameterList &parameterList, parser::Block &block);

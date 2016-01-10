@@ -5,6 +5,9 @@
 
 namespace dem {
     namespace parser {
+        /**
+         * \brief Represents a multiplication (e.g. 2 * 5)
+         */
         class MultiplicationExpression : public BinaryExpression<Expression, Expression> {
         public:
             MultiplicationExpression(Expression *left, Expression *right);

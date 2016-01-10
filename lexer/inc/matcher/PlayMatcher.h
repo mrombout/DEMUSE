@@ -8,6 +8,11 @@
 
 namespace dem {
     namespace lexer {
+        /**
+         * \brief Matches an entire MusePlay sequence. Always returns the play closing characters ">>".
+         *
+         * NOTE: This matcher modifies the iterators, tokens and tokenPositions.
+         */
         class PlayMatcher : public Matcher {
         public:
             PlayMatcher();

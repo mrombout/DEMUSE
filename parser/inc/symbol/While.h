@@ -12,6 +12,9 @@ namespace dem {
 
 namespace dem {
     namespace parser {
+        /**
+         * \brief Represents a while statement (e.g. while(true) { ... })
+         */
         class While : public CompoundStatement {
         public:
             While(Expression *expression, Block *block);

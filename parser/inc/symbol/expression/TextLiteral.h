@@ -6,6 +6,9 @@
 
 namespace dem {
     namespace parser {
+        /**
+         * \brief Represents a string literal (e.g. "Foo", "He said, \"Hello, sir!\"."
+         */
         class TextLiteral : public Literal {
         public:
             TextLiteral(const lexer::Token &token, std::string value);

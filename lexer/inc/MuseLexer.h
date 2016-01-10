@@ -5,6 +5,9 @@
 
 namespace dem {
     namespace lexer {
+        /**
+         * \brief Lexes a DEMUSE script.
+         */
         class MuseLexer : public Lexer {
         public:
             MuseLexer();

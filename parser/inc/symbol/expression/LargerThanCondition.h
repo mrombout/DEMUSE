@@ -5,6 +5,9 @@
 
 namespace dem {
     namespace parser {
+        /**
+         * \brief Represents a larger than condition (e.g. 4 > 1)
+         */
         class LargerThanCondition : public Condition {
         public:
             LargerThanCondition(Expression *left, Expression *right);

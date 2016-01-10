@@ -14,6 +14,11 @@ namespace dem {
 
 namespace dem {
     namespace parser {
+        /**
+         * \brief Produces a statement
+         *
+         * \ebnf statement = ( simple_statement | compound_statement ) ;
+         */
         class StatementFactory : public SymbolFactory {
         public:
             static Statement *produce(std::deque<lexer::Token> &tokens, ParseResults &results);

@@ -5,6 +5,9 @@
 
 namespace dem {
     namespace parser {
+        /**
+         * \brief Represents a smaller than or equal condition (e.g. 3 <= 4)
+         */
         class SmallerThanOrEqualCondition : public Condition {
         public:
             SmallerThanOrEqualCondition(Expression *left, Expression *right);

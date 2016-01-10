@@ -13,6 +13,11 @@ namespace dem {
 
 namespace dem {
     namespace parser {
+        /**
+         * \brief Produces a parameter list of a function or object definition
+         *
+         * \ebnf parameter_list = identifier | parameter_list "," identifier ;
+         */
         class ParameterListFactory : public SymbolFactory {
         public:
             static ParameterList *produce(std::deque<lexer::Token> &tokens, ParseResults &results);

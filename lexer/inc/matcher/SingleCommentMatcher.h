@@ -6,6 +6,11 @@
 
 namespace dem {
     namespace lexer {
+        /**
+         * \brief Matches a single line comments.
+         *
+         * It matches "//" and everything after than until a newline character is found. The newline is also included.
+         */
         class SingleCommentMatcher : public Matcher {
         public:
             virtual std::string match(std::string::iterator &begin, std::string::iterator &end, std::vector<Token> &tokens, TokenPosition &tokenPosition) const;

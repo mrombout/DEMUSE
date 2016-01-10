@@ -5,6 +5,9 @@
 
 namespace dem {
     namespace parser {
+        /**
+         * \brief Represents an instrument change (e.g. I[1])
+         */
         class Instrument : public Playable {
         public:
             Instrument(Expression *instrumentExpression);

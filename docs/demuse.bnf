@@ -1,5 +1,5 @@
 (* program *)
-program       = { function_def | variable_def_stmt | track } ;
+program       = { statement | track } ;
 track         = "track" (1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 ) block ;
 
 block         = "{" { statement } "}" ;
@@ -23,7 +23,8 @@ for_stmt          = "for(" ( terminator | variable_def_stmt | assignment_stmt ) 
 
 (* play *)
 play_stmt         = "<<" { note | identifier } ">>" ;
-note              = ( ( "C" | "D" | "E" | "F" | "G" | "A" | "B" ) [ integer ] [ "#" | "b" | "n" ] | "R" ) [ "w" | "h" | "q" ] ;
+note              = ( ( "C" | "D" | "E" | "F" | "G" | "A" | "B" ) [ integer ] accidental | "R" ) [ "w" | "h" | "q" ] ;
+accidental        = [ "#" | "b" | "n" ]
 instrument        = "I[" ( number | identifier ) "]"
 
 (* expression *)

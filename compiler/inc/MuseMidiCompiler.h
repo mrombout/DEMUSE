@@ -10,6 +10,9 @@
 
 namespace dem {
     namespace compiler {
+        /**
+         * \brief Compiles a DEMUSE script to a MIDI file
+         */
         class MidiCompiler : public Compiler {
         public:
             MidiCompiler();

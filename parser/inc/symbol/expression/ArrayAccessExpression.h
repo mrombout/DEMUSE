@@ -5,11 +5,29 @@
 
 namespace dem {
     namespace parser {
+        /**
+         * \brief Represents the accessing of an array value (e.g. A[2])
+         */
         class ArrayAccessExpression : public Expression {
         public:
-            ArrayAccessExpression(Expression *object, Expression *index, bool computed);
+            /**
+             * \brief Produces a ArrayAccessExpression where the given index is accessed of the array
+             *
+             * \param array    array to access the value of
+             * \param index    index of the value to access
+             * \param computed ???
+             */
+            ArrayAccessExpression(Expression *array, Expression *index, bool computed);
 
+            // TODO: Rename getter to array for clarity
+            /**
+             * \return array to access the value of
+             */
             Expression &object();
+
+            /**
+             * \return index of the value to access
+             */
             Expression &index();
 
             virtual bool accept(Visitor &visitor);

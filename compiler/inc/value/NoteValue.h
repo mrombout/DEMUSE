@@ -7,6 +7,9 @@
 
 namespace dem {
     namespace compiler {
+        /**
+         * \brief Represents a note value
+         */
         class NoteValue : public ObjectValue {
         public:
             NoteValue(parser::Note note);

@@ -8,6 +8,11 @@
 
 namespace dem {
     namespace compiler {
+        /**
+         * \brief Represents a function
+         *
+         * NOTE: Since all objects are now callable, isn't this Value obsolete?
+         */
         class FunctionValue : public ObjectValue {
         public:
             FunctionValue();

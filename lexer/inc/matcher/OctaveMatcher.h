@@ -5,6 +5,9 @@
 
 namespace dem {
     namespace lexer {
+        /**
+         * \brief Matches an octave, ranging from 0 to 10.
+         */
         class OctaveMatcher : public RegexMatcher {
         public:
             OctaveMatcher();

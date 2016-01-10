@@ -13,6 +13,11 @@ namespace dem {
 
 namespace dem {
     namespace parser {
+        /**
+         * \brief Produces an argument list of a function call.
+         *
+         * \ebnf argument_list = expression | argument_list "," expression ;
+         */
         class ArgumentListFactory : public SymbolFactory {
         public:
             static ArgumentList *produce(std::deque<lexer::Token> &tokens, ParseResults &results);

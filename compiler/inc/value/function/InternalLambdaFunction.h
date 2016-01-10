@@ -6,6 +6,9 @@
 
 namespace dem {
     namespace compiler {
+        /**
+         * \brief Similar to an InternalFunction this class uses a lambda as its function body
+         */
         class InternalLambdaFunction;
         typedef std::function<Value*(InternalLambdaFunction &function)> FunctionBody;
 

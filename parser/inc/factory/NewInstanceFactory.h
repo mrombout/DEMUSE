@@ -7,6 +7,11 @@
 
 namespace dem {
     namespace parser {
+        /**
+         * \brief Produces a new instance statement
+         *
+         * \ebnf new_instance = "new" identfier "(" argument_list ")" ;
+         */
         class NewInstanceFactory : public SymbolFactory {
         public:
             static NewInstance *produce(std::deque<lexer::Token> &tokens, ParseResults &results);

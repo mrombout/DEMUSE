@@ -5,6 +5,9 @@
 
 namespace dem {
     namespace parser {
+        /**
+         * \brief Represents a this expression (e.g. this)
+         */
         class ThisExpression : public Expression {
         public:
             ThisExpression(const lexer::Token &token) : Expression(token) { }

@@ -5,6 +5,9 @@
 
 namespace dem {
     namespace parser {
+        /**
+         * \brief Represents a binary condition
+         */
         class Condition : public BinaryExpression<Expression, Expression> {
         public:
             Condition(Expression *left, Expression *right);

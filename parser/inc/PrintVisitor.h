@@ -5,6 +5,9 @@
 
 namespace dem {
     namespace parser {
+        /**
+         * \brief Prints out an Expression in a more readable format
+         */
         class PrintVisitor : public Visitor {
         public:
             PrintVisitor();

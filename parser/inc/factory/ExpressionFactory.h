@@ -41,16 +41,41 @@ namespace dem {
             RIGHT
         };
 
-
         struct OperatorInfo {
             const unsigned int precedence;
             Associativity associativity;
         };
 
+        /**
+         * \brief Produces an expression
+         *
+         * Produces an expression for as long as it will find valid tokens for an expression. The produced Expression
+         * will be a tree of Expression symbols and its subclasses in the correct order of precedence for each
+         * operator.
+         *
+         * For example, an expression such as "1 + 2 * 3" would result in the following tree where each operator
+         * represents an Expression subclass:
+         *
+         * ```
+         *      +
+         *     1 *
+         *      2 3
+         * ```
+         *
+         * When the order of precedence is overruled by the use of parenthesis to create the expression "(1 + 2) * 3)",
+         * this would results in the following expression tree:
+         *
+         * ```
+         *      *
+         *     + 3
+         *    1 2
+         * ```
+         */
         class ExpressionFactory : public SymbolFactory {
         public:
             static Expression *produce(std::deque<lexer::Token> &tokens, ParseResults &results);
 
+        private:
             static Expression *gobbleExpression(std::deque<lexer::Token> &deque, ParseResults &results);
             static Expression *gobbleBinaryExpression(std::deque<lexer::Token> &deque, ParseResults &results);
             static Expression *gobbleToken(std::deque<lexer::Token> &deque, ParseResults &results);
@@ -59,8 +84,8 @@ namespace dem {
             static Expression *gobbleStringLiteral(std::deque<lexer::Token> &deque);
             static Expression *gobbleVariable(std::deque<lexer::Token> &deque, ParseResults &results);
             static Expression *gobbleGroup(std::deque<lexer::Token> &deque, ParseResults &results);
-            static Expression * gobbleIdentifier(std::deque<lexer::Token> &deque);
-            static std::vector<Expression *> gobbleArguments(std::deque<lexer::Token> &deque,
+            static Expression *gobbleIdentifier(std::deque<lexer::Token> &deque);
+            static std::vector<Expression*> gobbleArguments(std::deque<lexer::Token> &deque,
                                                                         lexer::TokenType termination,
                                                                         ParseResults &results);
             static ArrayLiteral *gobbleArray(std::deque<lexer::Token> &deque, ParseResults &results);
@@ -68,15 +93,15 @@ namespace dem {
             static unsigned int binaryPrecedence(lexer::TokenType tokenType);
             static Associativity associativity(lexer::TokenType tokenType);
 
-            static Expression * createBinaryExpression(lexer::TokenType op, Expression *left, Expression *right);
+            static Expression *createBinaryExpression(lexer::TokenType op, Expression *left, Expression *right);
 
             static bool isUnaryOperator(lexer::Token &token);
             static Expression *gobbleBoolLiteral(std::deque<lexer::Token> &deque);
 
+            static void replaceAll(std::string &subject, const std::string &search, const std::string &replace);
+
         private:
             static const std::map<lexer::TokenType, OperatorInfo> BINARY_OPS;
-
-            static void replaceAll(std::string &subject, const std::string &search, const std::string &replace);
         };
     }
 }

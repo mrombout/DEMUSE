@@ -5,6 +5,9 @@
 
 namespace dem {
     namespace compiler {
+        /**
+         * \brief Represents a null value
+         */
         class NullValue : public Value {
         public:
             virtual Value *add(Value *b);

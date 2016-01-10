@@ -13,6 +13,11 @@ namespace dem {
 
 namespace dem {
     namespace parser {
+        /**
+         * \brief Produces a function definition.
+         *
+         * \ebnf function_def = "function" identifier "(" [ parameter_list ] ")" block ;
+         */
         class FunctionDefinitionFactory : public SymbolFactory {
         public:
             static FunctionDefinition *produce(std::deque<lexer::Token> &tokens, ParseResults &results);

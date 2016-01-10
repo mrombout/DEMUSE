@@ -7,6 +7,11 @@
 
 namespace dem {
     namespace parser {
+        /**
+         * \brief Produces a play statement
+         *
+         * \ebnf play_stmt = "<<" { note | identifier } ">>" ;
+         */
         class PlayFactory : public SymbolFactory {
         public:
             static Play *produce(std::deque<lexer::Token> &tokens, ParseResults &results);

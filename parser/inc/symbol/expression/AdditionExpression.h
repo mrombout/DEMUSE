@@ -5,6 +5,9 @@
 
 namespace dem {
     namespace parser {
+        /**
+         * \brief Represents an addition expression (e.g. 1 + 1)
+         */
         class AdditionExpression : public BinaryExpression<Expression, Expression> {
         public:
             AdditionExpression(Expression *left, Expression *right);

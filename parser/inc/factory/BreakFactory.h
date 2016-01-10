@@ -13,6 +13,11 @@ namespace dem {
 
 namespace dem {
     namespace parser {
+        /**
+         * \brief Represents a break statement.
+         *
+         * \ebnf break_stmt = "break" ;
+         */
         class BreakFactory : public SymbolFactory {
         public:
             static Break *produce(std::deque<lexer::Token> &tokens, ParseResults &results);

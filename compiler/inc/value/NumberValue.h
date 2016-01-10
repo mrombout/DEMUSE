@@ -6,6 +6,9 @@
 
 namespace dem {
     namespace compiler {
+        /**
+         * \brief Represents a number value
+         */
         class NumberValue : public ObjectValue {
         public:
             NumberValue(double value);

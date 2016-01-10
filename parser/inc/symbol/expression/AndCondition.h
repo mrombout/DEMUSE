@@ -5,6 +5,9 @@
 
 namespace dem {
     namespace parser {
+        /**
+         * \brief Represents an and condition (e.g. true && false)
+         */
         class AndCondition : public Condition {
         public:
             AndCondition(Expression *left, Expression *right);

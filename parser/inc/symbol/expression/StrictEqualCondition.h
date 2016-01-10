@@ -5,6 +5,9 @@
 
 namespace dem {
     namespace parser {
+        /**
+         * \brief Represents a strict equal condition (e.g. 1 === 1)
+         */
         class StrictEqualCondition : public Condition {
         public:
             StrictEqualCondition(Expression *left, Expression *right);

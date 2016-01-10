@@ -6,6 +6,9 @@
 
 namespace dem {
     namespace parser {
+        /**
+         * \brief Represents an assignment expression (e.g. a = 5)
+         */
         class AssignmentExpression : public BinaryExpression<Expression, Expression> {
         public:
             AssignmentExpression(Expression *left, Expression *right);

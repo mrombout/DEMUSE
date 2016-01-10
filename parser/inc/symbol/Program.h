@@ -13,6 +13,11 @@ namespace dem {
 
 namespace dem {
     namespace parser {
+        /**
+         * \brief Represents a program
+         *
+         * A program consists of a list of statement that or run sequentially on execution.
+         */
         class Program : public Symbol {
         public:
             Program(std::vector<Statement*> statements);

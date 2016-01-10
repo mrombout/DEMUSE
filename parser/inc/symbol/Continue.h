@@ -5,6 +5,9 @@
 
 namespace dem {
     namespace parser {
+        /**
+         * \brief Represents a continue statement (e.g. continue)
+         */
         class Continue : public Statement {
         public:
             Continue(const lexer::Token &token);

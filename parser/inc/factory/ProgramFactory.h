@@ -15,6 +15,11 @@ namespace dem {
 
 namespace dem {
     namespace parser {
+        /**
+         * \brief Produces a program
+         *
+         * \ebnf program = { statement | track } ;
+         */
         class ProgramFactory : public SymbolFactory {
         public:
             static std::unique_ptr<Program> produce(std::deque<lexer::Token> &tokens, ParseResults &results);

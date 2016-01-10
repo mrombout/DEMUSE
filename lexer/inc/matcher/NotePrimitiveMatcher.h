@@ -12,6 +12,11 @@
 
 namespace dem {
     namespace lexer {
+        /**
+         * \brief Matches a note primitive.
+         *
+         * This matcher matches several tokens and thus modifies the iterators, tokens and tokenPosition.
+         */
         class NotePrimitiveMatcher : public Matcher {
         public:
             NotePrimitiveMatcher();

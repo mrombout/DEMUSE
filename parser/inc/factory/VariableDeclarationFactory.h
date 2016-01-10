@@ -13,6 +13,11 @@ namespace dem {
 
 namespace dem {
     namespace parser {
+        /**
+         * \brief Produces a variable declaration
+         *
+         * \ebnf variable_def_stmt = "var" assignment_stmt terminator ;
+         */
         class VariableDeclarationFactory : public SymbolFactory {
         public:
             static VariableDeclaration *produce(std::deque<lexer::Token> &tokens, ParseResults &results);

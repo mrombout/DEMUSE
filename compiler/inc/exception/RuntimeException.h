@@ -7,6 +7,11 @@
 
 namespace dem {
     namespace compiler {
+        /**
+         * \brief Exception thrown when an error occurs during runtime
+         *
+         * TODO: Rename to CompileException for consistency
+         */
         class RuntimeException : public std::exception {
         public:
             RuntimeException(const std::string &msg);

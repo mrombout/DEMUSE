@@ -5,6 +5,9 @@
 
 namespace dem {
     namespace parser {
+        /**
+         * \brief Represents a single statement
+         */
         class Statement : public Symbol {
         public:
             Statement(const lexer::Token &token);

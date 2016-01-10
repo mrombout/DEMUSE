@@ -6,6 +6,9 @@
 
 namespace dem {
     namespace compiler {
+        /**
+         * \brief Represents a property of an object
+         */
         class Property : public Variable {
         public:
             Property(ObjectValue *parent, parser::Identifier *identifier, Value *value);

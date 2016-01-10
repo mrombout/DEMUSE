@@ -6,6 +6,9 @@
 
 namespace dem {
     namespace parser {
+        /**
+         * \brief Represents a symbol
+         */
         class Symbol : public Visitable {
         public:
             Symbol(const lexer::Token token);

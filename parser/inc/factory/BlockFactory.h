@@ -13,6 +13,11 @@ namespace dem {
 
 namespace dem {
     namespace parser {
+        /**
+         * \brief Represents a block.
+         *
+         * \ebnf block = "{" { statement } "}" ;
+         */
         class BlockFactory : public SymbolFactory {
         public:
             static Block *produce(std::deque<lexer::Token> &tokens, ParseResults &results);

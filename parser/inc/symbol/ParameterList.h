@@ -13,6 +13,9 @@ namespace dem {
 
 namespace dem {
     namespace parser {
+        /**
+         * \brief Represents a parameter list for a function or new object (e.g. foo, bar)
+         */
         class ParameterList : public Symbol {
         public:
             ParameterList(const lexer::Token &token);

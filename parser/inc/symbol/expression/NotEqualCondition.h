@@ -5,6 +5,9 @@
 
 namespace dem {
     namespace parser {
+        /**
+         * \brief Represents a not equal condition (e.g. 1 != 5)
+         */
         class NotEqualCondition : public Condition {
         public:
             NotEqualCondition(Expression *left, Expression *right);

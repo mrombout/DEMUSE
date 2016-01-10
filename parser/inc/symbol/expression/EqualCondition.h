@@ -5,6 +5,9 @@
 
 namespace dem {
     namespace parser {
+        /**
+         * \brief Represents an equal condition (e.g. 1 == 1)
+         */
         class EqualCondition : public Condition {
         public:
             virtual bool accept(Visitor &visitor);

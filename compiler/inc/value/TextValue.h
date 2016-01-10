@@ -7,6 +7,9 @@
 
 namespace dem {
     namespace compiler {
+        /**
+         * \brief Represents a string value
+         */
         class TextValue : public ObjectValue {
         public:
             TextValue(std::string value);

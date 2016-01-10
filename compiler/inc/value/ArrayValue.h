@@ -7,6 +7,9 @@
 
 namespace dem {
     namespace compiler {
+        /**
+         * \brief Represents an array value
+         */
         class ArrayValue : public ObjectValue {
         public:
             ArrayValue(std::vector<Variable*> values);

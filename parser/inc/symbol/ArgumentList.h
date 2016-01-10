@@ -7,6 +7,9 @@
 
 namespace dem {
     namespace parser {
+        /**
+         * \brief Represents an argument list (e.g. "foo, 1, 4")
+         */
         class ArgumentList : public Symbol {
         public:
             ArgumentList(const lexer::Token &token, std::vector<Expression*> arguments);

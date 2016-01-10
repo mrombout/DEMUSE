@@ -6,6 +6,9 @@
 
 namespace dem {
     namespace parser {
+        /**
+         * \brief Represents a boolean literal (e.g. true)
+         */
         class BoolLiteral : public Literal {
         public:
             BoolLiteral(const lexer::Token &token, bool value);

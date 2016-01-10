@@ -5,6 +5,9 @@
 
 namespace dem {
     namespace lexer {
+        /**
+         * \brief Matches a string of characters.
+         */
         class StringMatcher : public Matcher {
         public:
             StringMatcher(std::string content);
