@@ -43,7 +43,7 @@ namespace dem {
             declareVariable(new parser::Identifier(token, "REED_ORGAN"),        new NumberValue(20));
             declareVariable(new parser::Identifier(token, "ACCORDION"),         new NumberValue(21));
             declareVariable(new parser::Identifier(token, "HARMONICA"),         new NumberValue(22));
-            declareVariable(new parser::Identifier(token, "TANGO ACCORDION"),   new NumberValue(23));
+            declareVariable(new parser::Identifier(token, "TANGO_ACCORDION"),   new NumberValue(23));
 
             //// Guitar
             declareVariable(new parser::Identifier(token, "NYLON_GUITAR"),      new NumberValue(24));

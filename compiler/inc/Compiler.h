@@ -16,7 +16,6 @@ namespace dem {
         public:
             virtual void compile(parser::Program *program, std::string fileName) = 0;
 
-        private:
             virtual Value *returnValue() = 0;
             virtual std::deque<ObjectValue*> &scopes() = 0;
         };

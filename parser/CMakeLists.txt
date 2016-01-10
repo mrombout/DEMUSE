@@ -191,9 +191,6 @@ set(Parser_SRCS
     inc/symbol/play/Note.h
     src/symbol/play/Note.cpp
 
-    inc/symbol/ProcedureCall.h
-    src/symbol/ProcedureCall.cpp
-
     inc/factory/SymbolFactory.h
     src/factory/SymbolFactory.cpp
 
