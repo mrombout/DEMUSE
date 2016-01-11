@@ -89,6 +89,8 @@ namespace dem {
 
             wxProcess *mActiveProcess;
 
+            std::streambuf *mOldSb;
+
             wxDECLARE_EVENT_TABLE();
         };
     }

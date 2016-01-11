@@ -74,6 +74,7 @@ namespace dem {
 
         MainFrame::~MainFrame() {
             mMgr.UnInit();
+            std::cout.rdbuf(mOldSb);
         }
 
         void MainFrame::createMenu() {
@@ -185,7 +186,7 @@ namespace dem {
             mOutput = new OutputTextCtrl(this, -1, _(""), wxDefaultPosition, wxSize(200, 150), wxNO_BORDER | wxTE_MULTILINE | wxTE_AUTO_URL | wxTE_RICH | wxTE_DONTWRAP);
             mMgr.AddPane(mOutput, wxAuiPaneInfo().Name("Output").Bottom().MinimizeButton(true).PaneBorder(true).MinSize(-1, 200));
 
-            std::streambuf *sbOld = std::cout.rdbuf(); //where is rdbuff declared/?!
+            mOldSb = std::cout.rdbuf(); //where is rdbuff declared/?!
             std::cout.rdbuf(mOutput);
         }
 
