@@ -1,0 +1,4 @@
+var fruits = ["Apple", "Banana"];
+
+print(fruits.length);
+// 2
