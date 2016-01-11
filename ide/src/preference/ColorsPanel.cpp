@@ -78,7 +78,7 @@ namespace dem {
                     // TODO: Remove this cheap hack to fix the format of colours to be read by wxColour::Set
                     value = "rgba" + value;
                 }
-                std::cout << "Writing: " << key << " = " << value << std::endl;
+                //std::cout << "Writing: " << key << " = " << value << std::endl;
 
                 config.Write(key, value);
             }

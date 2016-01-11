@@ -53,7 +53,17 @@ namespace dem {
         wxEND_EVENT_TABLE()
 
         MainFrame::MainFrame(const wxString &title, const wxPoint &pos, const wxSize &size) :
-            wxFrame(nullptr, wxID_ANY, title, pos, size) {
+            wxFrame(nullptr, wxID_ANY, title, pos, size),
+            mFileMenu(nullptr),
+            mRunMenu(nullptr),
+            mEditMenu(nullptr),
+            mHelpMenu(nullptr),
+            mToolbar(nullptr),
+            mErrorList(nullptr),
+            mOutput(nullptr),
+            mPreferencesEditor(nullptr),
+            mActiveProcess(nullptr),
+            mOldSb(nullptr) {
             mMgr.SetManagedWindow(this);
 #ifdef __WINDOWS__
             auto icon = wxICON(icon);
@@ -73,7 +83,11 @@ namespace dem {
 
         MainFrame::~MainFrame() {
             mMgr.UnInit();
+
             std::cout.rdbuf(mOldSb);
+
+            if(mPreferencesEditor)
+                delete mPreferencesEditor;
         }
 
         void MainFrame::createMenu() {
@@ -182,10 +196,10 @@ namespace dem {
             mMgr.AddPane(mErrorList, wxAuiPaneInfo().Name("Errors").Bottom().MinimizeButton(true).PaneBorder(true).MinSize(-1, 200));
 
             // output window
-            mOutput = new OutputTextCtrl(this, -1, _(""), wxDefaultPosition, wxSize(200, 150), wxNO_BORDER | wxTE_MULTILINE | wxTE_AUTO_URL | wxTE_RICH | wxTE_DONTWRAP);
+            mOutput = new OutputTextCtrl(this, -1, _(""), wxDefaultPosition, wxSize(200, 150), wxNO_BORDER | wxTE_MULTILINE | wxTE_AUTO_URL | wxTE_RICH | wxTE_DONTWRAP | wxTE_READONLY);
             mMgr.AddPane(mOutput, wxAuiPaneInfo().Name("Output").Bottom().MinimizeButton(true).PaneBorder(true).MinSize(-1, 200));
 
-            mOldSb = std::cout.rdbuf(); //where is rdbuff declared/?!
+            mOldSb = std::cout.rdbuf();
             std::cout.rdbuf(mOutput);
         }
 
@@ -318,12 +332,14 @@ namespace dem {
         }
 
         void MainFrame::onEditPreferences(wxCommandEvent &event) {
-            wxPreferencesEditor *preferencesEditor = new wxPreferencesEditor();
-            preferencesEditor->AddPage(new GeneralPage());
-            preferencesEditor->AddPage(new EditorPage());
-            preferencesEditor->AddPage(new ColorsPage());
-            preferencesEditor->AddPage(new ExecutionPage());
-            preferencesEditor->Show(this);
+            if(!mPreferencesEditor) {
+                mPreferencesEditor = new wxPreferencesEditor();
+                mPreferencesEditor->AddPage(new GeneralPage());
+                mPreferencesEditor->AddPage(new EditorPage());
+                mPreferencesEditor->AddPage(new ColorsPage());
+                mPreferencesEditor->AddPage(new ExecutionPage());
+            }
+            mPreferencesEditor->Show(this);
 
             // flush
             wxGetApp().config().Flush();

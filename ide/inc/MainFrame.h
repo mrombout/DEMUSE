@@ -8,6 +8,7 @@
 #include <wx/aui/aui.h>
 #include <wx/dataview.h>
 #include <wx/process.h>
+#include <wx/preferences.h>
 #include "AutocompleteVisitor.h"
 #include "MuseStyledTextEditor.h"
 #include "Parser.h"
@@ -87,6 +88,7 @@ namespace dem {
             wxToolBar *mToolbar;
             wxDataViewListCtrl *mErrorList;
             wxTextCtrl *mOutput;
+            wxPreferencesEditor *mPreferencesEditor;
 
             wxProcess *mActiveProcess;
 
