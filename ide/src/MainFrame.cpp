@@ -108,16 +108,16 @@ namespace dem {
 
             mRunMenu->Enable(ID_Stop, false);
 
-            //mHelpMenu = new wxMenu;
-            //mHelpMenu->Append(wxID_HELP);
-            //mHelpMenu->AppendSeparator();
-            //mHelpMenu->Append(wxID_ABOUT);
+            mHelpMenu = new wxMenu;
+            mHelpMenu->Append(wxID_HELP);
+            mHelpMenu->AppendSeparator();
+            mHelpMenu->Append(wxID_ABOUT);
 
             wxMenuBar *menuBar = new wxMenuBar;
             menuBar->Append(mFileMenu, "&File");
             menuBar->Append(mEditMenu, "&Edit");
             menuBar->Append(mRunMenu, "&Run");
-            //menuBar->Append(mHelpMenu, "&Help");
+            menuBar->Append(mHelpMenu, "&Help");
 
             SetMenuBar(menuBar);
         }

@@ -82,6 +82,7 @@ namespace dem {
             wxMenu *mFileMenu;
             wxMenu *mRunMenu;
             wxMenu *mEditMenu;
+            wxMenu *mHelpMenu;
 
             wxToolBar *mToolbar;
             wxDataViewListCtrl *mErrorList;
