@@ -14,6 +14,7 @@ namespace dem {
         class Harmony : public Playable {
         public:
             Harmony(const lexer::Token &token);
+            ~Harmony();
 
             void addNote(Expression* note);
             const std::vector<Expression*> &notes() const;

@@ -1,3 +1,4 @@
+#include <stdexcept>
 #include "symbol/expression/ExpressionStatement.h"
 #include "Visitor.h"
 
@@ -6,7 +7,8 @@ namespace dem {
         ExpressionStatement::ExpressionStatement(Expression *expression) :
             Statement(expression->token()),
             mExpression(expression) {
-
+            if(!mExpression)
+                throw std::invalid_argument("Argument 'expression' may not be null.");
         }
 
         Expression &ExpressionStatement::expression() const {

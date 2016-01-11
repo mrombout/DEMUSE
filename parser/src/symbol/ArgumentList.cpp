@@ -9,6 +9,11 @@ namespace dem {
 
         }
 
+        ArgumentList::~ArgumentList() {
+            for(Expression *expression : mArguments)
+                delete expression;
+        }
+
         std::vector<Expression *> &ArgumentList::arguments() {
             return mArguments;
         }

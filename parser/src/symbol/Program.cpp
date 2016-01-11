@@ -10,7 +10,8 @@ namespace dem {
         }
 
         Program::~Program() {
-
+            for(Statement *statement : mStatements)
+                delete statement;
         }
 
         const std::vector<Statement*> &Program::statements() const {

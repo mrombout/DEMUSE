@@ -1,3 +1,4 @@
+#include <stdexcept>
 #include "Visitor.h"
 
 namespace dem {
@@ -6,7 +7,15 @@ namespace dem {
             CompoundStatement(expression->token()),
             mExpression(expression),
             mBlock(block) {
+            if(!mExpression)
+                throw std::invalid_argument("Argument 'expression' may not be null.");
+            if(!mBlock)
+                throw std::invalid_argument("Argument 'block' may not be null.");
+        }
 
+        While::~While() {
+            delete mExpression;
+            delete mBlock;
         }
 
         bool While::accept(Visitor &visitor) {

@@ -19,6 +19,7 @@ namespace dem {
         class Track : public Statement {
         public:
             Track(int channel, Block *block);
+            ~Track();
 
             int channel() const;
             const Block &block() const;

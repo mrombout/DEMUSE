@@ -16,6 +16,9 @@ namespace dem {
              * \param array    array to access the value of
              * \param index    index of the value to access
              * \param computed ???
+             *
+             * \throws std::invalid_argument if array is null
+             * \throws std::invalid_argument if index is null
              */
             ArrayAccessExpression(Expression *array, Expression *index, bool computed);
 

@@ -17,17 +17,23 @@ namespace dem {
              *
              * \param expression expression to evaluate
              * \param block      block to execute when expression is true
+             * \throws std::invalid_argument if expression is null
+             * \throws std::invalid_argument if block is null
              */
             If(lexer::Token &ifToken, Expression *expression, Block *block);
 
             /**
              * \brief Constructs an if statement, with an else block
              *
-             * \param expression expression to evaluate
-             * \param block      block to execute when expression is true
-             * \param elseBlock  block to execute when expression is false
+             * \param expression expression to evaluate, may not be null
+             * \param block      block to execute when expression is true, may not be null
+             * \param elseBlock  block to execute when expression is false, may be null
+             * \throws std::invalid_argument if expression is null
+             * \throws std::invalid_argument if block is null
              */
             If(lexer::Token &ifToken, Expression *expression, Block *block, Block *elseBlock);
+
+            ~If();
 
             virtual bool accept(Visitor &visitor);
 

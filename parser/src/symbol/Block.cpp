@@ -9,6 +9,11 @@ namespace dem {
 
         }
 
+        Block::~Block() {
+            for(Statement *statement : mStatements)
+                delete statement;
+        }
+
         std::vector<Statement *> &Block::statements() {
             return mStatements;
         }

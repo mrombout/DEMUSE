@@ -18,10 +18,11 @@ namespace dem {
         class Return : public Statement {
         public:
             Return(Expression *expression);
+            ~Return();
 
             virtual bool accept(Visitor &visitor) override;
 
-            Expression *expression() const;
+            Expression &expression() const;
 
         private:
             Expression *mExpression;

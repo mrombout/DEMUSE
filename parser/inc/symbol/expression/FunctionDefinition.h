@@ -24,6 +24,13 @@ namespace dem {
              *     // ...
              * };
              * ```
+             *
+             * \param token         token this function definition is represented by
+             * \param parameterList parameter list this function takes, may not be null
+             * \param block         block to execute when this function is called, may not be null
+             *
+             * \throws std::invalid_argument when parameterList is null
+             * \throws std::invalid_argument when block is null
              */
             FunctionDefinition(const lexer::Token &token, ParameterList *parameterList, Block *block);
 
@@ -38,7 +45,15 @@ namespace dem {
              * }
              * ```
              *
-             * The function `foo` is then accassible throughout the DEMUSE script.
+             * The function `foo` is then accessible throughout the DEMUSE script.
+             *
+             * \param token         token this function definition is represented by
+             * \param identifier    identifier to associate with this function, may be null
+             * \param parameterList parameter list this function takes, may not be null
+             * \param block         block to execute when this function is called, may not be null
+             *
+             * \throws std::invalid_argument when parameterList is null
+             * \throws std::invalid_argument when block is null
              */
             FunctionDefinition(const lexer::Token &token, Identifier *identifier, ParameterList *parameterList, Block *block);
 

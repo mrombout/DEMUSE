@@ -13,12 +13,21 @@ namespace dem {
          */
         class FunctionCallExpression : public Expression, public parser::Identifiable {
         public:
+            /**
+             * \brief Constructs a new FunctionCallExpression
+             *
+             * \param argumentList arguments to pass to function on execution, may not be null
+             * \param expression   expression to be evaluated to a callable function, may not be null
+             *
+             * \throws std::invalid_argument if argumentList is null
+             * \throws std::invalid_argument if expression is null
+             */
             FunctionCallExpression(ArgumentList *argumentList, Expression *expression);
 
             virtual const std::string &name() const;
 
-            Expression *expression() const;
-            ArgumentList *argumentList() const;
+            Expression &expression() const;
+            ArgumentList &argumentList() const;
 
             virtual bool accept(Visitor &visitor);
 

@@ -1,3 +1,4 @@
+#include <stdexcept>
 #include "symbol/Track.h"
 #include "Visitor.h"
 
@@ -7,7 +8,12 @@ namespace dem {
             Statement(block->token()),
             mChannel(channel),
             mBlock(block) {
+            if(!mBlock)
+                throw std::invalid_argument("Argument 'block' may not be null.");
+        }
 
+        Track::~Track() {
+            delete mBlock;
         }
 
         int Track::channel() const {

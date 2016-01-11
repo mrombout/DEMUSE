@@ -22,6 +22,7 @@ namespace dem {
              * \param block          block to execute each loop, may not be null
              */
             For(Statement *initialization, Expression *condition, AssignmentExpression *afterThought, Block *block);
+            ~For();
 
             virtual bool accept(Visitor &visitor);
 

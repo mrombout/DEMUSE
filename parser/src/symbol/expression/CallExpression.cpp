@@ -7,7 +7,8 @@ namespace dem {
             Expression(callee->token()),
             mCallee(callee),
             mArguments(arguments) {
-
+            if(!mCallee)
+                throw std::invalid_argument("Argument 'mCallee' may not be null.");
         }
 
         Expression &CallExpression::callee() const {

@@ -10,6 +10,15 @@ namespace dem {
          */
         class MemberExpression : public Expression {
         public:
+            /**
+             * \brief Constructs a new MemberExpression
+             *
+             * \param object   object to access property of, may not be null
+             * \param property property to access, may not be null
+             *
+             * \throws std::invalid_argument if object is null
+             * \throws std::invalid_argument if property is null
+             */
             MemberExpression(Expression *object, Expression *property, bool computed);
 
             Expression &object() const;

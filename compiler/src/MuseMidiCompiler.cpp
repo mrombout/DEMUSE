@@ -182,7 +182,7 @@ namespace dem {
         bool MidiCompiler::visitEnter(parser::Return &returnSymbol) {
             std::clog << "ENTER - Return" << std::endl;
 
-            mReturnValue = mEvaluator.evaluate(mObjectScopes.front(), *returnSymbol.expression());
+            mReturnValue = mEvaluator.evaluate(mObjectScopes.front(), returnSymbol.expression());
 
             return false;
         }

@@ -8,7 +8,10 @@ namespace dem {
             mObject(array),
             mIndex(index),
             mComputed(computed) {
-
+            if(!mObject)
+                throw std::invalid_argument("Argument 'array' may not be null.");
+            if(!mIndex)
+                throw std::invalid_argument("Argument 'index' may not be null.");
         }
 
         Expression &ArrayAccessExpression::object() {

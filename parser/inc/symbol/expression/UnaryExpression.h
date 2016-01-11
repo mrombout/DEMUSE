@@ -10,6 +10,9 @@ namespace dem {
          */
         class UnaryExpression : public Expression {
         public:
+            /**
+             * \brief Constructs a UnaryExpression
+             */
             UnaryExpression(lexer::Token op, Expression *argument);
 
             const std::string &op() const;

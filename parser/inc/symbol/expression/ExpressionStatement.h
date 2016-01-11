@@ -14,6 +14,13 @@ namespace dem {
          */
         class ExpressionStatement : public Statement {
         public:
+            /**
+             * \brief Constructs a new ExpressionStatemnt
+             *
+             * \param expression expression to execute
+             *
+             * \throws std::invalid_argument if expression is null
+             */
             ExpressionStatement(Expression *expression);
 
             Expression &expression() const;

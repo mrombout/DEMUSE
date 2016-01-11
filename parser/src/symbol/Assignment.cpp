@@ -1,3 +1,4 @@
+#include <stdexcept>
 #include "symbol/Assignment.h"
 #include "Visitor.h"
 
@@ -7,7 +8,10 @@ namespace dem {
             Statement(identifier->token()),
             mIdentifier(identifier),
             mExpression(expression) {
-
+            if(!mIdentifier)
+                throw std::invalid_argument("Argument 'identifier' may not be null.");
+            if(!mExpression)
+                throw std::invalid_argument("Argument 'expression' may not be null.");
         }
 
         Identifier &Assignment::identifier() const {

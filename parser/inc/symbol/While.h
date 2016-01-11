@@ -18,6 +18,7 @@ namespace dem {
         class While : public CompoundStatement {
         public:
             While(Expression *expression, Block *block);
+            ~While();
 
             virtual bool accept(Visitor &visitor);
 

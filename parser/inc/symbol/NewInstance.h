@@ -13,6 +13,7 @@ namespace dem {
         class NewInstance : public Expression {
         public:
             NewInstance(Identifier *identifier, ArgumentList *argumentList);
+            ~NewInstance();
 
             const Identifier &identifier() const;
             const ArgumentList &argumentList() const;

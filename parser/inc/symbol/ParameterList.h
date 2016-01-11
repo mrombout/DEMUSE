@@ -20,6 +20,7 @@ namespace dem {
         public:
             ParameterList(const lexer::Token &token);
             ParameterList(std::vector<Identifier*> identifiers);
+            ~ParameterList();
 
             virtual bool accept(Visitor &visitor);
 

@@ -1,3 +1,4 @@
+#include <stdexcept>
 #include "symbol/ParameterList.h"
 #include "Visitor.h"
 
@@ -12,6 +13,11 @@ namespace dem {
             Symbol(identifiers.front()->token()),
             mIdentifiers(identifiers) {
 
+        }
+
+        ParameterList::~ParameterList() {
+            for(Identifier *identifier : mIdentifiers)
+                delete identifier;
         }
 
         bool ParameterList::accept(Visitor &visitor) {

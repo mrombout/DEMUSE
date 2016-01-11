@@ -8,6 +8,11 @@ namespace dem {
 
         }
 
+        Harmony::~Harmony() {
+            for(Expression *expression : mNotes)
+                delete expression;
+        }
+
         void Harmony::addNote(Expression *note) {
             mNotes.push_back(note);
         }

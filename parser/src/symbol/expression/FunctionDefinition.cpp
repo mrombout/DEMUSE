@@ -13,7 +13,10 @@ namespace dem {
             mIdentifier(identifier),
             mParameterList(parameterList),
             mBlock(block) {
-
+            if(!mParameterList)
+                throw std::invalid_argument("Argument 'parameterList' may not be null.");
+            if(!mBlock)
+                throw std::invalid_argument("Argument 'block' may not be null.");
         }
 
         bool FunctionDefinition::accept(Visitor &visitor) {

@@ -1,3 +1,4 @@
+#include <c++/stdexcept>
 #include "symbol/If.h"
 #include "Visitor.h"
 
@@ -13,7 +14,10 @@ namespace dem {
             mExpression(expression),
             mBlock(block),
             mElseBlock(elseBlock) {
-
+            if(!expression)
+                throw std::invalid_argument("Argument 'expression' may not be null.");
+            if(!block)
+                throw std::invalid_argument("Argument 'block' may not be null.");
         }
 
         bool If::accept(Visitor &visitor) {
@@ -38,6 +42,13 @@ namespace dem {
 
         Block *If::elseBlock() const {
             return mElseBlock;
+        }
+
+        If::~If() {
+            delete mExpression;
+            delete mBlock;
+            if(mElseBlock)
+                delete mElseBlock;
         }
     }
 }

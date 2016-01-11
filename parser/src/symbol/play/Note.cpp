@@ -1,4 +1,5 @@
 #include <sstream>
+#include <c++/stdexcept>
 #include "symbol/play/Note.h"
 #include "Visitor.h"
 
@@ -10,7 +11,10 @@ namespace dem {
             mOctave(octave),
             mAccidental(accidental),
             mDuration(duration) {
-
+            if(mNote < 'A' || mNote > 'G')
+                throw std::invalid_argument("Argument 'note' may only range from 'A' to 'G', note '" + std::to_string(mNote) + "' is not allowed.");
+            if(mOctave < 0 || mOctave > 10)
+                throw std::invalid_argument("Argument 'octave' may only range from '0' to '10', octave '" + std::to_string(mOctave) + "' is not allowed.");
         }
 
         bool Note::accept(Visitor &visitor) {

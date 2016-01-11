@@ -13,6 +13,7 @@ namespace dem {
         class ArgumentList : public Symbol {
         public:
             ArgumentList(const lexer::Token &token, std::vector<Expression*> arguments);
+            ~ArgumentList();
 
             std::vector<Expression*> &arguments();
             int numArguments();

@@ -1,3 +1,4 @@
+#include <stdexcept>
 #include "symbol/For.h"
 #include "Visitor.h"
 
@@ -9,7 +10,8 @@ namespace dem {
             mCondition(condition),
             mAfterThought(afterThought),
             mBlock(block) {
-
+            if(!mBlock)
+                throw std::invalid_argument("Argument 'block' may not be null.");
         }
 
         bool For::accept(Visitor &visitor) {
@@ -36,6 +38,17 @@ namespace dem {
 
         Block &For::block() const {
             return *mBlock;
+        }
+
+        For::~For() {
+            if(mInitialization)
+                delete mInitialization;
+            if(mCondition)
+                delete mCondition;
+            if(mAfterThought)
+                delete mAfterThought;
+            if(mBlock)
+                delete mBlock;
         }
     }
 }

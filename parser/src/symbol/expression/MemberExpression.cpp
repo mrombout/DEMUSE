@@ -8,7 +8,10 @@ namespace dem {
             mObject(object),
             mProperty(property),
             mComputed(computed) {
-
+            if(!mObject)
+                throw std::invalid_argument("Argument 'object' may not be null.");
+            if(!mProperty)
+                throw std::invalid_argument("Argument 'property' may not be null.");
         }
 
         bool MemberExpression::accept(Visitor &visitor) {

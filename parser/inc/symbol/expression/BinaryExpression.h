@@ -1,6 +1,7 @@
 #ifndef DEMUSE_BINARYEXPRESSION_H
 #define DEMUSE_BINARYEXPRESSION_H
 
+#include <stdexcept>
 #include "Expression.h"
 
 namespace dem {
@@ -20,14 +21,25 @@ namespace dem {
             /**
              * \brief Constructs a new BinaryExpression
              *
-             * \param left expression, should be executed first
-             * \param right expression, should be executed last
+             * \param left expression that should be executed first, may not be null
+             * \param right expression that should be executed last, may not be null
+             *
+             * \throws std::invalid_argument if mLeft is null
+             * \throws std::invalid_argument if mRight is null
              */
             BinaryExpression(TLeft *left, TRight *right) :
                 Expression(left->token()),
                 mLeft(left),
                 mRight(right) {
+                if(!mLeft)
+                    throw std::invalid_argument("Argument 'mLeft' may not be null.");
+                if(!mRight)
+                    throw std::invalid_argument("Argument 'mRight' may not be null.");
+            }
 
+            ~BinaryExpression() {
+                delete mLeft;
+                delete mRight;
             }
 
             TLeft &left() const {

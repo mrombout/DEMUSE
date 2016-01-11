@@ -96,7 +96,7 @@ namespace dem {
         bool MuseMidiPlayEvaluator::visitEnter(parser::Instrument &instrument) {
             std::cout << "ENTER - Instrument" << std::endl;
 
-            Value *value = mEvaluator.evaluate(mObjectScope, *instrument.instrumentExpression());
+            Value *value = mEvaluator.evaluate(mObjectScope, instrument.instrumentExpression());
             mMidiMessage.setCommand(0xC0 + mTrack->channel(), value->asNumber());
             mMidiFile.addEvent(1, mTime, mMidiMessage);
 

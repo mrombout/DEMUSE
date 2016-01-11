@@ -19,8 +19,10 @@ namespace dem {
             /**
              * Constructs a new CallExpression.
              *
-             * \param callee the object to call
+             * \param callee the object to call, may not be null
              * \param arguments to pass with the call
+             *
+             * \throws std::invalid_argument if callee is null
              */
             CallExpression(Expression *callee, std::vector<Expression*> arguments);
 

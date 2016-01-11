@@ -9,15 +9,18 @@ namespace dem {
             Expression(expression->token()),
             mExpression(expression),
             mArgumentList(argumentList) {
-
+            if(!mExpression)
+                throw std::invalid_argument("Argument 'argumentList' may not be null.");
+            if(!mArgumentList)
+                throw std::invalid_argument("Argument 'expression' may not be null.");
         }
 
-        Expression *FunctionCallExpression::expression() const {
-            return mExpression;
+        Expression &FunctionCallExpression::expression() const {
+            return *mExpression;
         }
 
-        ArgumentList *FunctionCallExpression::argumentList() const {
-            return mArgumentList;
+        ArgumentList &FunctionCallExpression::argumentList() const {
+            return *mArgumentList;
         }
 
         bool FunctionCallExpression::accept(Visitor &visitor) {

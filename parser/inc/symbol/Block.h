@@ -13,6 +13,7 @@ namespace dem {
         class Block : public Symbol {
         public:
             Block(const lexer::Token &token, std::vector<Statement*> statements);
+            ~Block();
 
             virtual bool accept(Visitor &visitor);
 

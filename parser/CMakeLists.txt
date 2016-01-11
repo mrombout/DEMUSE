@@ -59,7 +59,6 @@ set(Parser_SRCS
     src/symbol/For.cpp
 
     inc/symbol/Identifiable.h
-    src/symbol/Identifiable.cpp
 
     inc/symbol/expression/FunctionDefinition.h
     src/symbol/expression/FunctionDefinition.cpp

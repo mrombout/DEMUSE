@@ -12,6 +12,14 @@ namespace dem {
          */
         class Assignment : public Statement {
         public:
+            /**
+             * \brief Constructs a new Assignment
+             *
+             * \param identifier identifier to assign to
+             * \param expression expression to assign to identifier
+             * \throws std::invalid_argument if identifier is null
+             * \throws std::invalid_argument if expression is null
+             */
             Assignment(Identifier *identifier, Expression *expression);
 
             Identifier &identifier() const;
