@@ -1,12 +1,13 @@
 #include <sstream>
-#include <exception/RuntimeException.h>
+#include "exception/RuntimeException.h"
+#include "value/NumberValue.h"
 #include "value/ArrayValue.h"
 
 namespace dem {
     namespace compiler {
         ArrayValue::ArrayValue(std::vector<Variable*> values) :
             mValues(values) {
-
+            mProperties["length"] = new Variable(new parser::Identifier("length"), new NumberValue(mValues.size()));
         }
 
         Value *dem::compiler::ArrayValue::add(Value *b) {
