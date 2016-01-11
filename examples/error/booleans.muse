@@ -1,0 +1,2 @@
+// error 1 - "Lefthand value must be lvalue."
+var true = false;

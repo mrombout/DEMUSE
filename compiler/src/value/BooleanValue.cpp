@@ -32,6 +32,10 @@ namespace dem {
             throw RuntimeException("Booleans do not support exponent operations.");
         }
 
+        Value *BooleanValue::value() {
+            return new BooleanValue(*this);
+        }
+
         double BooleanValue::asNumber() const {
             return mValue ? 1 : 0;
         }

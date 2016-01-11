@@ -15,3 +15,10 @@ print("D: " + D); // should print "3"
 
 A[0][2] = 6;
 print("E: " + A[0][2]); // should print "6"
+
+A[0].push(7);
+print("A[0]: " + A[0]); // should print "A[0]: [1, 2, 6, 7]"
+
+var F = A[0].pop();
+print("F: " + F); // should print "E: 7"
+print("A[0]: " + A[0]); // should print "A[0]: [1, 2, 6]"

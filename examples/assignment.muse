@@ -1,0 +1,12 @@
+// test 1 - variable assignment
+var A = 0;
+var B = 1;
+var F = 1;
+
+F = A + B;
+A = B;
+B = F + 100;
+if(F == 1 && A == 1 && B == 101)
+    print("test 1 - OK!");
+else
+    print("test 1 - FAIL!");

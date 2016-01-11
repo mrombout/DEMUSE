@@ -10,7 +10,7 @@ namespace dem {
             lexer::Token token = tokens.front();
             expect(tokens, lexer::TokenType::IDENTIFIER, results);
 
-            std::cout << "[CREATE] Identifier" << std::endl;
+            std::clog << "[CREATE] Identifier" << std::endl;
             return new Identifier(token, token.content());
         }
     }

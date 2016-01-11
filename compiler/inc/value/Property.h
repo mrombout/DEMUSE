@@ -13,7 +13,6 @@ namespace dem {
         public:
             Property(ObjectValue *parent, parser::Identifier *identifier, Value *value);
 
-
             virtual void setValue(Value *value) override;
 
         private:

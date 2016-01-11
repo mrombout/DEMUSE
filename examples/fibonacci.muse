@@ -1,0 +1,36 @@
+// test 1 - fibonacci iterative
+var fibonacciIterative = function(n) {
+    var a = 0;
+    var b = 1;
+    var f = 1;
+    for(var i = 2; i <= n; i = i + 1) {
+        f = a + b;
+        a = b;
+        b = f;
+    }
+
+    return  f;
+};
+var A = fibonacciIterative(10);
+if(A === 55)
+    print("test 1 - OK!");
+else
+    print("test 1 - FAIL!");
+
+var fibonacciRecursive = function(n) {
+    if(n <= 2)
+        return 1;
+    else {
+        return fibonacciRecursive(n - 1) + fibonacciRecursive(n - 2);
+    }
+};
+var B = fibonacciRecursive(10);
+if(B === 55)
+    print("test 2 - OK!");
+else
+    print("test 2 - FAIL! (" + B + ")");
+
+//var A = fibonacciIterative(10);
+//var B = fibonacciRecursive(10);
+//print("A: " + A);
+//print("B: " + B);

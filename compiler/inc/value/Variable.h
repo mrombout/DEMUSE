@@ -17,8 +17,6 @@ namespace dem {
 
             parser::Identifier *identifier() const;
 
-            Value *value() const;
-
             virtual void setValue(Value *value);
 
             Value *realValue() const;
@@ -30,6 +28,7 @@ namespace dem {
             virtual Value *modulo(Value *b);
             virtual Value *exponent(Value *b);
 
+            virtual Value *value();
             virtual double asNumber() const;
             virtual bool asBool() const;
             virtual std::string asString() const;

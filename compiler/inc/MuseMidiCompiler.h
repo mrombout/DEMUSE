@@ -38,6 +38,7 @@ namespace dem {
             virtual Value *returnValue() override;
 
             virtual bool visitEnter(parser::Return &returnSymbol) override;
+            virtual bool visitLeave(parser::Return &returnSymbol) override;
 
             virtual bool visitLeave(parser::Block &block) override;
 
@@ -68,7 +69,7 @@ namespace dem {
 
             std::deque<ObjectValue*> mObjectScopes;
 
-            Value *mReturnValue;
+            std::stack<Value*> mReturnValues;
 
             bool mBreak;
             bool mContinue;

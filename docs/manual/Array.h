@@ -20,4 +20,18 @@
 class Array : public Object {
 public:
     Number length; //!< length of the array
+
+    /**
+     * \brief Pushes a new value at the end of the array
+     *
+     * \param value value to push at the end of the array
+     */
+    void push(Object value);
+
+    /**
+     * \brief Removes the last element from the array and returns it
+     *
+     * \returns the last element from the array
+     */
+    void pop();
 };

@@ -14,10 +14,10 @@ namespace dem {
         void MuseMidiPlayEvaluator::play(parser::Play &play, ObjectValue *objectScope) {
             mObjectScope = objectScope;
 
-            Variable &tempoVariable = mObjectScope->variable(new parser::Identifier("tempo"));
+            Variable *tempoVariable = mObjectScope->variable(new parser::Identifier("tempo"));
 
             int msPerMin = 60000;
-            int msPerQt  = (1 / tempoVariable.asNumber()) * msPerMin;
+            int msPerQt  = (1 / tempoVariable->asNumber()) * msPerMin;
 
             mTPQ = msPerQt;
             mMidiFile.setTicksPerQuarterNote(1000);
@@ -63,8 +63,8 @@ namespace dem {
         bool MuseMidiPlayEvaluator::visit(parser::Identifier &identifier) {
             std::cout << "START - Identifer" << std::endl;
 
-            Variable &variable = mObjectScope->variable(&identifier);
-            variable.asNote().accept(*this);
+            Variable *variable = mObjectScope->variable(&identifier);
+            variable->asNote().accept(*this);
 
             return false;
         }

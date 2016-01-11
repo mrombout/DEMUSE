@@ -14,7 +14,7 @@ if(true) {
 
 /* this should
 
-
+print("This should not be printed!");
 
 all
 

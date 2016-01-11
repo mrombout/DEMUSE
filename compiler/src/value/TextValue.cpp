@@ -10,10 +10,10 @@ namespace dem {
             mValue(value) {
             mProperties["length"] = new Variable(new parser::Identifier("length"), new NumberValue(value.length()));
             mProperties["charAt"] = new Variable(new parser::Identifier("charAt"), new InternalLambdaFunction(this, [this](InternalLambdaFunction &function) -> Value* {
-                return new TextValue(std::string(1, mValue.at(function.variable(new parser::Identifier("1")).asNumber())));
+                return new TextValue(std::string(1, mValue.at(function.variable(new parser::Identifier("1"))->asNumber())));
             }));
             mProperties["charCodeAt"] = new Variable(new parser::Identifier("charCodeAt"), new InternalLambdaFunction(this, [this](InternalLambdaFunction &function) -> Value* {
-                return new NumberValue(mValue.at(function.variable(new parser::Identifier("1")).asNumber()));
+                return new NumberValue(mValue.at(function.variable(new parser::Identifier("1"))->asNumber()));
             }));
         }
 
@@ -41,6 +41,10 @@ namespace dem {
 
         Value *TextValue::exponent(Value *b) {
             throw RuntimeException("Strings do not support exponent operations.");
+        }
+
+        Value *TextValue::value() {
+            return new TextValue(*this);
         }
 
         double TextValue::asNumber() const {

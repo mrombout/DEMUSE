@@ -52,7 +52,7 @@ namespace dem {
 
             // assign b to a
             std::clog << "ASSIGN - " << a->identifier()->name() << " = " << b->asString() << std::endl;
-            a->setValue(b);
+            a->setValue(b->value());
 
             mStack.push(a);
 
@@ -492,10 +492,10 @@ namespace dem {
         bool ExpressionEvaluator::visit(parser::Identifier &identifier) {
             std::clog << "ENTER - Evaluating Identifier" << std::endl;
 
-            Variable &variable = mObjectScope->variable(&identifier);
+            Variable *variable = mObjectScope->variable(&identifier);
 
-            std::clog << "(I)PUSH - " << variable.asString() << std::endl;
-            mStack.push(&variable);
+            std::clog << "(I)PUSH - " << variable->asString() << std::endl;
+            mStack.push(variable);
 
             return true;
         }

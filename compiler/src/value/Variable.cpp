@@ -12,10 +12,6 @@ namespace dem {
             return mIdentifier;
         }
 
-        Value *Variable::value() const {
-            return mValue;
-        }
-
         void Variable::setValue(Value *value) {
             mValue = value;
         }
@@ -42,6 +38,10 @@ namespace dem {
 
         Value *Variable::exponent(Value *b) {
             return mValue->exponent(b);
+        }
+
+        Value *Variable::value() {
+            return mValue->value();
         }
 
         double Variable::asNumber() const {

@@ -12,8 +12,7 @@ namespace dem {
                 mBreak(false),
                 mContinue(false),
                 mEvaluator(*this),
-                mPlayEvaluator(mEvaluator),
-                mReturnValue(nullptr) {
+                mPlayEvaluator(mEvaluator) {
 
         }
 
@@ -182,15 +181,22 @@ namespace dem {
         bool MidiCompiler::visitEnter(parser::Return &returnSymbol) {
             std::clog << "ENTER - Return" << std::endl;
 
-            mReturnValue = mEvaluator.evaluate(mObjectScopes.front(), returnSymbol.expression());
+            mReturnValues.push(mEvaluator.evaluate(mObjectScopes.front(), returnSymbol.expression()));
+            std::cout << "returned " << mReturnValues.top()->asString() << std::endl;
+
+            return false;
+        }
+
+        bool MidiCompiler::visitLeave(parser::Return &returnSymbol) {
+            std::clog << "LEAVE - Return" << std::endl;
 
             return false;
         }
 
         Value *MidiCompiler::returnValue() {
-            if(!mReturnValue)
+            if(!mReturnValues.empty())
                 return new NullValue();
-            return mReturnValue;
+            return mReturnValues.top();
         }
 
         std::deque<ObjectValue*> &MidiCompiler::scopes() {

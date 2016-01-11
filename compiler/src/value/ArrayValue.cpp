@@ -1,5 +1,7 @@
 #include <sstream>
 #include "exception/RuntimeException.h"
+#include "value/function/InternalLambdaFunction.h"
+#include "value/NullValue.h"
 #include "value/NumberValue.h"
 #include "value/ArrayValue.h"
 
@@ -8,6 +10,17 @@ namespace dem {
         ArrayValue::ArrayValue(std::vector<Variable*> values) :
             mValues(values) {
             mProperties["length"] = new Variable(new parser::Identifier("length"), new NumberValue(mValues.size()));
+            mProperties["push"] = new Variable(new parser::Identifier("charAt"), new InternalLambdaFunction(this, [this](InternalLambdaFunction &function) -> Value* {
+                mValues.push_back(function.variable(new parser::Identifier("1")));
+
+                return new NullValue();
+            }));
+            mProperties["pop"] = new Variable(new parser::Identifier("pop"), new InternalLambdaFunction(this, [this](InternalLambdaFunction &function) -> Value* {
+                Variable *variable = mValues.back();
+                mValues.pop_back();
+
+                return variable->realValue();
+            }));
         }
 
         Value *dem::compiler::ArrayValue::add(Value *b) {
@@ -32,6 +45,10 @@ namespace dem {
 
         Value *dem::compiler::ArrayValue::exponent(Value *b) {
             throw RuntimeException("Arrays do not support exponent operations.");
+        }
+
+        Value *ArrayValue::value() {
+            return this;
         }
 
         double ArrayValue::asNumber() const {
@@ -87,10 +104,6 @@ namespace dem {
 
         Value *ArrayValue::operator[](const int index) {
             return mValues.at(index);
-        }
-
-        Variable *ArrayValue::operator[](const std::string &index) {
-            throw RuntimeException("Arrays do not support '.' operations.");
         }
 
         Value *ArrayValue::operator()() {

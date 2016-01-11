@@ -2,40 +2,41 @@ function test() {
 	return 5;
 }
 
-track 1 {
-	var A = 1 + 1;
-	print("A: " + A); // should be 2
+var A = 1 + 1;
+print("A: " + A); // should be 2
 
-	var B = 2^3;
-	print("B: " + B); // should be 8
+var B = 2^3;
+print("B: " + B); // should be 8
 
-	var C = 2^2^3;
-	print("C: " + C); // should be 256
+var C = 2^2^3;
+print("C: " + C); // should be 256
 
-	var D = 14 % 5;
-	print("D: " + D); // should be 4
+var D = 14 % 5;
+print("D: " + D); // should be 4
 
-	var E = 1 - 1;
-	print("E: " + E); // should be 0
+var E = 1 - 1;
+print("E: " + E); // should be 0
 
-	var F = 2 * 3;
-	print("F: " + F); // should be 6
+var F = 2 * 3;
+print("F: " + F); // should be 6
 
-	var G = 10 / 2;
-	print("G: " + G); // should be 5
+var G = 10 / 2;
+print("G: " + G); // should be 5
 
-	var H = 1 + 6 * (1 + 1);
-	print("H: " + H); // should be 13
+var H = 1 + 6 * (1 + 1);
+print("H: " + H); // should be 13
 
-	var I = 6 / 2 * 1 + 2;
-	print("I: " + I);  // should be 5
+var I = 6 / 2 * 1 + 2;
+print("I: " + I);  // should be 5
 
-	var J1 = test();
-	print("J1: " + J1); // should print "J1: 5"
+var J1 = test();
+print("J1: " + J1); // should print "J1: 5"
 
-	var J2 = test() + 5;
-	print("J2: " + J2); // should print "J2: 10"
+var J2 = test() + 5;
+print("J2: " + J2); // should print "J2: 10"
 
-	var K = 1 + 2 * 3 + 5;
-	print("K: " + K); // should be 12
-}
+var J3 = 3 + test() + 3;
+print("J3: " + J3); // should print "J3: 11"
+
+var K = 1 + 2 * 3 + 5;
+print("K: " + K); // should be 12

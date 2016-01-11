@@ -273,10 +273,10 @@ TEST_F(ObjectValueTest, PropertyAccess_ReturnsProperty) {
     a.declareVariable(new dem::parser::Identifier("test"), &value);
 
     // act
-    dem::compiler::Variable &result = a.variable(new dem::parser::Identifier("test"));
+    dem::compiler::Variable *result = a.variable(new dem::parser::Identifier("test"));
 
     // assert
-    ASSERT_EQ(value.asNumber(), result.asNumber());
+    ASSERT_EQ(value.asNumber(), result->asNumber());
 }
 
 TEST_F(ObjectValueTest, Call_ThrowsException) {

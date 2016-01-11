@@ -45,6 +45,10 @@ namespace dem {
             return new NumberValue(newValue);
         }
 
+        Value *NumberValue::value() {
+            return new NumberValue(*this);
+        }
+
         double NumberValue::asNumber() const {
             return mValue;
         }

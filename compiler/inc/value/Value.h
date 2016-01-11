@@ -59,6 +59,17 @@ namespace dem {
             virtual Value *exponent(Value *b) = 0;
 
             /**
+             * \brief Returns a reference or a copy of this value
+             *
+             * Returns a reference or a copy depending on the overriden type. This methods should return a copy for
+             * datatypes that are generally immutable. For datatypes that are mutable, such as plain Objects this should
+             * simply return a reference (i.e. 'this' instead of a new instance of 'this' type).
+             *
+             * \return a reference or a copy of this value
+             */
+            virtual Value *value() = 0;
+
+            /**
              * \brief Converts the value to a number
              */
             virtual double asNumber() const = 0;

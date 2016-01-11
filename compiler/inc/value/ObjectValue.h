@@ -21,6 +21,7 @@ namespace dem {
             virtual Value *modulo(Value *b);
             virtual Value *exponent(Value *b);
 
+            virtual Value *value();
             virtual double asNumber() const;
             virtual bool asBool() const;
             virtual parser::Note asNote() const;
@@ -40,7 +41,7 @@ namespace dem {
             void declareVariable(parser::Identifier *identifier);
             void declareVariable(parser::Identifier *identifier, Value *value);
 
-            Variable &variable(parser::Identifier *identifier) const;
+            Variable *variable(parser::Identifier *identifier) const;
 
             ObjectValue *parent() const;
             void setParent(ObjectValue *parent);

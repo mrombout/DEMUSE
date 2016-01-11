@@ -32,6 +32,10 @@ namespace dem {
             throw RuntimeException("Notes do not support exponent operations.");
         }
 
+        Value *NoteValue::value() {
+            return new NoteValue(*this);
+        }
+
         double dem::compiler::NoteValue::asNumber() const {
             return mNote.midiNote();
         }

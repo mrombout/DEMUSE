@@ -39,6 +39,10 @@ namespace dem {
             throw RuntimeException("Objects do not support exponent operations.");
         }
 
+        Value *ObjectValue::value() {
+            return this;
+        }
+
         double ObjectValue::asNumber() const {
             throw RuntimeException("Value of type 'Object' can not implicitly be converted to value of type 'Number'.");
         }
@@ -104,11 +108,11 @@ namespace dem {
             mProperties[identifier->name()] = new Variable(identifier, value);
         }
 
-        Variable &ObjectValue::variable(parser::Identifier *identifier) const {
+        Variable *ObjectValue::variable(parser::Identifier *identifier) const {
             try {
                 Variable *variable = mProperties.at(identifier->name());
 
-                return *variable;
+                return variable;
             } catch(std::out_of_range &e) {
                 if(mParent)
                     return mParent->variable(identifier);

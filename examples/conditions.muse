@@ -1,44 +1,87 @@
-var A = 5 == 5;        // should be true
-print("A: " + A);
+// test 1 - equal (same type)
+var A = 5 == 5;
+if(A)
+    print("test 1 - OK!");
+else
+    print("test 1 - FAIL!");
 
-var A2 = 5 === 5;      // should be true
-print("A2: " + A2);
+// test 2 - equal (different type)
+var A4 = 5 == "5";
+if(A4)
+    print("test 2 - OK!");
+else
+    print("test 2 - FAIL!");
 
-var A3 = 5 === "5";    // should be false
-print("A3: " + A3);
+// test 3 - strict equal (equal)
+var A2 = 5 === 5;
+if(A2)
+    print("test 3 - OK!");
+else
+    print("test 3 - FAIL!");
 
-var A4 = 5 == "5";     // should be true
-print("A4: " + A4);
 
-var B = 5 != 5;        // should be false
-print("B: " + B);
+// test 4 - strict equal (not equal)
+var A3 = 5 === "5";
+if(A3)
+    print("test 4 - FAIL!");
+else
+    print("test 4 - OK!");
 
-var C = 5 <= 5;        // should be true
-print("C: " + C);
+// test 5 - not equal (equal)
+var B = 5 != 5;
+if(B)
+    print("test 5 - FAIL!");
+else
+    print("test 5 - OK!");
 
-var D = 5 < 5;         // should be false
-print("D: " + D);
+// test 6 - smaller or equal (equal)
+var C = 5 <= 5;
+if(C)
+    print("test 6 - OK!");
+else
+    print("test 6 - FAIL!");
 
-var E = 5 >= 5;        // should be true
-print("E: " + E);
+// test 7 - smaller (equal)
+var D = 5 < 5;
+if(D)
+    print("test 7 - FAIL!");
+else
+    print("test 7 - OK!");
 
+// test 8 - larger or equal (equal)
+var E = 5 >= 5;
+if(E)
+    print("test 8 - OK!");
+else
+    print("test 8 - FAIL!");
+
+// test 9 - larger (equal
 var F = 5 > 5;         // should be false
-print("F: " + F);
+if(F)
+    print("test 9 - FAIL!");
+else
+    print("test 9 - OK!");
 
+// test 10 - and
 var G = true && false; // should be false
-print("G: " + G);
+if(G)
+    print("test 10 - FAIL!");
+else
+    print("test 10 - OK!");
 
+// test 11 - or
 var F = true || false; // should be true
-print("F: " + F);
+if(F)
+    print("test 11 - OK!");
+else
+    print("test 11 - FAIL!");
 
-// short-circuit
-function test1() {
-    print("running test1");
-    return false;
-}
-function test2() {
-    print("running test2");
-    return true;
-}
-var H = test1() && test2();
-var I = test2() || test1();
+// test 12a - short-circuit and
+function test12a_false() { return false; }
+function test12a_true() { print("test 12a/b - FAIL!"); }
+var H = test12a_false() && test12a_true();
+
+// test 12b - short-circuit or
+function test12b_false() { print("test 12b/b - FAIL!"); }
+function test12b_true() { return true; }
+var I = test12b_true() || test12b_false();

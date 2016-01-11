@@ -28,6 +28,10 @@ namespace dem {
             throw RuntimeException("Null does not support exponent operations.");
         }
 
+        Value *NullValue::value() {
+            return this;
+        }
+
         double NullValue::asNumber() const {
             throw RuntimeException("Value of type 'Null' can not implicitly be converted to value of type 'Number'.");
         }
