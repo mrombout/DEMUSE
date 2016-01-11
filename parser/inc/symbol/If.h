@@ -18,7 +18,7 @@ namespace dem {
              * \param expression expression to evaluate
              * \param block      block to execute when expression is true
              */
-            If(Expression *expression, Block *block);
+            If(lexer::Token &ifToken, Expression *expression, Block *block);
 
             /**
              * \brief Constructs an if statement, with an else block
@@ -27,7 +27,7 @@ namespace dem {
              * \param block      block to execute when expression is true
              * \param elseBlock  block to execute when expression is false
              */
-            If(Expression *expression, Block *block, Block *elseBlock);
+            If(lexer::Token &ifToken, Expression *expression, Block *block, Block *elseBlock);
 
             virtual bool accept(Visitor &visitor);
 

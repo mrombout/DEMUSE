@@ -9,6 +9,7 @@ namespace dem {
         ArgumentList *ArgumentListFactory::produce(std::deque<lexer::Token> &tokens, ParseResults &results) {
             // argument_list = expression | argument_list "," expression ;
 
+            lexer::Token token = tokens.front();
             std::vector<Expression*> expressions;
 
             // expression
@@ -20,7 +21,7 @@ namespace dem {
                 expressions.push_back(ExpressionFactory::produce(tokens, results));
             }
 
-            return new ArgumentList(expressions.front()->token(), expressions);
+            return new ArgumentList(token, expressions);
         }
     }
 }

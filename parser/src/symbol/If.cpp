@@ -3,13 +3,13 @@
 
 namespace dem {
     namespace parser {
-        If::If(Expression *expression, Block *block) :
-            If(expression, block, nullptr) {
+        If::If(lexer::Token &ifToken, Expression *expression, Block *block) :
+            If(ifToken, expression, block, nullptr) {
 
         }
 
-        If::If(Expression *expression, Block *block, Block *elseBlock) :
-            CompoundStatement(expression->token()),
+        If::If(lexer::Token &ifToken, Expression *expression, Block *block, Block *elseBlock) :
+            CompoundStatement(ifToken),
             mExpression(expression),
             mBlock(block),
             mElseBlock(elseBlock) {

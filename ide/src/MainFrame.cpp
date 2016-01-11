@@ -1,3 +1,4 @@
+#include <stdexcept>
 #include <fstream>
 #include <wx/menu.h>
 #include <wx/toolbar.h>
@@ -371,33 +372,33 @@ namespace dem {
             wxStopWatch sw;
             sw.Pause();
 
-            mOutput->SetDefaultStyle(wxTextAttr(*wxBLUE));
-            mOutput->AppendText("= Building: file:///" + activeEditor()->filePath() + "\n");
-
-            // read file
-            mOutput->SetDefaultStyle(wxTextAttr(wxColour(255, 0, 255)));
-            mOutput->AppendText("== Reading: file:///" + activeEditor()->filePath() + "\n");
-
-            sw.Start();
-            std::ifstream is(activeEditor()->filePath().c_str());
-            std::string content{std::istreambuf_iterator<char>(is), std::istreambuf_iterator<char>()};
-            sw.Pause();
-
-            mOutput->AppendText("== Reading finished in " + std::to_string(sw.Time()) + "ms\n");
-
-            // lexing
-            mOutput->AppendText("== Lexing: file:///" + activeEditor()->filePath() + "\n");
-
-            sw.Start();
-            dem::lexer::MuseLexer museLexer;
-            auto begin = content.begin();
-            auto end = content.end();
-            std::vector<dem::lexer::Token> tokens = museLexer.lex(begin, end);
-            sw.Pause();
-
-            mOutput->AppendText("== Lexing finished in " + std::to_string(sw.Time()) + "ms\n");
-
             try {
+                mOutput->SetDefaultStyle(wxTextAttr(*wxBLUE));
+                mOutput->AppendText("= Building: file:///" + activeEditor()->filePath() + "\n");
+
+                // read file
+                mOutput->SetDefaultStyle(wxTextAttr(wxColour(255, 0, 255)));
+                mOutput->AppendText("== Reading: file:///" + activeEditor()->filePath() + "\n");
+
+                sw.Start();
+                std::ifstream is(activeEditor()->filePath().c_str());
+                std::string content{std::istreambuf_iterator<char>(is), std::istreambuf_iterator<char>()};
+                sw.Pause();
+
+                mOutput->AppendText("== Reading finished in " + std::to_string(sw.Time()) + "ms\n");
+
+                // lexing
+                mOutput->AppendText("== Lexing: file:///" + activeEditor()->filePath() + "\n");
+
+                sw.Start();
+                dem::lexer::MuseLexer museLexer;
+                auto begin = content.begin();
+                auto end = content.end();
+                std::vector<dem::lexer::Token> tokens = museLexer.lex(begin, end);
+                sw.Pause();
+
+                mOutput->AppendText("== Lexing finished in " + std::to_string(sw.Time()) + "ms\n");
+
                 // parsing
                 mOutput->AppendText("== Parsing: file:///" + activeEditor()->filePath() + "\n");
 
@@ -407,49 +408,48 @@ namespace dem {
                 std::shared_ptr<dem::parser::Symbol> program{results.astRoot()};
                 sw.Pause();
 
-                mOutput->AppendText("== Parsing finished in " + std::to_string(sw.Time()) + "ms\n");
-
                 mFileEditors[activeEditor()->filePath()].parseResults = results;
-                updateAutocomplete(mFileEditors[activeEditor()->filePath()]);
                 updateErrors();
+
+                if(!results.successful())
+                    throw std::exception();
+
+                updateAutocomplete(mFileEditors[activeEditor()->filePath()]);
+                mOutput->AppendText("== Parsing finished in " + std::to_string(sw.Time()) + "ms\n");
 
                 // compiling
                 mOutput->AppendText("== Compiling: file:///" + activeEditor()->filePath() + "\n");
 
-                try {
-                    wxString outputFileName = getOutputFileName(activeEditor()->filePath());
-                    std::cout << "Path: " << outputFileName << std::endl;
+                wxString outputFileName = getOutputFileName(activeEditor()->filePath());
+                std::cout << "Path: " << outputFileName << std::endl;
 
-                    sw.Start();
-                    mOutput->SetDefaultStyle(wxTextAttr(*wxBLACK));
-                    dem::compiler::MidiCompiler compiler;
-                    compiler.compile(static_cast<dem::parser::Program*>(program.get()), std::string(outputFileName.c_str()));
-                    sw.Pause();
+                sw.Start();
+                mOutput->SetDefaultStyle(wxTextAttr(*wxBLACK));
+                dem::compiler::MidiCompiler compiler;
+                compiler.compile(static_cast<dem::parser::Program*>(program.get()), std::string(outputFileName.c_str()));
+                sw.Pause();
 
-                    mOutput->SetDefaultStyle(wxTextAttr(wxColour(255, 0, 255)));
-                    mOutput->AppendText("== Compiling finished in " + std::to_string(sw.Time()) + "ms\n");
+                mOutput->SetDefaultStyle(wxTextAttr(wxColour(255, 0, 255)));
+                mOutput->AppendText("== Compiling finished in " + std::to_string(sw.Time()) + "ms\n");
 
-                    mOutput->SetDefaultStyle(wxTextAttr(*wxBLUE));
-                    mOutput->AppendText("= Build finished in " + std::to_string(totalStopWatch.Time()) + "ms\n");
+                mOutput->SetDefaultStyle(wxTextAttr(*wxBLUE));
+                mOutput->AppendText("= Build finished in " + std::to_string(totalStopWatch.Time()) + "ms\n");
 
-                    mOutput->AppendText("Output file: " + outputFileName.c_str());
-                } catch(const dem::compiler::RuntimeException &e) {
-                    wxVector<wxVariant> data;
-                    data.push_back(wxVariant(wxDataViewIconText("Error", wxArtProvider::GetIcon(wxART_ERROR, wxART_OTHER, wxSize(16, 16)))));
-                    data.push_back(wxVariant(e.token().line()));
-                    data.push_back(wxVariant(e.token().column()));
-                    data.push_back(wxVariant(e.what()));
-                    data.push_back(wxVariant(activeEditor()->filePath()));
-                    mErrorList->AppendItem(data);
-                }
-            } catch(...) {
+                mOutput->AppendText("Output file: " + outputFileName.c_str());
+            } catch(const dem::compiler::RuntimeException &e) {
                 wxVector<wxVariant> data;
                 data.push_back(wxVariant(wxDataViewIconText("Error", wxArtProvider::GetIcon(wxART_ERROR, wxART_OTHER, wxSize(16, 16)))));
-                data.push_back(wxVariant(1));
-                data.push_back(wxVariant(1));
-                data.push_back(wxVariant("Unknown error"));
+                data.push_back(wxVariant(e.token().line()));
+                data.push_back(wxVariant(e.token().column()));
+                data.push_back(wxVariant(e.what()));
                 data.push_back(wxVariant(activeEditor()->filePath()));
                 mErrorList->AppendItem(data);
+
+                mOutput->SetDefaultStyle(wxTextAttr(*wxRED));
+                mOutput->AppendText("== Build failed: file:///" + activeEditor()->filePath() + "\n");
+            } catch(...) {
+                mOutput->SetDefaultStyle(wxTextAttr(*wxRED));
+                mOutput->AppendText("== Build failed: file:///" + activeEditor()->filePath() + "\n");
             }
         }
 
@@ -577,8 +577,6 @@ namespace dem {
                     // add marker to editor
                     activeEditor()->MarkerAdd(error.token.line() - 1, demSTC_MARK_ERROR);
                 }
-
-                return;
             }
         }
 

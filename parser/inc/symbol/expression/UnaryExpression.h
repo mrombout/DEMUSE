@@ -10,7 +10,7 @@ namespace dem {
          */
         class UnaryExpression : public Expression {
         public:
-            UnaryExpression(std::string op, Expression *argument);
+            UnaryExpression(lexer::Token op, Expression *argument);
 
             const std::string &op() const;
             Expression &argument() const;
@@ -18,7 +18,7 @@ namespace dem {
             virtual bool accept(Visitor &visitor);
 
         private:
-            std::string mOperator;
+            lexer::Token mOperator;
             Expression *mArgument;
         };
     }

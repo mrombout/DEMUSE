@@ -13,6 +13,7 @@ namespace dem {
             //              [ "else" ( block | statement ) ] ;
 
             // "if("
+            lexer::Token ifToken = tokens.front();
             expect(tokens, lexer::TokenType::IF, results);
             expect(tokens, lexer::TokenType::OPEN, results);
 
@@ -49,10 +50,10 @@ namespace dem {
                     elseBlock = new Block(statement->token(), statements);
                 }
 
-                return new If(expression, block, elseBlock);
+                return new If(ifToken, expression, block, elseBlock);
             }
 
-            return new If(expression, block);
+            return new If(ifToken, expression, block);
         }
     }
 }

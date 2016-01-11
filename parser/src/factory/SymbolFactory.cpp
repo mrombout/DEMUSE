@@ -14,7 +14,7 @@ namespace dem {
                 return false;
             }
 
-            ss << "Expected '" << tokenType << "', but found " << tokens.front().type();
+            ss << "Expected '" << tokenType << "', but found '" << tokens.front().type() << "'.";
             addError(results, tokens.front(), ss.str());
             return false;
         }
@@ -37,7 +37,7 @@ namespace dem {
         }
 
         void SymbolFactory::addError(ParseError::Type type, ParseResults &results, lexer::Token token, const std::string &description) {
-            std::cout << "[" << token.line() << ":" << token.column() << "]" << "ERROR: " << description << std::endl;
+            std::cerr << "[" << token.line() << ":" << token.column() << "]" << "ERROR: " << description << std::endl;
             results.addError(ParseError(type, token, description));
         }
     }

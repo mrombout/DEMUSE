@@ -161,7 +161,7 @@ namespace dem {
                     lexer::Token token = deque.front();
                     deque.pop_front();
 
-                    return new UnaryExpression(token.content(), gobbleToken(deque, results));
+                    return new UnaryExpression(token, gobbleToken(deque, results));
                 }
             }
 

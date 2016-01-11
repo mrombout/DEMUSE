@@ -3,15 +3,15 @@
 
 namespace dem {
     namespace parser {
-        UnaryExpression::UnaryExpression(std::string op, Expression *argument) :
-            Expression(argument->token()),
+        UnaryExpression::UnaryExpression(lexer::Token op, Expression *argument) :
+            Expression(op),
             mOperator(op),
             mArgument(argument) {
 
         }
 
         const std::string &UnaryExpression::op() const {
-            return mOperator;
+            return mOperator.content();
         }
 
         Expression &UnaryExpression::argument() const {
