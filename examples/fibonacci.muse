@@ -18,19 +18,15 @@ else
     print("test 1 - FAIL!");
 
 var fibonacciRecursive = function(n) {
-    if(n <= 2)
+    if(n <= 2) {
         return 1;
-    else {
-        return fibonacciRecursive(n - 1) + fibonacciRecursive(n - 2);
     }
+    var a = fibonacciRecursive(n - 1);
+    var b = fibonacciRecursive(n - 2);
+    return a + b;
 };
 var B = fibonacciRecursive(10);
 if(B === 55)
     print("test 2 - OK!");
 else
     print("test 2 - FAIL! (" + B + ")");
-
-//var A = fibonacciIterative(10);
-//var B = fibonacciRecursive(10);
-//print("A: " + A);
-//print("B: " + B);

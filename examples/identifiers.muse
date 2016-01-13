@@ -1,14 +1,34 @@
+//// test 1 - single character
 var X  = 1;
-print("X: " + X); // should print "X: 1"
+if(X === 1)
+    print("test 1 - OK!");
+else
+    print("test 1 - FAIL!");
 
-var _X = 2; // should be set to 2
-print("_X: " + _X); // should print "X: 2"
+//// test 2 - word
+var YYY = 2;
+if(YYY === 2)
+    print("test 2 - OK!");
+else
+    print("test 2 - FAIL!");
 
-var X  = 3; // should be set to 3
-print("X: " + X); // should print "X: 3"
+//// test 3 - start underscore
+var _X = 3;
+if(_X === 3)
+    print("test 3 - OK!");
+else
+    print("test 3 - FAIL!");
 
-var X4 = 4; // should be set to 4
-print("X4: " + X4); // should print "X: 4"
+//// test 4 - end with number
+var X4 = 4;
+if(X4 === 4)
+    print("test 4 - OK!");
+else
+    print("test 4 - FAIL!");
 
-var X_ = 5; // should be set to 5
-print("X_: " + X_); // should print "X: 5"
+//// test 5 - end with underscore
+var X_ = 5;
+if(X_ === 5)
+    print("test 5 - OK!");
+else
+    print("test 5 - FAIL!");

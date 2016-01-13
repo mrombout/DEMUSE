@@ -1,14 +1,27 @@
+//// test 1 - string
 var X = "String";
-print("X: " + X); // should print "X: String"
+if(X === "String")
+    print("test 1 - OK!");
+else
+    print("test 1 - FAIL!");
 
+//// test 2 - string with spaces
 var Y = "String with spaces";
-print("Y: " + Y); // should print "Y: String with spaces"
+if(Y === "String with spaces")
+    print("test 2 - OK!");
+else
+    print("test 2 - FAIL!");
 
+//// test 3 - escape string
 var Z = "String with \" escape";
-print("Z: " + Z); // should print "Z: String with \" escape"
+if(Z === "String with \" escape")
+    print("test 3 - OK!");
+else
+    print("test 3 - FAIL!");
 
+//// test 4 - concat
 var A = "foo" + "bar";
-print("A: " + A); // should print "A: foobar"
-
-var B = "String with \n newline";
-print("B: " + B);
+if(A === "foobar")
+    print("test 4 - OK!");
+else
+    print("test 4 - FAIL!");

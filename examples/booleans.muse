@@ -1,5 +1,13 @@
+//// test 1 - true
 var X = true;
-print("X: " + X); // should print "true"
+if(X === true)
+    print("test 1 - OK!");
+else
+    print("test 1 - FAIL!");
 
+//// test 2 - false
 var Y = false;
-print("Y: " + Y); // should print "false"
+if(Y === false)
+    print("test 2 - OK!");
+else
+    print("test 2 - FAIL!");

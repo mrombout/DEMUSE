@@ -1,48 +1,46 @@
-// TODO: Return should break
+//// FUNCTION DECLARATION STATEMENT
 
-// FUNCTION DECLARATION STATEMENT
-
-// test 1 - function declaration statement, no arguments
+//// test 1 - function declaration statement, no arguments
 function foo() {
     print("test 1 - OK!");
 }
-//foo();
+foo();
 
-// test 2 - function declaration statement, with single argument
+//// test 2 - function declaration statement, with single argument
 function bar(foo1) {
     if(foo1 === 2)
         print("test 2 - OK!");
     else
         print("test 2 - FAIL!");
 }
-//bar(2);
+bar(2);
 
-// test 3 - function declaration statement, with arguments
+//// test 3 - function declaration statement, with arguments
 function bar(foo1, foo2) {
     if(foo1 == 2 && foo2 == 3)
         print("test 3 - OK!");
     else
         print("test 3 - FAIL!");
 }
-//bar(2, 3);
+bar(2, 3);
 
-// test 4 - function declaration statement, with return
+//// test 4 - function declaration statement, with return
 function buzz() {
     return 1;
 }
-//var D = buzz();
-//if(D == 1)
-//    print("test 4 - OK!");
-//else
-//    print("test 4 - FAIL!");
+var D = buzz();
+if(D == 1)
+    print("test 4 - OK!");
+else
+    print("test 4 - FAIL!");
 
-// FUNCTION DECLARATION EXPRESSION
+//// FUNCTION DECLARATION EXPRESSION
 
-// test 5 - function declaration expression, no arguments
+//// test 5 - function declaration expression, no arguments
 var foo1 = function() {
     print("test 5 - OK!");
 };
-//foo1();
+foo1();
 
 // test 6 - function declaration expression, with arguments
 var bar1 = function(foo1, foo2) {
@@ -51,34 +49,88 @@ var bar1 = function(foo1, foo2) {
     else
         print("test 6 - FAIL!");
 };
-//bar1(2, 3);
+bar1(2, 3);
 
-// test 7 - function declaration expression, with return
+//// test 7 - function declaration expression, with return
 var buzz1 = function() {
-    return 1; // should return 1
+    return 1;
 };
-//var H = buzz1();
-//if(H == 1)
-//    print("test 7 - OK!");
-//else
-//    print("test 7 - FAIL!");
+var H = buzz1();
+if(H == 1)
+    print("test 7 - OK!");
+else
+    print("test 7 - FAIL!");
 
-// test 8 - internal function
-//print("test 8 - OK!"); // should print "Lorum ipsum!"
+//// test 8 - internal function
+print("test 8 - OK!");
 
-// test 9 - return break;
+//// test 9 - return break;
 function test9() {
     return 1;
     print("test 9 - FAIL!");
     return 2;
 }
-//var I = test9();
-//if(I == 1)
-//    print("test 9 - OK!");
-//else
-//    print("test 9 - FAIL!");
+var I = test9();
+if(I == 1)
+    print("test 9 - OK!");
+else
+    print("test 9 - FAIL!");
 
-// test 10 - multiple nested return
+//// test 10 - return break nested block
+function test10() {
+    if(true)
+        return 4;
+    return 3;
+}
+var I1 = test10();
+if(I1 === 4)
+    print("test 10 - OK!");
+else {
+    print("test 10 - FAIL!");
+    print("test 10 - Expected: 4, Got: " + I1);
+}
+
+//// test 10a - return break else
+function test10a() {
+    if(false)
+        return 1;
+    else
+        return 2;
+    return 3;
+}
+var I2 = test10a();
+if(I2 === 2)
+    print("test 10a - OK!");
+else
+    print("test 10a - FAIL!");
+
+//// test 10b - return break while
+function test10b() {
+    while(true) {
+        return 2;
+    }
+    return 3;
+}
+var I3 = test10b();
+if(I3 === 2)
+    print("test 10b - OK!");
+else
+    print("test 10b - FAIL!");
+
+//// test 10c = return break for
+function test10c() {
+    for(var i = 0; i < 10; i = i + 1) {
+        return 2;
+    }
+    return 3;
+}
+var I4 = test10c();
+if(I4 === 2)
+    print("test 10c - OK!");
+else
+    print("test 10c - FAIL!");
+
+//// test 11 - multiple nested return
 function funcC() {
     return 1;
 }
@@ -91,24 +143,37 @@ function funcA() {
     return funcB() + 1;
 }
 
-//var J = funcA();
-//if(J === 3)
-//    print("test 10 - OK!");
-//else
-//    print("test 10 - FAIL!");
+var J = funcA();
+if(J === 3)
+    print("test 11 - OK!");
+else
+    print("test 11 - FAIL!");
 
 // test 12 - recursive
 function recursive(n) {
-    print("1: " + n);
     if(n > 10) {
-        print("2: " + n);
         return -5;
     }
     if(n > 10) {
         print("This can't run!");
     }
-    print("3: " + n);
     return recursive(n + 1);
 }
 var K = recursive(5);
-print("K: " + K);
+if(K === -5)
+    print("test 12 - OK!");
+else
+    print("test 12 - FAIL!");
+
+// test 13 - function scope
+function test13(n) {
+    if(n < 10) {
+        test13(100);
+    }
+    return n;
+}
+var L = test13(1);
+if(L === 1)
+    print("test 13 - OK!");
+else
+    print("test 13 - FAIL! (" + L + ")");

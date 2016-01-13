@@ -1,19 +1,19 @@
-// test 1 - X should count from 1 to 5
+var A = 0;
+
+//// test 1 - X should count from 1 to 5
 var X = 0;
 while(X < 5) {
 	X = X + 1;
-	print("X: " + X);
 }
 if(X === 5)
 	print("test 1 - OK!");
 else
 	print("test 1 - FAIL!");
 
-// test 2 - Y should count from 6 to 8
+//// test 2 - Y should count from 6 to 8
 var Y = X;
 while(Y < 10) {
 	Y = Y + 1;
-	print("Y: " + Y);
 	if(Y == 8)
 		break;
 }
@@ -22,20 +22,78 @@ if(Y === 8)
 else
     print("test 2 - FAIL!");
 
-// test 3 - Z should be printed, "FOOBAR" should not
+//// test 3 - Z should be printed, "FOOBAR" should not
 var Z = 0;
 while(Z < 5) {
 	Z = Z + 1;
-	print("Z: " + Z);
 	continue;
-	print("test 3 - FAIL!");
+    Z = Z + 2;
+	print("test 3 - FAIL(1)!");
 }
+if(Z === 5)
+	print("test 3 - OK!");
+else
+	print("test 3 - FAIL!(2)");
 
-// test 4 - A should count from 0 to 9
+//// test 4 - for-loop
+for(var A = 0; A < 10; A = A + 1) {
+
+}
+if(A === 10)
+    print("test 4 - OK!");
+else
+    print("test 4 - FAIL!");
+
+//// test 5 - for-loop no initializer
+for(; A < 20; A = A + 1) {
+
+}
+if(A === 20)
+    print("test 5 - OK!");
+else
+    print("test 5 - FAIL!");
+
+//// test 6 - for-loop no condition
+for(;; A = A + 1) {
+    if(A > 30)
+        break;
+}
+if(A === 31)
+    print("test 6 - OK!");
+else
+    print("test 6 - FAIL!");
+
+//// test 7 - for-loop no after thought
+for(var B = 0; B < 20;) {
+    B = B + 1;
+    if(B > 10)
+        break;
+}
+if(B === 11)
+    print("test 7 - OK!");
+else
+    print("test 7 - FAIL!");
+
+//// test 8 - for loop empty
+var C = 0;
+for(;;) {
+    C = C + 1;
+    if(C > 10)
+        break;
+}
+if(C === 11)
+    print("test 8 - OK!");
+else
+    print("test 8 - FAIL!");
+
+// test 9 - for-loop
+var D = 0;
 for(var i = 0; i < 10; i = i + 1) {
 	for(var j = 0; j < 2; j = j + 1) {
-		var A = i;
-		print("A: " + A);
+		D = i;
 	}
-	print("B: " + A);
 }
+if(D === 9)
+    print("test 9 - OK!");
+else
+    print("test 9 - FAIL!");

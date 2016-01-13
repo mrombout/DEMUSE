@@ -1,14 +1,34 @@
+//// test 1 - single note
 var X = >C;
-print("X: " + X); // should print "X: C5nw"
+if("" + X === "C5nw")
+    print("test 1 - OK!");
+else
+    print("test 1 - FAIL!");
 
+//// test 2 - sharp note
 var Y = >C#;
-print("Y: " + Y); // should print "Y: C5#w"
+if("" + Y === "C5#w")
+    print("test 2 - OK!");
+else
+    print("test 2 - FAIL!");
 
+//// test 3 - natural note
 var Z = >Cn;
-print("Z: " + Z); // should print "Z: C5nw"
+if("" + Z === "C5nw")
+    print("test 3 - OK!");
+else
+    print("test 3 - FAIL!");
 
+//// test 4 - flat note
 var A = >Cb;
-print("A: " + A); // should print "A: C5bw"
+if("" + A === "C5bw")
+    print("test 4 - OK!");
+else
+    print("test 4 - FAIL!");
 
+//// test 5 - quarter note
 var B = >Cq;
-print("B: " + B); // should print "B: C5nq"
+if("" + B === "C5nq")
+    print("test 5 - OK!");
+else
+    print("test 5 - FAIL!");

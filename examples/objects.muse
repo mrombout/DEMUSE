@@ -1,19 +1,28 @@
-track 1 {
-	var Test = new Object(); // should define new object
+var Test = new Object();
 
-	//// properties
-	Test.bar = 5;
-	print("Test.bar: " + Test.bar);
+//// test 1 - set/get property
+Test.bar = 5;
+if(Test.bar === 5)
+    print("test 1 - OK!");
+else
+    print("test 1 - FAIL!");
 
-	//// functions
-	Test.foo = function() {  // should add function to object
-		var X = 1;
-		print("X: " + X); // should print "X: 1"
-	};
-	Test.foo();
+//// test 2 - set/get/call functions
+var X = 0;
+Test.foo = function() {
+    X = 1;
+};
+Test.foo();
+if(X === 1)
+    print("test 2 - OK!");
+else
+    print("test 2 - FAIL!");
 
-    Test.widget = function() {
-        print("Test.widget: " + this.bar);
-    };
-    Test.widget();
-}
+//// test 3 - this
+Test.widget = function() {
+    if(this.bar === 5)
+        print("test 3 - OK!");
+    else
+        print("test 3 - FAIL!");
+};
+Test.widget();

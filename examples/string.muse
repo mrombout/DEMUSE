@@ -1,11 +1,20 @@
-// test 1 - length
+//// test 1 - length
 var A = "ABCDEF";
-print("Length: " + A.length); // should print "Length: 6"
+if(A.length === 6)
+    print("test 1 - OK!");
+else
+    print("test 1 - FAIL!");
 
-// test 2 - charAt
+//// test 2 - charAt
 var B = "ABCDEF";
-print("CharAt(1): " + B.charAt(1)); // should print "CharAt(1): B"
+if(B.charAt(1) === "B")
+    print("test 2 - OK!");
+else
+    print("test 2 - FAIL!");
 
-// test 2 - charCodeAt
+//// test 3 - charCodeAt
 var C = "ABCDEF";
-print("CharCodeAt(1): " + C.charCodeAt(1)); // should print "CharCodeAt(1): C"
+if(C.charCodeAt(1) === 66)
+    print("test 3 - OK!");
+else
+    print("test 3 - FAIL!");
