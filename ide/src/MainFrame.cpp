@@ -173,14 +173,14 @@ namespace dem {
                 size_t pageId = mNotebook->GetPageCount();
                 mNotebook->InsertPage(pageId, editor, tabName, true);
                 mFileEditors[filePath] = {
-                    pageId
+                    editor
                 };
 
                 // register events
                 editor->Bind(wxEVT_STC_MODIFIED, &MainFrame::onEditorModified, this);
             } else {
                 // select page with the loaded file
-                mNotebook->SetSelection(mFileEditors[filePath].editorId);
+                mNotebook->SetSelection(mNotebook->GetPageIndex(mFileEditors[filePath].editor));
             }
         }
 
@@ -235,6 +235,7 @@ namespace dem {
             int editorId = mNotebook->GetSelection();
             if(editorId == wxNOT_FOUND)
                 return nullptr;
+            std::cout << "Getting page " << editorId << " now." << std::endl;
             return static_cast<MuseStyledTextEditor*>(mNotebook->GetPage(editorId));
         }
 
@@ -290,11 +291,6 @@ namespace dem {
 
             mNotebook->SetPageText(editorId, fileName.GetFullName());
 
-            mFileEditors.erase(page->filePath());
-            mFileEditors[filePath] = {
-                editorId
-            };
-
             // save file under new name
             activeEditor()->saveAsFile(filePath);
         }
@@ -347,7 +343,7 @@ namespace dem {
 
             // re-initialize editors with new settings
             for(auto &pair : mFileEditors) {
-                MuseStyledTextEditor *editor = dynamic_cast<MuseStyledTextEditor*>(mNotebook->GetPage(pair.second.editorId));
+                MuseStyledTextEditor *editor = dynamic_cast<MuseStyledTextEditor*>(pair.second.editor);
                 editor->initialize();
             }
         }
@@ -425,7 +421,7 @@ namespace dem {
 
                 sw.Start();
                 mOutput->SetDefaultStyle(wxTextAttr(*wxBLACK));
-                dem::compiler::MidiCompiler compiler;
+                dem::compiler::MuseMidiCompiler compiler;
                 compiler.compile(static_cast<dem::parser::Program*>(program.get()), std::string(outputFileName.c_str()));
                 sw.Pause();
 
@@ -546,7 +542,7 @@ namespace dem {
 
                 // mark as modified
                 wxFileName fileName{editor->filePath()};
-                mNotebook->SetPageText(mFileEditors[editor->filePath()].editorId, fileName.GetFullName() + "*");
+                mNotebook->SetPageText(mNotebook->GetPageIndex(mFileEditors[editor->filePath()].editor), fileName.GetFullName() + "*");
 
                 // remove any error markers from modified line
                 int currentLine = editor->GetCurrentLine();
@@ -583,7 +579,7 @@ namespace dem {
         void MainFrame::updateAutocomplete(EditorInfo &info) {
             info.autoCompleteWords = mAutocompleteVisitor.search(*info.parseResults.astRoot());
 
-            MuseStyledTextEditor *editor = static_cast<MuseStyledTextEditor*>(mNotebook->GetPage(info.editorId));
+            MuseStyledTextEditor *editor = static_cast<MuseStyledTextEditor*>(info.editor);
             editor->setAutocompleteWords(info.autoCompleteWords);
         }
     }

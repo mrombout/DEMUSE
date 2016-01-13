@@ -115,7 +115,7 @@ var I3 = test10b();
 if(I3 === 2)
     print("test 10b - OK!");
 else
-    print("test 10b - FAIL!");
+    print("test 10b - FAIL! (" + I3 + ")");
 
 //// test 10c = return break for
 function test10c() {
@@ -128,7 +128,7 @@ var I4 = test10c();
 if(I4 === 2)
     print("test 10c - OK!");
 else
-    print("test 10c - FAIL!");
+    print("test 10c - FAIL! (" + I4 + ")");
 
 //// test 11 - multiple nested return
 function funcC() {

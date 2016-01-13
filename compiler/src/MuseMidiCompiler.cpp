@@ -146,13 +146,14 @@ namespace dem {
         bool MuseMidiCompiler::visitEnter(parser::While &whileSymbol) {
             std::clog << "ENTER - While" << std::endl;
 
+            mBreak = false;
+
             parser::Expression &expression = whileSymbol.expression();
             parser::Block &block = whileSymbol.block();
 
             Value *result = nullptr;
             do {
                 if(mBreak) {
-                    mBreak = false;
                     break;
                 }
                 if(mContinue) {
@@ -176,6 +177,8 @@ namespace dem {
         bool MuseMidiCompiler::visitEnter(parser::For &forSymbol) {
             std::clog << "ENTER - For" << std::endl;
 
+            mBreak = false;
+
             if(forSymbol.initialization())
                 forSymbol.initialization()->accept(*this);
 
@@ -191,7 +194,6 @@ namespace dem {
                 if(result->asBool()) {
                     block.accept(*this);
                     if(mBreak) {
-                        mBreak = false;
                         break;
                     }
                     if(afterThought)

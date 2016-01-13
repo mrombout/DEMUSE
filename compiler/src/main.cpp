@@ -10,9 +10,9 @@ int main(int argc, char* argv[]) {
         return -1;
     }
 
-//    std::ostringstream *oss = new std::ostringstream();
-//    std::cerr.rdbuf(oss->rdbuf());
-//    std::clog.rdbuf(oss->rdbuf());
+    std::ostringstream *oss = new std::ostringstream();
+    std::cerr.rdbuf(oss->rdbuf());
+    std::clog.rdbuf(oss->rdbuf());
 
     // read input
     std::string inputPath{argv[1]};
