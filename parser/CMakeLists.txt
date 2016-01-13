@@ -37,6 +37,9 @@ set(Parser_SRCS
     inc/symbol/Return.h
     src/symbol/Return.cpp
 
+    inc/symbol/ScopedBlock.h
+    src/symbol/ScopedBlock.cpp
+
     inc/symbol/Break.h
     src/symbol/Break.cpp
 

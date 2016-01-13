@@ -97,7 +97,7 @@ namespace dem {
             throw RuntimeException("Numbers do not support '.' operations.");
         }
 
-        Value *NumberValue::operator()() {
+        Value *NumberValue::operator()(ObjectValue &scope) {
             throw RuntimeException("Numbers do not support '()' operations.");
         }
     }

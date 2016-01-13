@@ -8,6 +8,7 @@
 namespace dem {
     namespace compiler {
         class Variable;
+        class ObjectValue;
     }
 }
 
@@ -109,7 +110,7 @@ namespace dem {
             /**
              * \briefs Calls this object (called when script performs "a()")
              */
-            virtual Value * operator()();
+            virtual Value *operator()(ObjectValue &scope);
 
             virtual bool strictEqual(const Value &other) {
                 if(typeid(*this).name() != typeid(other).name())

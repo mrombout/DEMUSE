@@ -1,6 +1,7 @@
 #include <iostream>
 #include "MuseMidiPlayEvaluator.h"
 #include "value/Variable.h"
+#include "ExpressionEvaluator.h"
 
 namespace dem {
     namespace compiler {

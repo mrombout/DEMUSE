@@ -36,8 +36,8 @@ namespace dem {
             virtual Value *operator[](const int index);
             virtual Variable *operator[](const std::string &index);
 
-            void mapScope(std::vector<Value*> &arguments) override;
-            virtual Value *operator()();
+            void mapScope(ObjectValue &functionScope, std::vector<Value*> &arguments) override;
+            virtual Value *operator()(ObjectValue &scope);
 
         private:
             Compiler &mCompiler;

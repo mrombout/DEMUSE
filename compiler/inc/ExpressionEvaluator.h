@@ -3,8 +3,14 @@
 
 #include <stack>
 #include "Visitor.h"
-#include "Compiler.h"
 #include "value/Value.h"
+#include "MuseMidiPlayEvaluator.h"
+
+namespace dem {
+    namespace compiler {
+        class MuseMidiCompiler;
+    }
+}
 
 namespace dem {
     namespace compiler {
@@ -13,7 +19,7 @@ namespace dem {
          */
         class ExpressionEvaluator : public parser::Visitor {
         public:
-            ExpressionEvaluator(Compiler &compiler);
+            ExpressionEvaluator(MuseMidiCompiler &compiler);
 
             Value *evaluate(ObjectValue *scope, parser::Expression &expression);
 
@@ -96,7 +102,10 @@ namespace dem {
             virtual bool visit(parser::ThisExpression &thisExpression) override;
 
         private:
-            Compiler &mCompiler;
+            void push(Value *value);
+
+        private:
+            MuseMidiCompiler &mCompiler;
 
             std::stack<Value*> mStack;
             ObjectValue *mObjectScope;

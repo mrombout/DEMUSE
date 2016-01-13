@@ -14,6 +14,9 @@ namespace dem {
         bool Visitor::visitEnter(Block &block) { return true; }
         bool Visitor::visitLeave(Block &block) { return true; }
 
+        bool Visitor::visitEnter(ScopedBlock &scopedBlock) { return true; }
+        bool Visitor::visitLeave(ScopedBlock &scopedBlock) { return true; }
+
         bool Visitor::visit(BoolLiteral &boolSymbol) { return true; }
 
         bool Visitor::visit(Break &breakSymbol) { return true; }

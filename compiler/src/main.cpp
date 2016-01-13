@@ -10,6 +10,10 @@ int main(int argc, char* argv[]) {
         return -1;
     }
 
+//    std::ostringstream *oss = new std::ostringstream();
+//    std::cerr.rdbuf(oss->rdbuf());
+//    std::clog.rdbuf(oss->rdbuf());
+
     // read input
     std::string inputPath{argv[1]};
     std::ifstream is{inputPath};
@@ -27,7 +31,7 @@ int main(int argc, char* argv[]) {
 
     if(results.successful()) {
         // compile input
-        dem::compiler::MidiCompiler midiCompiler;
+        dem::compiler::MuseMidiCompiler midiCompiler;
         midiCompiler.compile(static_cast<dem::parser::Program*>(results.astRoot().get()), "test.mid");
     }
 

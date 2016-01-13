@@ -8,8 +8,8 @@ namespace dem {
 
         }
 
-        Value *InternalLambdaFunction::operator()() {
-            mBody(*this);
+        Value *InternalLambdaFunction::operator()(ObjectValue &scope) {
+            mBody(*this, scope);
         }
     }
 }

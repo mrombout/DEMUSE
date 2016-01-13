@@ -4,8 +4,8 @@
 
 namespace dem {
     namespace parser {
-        For::For(Statement *initialization, Expression *condition, AssignmentExpression *afterThought, Block *block) :
-            CompoundStatement(initialization->token()),
+        For::For(lexer::Token &token, Statement *initialization, Expression *condition, AssignmentExpression *afterThought, Block *block) :
+            CompoundStatement(token),
             mInitialization(initialization),
             mCondition(condition),
             mAfterThought(afterThought),
@@ -16,9 +16,9 @@ namespace dem {
 
         bool For::accept(Visitor &visitor) {
             if(visitor.visitEnter(*this)) {
-                mInitialization->accept(visitor);
-                mCondition->accept(visitor);
-                mAfterThought->accept(visitor);
+                if(mInitialization->accept(visitor))
+                    if(mCondition->accept(visitor))
+                        mAfterThought->accept(visitor);
             }
 
             return visitor.visitLeave(*this);

@@ -19,11 +19,17 @@ int main(int argc, char* argv[]) {
     dem::lexer::MuseLexer lexer;
     std::vector<dem::lexer::Token> tokens = lexer.lex(begin, end, false);
 
-    std::cout << "  +----------------------+--------------+------------+------------+-------+\n";
-    std::cout << "  | " << std::left << std::setw(20) << "Content" << " | " << std::setw(12) << "Type" << " | " << std::setw(10) << "Line" << " | " << std::setw(10) << "Column" << " | " << std::setw(5) << "Index |\n";
-    std::cout << "  +----------------------+--------------+------------+------------+-------+\n";
+    int columnWidth = 0;
     for(dem::lexer::Token &token : tokens) {
-        std::cout << "  | " << std::left << std::setw(20) << token.content() << " | " << std::right << std::setw(12) << token.type() << " | " << std::setw(10) << token.line() << " | " << std::setw(10) << token.column() << " | " << std::setw(5) << token.startIndex() << " |" << std::endl;
+        if(token.content().length() > columnWidth)
+            columnWidth = token.content().length();
     }
-    std::cout << "  +----------------------+--------------+------------+------------+-------+\n" << std::endl;
+
+    std::cout << "  +-" << std::string(columnWidth, '-') << "-+--------------+------------+------------+-------+\n";
+    std::cout << "  | " << std::left << std::setw(columnWidth) << "Content" << " | " << std::setw(12) << "Type" << " | " << std::setw(10) << "Line" << " | " << std::setw(10) << "Column" << " | " << std::setw(5) << "Index |\n";
+    std::cout << "  +-" << std::string(columnWidth, '-') << "-+--------------+------------+------------+-------+\n";
+    for(dem::lexer::Token &token : tokens) {
+        std::cout << "  | " << std::left << std::setw(columnWidth) << token.content() << " | " << std::right << std::setw(12) << token.type() << " | " << std::setw(10) << token.line() << " | " << std::setw(10) << token.column() << " | " << std::setw(5) << token.startIndex() << " |\n";
+    }
+    std::cout << "  +-" << std::string(columnWidth, '-') << "-+--------------+------------+------------+-------+" << std::endl;
 }

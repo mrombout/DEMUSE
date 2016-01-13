@@ -20,7 +20,7 @@ namespace dem {
         public:
             PrintFunction(ObjectValue *parent);
 
-            virtual Value *operator()();
+            virtual Value *operator()(ObjectValue &scope);
         };
     }
 }

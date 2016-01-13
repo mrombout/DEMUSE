@@ -3,7 +3,7 @@
 #include "factory/BlockFactory.h"
 #include "factory/ParameterListFactory.h"
 #include "symbol/Identifier.h"
-#include "symbol/Block.h"
+#include "symbol/ScopedBlock.h"
 #include "symbol/ParameterList.h"
 #include "symbol/expression/FunctionDefinition.h"
 
@@ -38,8 +38,9 @@ namespace dem {
 
             // block
             Block *block = BlockFactory::produce(tokens, results);
+            ScopedBlock *scopedBlock = new ScopedBlock(*block);
 
-            return new FunctionDefinition(token, identifier, parameterList, block);
+            return new FunctionDefinition(token, identifier, parameterList, scopedBlock);
         }
     }
 }

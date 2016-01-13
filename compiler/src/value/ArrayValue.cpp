@@ -4,18 +4,19 @@
 #include "value/NullValue.h"
 #include "value/NumberValue.h"
 #include "value/ArrayValue.h"
+#include "value/Variable.h"
 
 namespace dem {
     namespace compiler {
         ArrayValue::ArrayValue(std::vector<Variable*> values) :
             mValues(values) {
             mProperties["length"] = new Variable(new parser::Identifier("length"), new NumberValue(mValues.size()));
-            mProperties["push"] = new Variable(new parser::Identifier("charAt"), new InternalLambdaFunction(this, [this](InternalLambdaFunction &function) -> Value* {
-                mValues.push_back(function.variable(new parser::Identifier("1")));
+            mProperties["push"] = new Variable(new parser::Identifier("charAt"), new InternalLambdaFunction(this, [this](InternalLambdaFunction &function, ObjectValue &scope) -> Value* {
+                mValues.push_back(scope.variable(new parser::Identifier("1")));
 
                 return new NullValue();
             }));
-            mProperties["pop"] = new Variable(new parser::Identifier("pop"), new InternalLambdaFunction(this, [this](InternalLambdaFunction &function) -> Value* {
+            mProperties["pop"] = new Variable(new parser::Identifier("pop"), new InternalLambdaFunction(this, [this](InternalLambdaFunction &function, ObjectValue &scope) -> Value* {
                 Variable *variable = mValues.back();
                 mValues.pop_back();
 
@@ -79,7 +80,7 @@ namespace dem {
         }
 
         bool ArrayValue::operator==(const Value &other) {
-            throw RuntimeException("Arrays do not support '==' operations.");
+            return this == &other;
         }
 
         bool ArrayValue::operator!=(const Value &other) {
@@ -106,7 +107,7 @@ namespace dem {
             return mValues.at(index);
         }
 
-        Value *ArrayValue::operator()() {
+        Value *ArrayValue::operator()(ObjectValue &scope) {
             throw RuntimeException("Arrays do not support '()' operations.");
         }
     }

@@ -35,7 +35,7 @@ namespace dem {
             virtual bool operator>=(const Value &other);
             virtual Value *operator[](const int index);
 
-            virtual void mapScope(std::vector<Value*> &arguments);
+            virtual void mapScope(ObjectValue &functionScope, std::vector<Value*> &arguments);
         };
     }
 }

@@ -1,7 +1,8 @@
+#include "value/ObjectValue.h"
 #include "exception/RuntimeException.h"
 #include "value/NullValue.h"
-#include "value/ObjectValue.h"
 #include "value/Property.h"
+#include "value/Variable.h"
 
 namespace dem {
     namespace compiler {
@@ -94,7 +95,7 @@ namespace dem {
             return mProperties.at(index);
         }
 
-        Value *ObjectValue::operator()() {
+        Value *ObjectValue::operator()(ObjectValue &scope) {
             throw RuntimeException("Objects do not support '()' operations.");
         }
 
@@ -103,7 +104,7 @@ namespace dem {
         }
 
         void ObjectValue::declareVariable(parser::Identifier *identifier, Value *value) {
-            std::clog << "DECLARE - Variable " << identifier->name() << " = " << value->asString() << std::endl;
+            std::clog << "DECLARE - Variable(" << this << ") " << identifier->name() << " = " << value->asString() << std::endl;
 
             mProperties[identifier->name()] = new Variable(identifier, value);
         }

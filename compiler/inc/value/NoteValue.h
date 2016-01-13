@@ -38,7 +38,7 @@ namespace dem {
 
             virtual Value *operator[](const int index);
             virtual Variable *operator[](const std::string &index);
-            virtual Value *operator()();
+            virtual Value *operator()(ObjectValue &scope);
 
         private:
             parser::Note mNote;

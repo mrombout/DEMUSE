@@ -20,8 +20,8 @@ namespace dem {
 
         bool While::accept(Visitor &visitor) {
             if(visitor.visitEnter(*this)) {
-                mExpression->accept(visitor);
-                mBlock->accept(visitor);
+                if(mExpression->accept(visitor))
+                    mBlock->accept(visitor);
             }
 
             return visitor.visitLeave(*this);

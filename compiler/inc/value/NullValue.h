@@ -31,7 +31,7 @@ namespace dem {
             virtual bool operator>=(const Value &other);
             virtual Value *operator[](const int index);
             virtual Variable *operator[](const std::string &index);
-            virtual Value *operator()();
+            virtual Value *operator()(ObjectValue &scope);
         };
     }
 }
