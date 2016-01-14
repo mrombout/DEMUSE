@@ -1,5 +1,5 @@
 #include <sstream>
-#include <c++/stdexcept>
+#include <stdexcept>
 #include "symbol/play/Note.h"
 #include "Visitor.h"
 

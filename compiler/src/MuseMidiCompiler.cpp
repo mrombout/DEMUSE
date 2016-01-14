@@ -23,7 +23,7 @@ namespace dem {
 
         bool MidiCompiler::visitEnter(parser::Program &program) {
             std::clog << "ENTER - Program" << std::endl;
-            
+
             mObjectScopes.push_front(new SongValue());
 
             return true;
@@ -194,7 +194,7 @@ namespace dem {
         }
 
         Value *MidiCompiler::returnValue() {
-            if(!mReturnValues.empty())
+            if(mReturnValues.empty())
                 return new NullValue();
             return mReturnValues.top();
         }

@@ -27,18 +27,14 @@ set(CPACK_NSIS_EXECUTABLES_DIRECTORY ".")
 
 set(CPACK_PACKAGE_EXECUTABLES ide "DEMUSE IDE")
 
-set(CPACK_COMPONENTS_ALL ide compiler libcompiler libparser liblexer functionref manual examples runtime)
+set(CPACK_COMPONENTS_ALL ide compiler libcompiler libparser liblexer manual examples runtime)
 
 ## documentation
-install(DIRECTORY ${CMAKE_SOURCE_DIR}/docs/api DESTINATION docs COMPONENT functionref)
-set(CPACK_COMPONENT_FUNCTIONREF_DISPLAY_NAME "Function Reference")
-set(CPACK_COMPONENT_FUNCTIONREF_GROUP "Documentation")
-
-install(DIRECTORY ${CMAKE_SOURCE_DIR}/docs/manual DESTINATION docs COMPONENT manual)
+install(DIRECTORY ${CMAKE_SOURCE_DIR}/docs/manual DESTINATION manual COMPONENT manual)
 set(CPACK_COMPONENT_FUNCTIONREF_DISPLAY_NAME "Manual")
 set(CPACK_COMPONENT_FUNCTIONREF_GROUP "Documentation")
 
-install(DIRECTORY ${CMAKE_SOURCE_DIR}/examples DESTINATION / COMPONENT examples)
+install(DIRECTORY ${CMAKE_SOURCE_DIR}/examples DESTINATION examples COMPONENT examples)
 set(CPACK_COMPONENT_EXAMPLES_DISPLAY_NAME "Examples")
 set(CPACK_COMPONENT_EXAMPLES_GROUP "Documentation")
 

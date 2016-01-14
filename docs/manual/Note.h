@@ -1,3 +1,6 @@
+/**
+ *
+ */
 class Note : public Object {
     
 };

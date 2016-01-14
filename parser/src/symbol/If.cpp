@@ -1,4 +1,4 @@
-#include <c++/stdexcept>
+#include <stdexcept>
 #include "symbol/If.h"
 #include "Visitor.h"
 
