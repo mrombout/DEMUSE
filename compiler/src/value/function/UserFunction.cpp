@@ -16,13 +16,13 @@ namespace dem {
 
         }
 
-        Value *UserFunction::operator()() {
+        Value *UserFunction::operator()(ObjectValue &scope) {
             mBlock.accept(mCompiler);
 
             return mCompiler.returnValue();
         }
 
-        void UserFunction::mapScope(std::vector<Value*> &arguments) {
+        void UserFunction::mapScope(ObjectValue &functionScope, std::vector<Value*> &arguments) {
             if(mParameterList.numParameters() == 0)
                 return;
 
@@ -33,7 +33,7 @@ namespace dem {
 
             unsigned int i = 0;
             for(parser::Identifier *identifier : mParameterList.parameters()) {
-                declareVariable(identifier, arguments.at(i++));
+                functionScope.declareVariable(identifier, arguments.at(i++)->value());
             }
         }
 

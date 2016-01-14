@@ -11,6 +11,7 @@ namespace dem {
             // for_stmt = "for(" ( terminator | variable_def_stmt | assignment_stmt) ( terminator | conditional ) ( terminator | assignment_stmt ) ")" block ;
 
             // "for("
+            lexer::Token token = tokens.front();
             expect(tokens, lexer::TokenType::FOR, results);
             expect(tokens, lexer::TokenType::OPEN, results);
 
@@ -50,7 +51,7 @@ namespace dem {
             // block
             Block *block = BlockFactory::produce(tokens, results);
 
-            return new For(initializerStatement, conditionalExpression, assignmentExpression, block);
+            return new For(token, initializerStatement, conditionalExpression, assignmentExpression, block);
         }
     }
 }

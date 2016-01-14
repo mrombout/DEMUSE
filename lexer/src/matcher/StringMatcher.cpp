@@ -3,8 +3,8 @@
 
 namespace dem {
     namespace lexer {
-        StringMatcher::StringMatcher(std::string content) :
-            mContent(content) {
+        StringMatcher::StringMatcher(std::string contents) :
+            mContent(contents) {
 
         }
 

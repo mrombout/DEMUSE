@@ -221,7 +221,7 @@ TEST_F(MuseLexerTest, Positive_Plain) {
     std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
-    ASSERT_EQ(dem::lexer::TokenType::POSITIVE, result[0].type());
+    ASSERT_EQ(dem::lexer::TokenType::PLUS, result[0].type());
     ASSERT_EQ("+", result[0].content());
 }
 
@@ -235,7 +235,7 @@ TEST_F(MuseLexerTest, Negative_Plain) {
     std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
-    ASSERT_EQ(dem::lexer::TokenType::NEGATIVE, result[0].type());
+    ASSERT_EQ(dem::lexer::TokenType::MINUS, result[0].type());
     ASSERT_EQ("-", result[0].content());
 }
 
@@ -263,7 +263,7 @@ TEST_F(MuseLexerTest, Plus_NoSpace) {
     std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
-    ASSERT_NE(dem::lexer::TokenType::PLUS, result[0].type());
+    ASSERT_EQ(dem::lexer::TokenType::PLUS, result[0].type());
     ASSERT_EQ("+", result[0].content());
 }
 
@@ -291,7 +291,7 @@ TEST_F(MuseLexerTest, Minus_NoSpace) {
     std::vector<dem::lexer::Token> result = lexer.lex(begin, end);
 
     // assert
-    ASSERT_NE(dem::lexer::TokenType::MINUS, result[0].type());
+    ASSERT_EQ(dem::lexer::TokenType::MINUS, result[0].type());
     ASSERT_EQ("-", result[0].content());
 }
 

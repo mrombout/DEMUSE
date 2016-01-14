@@ -84,7 +84,7 @@ namespace dem {
             throw RuntimeException("Notes do not support '.' operations.");
         }
 
-        Value *NoteValue::operator()() {
+        Value *NoteValue::operator()(ObjectValue &scope) {
             throw RuntimeException("Notes do not support '()' operations.");
         }
     }

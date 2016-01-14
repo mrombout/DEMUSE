@@ -23,7 +23,7 @@ namespace dem {
         };
 
         struct EditorInfo {
-            size_t editorId;
+            MuseStyledTextEditor *editor;
             parser::ParseResults parseResults;
             std::unordered_set<std::string> autoCompleteWords;
         };

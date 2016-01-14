@@ -1,4 +1,5 @@
 #include <iostream>
+#include <value/BooleanValue.h>
 #include "exception/RuntimeException.h"
 #include "MuseMidiCompiler.h"
 #include "value/NullValue.h"
@@ -8,7 +9,7 @@
 
 namespace dem {
     namespace compiler {
-        MidiCompiler::MidiCompiler() :
+        MuseMidiCompiler::MuseMidiCompiler() :
                 mBreak(false),
                 mContinue(false),
                 mEvaluator(*this),
@@ -16,12 +17,12 @@ namespace dem {
 
         }
 
-        void MidiCompiler::compile(parser::Program *program, std::string fileName) {
+        void MuseMidiCompiler::compile(parser::Program *program, std::string fileName) {
             mFileName = fileName;
             program->accept(*this);
         }
 
-        bool MidiCompiler::visitEnter(parser::Program &program) {
+        bool MuseMidiCompiler::visitEnter(parser::Program &program) {
             std::clog << "ENTER - Program" << std::endl;
 
             mObjectScopes.push_front(new SongValue());
@@ -29,7 +30,7 @@ namespace dem {
             return true;
         }
 
-        bool MidiCompiler::visitLeave(parser::Program &program) {
+        bool MuseMidiCompiler::visitLeave(parser::Program &program) {
             std::clog << "LEAVE - Program" << std::endl;
 
             mPlayEvaluator.write(mFileName);
@@ -37,7 +38,7 @@ namespace dem {
             return true;
         }
 
-        bool MidiCompiler::visitEnter(parser::Track &track) {
+        bool MuseMidiCompiler::visitEnter(parser::Track &track) {
             std::clog << "ENTER - Track" << std::endl;
 
             mPlayEvaluator.setTrack(track);
@@ -45,25 +46,39 @@ namespace dem {
             return true;
         }
 
-        bool MidiCompiler::visitLeave(parser::Track &track) {
+        bool MuseMidiCompiler::visitLeave(parser::Track &track) {
             std::clog << "LEAVE - Track" << std::endl;
 
             return true;
         }
 
-        bool MidiCompiler::visitEnter(parser::Block &block) {
+        bool MuseMidiCompiler::visitEnter(parser::Block &block) {
             std::clog << "ENTER - Block" << std::endl;
 
             return true;
         }
 
-        bool MidiCompiler::visitLeave(parser::Block &block) {
+        bool MuseMidiCompiler::visitLeave(parser::Block &block) {
             std::clog << "LEAVE - Block" << std::endl;
 
             return true;
         }
 
-        bool MidiCompiler::visitEnter(parser::VariableDeclaration &variableDefinition) {
+        bool MuseMidiCompiler::visitEnter(parser::ScopedBlock &block) {
+            std::clog << "ENTER - ScopedBlock" << std::endl;
+
+            return true;
+        }
+
+        bool MuseMidiCompiler::visitLeave(parser::ScopedBlock &block) {
+            std::clog << "LEAVE - ScopedBlock" << std::endl;
+
+            mBreak = false;
+
+            return true;
+        }
+
+        bool MuseMidiCompiler::visitEnter(parser::VariableDeclaration &variableDefinition) {
             std::clog << "ENTER - Variable Declaration" << std::endl;
 
             // TODO: Make proper lvalue class and move this logic?
@@ -80,7 +95,7 @@ namespace dem {
         }
 
 
-        bool MidiCompiler::visitEnter(parser::FunctionDefinition &functionDefinition) {
+        bool MuseMidiCompiler::visitEnter(parser::FunctionDefinition &functionDefinition) {
             std::clog << "ENTER - Function Definition" << std::endl;
 
             mObjectScopes.front()->declareVariable(functionDefinition.identifier(), new UserFunction(*this, mObjectScopes.front(), functionDefinition.parameterList(), functionDefinition.block()));
@@ -88,15 +103,24 @@ namespace dem {
             return false;
         }
 
-        bool MidiCompiler::visitEnter(parser::AssignmentExpression &assignmentExpression) {
+        bool MuseMidiCompiler::visitLeave(parser::FunctionDefinition &functionDefinition) {
+            std::clog << "LEAVE - Function Definition" << std::endl;
+
+            mBreak = false;
+
+            return true;
+        }
+
+        bool MuseMidiCompiler::visitEnter(parser::AssignmentExpression &assignmentExpression) {
             std::clog << "ENTER - AssignmentExpression" << std::endl;
 
+            //mBreak = false;
             mEvaluator.evaluate(mObjectScopes.front(), assignmentExpression);
 
             return false;
         }
 
-        bool MidiCompiler::visitEnter(parser::If &ifSymbol) {
+        bool MuseMidiCompiler::visitEnter(parser::If &ifSymbol) {
             std::clog << "ENTER - If" << std::endl;
 
             parser::Expression &expression = ifSymbol.expression();
@@ -113,8 +137,16 @@ namespace dem {
             return false;
         }
 
-        bool MidiCompiler::visitEnter(parser::While &whileSymbol) {
+        bool MuseMidiCompiler::visitLeave(parser::If &ifSymbol) {
+            std::clog << "LEAVE - If" << std::endl;
+
+            return !mBreak;
+        }
+
+        bool MuseMidiCompiler::visitEnter(parser::While &whileSymbol) {
             std::clog << "ENTER - While" << std::endl;
+
+            mBreak = false;
 
             parser::Expression &expression = whileSymbol.expression();
             parser::Block &block = whileSymbol.block();
@@ -122,7 +154,6 @@ namespace dem {
             Value *result = nullptr;
             do {
                 if(mBreak) {
-                    mBreak = false;
                     break;
                 }
                 if(mContinue) {
@@ -137,11 +168,24 @@ namespace dem {
             return false;
         }
 
-        bool MidiCompiler::visitEnter(parser::For &forSymbol) {
+        bool MuseMidiCompiler::visitLeave(parser::While &whileSymbol) {
+            std::clog << "LEAVE - While" << std::endl;
+
+            return !mBreak;
+        }
+
+        bool MuseMidiCompiler::visitEnter(parser::For &forSymbol) {
             std::clog << "ENTER - For" << std::endl;
 
-            forSymbol.initialization()->accept(*this);
+            mBreak = false;
+
+            if(forSymbol.initialization())
+                forSymbol.initialization()->accept(*this);
+
             parser::Expression *condition = forSymbol.condition();
+            if(!condition)
+                condition = new parser::BoolLiteral(forSymbol.token(), true);
+
             parser::AssignmentExpression *afterThought = forSymbol.afterThought();
             parser::Block &block = forSymbol.block();
             Value *result = nullptr;
@@ -149,14 +193,24 @@ namespace dem {
                 result = mEvaluator.evaluate(mObjectScopes.front(), *condition);
                 if(result->asBool()) {
                     block.accept(*this);
-                    afterThought->accept(*this);
+                    if(mBreak) {
+                        break;
+                    }
+                    if(afterThought)
+                        afterThought->accept(*this);
                 }
             } while(result->asBool());
 
             return false;
         }
 
-        bool MidiCompiler::visitEnter(parser::PropertyAccessExpression &propertyAccessExpression) {
+        bool MuseMidiCompiler::visitLeave(parser::For &forSymbol) {
+            std::clog << "LEAVE - For" << std::endl;
+
+            return !mBreak;
+        }
+
+        bool MuseMidiCompiler::visitEnter(parser::PropertyAccessExpression &propertyAccessExpression) {
             std::clog << "ENTER - PropertyAccessExpression" << std::endl;
 
             mEvaluator.evaluate(mObjectScopes.front(), propertyAccessExpression);
@@ -164,7 +218,7 @@ namespace dem {
             return false;
         }
 
-        bool MidiCompiler::visitEnter(parser::Play &play) {
+        bool MuseMidiCompiler::visitEnter(parser::Play &play) {
             std::clog << "ENTER - Play" << std::endl;
 
             mPlayEvaluator.play(play, mObjectScopes.front());
@@ -172,52 +226,38 @@ namespace dem {
             return false;
         }
 
-        bool MidiCompiler::visitLeave(parser::Play &play) {
+        bool MuseMidiCompiler::visitLeave(parser::Play &play) {
             std::clog << "LEAVE - Play" << std::endl;
 
             return true;
         }
 
-        bool MidiCompiler::visitEnter(parser::Return &returnSymbol) {
+        bool MuseMidiCompiler::visitEnter(parser::Return &returnSymbol) {
             std::clog << "ENTER - Return" << std::endl;
 
             mReturnValues.push(mEvaluator.evaluate(mObjectScopes.front(), returnSymbol.expression()));
-            std::cout << "returned " << mReturnValues.top()->asString() << std::endl;
+            mBreak = true;
 
             return false;
         }
 
-        bool MidiCompiler::visitLeave(parser::Return &returnSymbol) {
+        bool MuseMidiCompiler::visitLeave(parser::Return &returnSymbol) {
             std::clog << "LEAVE - Return" << std::endl;
 
             return false;
         }
 
-        Value *MidiCompiler::returnValue() {
+        Value *MuseMidiCompiler::returnValue() {
             if(mReturnValues.empty())
                 return new NullValue();
             return mReturnValues.top();
         }
 
-        std::deque<ObjectValue*> &MidiCompiler::scopes() {
+        std::deque<ObjectValue*> &MuseMidiCompiler::scopes() {
             return mObjectScopes;
         }
 
-        bool MidiCompiler::visitEnter(parser::FunctionCallExpression &functionCallExpression) {
-            std::clog << "ENTER - FunctionCallExpression" << std::endl;
-
-            mEvaluator.evaluate(mObjectScopes.front(), functionCallExpression);
-
-            return true;
-        }
-
-        bool MidiCompiler::visitLeave(parser::FunctionCallExpression &functionCallExpression) {
-            std::clog << "LEAVE - FunctionCallExpression" << std::endl;
-
-            return true;
-        }
-
-        bool MidiCompiler::visitEnter(parser::ExpressionStatement &statement) {
+        bool MuseMidiCompiler::visitEnter(parser::ExpressionStatement &statement) {
             std::clog << "ENTER - ExpressionStatement" << std::endl;
 
             mEvaluator.evaluate(mObjectScopes.front(), statement.expression());
@@ -225,7 +265,13 @@ namespace dem {
             return false;
         }
 
-        bool MidiCompiler::visit(parser::Break &breakSymbol) {
+        bool MuseMidiCompiler::visitLeave(parser::ExpressionStatement &statement) {
+            std::clog << "LEAVE - ExpressionStatement" << std::endl;
+
+            return true;
+        }
+
+        bool MuseMidiCompiler::visit(parser::Break &breakSymbol) {
             std::clog << "ENTER - Break" << std::endl;
 
             mBreak = true;
@@ -233,12 +279,20 @@ namespace dem {
             return false;
         }
 
-        bool MidiCompiler::visit(parser::Continue &continueSymbol) {
+        bool MuseMidiCompiler::visit(parser::Continue &continueSymbol) {
             std::clog << "ENTER - Continue" << std::endl;
 
             mContinue = true;
 
             return false;
+        }
+
+        void MuseMidiCompiler::doBreak() {
+            mBreak = true;
+        }
+
+        void MuseMidiCompiler::doNotBreak() {
+            mBreak = false;
         }
     }
 }

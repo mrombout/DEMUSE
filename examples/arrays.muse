@@ -1,24 +1,52 @@
+//// test 1 - multi-array
 var A = [
 	[1, 2, 3],
 	[4, 5, 6]
 ];
-print("A: " + A); // should print "[[1, 2, 3], [4, 5, 6]]"
+if("" + A === "[[1.000000, 2.000000, 3.000000], [4.000000, 5.000000, 6.000000]]")
+	print("test 1 - OK!");
+else
+	print("test 1 - FAIL!");
 
+//// test 2 - array access
 var B = A[0];
-print("B: " + B); // should print "[1, 2, 3]"
+if("" + B === "[1.000000, 2.000000, 3.000000]")
+    print("test 2 - OK!");
+else
+    print("test 2 - FAIL!");
 
+//// test 3 - access array
 var C = B[2];
-print("C: " + C); // should print "3"
+if(C === 3)
+    print("test 3 - OK!");
+else
+    print("test 3 - FAIL!");
 
+//// test 4 - mutli-access
 var D = A[0][2];
-print("D: " + D); // should print "3"
+if(C === 3)
+    print("test 4 - OK!");
+else
+    print("test 4 - FAIL!");
 
+//// test 5 - assign multi
 A[0][2] = 6;
-print("E: " + A[0][2]); // should print "6"
+var E = A[0][2];
+if(E === 6)
+    print("test 5 - OK!");
+else
+    print("test 5 - FAIL!");
 
+//// test 6 - push
 A[0].push(7);
-print("A[0]: " + A[0]); // should print "A[0]: [1, 2, 6, 7]"
+if("" + A[0] === "[1.000000, 2.000000, 6.000000, 7.000000]")
+    print("test 6 - OK!");
+else
+    print("test 6 - FAIL!");
 
+//// test 7 - pop
 var F = A[0].pop();
-print("F: " + F); // should print "E: 7"
-print("A[0]: " + A[0]); // should print "A[0]: [1, 2, 6]"
+if(F === 7 && "" + A[0] === "[1.000000, 2.000000, 6.000000]")
+    print("test 7 - OK!");
+else
+    print("test 7 - FAIL!");

@@ -37,7 +37,7 @@ namespace dem {
             virtual bool operator>(const Value &other);
             virtual bool operator>=(const Value &other);
             virtual Value *operator[](const int index);
-            virtual Value *operator()();
+            virtual Value *operator()(ObjectValue &scope);
 
         private:
             std::vector<Variable*> mValues;

@@ -17,9 +17,9 @@ namespace dem {
 
             virtual bool accept(Visitor &visitor);
 
-            std::vector<Statement*> &statements();
+            const std::vector<Statement*> &statements() const;
 
-        private:
+        protected:
             std::vector<Statement*> mStatements;
         };
     }

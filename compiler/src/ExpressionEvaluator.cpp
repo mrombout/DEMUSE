@@ -7,12 +7,14 @@
 #include "value/TextValue.h"
 #include "value/ArrayValue.h"
 #include "value/NoteValue.h"
+#include "value/Variable.h"
 #include "value/function/FunctionValue.h"
 #include "value/function/UserFunction.h"
+#include "MuseMidiCompiler.h"
 
 namespace dem {
     namespace compiler {
-        ExpressionEvaluator::ExpressionEvaluator(Compiler &compiler) :
+        ExpressionEvaluator::ExpressionEvaluator(MuseMidiCompiler &compiler) :
             mCompiler(compiler) {
 
         }
@@ -54,7 +56,7 @@ namespace dem {
             std::clog << "ASSIGN - " << a->identifier()->name() << " = " << b->asString() << std::endl;
             a->setValue(b->value());
 
-            mStack.push(a);
+            push(a);
 
             return true;
         }
@@ -78,7 +80,7 @@ namespace dem {
             try {
                 std::clog << "Executing " << a->asString() << " + " << b->asString() << std::endl;
                 Value *c = a->add(b);
-                mStack.push(c);
+                push(c);
             } catch(const RuntimeException &e) {
                 throw RuntimeException(additionExpression.token(), e.what());
             }
@@ -105,7 +107,7 @@ namespace dem {
             try {
                 std::clog << "Executing " << a->asString() << " - " << b->asString() << std::endl;
                 Value *c = a->subtract(b);
-                mStack.push(c);
+                push(c);
             } catch(const RuntimeException &e) {
                 throw RuntimeException(subtractionExpression.token(), e.what());
             }
@@ -132,7 +134,7 @@ namespace dem {
             try {
                 std::clog << "Executing " << a->asString() << " * " << b->asString() << std::endl;
                 Value *c = a->multiply(b);
-                mStack.push(c);
+                push(c);
             } catch(const RuntimeException &e) {
                 throw RuntimeException(multiplicationExpression.token(), e.what());
             }
@@ -159,7 +161,7 @@ namespace dem {
             try {
                 std::clog << "Executing " << a->asString() << " / " << b->asString() << std::endl;
                 Value *c = a->divide(b);
-                mStack.push(c);
+                push(c);
             } catch(const RuntimeException &e) {
                 throw RuntimeException(divisionExpression.token(), e.what());
             }
@@ -186,7 +188,7 @@ namespace dem {
             try {
                 std::clog << "Executing " << a->asString() << " % " << b->asString() << std::endl;
                 Value *c = a->modulo(b);
-                mStack.push(c);
+                push(c);
             } catch(const RuntimeException &e) {
                 throw RuntimeException(moduloExpression.token(), e.what());
             }
@@ -213,7 +215,7 @@ namespace dem {
             try {
                 std::clog << "Executing " << a->asString() << " ^ " << b->asString() << std::endl;
                 Value *c = a->exponent(b);
-                mStack.push(c);
+                push(c);
             } catch(const RuntimeException &e) {
                 throw RuntimeException(exponentExpression.token(), e.what());
             }
@@ -238,7 +240,7 @@ namespace dem {
 
             // compare equality
             try {
-                mStack.push(new BooleanValue(*a == *b));
+                push(new BooleanValue(*a == *b));
             } catch(const RuntimeException &e) {
                 throw RuntimeException(equalCondition.token(), e.what());
             }
@@ -263,7 +265,7 @@ namespace dem {
 
             // compare not equal
             try {
-                mStack.push(new BooleanValue(*a != *b));
+                push(new BooleanValue(*a != *b));
             } catch(const RuntimeException &e) {
                 throw RuntimeException(notEqualCondition.token(), e.what());
             }
@@ -288,7 +290,7 @@ namespace dem {
 
             // compare smaller than
             try {
-                mStack.push(new BooleanValue(*a < *b));
+                push(new BooleanValue(*a < *b));
             } catch(const RuntimeException &e) {
                 throw RuntimeException(smallerThanCondition.token(), e.what());
             }
@@ -313,7 +315,7 @@ namespace dem {
 
             // compare smaller or equal than
             try {
-                mStack.push(new BooleanValue(*a <= *b));
+                push(new BooleanValue(*a <= *b));
             } catch(const RuntimeException &e) {
                 throw RuntimeException(smallerThanOrEqualCondition.token(), e.what());
             }
@@ -338,7 +340,7 @@ namespace dem {
 
             // compare larger than
             try {
-                mStack.push(new BooleanValue(*a > *b));
+                push(new BooleanValue(*a > *b));
             } catch(const RuntimeException &e) {
                 throw RuntimeException(largerThanCondition.token(), e.what());
             }
@@ -363,7 +365,7 @@ namespace dem {
 
             // compare larger than or equal
             try {
-                mStack.push(new BooleanValue(*a >= *b));
+                push(new BooleanValue(*a >= *b));
             } catch(const RuntimeException &e) {
                 throw RuntimeException(largerThanOrEqualCondition.token(), e.what());
             }
@@ -388,7 +390,7 @@ namespace dem {
 
             // compare larger than or equal
             try {
-                mStack.push(new BooleanValue(a->strictEqual(*b)));
+                push(new BooleanValue(a->strictEqual(*b)));
             } catch(const RuntimeException &e) {
                 throw RuntimeException(strictEqualCondition.token(), e.what());
             }
@@ -413,7 +415,7 @@ namespace dem {
 
             // compare larger than or equal
             try {
-                mStack.push(new BooleanValue(a->strictNotEqual(*b)));
+                push(new BooleanValue(a->strictNotEqual(*b)));
             } catch(const RuntimeException &e) {
                 throw RuntimeException(strictNotEqualCondition.token(), e.what());
             }
@@ -424,23 +426,28 @@ namespace dem {
         bool ExpressionEvaluator::visitEnter(parser::AndCondition &andCondition) {
             std::clog << "ENTER - Evaluating AndCondition" << std::endl;
 
-            return true;
+            andCondition.left().accept(*this);
+            Value *a = mStack.top();
+            mStack.pop();
+            if(a->asBool()) {
+                andCondition.right().accept(*this);
+                Value *b = mStack.top();
+                mStack.pop();
+
+                try {
+                    push(new BooleanValue(a->asBool() && b->asBool()));
+                    return false;
+                } catch(const RuntimeException &e) {
+                    throw RuntimeException(andCondition.token(), e.what());
+                }
+            }
+
+            push(new BooleanValue(false));
+            return false;
         }
 
         bool ExpressionEvaluator::visitLeave(parser::AndCondition &andCondition) {
             std::clog << "LEAVE - Evaluating AndCondition" << std::endl;
-
-            Value *b = mStack.top();
-            mStack.pop();
-
-            Value *a = mStack.top();
-            mStack.pop();
-
-            try {
-                mStack.push(new BooleanValue(a->asBool() && b->asBool()));
-            } catch(const RuntimeException &e) {
-                throw RuntimeException(andCondition.token(), e.what());
-            }
 
             return true;
         }
@@ -448,23 +455,28 @@ namespace dem {
         bool ExpressionEvaluator::visitEnter(parser::OrCondition &orCondition) {
             std::clog << "ENTER - Evaluating OrCondition" << std::endl;
 
-            return true;
-        }
-
-        bool ExpressionEvaluator::visitLeave(parser::OrCondition &orCondition) {
-            std::clog << "LEAVE - Evaluating OrCondition" << std::endl;
+            orCondition.left().accept(*this);
+            Value *a = mStack.top();
+            mStack.pop();
+            if(a->asBool()) {
+                push(new BooleanValue(true));
+                return false;
+            }
 
             Value *b = mStack.top();
             mStack.pop();
 
-            Value *a = mStack.top();
-            mStack.pop();
-
             try {
-                mStack.push(new BooleanValue(a->asBool() || b->asBool()));
+                push(new BooleanValue(a->asBool() || b->asBool()));
             } catch(const RuntimeException &e) {
                 throw RuntimeException(orCondition.token(), e.what());
             }
+
+            return false;
+        }
+
+        bool ExpressionEvaluator::visitLeave(parser::OrCondition &orCondition) {
+            std::clog << "LEAVE - Evaluating OrCondition" << std::endl;
 
             return true;
         }
@@ -484,7 +496,7 @@ namespace dem {
                 mStack.pop();
             }
 
-            mStack.push(new ArrayValue(values));
+            push(new ArrayValue(values));
 
             return false;
         }
@@ -495,7 +507,7 @@ namespace dem {
             Variable *variable = mObjectScope->variable(&identifier);
 
             std::clog << "(I)PUSH - " << variable->asString() << std::endl;
-            mStack.push(variable);
+            push(variable);
 
             return true;
         }
@@ -507,7 +519,7 @@ namespace dem {
             NumberValue *value = new NumberValue(number.value());
 
             std::clog << "PUSH - " << value->asString() << std::endl;
-            mStack.push(value);
+            push(value);
 
             return true;
         }
@@ -518,7 +530,7 @@ namespace dem {
             BooleanValue *value = new BooleanValue(boolSymbol.value());
 
             std::clog << "PUSH - " << value->asString() << std::endl;
-            mStack.push(value);
+            push(value);
 
             return true;
         }
@@ -529,7 +541,7 @@ namespace dem {
             TextValue *value = new TextValue(text.value());
 
             std::clog << "PUSH - " << value->asString() << std::endl;
-            mStack.push(value);
+            push(value);
 
             return true;
         }
@@ -540,7 +552,7 @@ namespace dem {
             NoteValue *value = new NoteValue(note);
 
             std::clog << "PUSH - " << value->asString() << std::endl;
-            mStack.push(value);
+            push(value);
 
             return true;
         }
@@ -548,7 +560,7 @@ namespace dem {
         bool ExpressionEvaluator::visit(parser::ThisExpression &thisExpression) {
             std::clog << "ENTER - ThisExpression" << std::endl;
 
-            mStack.push(mObjectScope->parent());
+            push(mObjectScope->parent()->parent());
 
             return true;
         }
@@ -576,7 +588,7 @@ namespace dem {
                     newValue = value;
                 }
 
-                mStack.push(newValue);
+                push(newValue);
             } catch(const RuntimeException &e) {
                 throw RuntimeException(unaryExpression.token(), e.what());
             }
@@ -595,8 +607,7 @@ namespace dem {
 
             UserFunction *value = new UserFunction(mCompiler, mObjectScope, functionDefinition.parameterList(), functionDefinition.block());
 
-            std::clog << "PUSH - " << value->asString() << std::endl;
-            mStack.push(value);
+            push(value);
 
             return false;
         }
@@ -621,7 +632,7 @@ namespace dem {
             try {
                 static_cast<int>(b->asNumber());
                 Value *value = (*a)[b->asNumber()];
-                mStack.push(value);
+                push(value);
             } catch(const RuntimeException &e) {
                 throw RuntimeException(arrayAccessExpression.token(), e.what());
             }
@@ -645,7 +656,7 @@ namespace dem {
                 std::vector<Value*> argumentValues;
                 for(parser::Expression *expr : arguments) {
                     Value *result = this->evaluate(mObjectScope, *expr);
-                    argumentValues.push_back(result);
+                    argumentValues.push_back(result->value());
                 }
 
                 // map to function scope
@@ -654,18 +665,19 @@ namespace dem {
                 if(!functionValue) {
                     Variable *variable = dynamic_cast<Variable*>(callee);
                     if(variable)
-                        functionValue = dynamic_cast<FunctionValue*>(variable->value());
+                        functionValue = dynamic_cast<FunctionValue*>(variable->realValue());
                 }
+                ObjectValue *functionScope = new ObjectValue(functionValue);
                 if(functionValue) {
-                    functionValue->mapScope(argumentValues);
+                    functionValue->mapScope(*functionScope, argumentValues);
                 }
 
                 // call function
-                mCompiler.scopes().push_front(functionValue);
-                Value *result = (*callee)();
+                mCompiler.scopes().push_front(functionScope);
+                Value *result = (*callee)(*functionScope);
                 mCompiler.scopes().pop_front();
 
-                mStack.push(result);
+                push(result);
             } catch(const RuntimeException &e) {
                 throw RuntimeException(callExpression.token(), e.what());
             }
@@ -693,7 +705,7 @@ namespace dem {
 
             try {
                 Value *value = (*a)[identifiable->name()];
-                mStack.push(value);
+                push(value);
             } catch(const RuntimeException &e) {
                 throw RuntimeException(propertyAccessExpression.token(), e.what());
             }
@@ -730,8 +742,7 @@ namespace dem {
             // fetch property
             try {
                 Variable *var = (*object)[identifier->name()];
-                std::clog << "PUSH - " << identifier->name() << ": " << var->asString() << std::endl;
-                mStack.push(var);
+                push(var);
             } catch(const RuntimeException &e) {
                 throw RuntimeException(memberExpression.token(), e.what());
             }
@@ -765,9 +776,14 @@ namespace dem {
             if(parentObject == nullptr)
                 throw RuntimeException(newInstance.token(), "Can't create a new instance, \"" + newInstance.identifier().name() + "\" is not an object.");
 
-            mStack.push(new ObjectValue(parentObject));
+            push(new ObjectValue(parentObject));
 
             return false;
+        }
+
+        void ExpressionEvaluator::push(Value *value) {
+            std::clog << "PUSH - " << value->asString() << std::endl;
+            mStack.push(value);
         }
     }
 }

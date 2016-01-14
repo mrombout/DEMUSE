@@ -1,8 +1,15 @@
 #include <gtest/gtest.h>
 #include "value/TextValue.h"
+#include "value/Variable.h"
 
 class TextValueTest : public ::testing::Test {
+protected:
+    TextValueTest() :
+            scope(nullptr) {
 
+    }
+
+    dem::compiler::ObjectValue scope;
 };
 
 TEST_F(TextValueTest, Add_AddsToString) {
@@ -314,23 +321,30 @@ TEST_F(TextValueTest, ArrayAccess_IndexNotExist_ThrowsException) {
     dem::compiler::TextValue a{"Lorum Ipsum"};
 
     // assert / act
-    ASSERT_ANY_THROW({ a[8]; });
+    ASSERT_ANY_THROW({ a[16]; });
 }
 
-TEST_F(TextValueTest, ArrayAccess_IndexExist_ThrowsException) {
+TEST_F(TextValueTest, ArrayAccess_IndexExist_ReturnsChar) {
     // arrange
     dem::compiler::TextValue a{"Lorum Ipsum"};
 
-    // assert / act
-    ASSERT_ANY_THROW({ a[0]; });
+    // act
+    dem::compiler::Value *result = a[0];
+
+    // assert
+    ASSERT_EQ("L", result->asString());
 }
 
-TEST_F(TextValueTest, PropertyAccess_ReturnsProperty) {
+TEST_F(TextValueTest, LengthProperty_ReturnsProperty) {
     // arrange
     dem::compiler::TextValue a{"Lorum Ipsum"};
 
-    // assert / act
-    ASSERT_ANY_THROW({ a[0]; });
+    // act
+    const std::string propertyName = "length";
+    dem::compiler::Variable *result = a[propertyName];
+
+    // assert
+    ASSERT_EQ(11, result->realValue()->asNumber());
 }
 
 TEST_F(TextValueTest, Call_ThrowsException) {
@@ -338,5 +352,5 @@ TEST_F(TextValueTest, Call_ThrowsException) {
     dem::compiler::TextValue a{"Lorum Ipsum"};
 
     // assert / act
-    ASSERT_ANY_THROW({ a(); });
+    ASSERT_ANY_THROW({ a(scope); });
 }

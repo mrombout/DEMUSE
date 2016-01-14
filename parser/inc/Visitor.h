@@ -5,6 +5,7 @@
 #include "symbol/ArgumentList.h"
 #include "symbol/Assignment.h"
 #include "symbol/Block.h"
+#include "symbol/ScopedBlock.h"
 #include "symbol/Break.h"
 #include "symbol/Continue.h"
 #include "symbol/For.h"
@@ -74,6 +75,9 @@ namespace dem {
 
             virtual bool visitEnter(parser::Block &block);
             virtual bool visitLeave(parser::Block &block);
+
+            virtual bool visitEnter(parser::ScopedBlock &block);
+            virtual bool visitLeave(parser::ScopedBlock &block);
 
             virtual bool visit(parser::BoolLiteral &boolSymbol);
 

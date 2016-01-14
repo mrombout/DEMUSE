@@ -10,13 +10,13 @@ namespace dem {
          * \brief Similar to an InternalFunction this class uses a lambda as its function body
          */
         class InternalLambdaFunction;
-        typedef std::function<Value*(InternalLambdaFunction &function)> FunctionBody;
+        typedef std::function<Value*(InternalLambdaFunction &function, ObjectValue &scope)> FunctionBody;
 
         class InternalLambdaFunction : public InternalFunction {
         public:
             InternalLambdaFunction(ObjectValue *parent, FunctionBody body);
 
-            virtual Value *operator()();
+            virtual Value *operator()(ObjectValue &scope);
 
         private:
             FunctionBody mBody;

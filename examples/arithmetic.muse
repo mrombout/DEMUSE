@@ -2,41 +2,93 @@ function test() {
 	return 5;
 }
 
-var A = 1 + 1;
-print("A: " + A); // should be 2
+/// test 1 - addition
+var test1 = 1 + 1;
+if(test1 === 2)
+	print("test 1 - OK!");
+else
+	print("test 1 - FAIL!");
 
-var B = 2^3;
-print("B: " + B); // should be 8
+//// test 2 - exponent single
+var test2 = 2^3;
+if(test2 === 8)
+    print("test 2 - OK!");
+else
+    print("test 2 - FAIL!");
 
-var C = 2^2^3;
-print("C: " + C); // should be 256
+//// test 3 - exponent double
+var test3 = 2^2^3;
+if(test3 === 256)
+    print("test 3 - OK!");
+else
+    print("test 3 - FAIL!");
 
-var D = 14 % 5;
-print("D: " + D); // should be 4
+//// test 4 - modulo
+var test4 = 14 % 5;
+if(test4 === 4)
+    print("test 4 - OK!");
+else
+    print("test 4 - FAIL!");
 
-var E = 1 - 1;
-print("E: " + E); // should be 0
+//// test 5 - subtraction
+var test5 = 1 - 1;
+if(test5 === 0)
+    print("test 5 - OK!");
+else
+    print("test 5 - FAIL!");
 
-var F = 2 * 3;
-print("F: " + F); // should be 6
+//// test 6 - multiplication
+var test6 = 2 * 3;
+if(test6 === 6)
+    print("test 6 - OK!");
+else
+    print("test 6 - FAIL!");
 
-var G = 10 / 2;
-print("G: " + G); // should be 5
+//// test 7 - division
+var test7 = 10 / 2;
+if(test7 === 5)
+    print("test 7 - OK!");
+else
+    print("test 7 - FAIL!");
 
-var H = 1 + 6 * (1 + 1);
-print("H: " + H); // should be 13
+//// test 8 - precedence (right-to-left)
+var test8 = 1 + 6 * (1 + 1);
+if(test8 === 13)
+    print("test 8 - OK!");
+else
+    print("test 8 - FAIL!");
 
-var I = 6 / 2 * 1 + 2;
-print("I: " + I);  // should be 5
+//// test 9 - precedence (left-to-right)
+var test9 = 6 / 2 * 1 + 2;
+if(test9 === 5)
+    print("test 9 - OK!");
+else
+    print("test 9 - FAIL!");
 
-var J1 = test();
-print("J1: " + J1); // should print "J1: 5"
+//// test 10 - function call
+var test10 = test();
+if(test10 == 5)
+    print("test 10 - OK!");
+else
+    print("test 10 - FAIL!");
 
-var J2 = test() + 5;
-print("J2: " + J2); // should print "J2: 10"
+//// test 11 - function call and operation
+var test11 = test() + 5;
+if(test11 === 10)
+    print("test 11 - OK!");
+else
+    print("test 11 - FAIL!");
 
-var J3 = 3 + test() + 3;
-print("J3: " + J3); // should print "J3: 11"
+//// test 12 - function call and multiple operations
+var test12 = 3 + test() + 3;
+if(test12 === 11)
+    print("test 12 - OK!");
+else
+    print("test 12 - FAIL!");
 
-var K = 1 + 2 * 3 + 5;
-print("K: " + K); // should be 12
+//// test 13 - precedence
+var test13 = 1 + 2 * 3 + 5;
+if(test13 === 12)
+    print("test 13 - OK!");
+else
+    print("test 13 - FAIL!");

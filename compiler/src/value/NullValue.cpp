@@ -80,7 +80,7 @@ namespace dem {
             throw RuntimeException("Null does not support '.' operations.");
         }
 
-        Value *NullValue::operator()() {
+        Value *NullValue::operator()(ObjectValue &scope) {
             throw RuntimeException("Null does not support '()' operations.");
         }
     }

@@ -2,7 +2,14 @@
 #define DEMUSE_OBJECTVALUE_H
 
 #include <map>
-#include "value/Variable.h"
+#include "Value.h"
+#include "symbol/Identifier.h"
+
+namespace dem {
+    namespace compiler {
+        class Variable;
+    }
+}
 
 namespace dem {
     namespace compiler {
@@ -36,7 +43,7 @@ namespace dem {
 
             virtual Value *operator[](const int index);
             virtual Variable *operator[](const std::string &index);
-            virtual Value *operator()();
+            virtual Value *operator()(ObjectValue &scope);
 
             void declareVariable(parser::Identifier *identifier);
             void declareVariable(parser::Identifier *identifier, Value *value);

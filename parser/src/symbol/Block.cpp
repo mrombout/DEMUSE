@@ -14,7 +14,7 @@ namespace dem {
                 delete statement;
         }
 
-        std::vector<Statement *> &Block::statements() {
+        const std::vector<Statement*> &Block::statements() const {
             return mStatements;
         }
 

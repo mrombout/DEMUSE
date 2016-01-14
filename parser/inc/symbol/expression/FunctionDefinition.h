@@ -1,6 +1,7 @@
 #ifndef DEMUSE_FUNCTIONDEFINITION_H
 #define DEMUSE_FUNCTIONDEFINITION_H
 
+#include "symbol/ScopedBlock.h"
 #include "symbol/CompoundStatement.h"
 #include "symbol/ParameterList.h"
 #include "symbol/Block.h"
@@ -32,7 +33,7 @@ namespace dem {
              * \throws std::invalid_argument when parameterList is null
              * \throws std::invalid_argument when block is null
              */
-            FunctionDefinition(const lexer::Token &token, ParameterList *parameterList, Block *block);
+            FunctionDefinition(const lexer::Token &token, ParameterList *parameterList, ScopedBlock *block);
 
             /**
              * \brief Constructs a function with an identifier
@@ -55,7 +56,7 @@ namespace dem {
              * \throws std::invalid_argument when parameterList is null
              * \throws std::invalid_argument when block is null
              */
-            FunctionDefinition(const lexer::Token &token, Identifier *identifier, ParameterList *parameterList, Block *block);
+            FunctionDefinition(const lexer::Token &token, Identifier *identifier, ParameterList *parameterList, ScopedBlock *block);
 
             virtual bool accept(Visitor &visitor);
 
@@ -72,12 +73,12 @@ namespace dem {
             /**
              * \brief Block to execute when this function is called
              */
-            Block &block() const;
+            ScopedBlock &block() const;
 
         private:
             Identifier *mIdentifier;
             ParameterList *mParameterList;
-            Block *mBlock;
+            ScopedBlock *mBlock;
         };
     }
 }

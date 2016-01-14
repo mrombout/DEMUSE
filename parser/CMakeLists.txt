@@ -37,6 +37,9 @@ set(Parser_SRCS
     inc/symbol/Return.h
     src/symbol/Return.cpp
 
+    inc/symbol/ScopedBlock.h
+    src/symbol/ScopedBlock.cpp
+
     inc/symbol/Break.h
     src/symbol/Break.cpp
 
@@ -178,6 +181,8 @@ set(Parser_SRCS
     inc/symbol/expression/StrictNotEqualCondition.h
     src/symbol/expression/StrictNotEqualCondition.cpp
 
+    inc/symbol/play/Playable.h
+
     inc/symbol/play/Play.h
     src/symbol/play/Play.cpp
 
@@ -274,8 +279,7 @@ set(TestParser_SRCS
     test/factory/ReturnFactoryTest.cpp
     test/factory/StatementFactoryTest.cpp
     test/factory/VariableDefinitionTest.cpp
-    test/factory/WhileFactoryTest.cpp
-    test/factory/PrimitiveFactoryTest.cpp inc/symbol/play/Playable.h)
+    test/factory/WhileFactoryTest.cpp)
 
 add_library(libparser SHARED ${Parser_SRCS})
 add_library(dem::libparser ALIAS libparser)

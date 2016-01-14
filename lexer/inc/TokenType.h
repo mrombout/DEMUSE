@@ -13,8 +13,6 @@ namespace dem {
             THIS_T,
             COMMA,
             PERIOD,
-            POSITIVE,
-            NEGATIVE,
             PLUS,
             MINUS,
             TIMES,

@@ -3,7 +3,13 @@
 
 #include "MidiFile.h"
 #include "Visitor.h"
-#include "ExpressionEvaluator.h"
+#include "value/ObjectValue.h"
+
+namespace dem {
+    namespace compiler {
+        class ExpressionEvaluator;
+    }
+}
 
 namespace dem {
     namespace compiler {

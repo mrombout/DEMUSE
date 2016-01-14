@@ -1,17 +1,24 @@
-var A = 0;
-print("A: " + A); // should print "A: 0"
+//// test 1 - single line comment
+// print("test 1 - FAIL!");
 
-// var B = 1;   // should not run
-/* var C = 2 */ // should not run
+//// test 2 - multi line comment (on single line)
+/* print("test 1 - FAIL!"); */
+
+//// test 3 - multi line comment (within statement)
 var D = /*3*/4;
-print("D: " + D); // should print "D: 4"
+if(D === 4)
+    print("test 3 - OK!");
+else
+    print("test 3 - FAIL!");
 
+//// test 4 - multi line comment (multilines)
 /* should not run
 if(true) {
-
+    print("test 4 - FAIL!");
 }
 */
 
+//// test 5 - multi line comment (multiple newlines)
 /* this should
 
 print("This should not be printed!");
@@ -21,6 +28,8 @@ all
 
 be a comment
 
+
+print("test 5 - FAIL!");
 
 
 */

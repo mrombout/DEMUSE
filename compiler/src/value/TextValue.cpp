@@ -3,17 +3,18 @@
 #include "value/Value.h"
 #include "value/TextValue.h"
 #include "value/NumberValue.h"
+#include "value/Variable.h"
 
 namespace dem {
     namespace compiler {
         TextValue::TextValue(std::string value) :
             mValue(value) {
             mProperties["length"] = new Variable(new parser::Identifier("length"), new NumberValue(value.length()));
-            mProperties["charAt"] = new Variable(new parser::Identifier("charAt"), new InternalLambdaFunction(this, [this](InternalLambdaFunction &function) -> Value* {
-                return new TextValue(std::string(1, mValue.at(function.variable(new parser::Identifier("1"))->asNumber())));
+            mProperties["charAt"] = new Variable(new parser::Identifier("charAt"), new InternalLambdaFunction(this, [this](InternalLambdaFunction &function, ObjectValue &objectValue) -> Value* {
+                return new TextValue(std::string(1, mValue.at(objectValue.variable(new parser::Identifier("1"))->asNumber())));
             }));
-            mProperties["charCodeAt"] = new Variable(new parser::Identifier("charCodeAt"), new InternalLambdaFunction(this, [this](InternalLambdaFunction &function) -> Value* {
-                return new NumberValue(mValue.at(function.variable(new parser::Identifier("1"))->asNumber()));
+            mProperties["charCodeAt"] = new Variable(new parser::Identifier("charCodeAt"), new InternalLambdaFunction(this, [this](InternalLambdaFunction &function, ObjectValue &objectValue) -> Value* {
+                return new NumberValue(mValue.at(objectValue.variable(new parser::Identifier("1"))->asNumber()));
             }));
         }
 
@@ -88,10 +89,14 @@ namespace dem {
         }
 
         Value *TextValue::operator[](const int index) {
-            return new TextValue(std::to_string(mValue.at(index)));
+            return new TextValue(std::string(1, mValue.at(index)));
         }
 
-        Value *TextValue::operator()() {
+        Variable *TextValue::operator[](const std::string &index) {
+            return ObjectValue::operator[](index);
+        }
+
+        Value *TextValue::operator()(ObjectValue &scope) {
             throw RuntimeException("Strings do not support '()' operations.");
         }
     }

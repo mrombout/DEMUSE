@@ -18,7 +18,7 @@ namespace dem {
             FunctionValue();
             FunctionValue(ObjectValue *parent);
 
-            virtual void mapScope(std::vector<Value*> &arguments) = 0;
+            virtual void mapScope(ObjectValue &functionScope, std::vector<Value*> &arguments) = 0;
         };
     }
 }

@@ -1,0 +1,50 @@
+//// test 1 - recursive variables
+function test1(n) {
+    if(n > 1) {
+        return 6;
+    }
+    var a = n + 1;
+    var b = n + 2;
+
+    var a1 = test1(a);
+    var b1 = test1(b);
+    return a1 + b1;
+}
+var r1 = test1(0);
+if(r1 === 18)
+    print("test1 - OK!");
+else
+    print("test1 - FAIL!");
+
+//// test 2 - recursive return directly
+//function test2(n) {
+//    if(n > 1) {
+//        return 6;
+//    }
+//    var a = n + 1;
+//    var b = n + 2;
+//
+//    return test2(a) + test2(b);
+//}
+//var r2 = test2(0);
+//if(r2 === 18)
+//    print("test2 - OK!");
+//else
+//    print("test2 - FAIL!");
+
+//// test 3 - return function in if does not break
+function test3r() {
+    return false;
+}
+
+function test3() {
+    if(test3r()) {
+        return 5;
+    }
+    return 3;
+}
+var r3 = test3();
+if(r3 === 3)
+    print("test3 - OK!");
+else
+    print("test3 - FAIL!");

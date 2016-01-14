@@ -1,3 +1,4 @@
+#include "value/ObjectValue.h"
 #include "value/Variable.h"
 
 namespace dem {
@@ -41,7 +42,7 @@ namespace dem {
         }
 
         Value *Variable::value() {
-            return mValue->value();
+            return realValue()->value();
         }
 
         double Variable::asNumber() const {
@@ -92,8 +93,8 @@ namespace dem {
             return (*mValue)[index];
         }
 
-        Value *Variable::operator()() {
-            return (*mValue)();
+        Value *Variable::operator()(ObjectValue &scope) {
+            return (*mValue)(scope);
         }
 
         Value *Variable::realValue() const {

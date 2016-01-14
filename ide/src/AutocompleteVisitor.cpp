@@ -15,8 +15,6 @@ namespace dem {
             if(functionDefinition.identifier()) {
                 std::string name = functionDefinition.identifier()->name() + "?0";
                 mWords.insert(name);
-
-                std::cout << "Adding: " << name << std::endl;
             }
 
             return true;
@@ -30,8 +28,6 @@ namespace dem {
                 if(name.size() > 1) {
                     std::string name = identifier->name() + "?1";
                     mWords.insert(name);
-
-                    std::cout << "Adding: " << name << std::endl;
                 }
             }
 
