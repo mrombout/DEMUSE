@@ -104,7 +104,9 @@ namespace dem {
         }
 
         Value *ArrayValue::operator[](const int index) {
-            return mValues.at(index);
+            if(index < mValues.size())
+                return mValues.at(index);
+            throw RuntimeException("Index " + std::to_string(index) + " does not exist.");
         }
 
         Value *ArrayValue::operator()(ObjectValue &scope) {

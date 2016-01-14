@@ -370,40 +370,45 @@ namespace dem {
          * Also note that `a && b` and `a || b` are *logical* expression, not binary expressions
          */
         Expression *ExpressionFactory::createBinaryExpression(lexer::TokenType op, Expression *left, Expression *right) {
-            if(op == lexer::TokenType::PLUS) {
-                return new AdditionExpression(left, right);
-            } else if(op == lexer::TokenType::MINUS) {
-                return new SubtractionExpression(left, right);
-            } else if(op == lexer::TokenType::TIMES) {
-                return new MultiplicationExpression(left, right);
-            } else if(op == lexer::TokenType::DIVIDE) {
-                return new DivisionExpression(left, right);
-            } else if(op == lexer::TokenType::MOD) {
-                return new ModuloExpression(left, right);
-            } else if(op == lexer::TokenType::AND) {
-                return new AndCondition(left, right);
-            } else if(op == lexer::TokenType::EQ) {
-                return new EqualCondition(left, right);
-            } else if(op == lexer::TokenType::LR) {
-                return new LargerThanCondition(left, right);
-            } else if(op == lexer::TokenType::LREQ) {
-                return new LargerThanOrEqualCondition(left, right);
-            } else if(op == lexer::TokenType::NEQ) {
-                return new NotEqualCondition(left, right);
-            } else if(op == lexer::TokenType::OR) {
-                return new OrCondition(left, right);
-            } else if(op == lexer::TokenType::SM) {
-                return new SmallerThanCondition(left, right);
-            } else if(op == lexer::TokenType::SMEQ) {
-                return new SmallerThanOrEqualCondition(left, right);
-            } else if(op == lexer::TokenType::TEQ) {
-                return new StrictEqualCondition(left, right);
-            } else if(op == lexer::TokenType::TNEQ) {
-                return new StrictNotEqualCondition(left, right);
-            } else if(op == lexer::TokenType::ASSIGNMENT) {
-                return new AssignmentExpression(left, right);
-            } else if(op == lexer::TokenType::EXP) {
-                return new ExponentExpression(left, right);
+            try {
+                if(op == lexer::TokenType::PLUS) {
+                    return new AdditionExpression(left, right);
+                } else if(op == lexer::TokenType::MINUS) {
+                    return new SubtractionExpression(left, right);
+                } else if(op == lexer::TokenType::TIMES) {
+                    return new MultiplicationExpression(left, right);
+                } else if(op == lexer::TokenType::DIVIDE) {
+                    return new DivisionExpression(left, right);
+                } else if(op == lexer::TokenType::MOD) {
+                    return new ModuloExpression(left, right);
+                } else if(op == lexer::TokenType::AND) {
+                    return new AndCondition(left, right);
+                } else if(op == lexer::TokenType::EQ) {
+                    return new EqualCondition(left, right);
+                } else if(op == lexer::TokenType::LR) {
+                    return new LargerThanCondition(left, right);
+                } else if(op == lexer::TokenType::LREQ) {
+                    return new LargerThanOrEqualCondition(left, right);
+                } else if(op == lexer::TokenType::NEQ) {
+                    return new NotEqualCondition(left, right);
+                } else if(op == lexer::TokenType::OR) {
+                    return new OrCondition(left, right);
+                } else if(op == lexer::TokenType::SM) {
+                    return new SmallerThanCondition(left, right);
+                } else if(op == lexer::TokenType::SMEQ) {
+                    return new SmallerThanOrEqualCondition(left, right);
+                } else if(op == lexer::TokenType::TEQ) {
+                    return new StrictEqualCondition(left, right);
+                } else if(op == lexer::TokenType::TNEQ) {
+                    return new StrictNotEqualCondition(left, right);
+                } else if(op == lexer::TokenType::ASSIGNMENT) {
+                    return new AssignmentExpression(left, right);
+                } else if(op == lexer::TokenType::EXP) {
+                    return new ExponentExpression(left, right);
+                }
+            } catch(const std::invalid_argument &e) {
+                // TODO: HACK: Retrow instead of wrap
+                throw ParsingException(left->token(), std::string(e.what()));
             }
 
             throw ParsingException(left->token(), "Operator not supported.");

@@ -48,9 +48,8 @@ namespace dem {
             Variable *a = dynamic_cast<Variable*>(mStack.top());
             mStack.pop();
 
-            if(!a) {
-                throw RuntimeException("Lefthand value must be lvalue.");
-            }
+            if(!a)
+                throw RuntimeException(assignmentExpression.token(), "Lefthand value must be lvalue.");
 
             // assign b to a
             std::clog << "ASSIGN - " << a->identifier()->name() << " = " << b->asString() << std::endl;

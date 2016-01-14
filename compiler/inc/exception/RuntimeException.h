@@ -1,5 +1,5 @@
-#ifndef DEMUSE_PARSINGEXCEPTION_H
-#define DEMUSE_PARSINGEXCEPTION_H
+#ifndef DEMUSE_RUNTIMEEXCEPTION_H
+#define DEMUSE_RUNTIMEEXCEPTION_H
 
 #include <exception>
 #include "Token.h"
@@ -28,4 +28,4 @@ namespace dem {
     }
 }
 
-#endif //DEMUSE_PARSINGEXCEPTION_H
+#endif //DEMUSE_RUNTIMEEXCEPTION_H
