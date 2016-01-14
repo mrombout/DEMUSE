@@ -235,7 +235,6 @@ namespace dem {
             int editorId = mNotebook->GetSelection();
             if(editorId == wxNOT_FOUND)
                 return nullptr;
-            std::cout << "Getting page " << editorId << " now." << std::endl;
             return static_cast<MuseStyledTextEditor*>(mNotebook->GetPage(editorId));
         }
 
