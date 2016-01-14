@@ -114,4 +114,4 @@ endif()
 add_test(AllLexerTests testlexer)
 
 # install
-install(TARGETS liblexer DESTINATION bin COMPONENT liblexer)
+install(TARGETS liblexer DESTINATION . COMPONENT liblexer)

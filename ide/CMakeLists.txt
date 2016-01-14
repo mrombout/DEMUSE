@@ -75,5 +75,5 @@ if(wxWidgets_FOUND)
 endif()
 
 # install
-install(TARGETS ide DESTINATION bin COMPONENT ide)
-install(DIRECTORY res DESTINATION bin COMPONENT ide)
+install(TARGETS ide DESTINATION . COMPONENT ide)
+install(DIRECTORY res DESTINATION . COMPONENT ide)

@@ -310,4 +310,4 @@ endif()
 add_test(AllLexerTests testparser)
 
 # install
-install(TARGETS libparser DESTINATION bin COMPONENT libparser)
+install(TARGETS libparser DESTINATION . COMPONENT libparser)

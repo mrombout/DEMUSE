@@ -123,5 +123,5 @@ if(Midifile_FOUND)
 endif()
 
 # install
-install(TARGETS compiler DESTINATION bin COMPONENT compiler)
-install(TARGETS libcompiler DESTINATION bin COMPONENT libcompiler)
+install(TARGETS compiler DESTINATION . COMPONENT compiler)
+install(TARGETS libcompiler DESTINATION . COMPONENT libcompiler)

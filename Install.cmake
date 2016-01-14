@@ -10,6 +10,8 @@ include(InstallRequiredSystemLibraries)
 install(FILES ${CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS}
         DESTINATION /
         COMPONENT runtime)
+set(CPACK_COMPONENT_RUNTIME_REQUIRED true)
+set(CPACK_COMPONENT_RUNTIME_DISPLAY_NAME "Runtime")
 
 set(CPACK_PACKAGE_NAME "DEMUSE")
 set(CPACK_PACKAGE_VENDOR "Mike Rombout")
@@ -27,14 +29,14 @@ set(CPACK_NSIS_EXECUTABLES_DIRECTORY ".")
 
 set(CPACK_PACKAGE_EXECUTABLES ide "DEMUSE IDE")
 
-set(CPACK_COMPONENTS_ALL ide compiler libcompiler libparser liblexer manual examples runtime)
+set(CPACK_COMPONENTS_ALL ide compiler libcompiler libparser liblexer examples runtime)
 
 ## documentation
-install(DIRECTORY ${CMAKE_SOURCE_DIR}/docs/manual DESTINATION manual COMPONENT manual)
-set(CPACK_COMPONENT_FUNCTIONREF_DISPLAY_NAME "Manual")
-set(CPACK_COMPONENT_FUNCTIONREF_GROUP "Documentation")
+#install(DIRECTORY ${CMAKE_SOURCE_DIR}/docs/manual DESTINATION . COMPONENT manual)
+#set(CPACK_COMPONENT_MANUAL_DISPLAY_NAME "Manual")
+#set(CPACK_COMPONENT_MANUAL_GROUP "Documentation")
 
-install(DIRECTORY ${CMAKE_SOURCE_DIR}/examples DESTINATION examples COMPONENT examples)
+install(DIRECTORY ${CMAKE_SOURCE_DIR}/examples DESTINATION . COMPONENT examples)
 set(CPACK_COMPONENT_EXAMPLES_DISPLAY_NAME "Examples")
 set(CPACK_COMPONENT_EXAMPLES_GROUP "Documentation")
 
