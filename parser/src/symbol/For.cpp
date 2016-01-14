@@ -16,9 +16,10 @@ namespace dem {
 
         bool For::accept(Visitor &visitor) {
             if(visitor.visitEnter(*this)) {
-                if(mInitialization->accept(visitor))
-                    if(mCondition->accept(visitor))
-                        mAfterThought->accept(visitor);
+                if(mInitialization && mInitialization->accept(visitor))
+                    if(mCondition && mCondition->accept(visitor))
+                        if(mAfterThought)
+                            mAfterThought->accept(visitor);
             }
 
             return visitor.visitLeave(*this);
