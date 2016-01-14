@@ -67,7 +67,6 @@ set(Compiler_SRCS
 )
 
 set(TestCompiler_SRCS
-    test/value/ArrayValueTest.cpp
     test/value/BooleanValueTest.cpp
     test/value/NoteValueTest.cpp
     test/value/NullValueTest.cpp
