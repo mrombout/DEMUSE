@@ -288,6 +288,10 @@ namespace dem {
             wxFileName fileName{filePath};
             MuseStyledTextEditor *page = static_cast<MuseStyledTextEditor*>(mNotebook->GetPage(editorId));
 
+            mFileEditors.erase(page->filePath());
+            mFileEditors[filePath] = {
+                page
+            };
             mNotebook->SetPageText(editorId, fileName.GetFullName());
 
             // save file under new name
@@ -578,7 +582,7 @@ namespace dem {
         void MainFrame::updateAutocomplete(EditorInfo &info) {
             info.autoCompleteWords = mAutocompleteVisitor.search(*info.parseResults.astRoot());
 
-            MuseStyledTextEditor *editor = static_cast<MuseStyledTextEditor*>(info.editor);
+            MuseStyledTextEditor *editor = info.editor;
             editor->setAutocompleteWords(info.autoCompleteWords);
         }
     }
