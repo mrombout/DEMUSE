@@ -9,6 +9,7 @@
 #include <wx/filedlg.h>
 #include <wx/preferences.h>
 #include <wx/mimetype.h>
+#include "exception/ParsingException.h"
 #include "exception/RuntimeException.h"
 #include "App.h"
 #include "MuseParser.h"
@@ -435,6 +436,20 @@ namespace dem {
                 mOutput->AppendText("= Build finished in " + std::to_string(totalStopWatch.Time()) + "ms\n");
 
                 mOutput->AppendText("Output file: " + outputFileName.c_str());
+            } catch(const dem::parser::ParsingException &e) {
+                wxVector<wxVariant> data;
+                data.push_back(wxVariant(wxDataViewIconText("Error", wxArtProvider::GetIcon(wxART_ERROR, wxART_OTHER, wxSize(16, 16)))));
+                data.push_back(wxVariant(e.token().line()));
+                data.push_back(wxVariant(e.token().column()));
+                data.push_back(wxVariant(e.what()));
+                data.push_back(wxVariant(activeEditor()->filePath()));
+                mErrorList->AppendItem(data);
+
+                // add marker to editor
+                activeEditor()->MarkerAdd(e.token().line() - 1, demSTC_MARK_ERROR);
+
+                mOutput->SetDefaultStyle(wxTextAttr(*wxRED));
+                mOutput->AppendText("== Build failed: file:///" + activeEditor()->filePath() + "\n");
             } catch(const dem::compiler::RuntimeException &e) {
                 wxVector<wxVariant> data;
                 data.push_back(wxVariant(wxDataViewIconText("Error", wxArtProvider::GetIcon(wxART_ERROR, wxART_OTHER, wxSize(16, 16)))));
@@ -444,9 +459,20 @@ namespace dem {
                 data.push_back(wxVariant(activeEditor()->filePath()));
                 mErrorList->AppendItem(data);
 
+                // add marker to editor
+                activeEditor()->MarkerAdd(e.token().line() - 1, demSTC_MARK_ERROR);
+
                 mOutput->SetDefaultStyle(wxTextAttr(*wxRED));
                 mOutput->AppendText("== Build failed: file:///" + activeEditor()->filePath() + "\n");
             } catch(...) {
+                wxVector<wxVariant> data;
+                data.push_back(wxVariant(wxDataViewIconText("Error", wxArtProvider::GetIcon(wxART_ERROR, wxART_OTHER, wxSize(16, 16)))));
+                data.push_back(wxVariant(0));
+                data.push_back(wxVariant(0));
+                data.push_back(wxVariant("Unknown error"));
+                data.push_back(wxVariant(activeEditor()->filePath()));
+                mErrorList->AppendItem(data);
+
                 mOutput->SetDefaultStyle(wxTextAttr(*wxRED));
                 mOutput->AppendText("== Build failed: file:///" + activeEditor()->filePath() + "\n");
             }
