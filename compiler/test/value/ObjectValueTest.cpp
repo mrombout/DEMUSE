@@ -1,10 +1,15 @@
 #include <gtest/gtest.h>
-#include <value/NumberValue.h>
-#include "value/ObjectValue.h"
-#include "Token.h"
+#include "value/NumberValue.h"
+#include "value/Variable.h"
 
 class ObjectValueTest : public ::testing::Test {
+protected:
+    ObjectValueTest() :
+            scope(nullptr) {
 
+    }
+
+    dem::compiler::ObjectValue scope;
 };
 
 TEST_F(ObjectValueTest, Add_ThrowsException) {
@@ -284,5 +289,5 @@ TEST_F(ObjectValueTest, Call_ThrowsException) {
     dem::compiler::ObjectValue a;
 
     // assert / act
-    ASSERT_ANY_THROW({ a(); });
+    ASSERT_ANY_THROW({ a(scope); });
 }

@@ -89,7 +89,11 @@ namespace dem {
         }
 
         Value *TextValue::operator[](const int index) {
-            return new TextValue(std::to_string(mValue.at(index)));
+            return new TextValue(std::string(1, mValue.at(index)));
+        }
+
+        Variable *TextValue::operator[](const std::string &index) {
+            return ObjectValue::operator[](index);
         }
 
         Value *TextValue::operator()(ObjectValue &scope) {

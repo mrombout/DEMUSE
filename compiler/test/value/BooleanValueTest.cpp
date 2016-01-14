@@ -2,7 +2,13 @@
 #include "value/BooleanValue.h"
 
 class BooleanValueTest : public ::testing::Test {
+protected:
+    BooleanValueTest() :
+            scope(nullptr) {
 
+    }
+
+    dem::compiler::ObjectValue scope;
 };
 
 TEST_F(BooleanValueTest, Add_ThrowsException) {
@@ -340,5 +346,5 @@ TEST_F(BooleanValueTest, Call_ThrowsException) {
     dem::compiler::BooleanValue a{true};
 
     // assert / act
-    ASSERT_ANY_THROW({ a(); });
+    ASSERT_ANY_THROW({ a(scope); });
 }

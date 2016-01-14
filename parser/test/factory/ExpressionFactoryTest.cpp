@@ -25,7 +25,6 @@ TEST_F(ExpressionFactoryTest, ExpressionIdentifier) {
     dem::parser::Identifier *identifier = dynamic_cast<dem::parser::Identifier*>(dem::parser::ExpressionFactory::produce(tokens, parseResults));
 
     // assert
-    printer.print(identifier);
     ASSERT_NE(nullptr, identifier);
 }
 
@@ -39,7 +38,6 @@ TEST_F(ExpressionFactoryTest, ExpressionLiteralNumber) {
     dem::parser::NumberLiteral *number = dynamic_cast<dem::parser::NumberLiteral*>(dem::parser::ExpressionFactory::produce(tokens, parseResults));
 
     // assert
-    printer.print(number);
     ASSERT_NE(nullptr, number);
     ASSERT_EQ(5, number->value());
 }
@@ -47,14 +45,13 @@ TEST_F(ExpressionFactoryTest, ExpressionLiteralNumber) {
 TEST_F(ExpressionFactoryTest, ExpressionLiteralText) {
     // arrange
     std::deque<dem::lexer::Token> tokens = {
-        dem::lexer::Token(dem::lexer::TokenType::TEXT, "Lorum ipsum", tokenPosition)
+        dem::lexer::Token(dem::lexer::TokenType::TEXT, "\"Lorum ipsum\"", tokenPosition)
     };
 
     // act
     dem::parser::TextLiteral *text = dynamic_cast<dem::parser::TextLiteral*>(dem::parser::ExpressionFactory::produce(tokens, parseResults));
 
     // assert
-    printer.print(text);
     ASSERT_NE(nullptr, text);
     ASSERT_EQ("Lorum ipsum", text->value());
 }
@@ -69,7 +66,6 @@ TEST_F(ExpressionFactoryTest, ExpressionLiteralBool) {
     dem::parser::BoolLiteral *boolean = dynamic_cast<dem::parser::BoolLiteral*>(dem::parser::ExpressionFactory::produce(tokens, parseResults));
 
     // assert
-    printer.print(boolean);
     ASSERT_NE(nullptr, boolean);
 }
 
@@ -90,7 +86,6 @@ TEST_F(ExpressionFactoryTest, ExpressionLiteralArray) {
     dem::parser::ArrayLiteral *arrayLiteral = dynamic_cast<dem::parser::ArrayLiteral*>(expression);
 
     // assert
-    printer.print(expression);
     ASSERT_TRUE(tokens.empty());
     ASSERT_NE(nullptr, arrayLiteral);
     ASSERT_EQ(3, arrayLiteral->expressions().size());
@@ -119,7 +114,6 @@ TEST_F(ExpressionFactoryTest, ExpressionLiteralArrayNested) {
     dem::parser::ArrayLiteral *arrayLiteral = dynamic_cast<dem::parser::ArrayLiteral*>(expression);
 
     // assert
-    printer.print(expression);
     ASSERT_TRUE(tokens.empty());
     ASSERT_NE(nullptr, arrayLiteral);
     ASSERT_EQ(3, arrayLiteral->expressions().size());
@@ -143,7 +137,6 @@ TEST_F(ExpressionFactoryTest, AssignmentSingle) {
     dem::parser::AssignmentExpression *assignmentExpression = dynamic_cast<dem::parser::AssignmentExpression*>(expression);
 
     // assert
-    printer.print(expression);
     ASSERT_NE(nullptr, assignmentExpression);
     ASSERT_NE(nullptr, dynamic_cast<dem::parser::Identifier*>(&assignmentExpression->left()));
     ASSERT_NE(nullptr, dynamic_cast<dem::parser::AdditionExpression*>(&assignmentExpression->right()));
@@ -166,7 +159,6 @@ TEST_F(ExpressionFactoryTest, AssignmentMultiple) {
     dem::parser::AssignmentExpression *assignmentExpression = dynamic_cast<dem::parser::AssignmentExpression*>(expression);
 
     // assert
-    printer.print(expression);
     ASSERT_NE(nullptr, assignmentExpression);
     ASSERT_NE(nullptr, dynamic_cast<dem::parser::Identifier*>(&assignmentExpression->left()));
     ASSERT_NE(nullptr, dynamic_cast<dem::parser::AssignmentExpression*>(&assignmentExpression->right()));
@@ -185,7 +177,6 @@ TEST_F(ExpressionFactoryTest, AdditionSingle) {
     dem::parser::AdditionExpression *addExpression = dynamic_cast<dem::parser::AdditionExpression *>(expression);
 
     // assert
-    printer.print(expression);
     ASSERT_NE(nullptr, addExpression);
     ASSERT_EQ(typeid(dem::parser::NumberLiteral), typeid(addExpression->left()));
     ASSERT_EQ(typeid(dem::parser::NumberLiteral), typeid(addExpression->right()));
@@ -206,15 +197,12 @@ TEST_F(ExpressionFactoryTest, AdditionMultiple) {
     dem::parser::AdditionExpression *addExpression = dynamic_cast<dem::parser::AdditionExpression *>(expression);
 
     // assert
-    printer.print(expression);
     ASSERT_NE(nullptr, addExpression);
     ASSERT_NE(nullptr, dynamic_cast<dem::parser::AdditionExpression*>(&addExpression->left()));
     ASSERT_NE(nullptr, dynamic_cast<dem::parser::NumberLiteral*>(&addExpression->right()));
 }
 
 TEST_F(ExpressionFactoryTest, SubtractionSingle) {
-    FAIL(); // TODO: Somehow this crashes everything
-
     // arrange
     std::deque<dem::lexer::Token> tokens = {
         dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", tokenPosition),
@@ -227,7 +215,6 @@ TEST_F(ExpressionFactoryTest, SubtractionSingle) {
     dem::parser::SubtractionExpression *subtractionExpression = dynamic_cast<dem::parser::SubtractionExpression*>(expression);
 
     // assert
-    printer.print(expression);
     ASSERT_NE(nullptr, subtractionExpression);
     ASSERT_EQ(typeid(dem::parser::NumberLiteral), typeid(subtractionExpression->left()));
     ASSERT_EQ(typeid(dem::parser::NumberLiteral), typeid(subtractionExpression->right()));
@@ -247,14 +234,13 @@ TEST_F(ExpressionFactoryTest, SubtractionMultiple) {
     dem::parser::SubtractionExpression *subtractionExpression = dynamic_cast<dem::parser::SubtractionExpression*>(dem::parser::ExpressionFactory::produce(tokens, parseResults));
 
     // assert
-    printer.print(subtractionExpression);
     ASSERT_NE(nullptr, subtractionExpression);
     ASSERT_EQ(typeid(dem::parser::SubtractionExpression), typeid(subtractionExpression->left()));
     ASSERT_EQ(typeid(dem::parser::NumberLiteral), typeid(subtractionExpression->right()));
 }
 
 TEST_F(ExpressionFactoryTest, MultiplicationSingle) {
-    FAIL(); // TODO: Fix me, this crashes the rest
+    //FAIL(); // TODO: Fix me, this crashes the rest
     // arrange
     std::deque<dem::lexer::Token> tokens {
         dem::lexer::Token(dem::lexer::TokenType::NUMBER, "5", tokenPosition),
@@ -267,7 +253,6 @@ TEST_F(ExpressionFactoryTest, MultiplicationSingle) {
     dem::parser::MultiplicationExpression *multiplicationExpression = dynamic_cast<dem::parser::MultiplicationExpression*>(expression);
 
     // assert
-    printer.print(expression);
     ASSERT_NE(nullptr, multiplicationExpression);
     ASSERT_EQ(typeid(dem::parser::NumberLiteral), typeid(multiplicationExpression->left()));
     ASSERT_EQ(typeid(dem::parser::NumberLiteral), typeid(multiplicationExpression->right()));
@@ -288,14 +273,13 @@ TEST_F(ExpressionFactoryTest, MultiplicationMultiple) {
     dem::parser::MultiplicationExpression *multiplicationExpression = dynamic_cast<dem::parser::MultiplicationExpression*>(expression);
 
     // assert
-    printer.print(expression);
     ASSERT_NE(nullptr, multiplicationExpression);
     ASSERT_EQ(typeid(dem::parser::MultiplicationExpression), typeid(multiplicationExpression->left()));
     ASSERT_EQ(typeid(dem::parser::NumberLiteral), typeid(multiplicationExpression->right()));
 }
 
 TEST_F(ExpressionFactoryTest, DivisionSingle) {
-    FAIL(); // TODO: Fix me, this crashes everything
+    //FAIL(); // TODO: Fix me, this crashes everything
 
     // arrange
     std::deque<dem::lexer::Token> tokens {
@@ -309,7 +293,6 @@ TEST_F(ExpressionFactoryTest, DivisionSingle) {
     dem::parser::DivisionExpression *divisionExpression = dynamic_cast<dem::parser::DivisionExpression*>(expression);
 
     // assert
-    printer.print(expression);
     ASSERT_NE(nullptr, divisionExpression);
     ASSERT_EQ(typeid(dem::parser::NumberLiteral), typeid(divisionExpression->left()));
     ASSERT_EQ(typeid(dem::parser::NumberLiteral), typeid(divisionExpression->right()));
@@ -330,14 +313,13 @@ TEST_F(ExpressionFactoryTest, DivisionMultiple) {
     dem::parser::DivisionExpression *divisionExpression = dynamic_cast<dem::parser::DivisionExpression*>(expression);
 
     // assert
-    printer.print(expression);
     ASSERT_NE(nullptr, divisionExpression);
     ASSERT_EQ(typeid(dem::parser::DivisionExpression), typeid(divisionExpression->left()));
     ASSERT_EQ(typeid(dem::parser::NumberLiteral), typeid(divisionExpression->right()));
 }
 
 TEST_F(ExpressionFactoryTest, ModuloSingle) {
-    FAIL(); // TODO: Fix me, this crashes everything
+    //FAIL(); // TODO: Fix me, this crashes everything
 
     // arrange
     std::deque<dem::lexer::Token> tokens {
@@ -351,7 +333,6 @@ TEST_F(ExpressionFactoryTest, ModuloSingle) {
     dem::parser::ModuloExpression *moduloExpression = dynamic_cast<dem::parser::ModuloExpression*>(expression);
 
     // assert
-    printer.print(expression);
     ASSERT_NE(nullptr, moduloExpression);
     ASSERT_EQ(typeid(dem::parser::NumberLiteral), typeid(moduloExpression->left()));
     ASSERT_EQ(typeid(dem::parser::NumberLiteral), typeid(moduloExpression->right()));
@@ -370,7 +351,6 @@ TEST_F(ExpressionFactoryTest, ExponentSingle) {
     dem::parser::ExponentExpression *exponentExpression = dynamic_cast<dem::parser::ExponentExpression*>(expression);
 
     // assert
-    printer.print(expression);
     ASSERT_NE(nullptr, exponentExpression);
     ASSERT_EQ(typeid(dem::parser::NumberLiteral), typeid(exponentExpression->left()));
     ASSERT_EQ(typeid(dem::parser::NumberLiteral), typeid(exponentExpression->right()));
@@ -391,7 +371,6 @@ TEST_F(ExpressionFactoryTest, ModuloMultiple) {
     dem::parser::ModuloExpression *moduloExpression = dynamic_cast<dem::parser::ModuloExpression*>(expression);
 
     // assert
-    printer.print(expression);
     ASSERT_NE(nullptr, moduloExpression);
     ASSERT_EQ(typeid(dem::parser::ModuloExpression), typeid(moduloExpression->left()));
     ASSERT_EQ(typeid(dem::parser::NumberLiteral), typeid(moduloExpression->right()));
@@ -413,7 +392,6 @@ TEST_F(ExpressionFactoryTest, ParenthesisSingle) {
     dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens, parseResults);
 
     // assert
-    printer.print(expression);
     ASSERT_TRUE(dynamic_cast<dem::parser::MultiplicationExpression*>(expression));
 }
 
@@ -430,7 +408,6 @@ TEST_F(ExpressionFactoryTest, ConditionAnd) {
     dem::parser::AndCondition *andCondition = dynamic_cast<dem::parser::AndCondition*>(expression);
 
     // assert
-    printer.print(expression);
     ASSERT_NE(nullptr, andCondition);
     ASSERT_EQ(typeid(dem::parser::BoolLiteral), typeid(andCondition->left()));
     ASSERT_EQ(typeid(dem::parser::BoolLiteral), typeid(andCondition->right()));
@@ -449,7 +426,6 @@ TEST_F(ExpressionFactoryTest, ConditionEqual) {
     dem::parser::EqualCondition *equalCondition = dynamic_cast<dem::parser::EqualCondition*>(expression);
 
     // assert
-    printer.print(expression);
     ASSERT_NE(nullptr, equalCondition);
     ASSERT_EQ(typeid(dem::parser::NumberLiteral), typeid(equalCondition->left()));
     ASSERT_EQ(typeid(dem::parser::NumberLiteral), typeid(equalCondition->right()));
@@ -468,7 +444,6 @@ TEST_F(ExpressionFactoryTest, ConditionLargerThan) {
     dem::parser::LargerThanCondition *largerThanCondition = dynamic_cast<dem::parser::LargerThanCondition*>(expression);
 
     // assert
-    printer.print(expression);
     ASSERT_NE(nullptr, largerThanCondition);
     ASSERT_EQ(typeid(dem::parser::NumberLiteral), typeid(largerThanCondition->left()));
     ASSERT_EQ(typeid(dem::parser::NumberLiteral), typeid(largerThanCondition->right()));
@@ -614,9 +589,7 @@ TEST_F(ExpressionFactoryTest, ExpressionCallNoArguments) {
     dem::parser::CallExpression *callExpression = dynamic_cast<dem::parser::CallExpression*>(expression);
 
     // assert
-    printer.print(expression);
     ASSERT_NE(nullptr, callExpression);
-
     ASSERT_EQ(0, callExpression->arguments().size());
 
     dem::parser::Identifier* identifier = dynamic_cast<dem::parser::Identifier*>(&callExpression->callee());
@@ -638,9 +611,7 @@ TEST_F(ExpressionFactoryTest, ExpressionCallSingleArgument) {
     dem::parser::CallExpression *callExpression = dynamic_cast<dem::parser::CallExpression*>(expression);
 
     // assert
-    printer.print(expression);
     ASSERT_NE(nullptr, callExpression);
-
     ASSERT_EQ(1, callExpression->arguments().size());
 
     dem::parser::Identifier* identifier = dynamic_cast<dem::parser::Identifier*>(&callExpression->callee());
@@ -664,7 +635,6 @@ TEST_F(ExpressionFactoryTest, ExpressionCallTwoArgument) {
     dem::parser::CallExpression *callExpression = dynamic_cast<dem::parser::CallExpression*>(expression);
 
     // assert
-    printer.print(expression);
     ASSERT_NE(nullptr, callExpression);
 
     ASSERT_EQ(2, callExpression->arguments().size());
@@ -692,7 +662,6 @@ TEST_F(ExpressionFactoryTest, ExpressionMemberCallTwoArgument) {
     dem::parser::CallExpression *callExpression = dynamic_cast<dem::parser::CallExpression*>(expression);
 
     // assert
-    printer.print(expression);
     ASSERT_NE(nullptr, callExpression);
 
     ASSERT_EQ(2, callExpression->arguments().size());
@@ -720,21 +689,21 @@ TEST_F(ExpressionFactoryTest, ExpressionArrayAccess) {
 
     // act
     dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens, parseResults);
-    dem::parser::MemberExpression *memberExpression = dynamic_cast<dem::parser::MemberExpression*>(expression);
+    dem::parser::ArrayAccessExpression *arrayAccessExpression = dynamic_cast<dem::parser::ArrayAccessExpression*>(expression);
 
     // assert
-    printer.print(expression);
-    ASSERT_NE(nullptr, memberExpression);
-    ASSERT_NE(nullptr, dynamic_cast<dem::parser::Identifier*>(&memberExpression->object()));
-    ASSERT_NE(nullptr, dynamic_cast<dem::parser::NumberLiteral*>(&memberExpression->property()));
+    ASSERT_NE(nullptr, arrayAccessExpression);
+    ASSERT_NE(nullptr, dynamic_cast<dem::parser::Identifier*>(&arrayAccessExpression->object()));
+    ASSERT_NE(nullptr, dynamic_cast<dem::parser::NumberLiteral*>(&arrayAccessExpression->index()));
 }
 
+/*
 TEST_F(ExpressionFactoryTest, ExpressionArrayAccessMulti) {
     // arrange
     std::deque<dem::lexer::Token> tokens = {
         dem::lexer::Token(dem::lexer::TokenType::IDENTIFIER,    "foo", tokenPosition),
         dem::lexer::Token(dem::lexer::TokenType::BRACKET_OPEN,  "[",   tokenPosition),
-        dem::lexer::Token(dem::lexer::TokenType::NUMBER,        "0",   tokenPosition),
+        dem::lexer::Token(dem::lexer::TokenType::NUMBER,        "8",   tokenPosition),
         dem::lexer::Token(dem::lexer::TokenType::BRACKET_CLOSE, "]",   tokenPosition),
         dem::lexer::Token(dem::lexer::TokenType::BRACKET_OPEN,  "[",   tokenPosition),
         dem::lexer::Token(dem::lexer::TokenType::NUMBER,        "1",   tokenPosition),
@@ -743,14 +712,15 @@ TEST_F(ExpressionFactoryTest, ExpressionArrayAccessMulti) {
 
     // act
     dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens, parseResults);
-    dem::parser::MemberExpression *memberExpression = dynamic_cast<dem::parser::MemberExpression*>(expression);
+    dem::parser::ArrayAccessExpression *arrayAccessExpression = dynamic_cast<dem::parser::ArrayAccessExpression*>(expression);
 
     // assert
-    printer.print(expression);
-    ASSERT_NE(nullptr, memberExpression);
-    ASSERT_NE(nullptr, dynamic_cast<dem::parser::MemberExpression*>(&memberExpression->object()));
-    ASSERT_NE(nullptr, dynamic_cast<dem::parser::NumberLiteral*>(&memberExpression->property()));
+    printer.print(arrayAccessExpression);
+    ASSERT_NE(nullptr, arrayAccessExpression);
+    ASSERT_NE(nullptr, dynamic_cast<dem::parser::Identifier*>(&arrayAccessExpression->object()));
+    ASSERT_NE(nullptr, dynamic_cast<dem::parser::NumberLiteral*>(&arrayAccessExpression->index()));
 }
+*/
 
 TEST_F(ExpressionFactoryTest, UnaryNegativeLiteralSingle) {
     // arrange
@@ -764,7 +734,6 @@ TEST_F(ExpressionFactoryTest, UnaryNegativeLiteralSingle) {
     dem::parser::UnaryExpression *unaryExpression = dynamic_cast<dem::parser::UnaryExpression*>(expression);
 
     // assert
-    printer.print(expression);
     ASSERT_NE(nullptr, unaryExpression);
 
     dem::parser::NumberLiteral *numberLiteral = dynamic_cast<dem::parser::NumberLiteral*>(&unaryExpression->argument());
@@ -786,7 +755,6 @@ TEST_F(ExpressionFactoryTest, UnaryNegativeExpressionSingle) {
     dem::parser::AdditionExpression *additionExpression = dynamic_cast<dem::parser::AdditionExpression*>(expression);
 
     // assert
-    printer.print(expression);
     ASSERT_NE(nullptr, additionExpression);
 
     ASSERT_NE(nullptr, dynamic_cast<dem::parser::UnaryExpression*>(&additionExpression->left()));
@@ -809,7 +777,6 @@ TEST_F(ExpressionFactoryTest, PrecedenceMultiplyAddition) {
     dem::parser::Expression *expression = dem::parser::ExpressionFactory::produce(tokens, parseResults);
 
     // assert
-    printer.print(expression);
     // TODO: Assertions
 }
 

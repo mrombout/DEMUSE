@@ -1,16 +1,18 @@
 #include <gtest/gtest.h>
-#include <value/NullValue.h>
+#include "value/ObjectValue.h"
 #include "value/NullValue.h"
 #include "Token.h"
 
 class NullValueTest : public ::testing::Test {
 protected:
     NullValueTest() :
-            token(dem::lexer::TokenType::UNKNOWN, "", dem::lexer::TokenPosition()) {
+        token(dem::lexer::TokenType::UNKNOWN, "", dem::lexer::TokenPosition()),
+        scope(nullptr) {
 
     }
 
     dem::lexer::Token token;
+    dem::compiler::ObjectValue scope;
 };
 
 TEST_F(NullValueTest, Add_ThrowsException) {
@@ -83,12 +85,15 @@ TEST_F(NullValueTest, AsBool_ReturnsTrueWhenTrue) {
     ASSERT_ANY_THROW({ a.asBool(); });
 }
 
-TEST_F(NullValueTest, AsString_ReturnsNoteRepr) {
+TEST_F(NullValueTest, AsString_ReturnsNULL) {
     // arrange
     dem::compiler::NullValue a;
 
-    // assert / act
-    ASSERT_ANY_THROW({ a.asString(); });
+    // act
+    std::string result = a.asString();
+
+    // assert
+    ASSERT_EQ("NULL", result);
 }
 
 TEST_F(NullValueTest, AsNote_ThrowsException) {
@@ -281,5 +286,5 @@ TEST_F(NullValueTest, Call_ThrowsException) {
     dem::compiler::NullValue a;
 
     // assert / act
-    ASSERT_ANY_THROW({ a(); });
+    ASSERT_ANY_THROW({ a(scope); });
 }

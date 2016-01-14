@@ -5,11 +5,13 @@
 class NoteValueTest : public ::testing::Test {
 protected:
     NoteValueTest() :
-        token(dem::lexer::TokenType::UNKNOWN, "", dem::lexer::TokenPosition()) {
+        token(dem::lexer::TokenType::UNKNOWN, "", dem::lexer::TokenPosition()),
+        scope(nullptr) {
 
     }
 
     dem::lexer::Token token;
+    dem::compiler::ObjectValue scope;
 };
 
 TEST_F(NoteValueTest, Add_ThrowsException) {
@@ -331,5 +333,5 @@ TEST_F(NoteValueTest, Call_ThrowsException) {
     dem::compiler::NoteValue a{dem::parser::Note(token, 'C', 4, 'n', 'w')};
 
     // assert / act
-    ASSERT_ANY_THROW({ a(); });
+    ASSERT_ANY_THROW({ a(scope); });
 }

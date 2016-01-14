@@ -2,7 +2,13 @@
 #include "value/NumberValue.h"
 
 class NumberValueTest : public ::testing::Test {
+protected:
+    NumberValueTest() :
+            scope(nullptr) {
 
+    }
+
+    dem::compiler::ObjectValue scope;
 };
 
 TEST_F(NumberValueTest, Add_NumberNumber_CalculationCorrect) {
@@ -394,5 +400,5 @@ TEST_F(NumberValueTest, Call_ThrowsException) {
     dem::compiler::NumberValue a{2};
 
     // assert / act
-    ASSERT_ANY_THROW({ a(); });
+    ASSERT_ANY_THROW({ a(scope); });
 }

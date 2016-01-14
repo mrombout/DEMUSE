@@ -189,7 +189,7 @@ TEST_F(MusicStringLexerTest, Measure_Single) {
     auto end = str.end();
 
     // act
-    std::vector<dem::lexer::Token> tokens = lexer.lex(begin, end);
+    std::vector<dem::lexer::Token> tokens = lexer.lex(begin, end, false);
 
     // assert
     ASSERT_EQ(dem::lexer::TokenType::MEASURE, tokens[0].type());
